@@ -15,3 +15,4 @@ Enjoy!
 Dr. Gary
 
 Testing commit messages to slack via git commits
+First test didn't work, trying again
