@@ -644,7 +644,7 @@ public class AppFrame extends JFrame {
         Util.runBrowser(App.GUIDE_URL);
     }
     
-    //File | Exit action performed
+    //File | Exit action performed and Frame X clicked
     public void doExit() {
         if (Configuration.get("ASK_ON_EXIT").equals("yes")) {
                         Dimension frmSize = this.getSize();
@@ -664,9 +664,10 @@ public class AppFrame extends JFrame {
         System.exit(0);
     }
 
+    // Changing this method to minimize the frame instead of the original action to close
     public void doMinimize() {
-        exitNotify();
-        App.closeWindow();
+    	// Got rid of the previous lines and replaced it with Frame.ICONIFIED
+    	this.setState (Frame.ICONIFIED);
     }
 
     //Help | About action performed
@@ -680,20 +681,20 @@ public class AppFrame extends JFrame {
          dlg.setVisible(true);
     }
 
+    // This handles the current process of the Frame clicks (Minimize, Maximize and Exit) 
     protected void processWindowEvent(WindowEvent e) {
-        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
-            if (Configuration.get("ON_CLOSE").equals("exit"))
-                doExit();
-            else
-                doMinimize();
-        }
-        else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
-            super.processWindowEvent(new WindowEvent(this,
-                    WindowEvent.WINDOW_CLOSING));
+    	if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            // Changed status of this condition to exit the frame via doExit() method
+    		doExit();               
+        } 
+        else if (e.getID() == WindowEvent.WINDOW_ICONIFIED) {
+            // Changed status of this condition to minimize the Frame instead of closing            
             doMinimize();
         }
-        else
+        else {
+        	// Left alone from before - untouched
             super.processWindowEvent(e);
+        }
     }
 
     public static void addExitListener(ActionListener al) {
