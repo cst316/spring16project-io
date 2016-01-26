@@ -51,6 +51,7 @@ public class TaskPanel extends JPanel {
     JButton editTaskB = new JButton();
     JButton removeTaskB = new JButton();
     JButton completeTaskB = new JButton();
+    JButton decompletetaskB = new JButton();
     
 	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 		
@@ -177,6 +178,27 @@ public class TaskPanel extends JPanel {
         completeTaskB.setIcon(
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_complete.png")));
 
+        /*
+         * added 1/26/2016 decomplete button, need new image for button.
+         */
+        
+        decompleteTaskB.setBorderPainted(false);
+        decompleteTaskB.setFocusable(false);
+        decompleteTaskB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ppDecompleteTask_actionPerformed(e);
+            }
+        });
+        decompleteTaskB.setPreferredSize(new Dimension(24, 24));
+        decompleteTaskB.setRequestFocusEnabled(false);
+        decompleteTaskB.setToolTipText(Local.getString("Decomplete task"));
+        decompleteTaskB.setMinimumSize(new Dimension(24, 24));
+        decompleteTaskB.setMaximumSize(new Dimension(24, 24));
+        decompleteTaskB.setIcon(
+            new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_complete.png")));
+
+        
+        
 		// added by rawsushi
 //		showActiveOnly.setBorderPainted(false);
 //		showActiveOnly.setFocusable(false);
@@ -322,6 +344,7 @@ public class TaskPanel extends JPanel {
         tasksToolBar.addSeparator(new Dimension(8, 24));
         tasksToolBar.add(editTaskB, null);
         tasksToolBar.add(completeTaskB, null);
+        tasksToolBar.add(decompleteTaskB, null);
 
 		//tasksToolBar.add(showActiveOnly, null);
         
@@ -356,6 +379,8 @@ public class TaskPanel extends JPanel {
 				
 				ppCompleteTask.setEnabled(enbl);
 				completeTaskB.setEnabled(enbl);
+				decompleteTaskB.setEnabled(endl);
+				
 				ppAddSubTask.setEnabled(enbl);
 				//ppSubTasks.setEnabled(enbl); // default value to be over-written later depending on whether it has sub tasks
 				ppCalcTask.setEnabled(enbl); // default value to be over-written later depending on whether it has sub tasks
@@ -386,6 +411,7 @@ public class TaskPanel extends JPanel {
         editTaskB.setEnabled(false);
         removeTaskB.setEnabled(false);
 		completeTaskB.setEnabled(false);
+		decompleteTaskB.setEnabled(false);
 		ppAddSubTask.setEnabled(false);
 		//ppSubTasks.setEnabled(false);
 		//ppParentTask.setEnabled(false);
@@ -697,6 +723,27 @@ public class TaskPanel extends JPanel {
 		parentPanel.updateIndicators();
 		//taskTable.updateUI();
 	}
+	
+	void ppDecompleteTask_actionPerformed(ActionEvent e) {
+		String msg;
+		Vector tocomplete = new Vector();
+		for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
+			Task t =
+			CurrentProject.getTaskList().getTask(
+				taskTable.getModel().getValueAt(taskTable.getSelectedRows()[i], TaskTable.TASK_ID).toString());
+			if (t != null)
+				tocomplete.add(t);
+		}
+		for (int i = 0; i < tocomplete.size(); i++) {
+			Task t = (Task)tocomplete.get(i);
+			t.setProgress(0);
+		}
+		taskTable.tableChanged();
+		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+		parentPanel.updateIndicators();
+		//taskTable.updateUI();
+	}
+	
 
 	// toggle "show active only"
 	void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
