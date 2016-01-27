@@ -488,6 +488,7 @@ public class PreferencesDialog extends JDialog {
 		
 		
 		//Build langaugePanel
+		
 		/*
 		normalFontLabel.setText(Local.getString("TEST PANEL"));
 		TODO: two radio or dropdown options for english/spanish
