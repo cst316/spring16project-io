@@ -51,7 +51,7 @@ public class TaskPanel extends JPanel {
     JButton editTaskB = new JButton();
     JButton removeTaskB = new JButton();
     JButton completeTaskB = new JButton();
-    JButton decompleteTaskB = new JButton();
+    JButton undoTaskB = new JButton();
     
 	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 		
@@ -179,22 +179,22 @@ public class TaskPanel extends JPanel {
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_complete.png")));
 
         /*
-         * added 1/26/2016 decomplete button, need new image for button.
+         * added 1/26/2016 undo button, need new image for button.
          */
         
-        decompleteTaskB.setBorderPainted(false);
-        decompleteTaskB.setFocusable(false);
-        decompleteTaskB.addActionListener(new java.awt.event.ActionListener() {
+        undoTaskB.setBorderPainted(false);
+        undoTaskB.setFocusable(false);
+        undoTaskB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ppDecompleteTask_actionPerformed(e);
+                ppundoTask_actionPerformed(e);
             }
         });
-        decompleteTaskB.setPreferredSize(new Dimension(24, 24));
-        decompleteTaskB.setRequestFocusEnabled(false);
-        decompleteTaskB.setToolTipText(Local.getString("Decomplete task"));
-        decompleteTaskB.setMinimumSize(new Dimension(24, 24));
-        decompleteTaskB.setMaximumSize(new Dimension(24, 24));
-        decompleteTaskB.setIcon(
+        undoTaskB.setPreferredSize(new Dimension(24, 24));
+        undoTaskB.setRequestFocusEnabled(false);
+        undoTaskB.setToolTipText(Local.getString("undo task"));
+        undoTaskB.setMinimumSize(new Dimension(24, 24));
+        undoTaskB.setMaximumSize(new Dimension(24, 24));
+        undoTaskB.setIcon(
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_complete.png")));
 
         
@@ -344,7 +344,7 @@ public class TaskPanel extends JPanel {
         tasksToolBar.addSeparator(new Dimension(8, 24));
         tasksToolBar.add(editTaskB, null);
         tasksToolBar.add(completeTaskB, null);
-        tasksToolBar.add(decompleteTaskB, null);
+        tasksToolBar.add(undoTaskB, null);
 
 		//tasksToolBar.add(showActiveOnly, null);
         
@@ -379,7 +379,7 @@ public class TaskPanel extends JPanel {
 				
 				ppCompleteTask.setEnabled(enbl);
 				completeTaskB.setEnabled(enbl);
-				decompleteTaskB.setEnabled(enbl);
+				undoTaskB.setEnabled(enbl);
 				
 				ppAddSubTask.setEnabled(enbl);
 				//ppSubTasks.setEnabled(enbl); // default value to be over-written later depending on whether it has sub tasks
@@ -411,7 +411,7 @@ public class TaskPanel extends JPanel {
         editTaskB.setEnabled(false);
         removeTaskB.setEnabled(false);
 		completeTaskB.setEnabled(false);
-		decompleteTaskB.setEnabled(false);
+		undoTaskB.setEnabled(false);
 		ppAddSubTask.setEnabled(false);
 		//ppSubTasks.setEnabled(false);
 		//ppParentTask.setEnabled(false);
@@ -724,7 +724,7 @@ public class TaskPanel extends JPanel {
 		//taskTable.updateUI();
 	}
 	
-	void ppDecompleteTask_actionPerformed(ActionEvent e) {
+	void ppundoTask_actionPerformed(ActionEvent e) {
 		String msg;
 		Vector tocomplete = new Vector();
 		for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
