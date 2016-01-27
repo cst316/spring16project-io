@@ -19,7 +19,8 @@ String name;
                   
                   */
                 
-                JOptionPane.showMessageDialog(null,Local.getString("Aun no podemos importar su documento"));
+                JOptionPane.showMessageDialog(null,Local.getString("We cannot import your document"));
+                //Original message said: "Aun no podemos importar su documento"
                 return true;
         }
         
