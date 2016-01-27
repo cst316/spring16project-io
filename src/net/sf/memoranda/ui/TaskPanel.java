@@ -51,7 +51,7 @@ public class TaskPanel extends JPanel {
     JButton editTaskB = new JButton();
     JButton removeTaskB = new JButton();
     JButton completeTaskB = new JButton();
-    JButton decompletetaskB = new JButton();
+    JButton decompleteTaskB = new JButton();
     
 	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 		
@@ -379,7 +379,7 @@ public class TaskPanel extends JPanel {
 				
 				ppCompleteTask.setEnabled(enbl);
 				completeTaskB.setEnabled(enbl);
-				decompleteTaskB.setEnabled(endl);
+				decompleteTaskB.setEnabled(enbl);
 				
 				ppAddSubTask.setEnabled(enbl);
 				//ppSubTasks.setEnabled(enbl); // default value to be over-written later depending on whether it has sub tasks
