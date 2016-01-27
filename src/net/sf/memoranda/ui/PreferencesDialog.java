@@ -126,7 +126,10 @@ public class PreferencesDialog extends JDialog {
 	BorderLayout borderLayout2 = new BorderLayout();
 	
 	JPanel editorConfigPanel = new JPanel(new BorderLayout());
+	JPanel languagePanel = new JPanel(new BorderLayout());
 	JPanel econfPanel = new JPanel(new GridLayout(5, 2));
+	//change
+	JPanel econfPanel2 = new JPanel(new GridLayout(5, 2));
 	Vector fontnames = getFontNames();
 	JComboBox normalFontCB = new JComboBox(fontnames);
 	JComboBox headerFontCB = new JComboBox(fontnames);
@@ -456,6 +459,7 @@ public class PreferencesDialog extends JDialog {
 
 		resourcePanel.add(rsBottomPanel, BorderLayout.SOUTH);
 		
+		
 		// Build editorConfigPanel
 		normalFontLabel.setText(Local.getString("Normal text font"));
 		normalFontLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -481,11 +485,21 @@ public class PreferencesDialog extends JDialog {
 		((GridLayout)econfPanel.getLayout()).setHgap(10);
 		((GridLayout)econfPanel.getLayout()).setVgap(5);
 		editorConfigPanel.add(econfPanel, BorderLayout.NORTH);
+		
+		
+		//Build langaugePanel
+		/*
+		normalFontLabel.setText(Local.getString("TEST PANEL"));
+		TODO: two radio or dropdown options for english/spanish
+		*/
+		
 		// Build TabbedPanel
 		tabbedPanel.add(GeneralPanel, Local.getString("General"));
 		tabbedPanel.add(resourcePanel, Local.getString("Resource types"));
 		tabbedPanel.add(soundPanel, Local.getString("Sound"));
 		tabbedPanel.add(editorConfigPanel, Local.getString("Editor"));
+		//added tab for Language Option
+		tabbedPanel.add(languagePanel, Local.getString("Language Options"));
 
 		// Build TopPanel
 		topPanel.add(tabbedPanel, BorderLayout.CENTER);
