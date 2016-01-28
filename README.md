@@ -14,4 +14,4 @@ Your first steps should be to get your team set up with this code, ensure you ca
 Enjoy!
 Dr. Gary
 
-Changed git app in slack to commit to #random channel
+Changed git app in slack to commit to #general channel
