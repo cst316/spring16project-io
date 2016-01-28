@@ -14,5 +14,4 @@ Your first steps should be to get your team set up with this code, ensure you ca
 Enjoy!
 Dr. Gary
 
-Testing commit messages to slack via git commits
-First test didn't work, trying again
+Changed git app in slack to commit to #random channel
