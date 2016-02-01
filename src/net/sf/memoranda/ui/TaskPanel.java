@@ -410,6 +410,7 @@ public class TaskPanel extends JPanel {
         editTaskB.setEnabled(false);
         removeTaskB.setEnabled(false);
 		completeTaskB.setEnabled(false);
+		undoTaskB.setVisible(false);
 		undoTaskB.setEnabled(false);
 		ppAddSubTask.setEnabled(false);
 		//ppSubTasks.setEnabled(false);
