@@ -489,9 +489,19 @@ public class PreferencesDialog extends JDialog {
 		
 		//Build langaugePanel
 		
+		//Builds Language Tab
+		JLabel languageLabel = new JLabel();
+		JLabel languageLabel2 = new JLabel();
+		languageLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		languageLabel.setText(Local.getString("Spanish:"));
+		languageLabel2.setHorizontalAlignment(SwingConstants.CENTER);
+		languageLabel2.setText(Local.getString("English:"));
+		languagePanel.add(languageLabel, null);
+		languagePanel.add(languageLabel2, null);
+		
+		
 		/*
-		normalFontLabel.setText(Local.getString("TEST PANEL"));
-		TODO: two radio or dropdown options for english/spanish
+				TODO: two radio or dropdown options for english/spanish
 		*/
 		
 		// Build TabbedPanel
