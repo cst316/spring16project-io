@@ -43,6 +43,7 @@ public class ResourcesPanel extends JPanel {
     JScrollPane scrollPane = new JScrollPane();
     JButton refreshB = new JButton();
   JPopupMenu resPPMenu = new JPopupMenu();
+  JMenuItem ppUndo = new JMenuItem();
   JMenuItem ppRun = new JMenuItem();
   JMenuItem ppRemoveRes = new JMenuItem();
   JMenuItem ppNewRes = new JMenuItem();
@@ -125,6 +126,16 @@ public class ResourcesPanel extends JPanel {
         refreshB.setIcon(
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/refreshres.png")));
         resPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
+        ppUndo.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppUndo.setText(Local.getString("Undo Resource"));
+        ppUndo.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ppUndo_actionPerformed(e);
+        	}
+        });
+        ppUndo.setEnabled(true);
+        //image taken from http://findicons.com/icon/219162/undo?id=398871
+        ppUndo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
     ppRun.setFont(new java.awt.Font("Dialog", 1, 11));
     ppRun.setText(Local.getString("Open resource")+"...");
     ppRun.addActionListener(new java.awt.event.ActionListener() {
@@ -168,6 +179,7 @@ public class ResourcesPanel extends JPanel {
         this.add(scrollPane, BorderLayout.CENTER);
         scrollPane.getViewport().add(resourcesTable, null);
         this.add(toolBar, BorderLayout.NORTH);
+    resPPMenu.add(ppUndo);
     resPPMenu.add(ppRun);
     resPPMenu.addSeparator();
     resPPMenu.add(ppNewRes);
@@ -383,6 +395,11 @@ public class ResourcesPanel extends JPanel {
                 else
                     runBrowser((String) resourcesTable.getValueAt(resourcesTable.getSelectedRow(), 0));
   }
+  
+  void ppUndo_actionPerformed(ActionEvent e) {
+		 removeResB_actionPerformed(e);
+	 }
+  
   void ppRemoveRes_actionPerformed(ActionEvent e) {
     removeResB_actionPerformed(e);
   }

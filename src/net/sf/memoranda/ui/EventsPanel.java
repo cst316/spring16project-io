@@ -47,6 +47,7 @@ public class EventsPanel extends JPanel {
     JScrollPane scrollPane = new JScrollPane();
     EventsTable eventsTable = new EventsTable();
     JPopupMenu eventPPMenu = new JPopupMenu();
+    JMenuItem ppUndoEvent = new JMenuItem();
     JMenuItem ppEditEvent = new JMenuItem();
     JMenuItem ppRemoveEvent = new JMenuItem();
     JMenuItem ppNewEvent = new JMenuItem();
@@ -136,6 +137,18 @@ public class EventsPanel extends JPanel {
         eventsTable.setMaximumSize(new Dimension(32767, 32767));
         eventsTable.setRowHeight(24);
         eventPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
+        
+        ppUndoEvent.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppUndoEvent.setText(Local.getString("Undo Event"));
+        ppUndoEvent.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ppUndoEvent_actionPerformed(e);
+        	}
+        });
+        ppUndoEvent.setEnabled(true);
+        //image taken from http://findicons.com/icon/219162/undo?id=398871
+        ppUndoEvent.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
+        
         ppEditEvent.setFont(new java.awt.Font("Dialog", 1, 11));
         ppEditEvent.setText(Local.getString("Edit event") + "...");
         ppEditEvent.addActionListener(new java.awt.event.ActionListener() {
@@ -192,6 +205,7 @@ public class EventsPanel extends JPanel {
                 ppEditEvent.setEnabled(false);
                 removeEventB.setEnabled(false);
                 ppRemoveEvent.setEnabled(false);
+                ppUndoEvent.setEnabled(false);
             }
         });
 
@@ -202,10 +216,12 @@ public class EventsPanel extends JPanel {
                 ppEditEvent.setEnabled(enbl);
                 removeEventB.setEnabled(enbl);
                 ppRemoveEvent.setEnabled(enbl);
+                ppUndoEvent.setEnabled(enbl);
             }
         });
         editEventB.setEnabled(false);
         removeEventB.setEnabled(false);
+        eventPPMenu.add(ppUndoEvent);
         eventPPMenu.add(ppEditEvent);
         eventPPMenu.addSeparator();
         eventPPMenu.add(ppNewEvent);
@@ -222,7 +238,23 @@ public class EventsPanel extends JPanel {
 			public void keyTyped(KeyEvent e){} 
 		});
     }
-
+    void undoEvent_actionPerformed(ActionEvent e) {
+    	//Implementation for undo button for the events section
+        EventDialog dlg = new EventDialog(App.getFrame(), Local.getString("Event"));
+        net.sf.memoranda.Event ev =
+            (net.sf.memoranda.Event) eventsTable.getModel().getValueAt(
+                eventsTable.getSelectedRow(),
+                EventsTable.EVENT);
+       if(dlg.CANCELLED == true)
+        {
+        	this.newEventB_actionPerformed(e);
+        }
+        else
+        {
+        	this.removeEventB_actionPerformed(e);
+        }
+    }
+    
     void editEventB_actionPerformed(ActionEvent e) {
         EventDialog dlg = new EventDialog(App.getFrame(), Local.getString("Event"));
         net.sf.memoranda.Event ev =
@@ -449,6 +481,9 @@ public class EventsPanel extends JPanel {
             }
         }
 
+    }
+    void ppUndoEvent_actionPerformed(ActionEvent e) {
+    	undoEvent_actionPerformed(e);
     }
     void ppEditEvent_actionPerformed(ActionEvent e) {
         editEventB_actionPerformed(e);

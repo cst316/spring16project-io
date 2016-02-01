@@ -59,6 +59,7 @@ public class TaskPanel extends JPanel {
     TaskTable taskTable = new TaskTable();
 	JMenuItem ppEditTask = new JMenuItem();
 	JPopupMenu taskPPMenu = new JPopupMenu();
+	JMenuItem ppUndo = new JMenuItem();
 	JMenuItem ppRemoveTask = new JMenuItem();
 	JMenuItem ppNewTask = new JMenuItem();
 	JMenuItem ppCompleteTask = new JMenuItem();
@@ -274,6 +275,18 @@ public class TaskPanel extends JPanel {
         });
     ppRemoveTask.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_remove.png")));
     ppRemoveTask.setEnabled(false);
+    
+    ppUndo.setFont(new java.awt.Font("Dialog", 1, 11));
+    ppUndo.setText(Local.getString("Undo Task"));
+    ppUndo.addActionListener(new java.awt.event.ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+    		ppUndo_actionPerformed(e);
+    	}
+    });
+    ppUndo.setEnabled(true);
+    //image taken from http://findicons.com/icon/219162/undo?id=398871
+    ppUndo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
+    
     ppNewTask.setFont(new java.awt.Font("Dialog", 1, 11));
     ppNewTask.setText(Local.getString("New task")+"...");
     ppNewTask.addActionListener(new java.awt.event.ActionListener() {
@@ -377,6 +390,7 @@ public class TaskPanel extends JPanel {
                 editTaskB.setEnabled(enbl);ppEditTask.setEnabled(enbl);
                 removeTaskB.setEnabled(enbl);ppRemoveTask.setEnabled(enbl);
 				
+                ppUndo.setEnabled(enbl);
 				ppCompleteTask.setEnabled(enbl);
 				completeTaskB.setEnabled(enbl);
 
@@ -407,6 +421,7 @@ public class TaskPanel extends JPanel {
                 }
             }
         });
+        ppUndo.setEnabled(true);
         editTaskB.setEnabled(false);
         removeTaskB.setEnabled(false);
 		completeTaskB.setEnabled(false);
@@ -415,6 +430,7 @@ public class TaskPanel extends JPanel {
 		ppAddSubTask.setEnabled(false);
 		//ppSubTasks.setEnabled(false);
 		//ppParentTask.setEnabled(false);
+    taskPPMenu.add(ppUndo);
     taskPPMenu.add(ppEditTask);
     
     taskPPMenu.addSeparator();
@@ -702,6 +718,10 @@ public class TaskPanel extends JPanel {
         parentPanel.updateIndicators();
         //taskTable.updateUI();
 
+    }
+    
+    void ppUndo_actionPerformed(ActionEvent e) {
+    	this.ppRemoveTask_actionPerformed(e);
     }
 
 	void ppCompleteTask_actionPerformed(ActionEvent e) {
