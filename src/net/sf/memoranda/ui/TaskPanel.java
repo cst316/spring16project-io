@@ -186,7 +186,7 @@ public class TaskPanel extends JPanel {
         undoTaskB.setFocusable(false);
         undoTaskB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ppundoTask_actionPerformed(e);
+                ppUndoTask_actionPerformed(e);
             }
         });
         undoTaskB.setPreferredSize(new Dimension(24, 24));
@@ -379,8 +379,7 @@ public class TaskPanel extends JPanel {
 				
 				ppCompleteTask.setEnabled(enbl);
 				completeTaskB.setEnabled(enbl);
-				undoTaskB.setEnabled(enbl);
-				
+
 				ppAddSubTask.setEnabled(enbl);
 				//ppSubTasks.setEnabled(enbl); // default value to be over-written later depending on whether it has sub tasks
 				ppCalcTask.setEnabled(enbl); // default value to be over-written later depending on whether it has sub tasks
@@ -718,13 +717,17 @@ public class TaskPanel extends JPanel {
 			Task t = (Task)tocomplete.get(i);
 			t.setProgress(100);
 		}
+		undoTaskB.setEnabled(true);
+		completeTaskB.setVisible(false);
+		undoTaskB.setVisible(true);
+		
 		taskTable.tableChanged();
 		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
 		parentPanel.updateIndicators();
 		//taskTable.updateUI();
 	}
 	
-	void ppundoTask_actionPerformed(ActionEvent e) {
+	void ppUndoTask_actionPerformed(ActionEvent e) {
 		String msg;
 		Vector tocomplete = new Vector();
 		for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
@@ -738,6 +741,10 @@ public class TaskPanel extends JPanel {
 			Task t = (Task)tocomplete.get(i);
 			t.setProgress(0);
 		}
+		
+		completeTaskB.setVisible(true);
+		undoTaskB.setVisible(false);
+		
 		taskTable.tableChanged();
 		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
 		parentPanel.updateIndicators();
