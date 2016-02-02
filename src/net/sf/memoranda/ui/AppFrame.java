@@ -279,6 +279,7 @@ public class AppFrame extends JFrame {
                 + App.BUILD_INFO + " )");
 
         jMenuFile.setText(Local.getString("File"));
+        	jMenuFile.setMnemonic(KeyEvent.VK_F);	//Creating hot key mnemonic
         jMenuFileExit.setText(Local.getString("Exit"));
         jMenuFileExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -286,7 +287,7 @@ public class AppFrame extends JFrame {
             }
         });
         jMenuHelp.setText(Local.getString("Help"));
-        
+        	jMenuHelp.setMnemonic(KeyEvent.VK_H);	//Creating hot key mnemonic
         jMenuHelpGuide.setText(Local.getString("Online user's guide"));
         jMenuHelpGuide.setIcon(new ImageIcon(AppFrame.class.getResource(
                 "resources/icons/help.png")));
@@ -353,7 +354,7 @@ public class AppFrame extends JFrame {
                 InputEvent.ALT_MASK));
 
         jMenuEdit.setText(Local.getString("Edit"));
-
+        	jMenuEdit.setMnemonic(KeyEvent.VK_E);	//Creating hot key mnemonic
         jMenuEditUndo.setText(Local.getString("Undo"));
         jMenuEditUndo.setToolTipText(Local.getString("Undo"));
         jMenuEditRedo.setText(Local.getString("Redo"));
@@ -373,7 +374,7 @@ public class AppFrame extends JFrame {
         jMenuEditPref.setText(Local.getString("Preferences") + "...");
 
         jMenuInsert.setText(Local.getString("Insert"));
-
+        	jMenuInsert.setMnemonic(KeyEvent.VK_I);		//Creating hot key mnemonic
         jMenuInsertImage.setText(Local.getString("Image") + "...");
         jMenuInsertImage.setToolTipText(Local.getString("Insert Image"));
         jMenuInsertTable.setText(Local.getString("Table") + "...");
@@ -400,6 +401,7 @@ public class AppFrame extends JFrame {
         jMenuInsertFile.setText(Local.getString("File") + "...");
 
         jMenuFormat.setText(Local.getString("Format"));
+        	jMenuFormat.setMnemonic(KeyEvent.VK_F);		//Creating hot key mnemonic
         jMenuFormatPStyle.setText(Local.getString("Paragraph style"));
         jMenuFormatP.setText(Local.getString("Paragraph"));
         jMenuFormatH1.setText(Local.getString("Header") + " 1");
@@ -441,6 +443,7 @@ public class AppFrame extends JFrame {
                 "Object properties"));
 
         jMenuGo.setText(Local.getString("Go"));
+        	jMenuGo.setMnemonic(KeyEvent.VK_G);		//Creating hot key mnemonic
         jMenuGoHBack.setText(Local.getString("History back"));
         jMenuGoHBack.setToolTipText(Local.getString("History back"));
         jMenuGoFwd.setText(Local.getString("History forward"));
