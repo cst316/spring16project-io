@@ -236,8 +236,7 @@ public class AgendaPanel extends JPanel {
 
 		this.setLayout(borderLayout1);
 		scrollPane.getViewport().setBackground(Color.white);
-
-		scrollPane.getViewport().add(viewer, null);
+		scrollPane.setViewportView(viewer);
 		this.add(scrollPane, BorderLayout.CENTER);
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
@@ -297,7 +296,7 @@ public class AgendaPanel extends JPanel {
 	}
 
 	public void refresh(CalendarDate date) {
-		viewer.setText(AgendaGenerator.getAgenda(date,expandedTasks));
+		viewer.setText("<html><head><title></title>\r\n<style>\r\n    body, td {font: 12pt sans-serif}\r\n    h1 {font:20pt sans-serif; background-color:#E0E0E0; margin-top:0}\r\n    h2 {font:16pt sans-serif; margin-bottom:0}\r\n    li {margin-bottom:5px}\r\n a {color:black; text-decoration:none}\r\n</style></head>\r\n<body><table width=\"100%\" height=\"100%\" border=\"0\" cellpadding=\"4\" cellspacing=\"4\">\r\n<tr>\r\n<td width=\"66%\" valign=\"top\"><h1>Projects and tasks</h1>\r\n<h2><a href=\"memoranda:project#__default\">Default project</a></h2>\r\n<table border=\"0\" width=\"100%\" cellpadding=\"2\" bgcolor=\"#EFEFEF\"><tr><td>Start date: <i>Jan 25, 2016</i>\r\n</td></tr></table>\r\n<p>No actual tasks.</p>\r\n</td><td width=\"34%\" valign=\"top\"><a href=\"memoranda:events\"><h1>Events</h1></a>\r\n<table width=\"100%\" valign=\"top\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"#FFFFF6\">\r\n</table><hr><hr>\r\n<table border=\"0\" cellpadding=\"0\" width=\"100%\">\r\n<!--Original text: \"Importar anotaci\u00EF\u00BF\u00BDn\" -->\r\n<tr><td><a href=\"memoranda:importstickers\"><b>Import Note</b></a></td>\r\n<!-- Original text: \">Exportar anotaci\u00EF\u00BF\u00BDn como .txt\" -->\r\n<td><a href=\"memoranda:exportstickerst\"><b>Export Note as .txt</b></a>\r\n<!-- Original text: \"Exportar anotaci\u00EF\u00BF\u00BDn como .html\" -->\r\n<td><a href=\"memoranda:exportstickersh\"><b>Export Note as .html</b></a></td></tr></table>\r\n<table border=\"0\" cellpadding=\"0\" width=\"100%\">\r\n<tr><td><a href=\"memoranda:addsticker\"><img align=\"left\" width=\"22\" height=\"22\"\r\nsrc=\"file:/C:/Users/Julie/git/spring16project-io/spring16project-io/classes/net/sf/memoranda/ui/resources/agenda/addsticker.gif\" border=\"0\"  hspace=\"0\" vspace=\"0\" alt=\"New sticker\"></a></td>\r\n<td width=\"100%\"><a href=\"memoranda:addsticker\"><b>&nbsp;Add sticker</b></a></td></tr></table>\r\n<hr></td></tr></table></body></html>");
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				if(gotoTask != null) {
