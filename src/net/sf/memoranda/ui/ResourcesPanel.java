@@ -31,6 +31,8 @@ import net.sf.memoranda.util.MimeType;
 import net.sf.memoranda.util.MimeTypesList;
 import net.sf.memoranda.util.Util;
 
+import java.util.Vector;
+
 import java.io.*;
 
 /*$Id: ResourcesPanel.java,v 1.13 2007/03/20 08:22:41 alexeya Exp $*/
@@ -397,7 +399,10 @@ public class ResourcesPanel extends JPanel {
   }
   
   void ppUndo_actionPerformed(ActionEvent e) {
-		 removeResB_actionPerformed(e);
+	  Vector<Resource> undoMostRecentResource = CurrentProject.getResourcesList().getAllResources();
+	    CurrentProject.getResourcesList().removeResource(
+		  ((Resource) resourcesTable.getModel().getValueAt(undoMostRecentResource.size()-1, ResourcesTable._RESOURCE)).getPath());
+	      resourcesTable.tableChanged();
 	 }
   
   void ppRemoveRes_actionPerformed(ActionEvent e) {
