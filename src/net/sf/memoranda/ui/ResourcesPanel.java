@@ -42,9 +42,12 @@ public class ResourcesPanel extends JPanel {
     JButton newResB = new JButton();
     ResourcesTable resourcesTable = new ResourcesTable();
     JButton removeResB = new JButton();
+    //Undo button for the toolbar
+    JButton resourceToUndo = new JButton();
     JScrollPane scrollPane = new JScrollPane();
     JButton refreshB = new JButton();
   JPopupMenu resPPMenu = new JPopupMenu();
+  //Undo button for the popup menu
   JMenuItem ppUndo = new JMenuItem();
   JMenuItem ppRun = new JMenuItem();
   JMenuItem ppRemoveRes = new JMenuItem();
@@ -127,7 +130,26 @@ public class ResourcesPanel extends JPanel {
         refreshB.setEnabled(true);
         refreshB.setIcon(
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/refreshres.png")));
+        
+        //Layout and listener for undo button in toolbar
+        resourceToUndo.setBorderPainted(false);
+        resourceToUndo.setFocusable(true);
+        resourceToUndo.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ppUndo_actionPerformed(e);
+        	}
+        });
+        resourceToUndo.setPreferredSize(new Dimension(24, 24));
+        resourceToUndo.setRequestFocusEnabled(true);
+        resourceToUndo.setToolTipText(Local.getString("Undo a Task"));
+        resourceToUndo.setMinimumSize(new Dimension(24, 24));
+        resourceToUndo.setMaximumSize(new Dimension(24, 24));
+        //image taken from http://findicons.com/icon/219162/undo?id=398871
+        resourceToUndo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
+        
         resPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
+        
+        //Layout and event listener for undo in popup menu 
         ppUndo.setFont(new java.awt.Font("Dialog", 1, 11));
         ppUndo.setText(Local.getString("Undo Resource"));
         ppUndo.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +160,7 @@ public class ResourcesPanel extends JPanel {
         ppUndo.setEnabled(true);
         //image taken from http://findicons.com/icon/219162/undo?id=398871
         ppUndo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
+    
     ppRun.setFont(new java.awt.Font("Dialog", 1, 11));
     ppRun.setText(Local.getString("Open resource")+"...");
     ppRun.addActionListener(new java.awt.event.ActionListener() {
@@ -178,10 +201,15 @@ public class ResourcesPanel extends JPanel {
         toolBar.add(removeResB, null);
         toolBar.addSeparator();
         toolBar.add(refreshB, null);
+        //Where the undo button in the toolbar is placed in the GUI
+        toolBar.add(resourceToUndo, null);
         this.add(scrollPane, BorderLayout.CENTER);
         scrollPane.getViewport().add(resourcesTable, null);
         this.add(toolBar, BorderLayout.NORTH);
+    
+    //Where the undo button for the popmenu is placed in the GUI
     resPPMenu.add(ppUndo);
+    
     resPPMenu.add(ppRun);
     resPPMenu.addSeparator();
     resPPMenu.add(ppNewRes);
@@ -398,11 +426,22 @@ public class ResourcesPanel extends JPanel {
                     runBrowser((String) resourcesTable.getValueAt(resourcesTable.getSelectedRow(), 0));
   }
   
+  //What happens when undo in the toolbar or popmenu is clicked
   void ppUndo_actionPerformed(ActionEvent e) {
+	  //Store all resources in a vector
 	  Vector<Resource> undoMostRecentResource = CurrentProject.getResourcesList().getAllResources();
-	    CurrentProject.getResourcesList().removeResource(
+	  //Message pops up if no resources available and undo buttons are clicked
+	  if(undoMostRecentResource.size() == 0)
+	  {
+		  JOptionPane.showMessageDialog(App.getFrame(), Local.getString("No resources to undo!"));
+	  }
+	  else
+	  {
+	  //Performs undo on the resource regardless of whether it is selected or not	  
+	  CurrentProject.getResourcesList().removeResource(
 		  ((Resource) resourcesTable.getModel().getValueAt(undoMostRecentResource.size()-1, ResourcesTable._RESOURCE)).getPath());
-	      resourcesTable.tableChanged();
+	  }
+	  resourcesTable.tableChanged();
 	 }
   
   void ppRemoveRes_actionPerformed(ActionEvent e) {

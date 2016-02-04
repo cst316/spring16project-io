@@ -86,9 +86,6 @@ public class AppFrame extends JFrame {
     JMenu jMenuFormat = new JMenu();
     JMenu jMenuInsert = new JMenu();
     
-    //Instance variables for rightClickUndo()
-    JButton rightClickUndo1 = new JButton();
-    JMenu rightClickMenu = new JMenu();
 
     public WorkPanel workPanel = new WorkPanel();
     HTMLEditor editor = workPanel.dailyItemsPanel.editorPanel.editor;
@@ -118,13 +115,6 @@ public class AppFrame extends JFrame {
             showPreferences();
         }
     };
-    
-    public Action contextMenuAction = new AbstractAction("Right click and undo") {
-        public void actionPerformed(ActionEvent e) {
-            //placeholder
-        	showPreferences();
-        }
-    };  
     
     public Action exportNotesAction =
                 new AbstractAction(Local.getString("Export notes") + "...") {

@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Vector;
 
@@ -29,6 +30,7 @@ import net.sf.memoranda.History;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
+import net.sf.memoranda.Resource;
 import net.sf.memoranda.ResourcesList;
 import net.sf.memoranda.Task;
 import net.sf.memoranda.TaskList;
@@ -52,6 +54,7 @@ public class TaskPanel extends JPanel {
     JButton removeTaskB = new JButton();
     JButton completeTaskB = new JButton();
     JButton undoTaskB = new JButton();
+    JButton taskToUndo = new JButton();
     
 	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 		
@@ -197,8 +200,23 @@ public class TaskPanel extends JPanel {
         undoTaskB.setMaximumSize(new Dimension(24, 24));
         undoTaskB.setIcon(
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_complete.png")));
-
         
+        //Layout and listener for undo button in toolbar
+        taskToUndo.setBorderPainted(false);
+        taskToUndo.setFocusable(true);
+        taskToUndo.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ppUndo_actionPerformed(e);
+        	}
+        });
+        taskToUndo.setPreferredSize(new Dimension(24, 24));
+        taskToUndo.setRequestFocusEnabled(true);
+        taskToUndo.setToolTipText(Local.getString("Undo a Task"));
+        taskToUndo.setMinimumSize(new Dimension(24, 24));
+        taskToUndo.setMaximumSize(new Dimension(24, 24));
+
+        //image taken from http://findicons.com/icon/219162/undo?id=398871
+        taskToUndo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
         
 		// added by rawsushi
 //		showActiveOnly.setBorderPainted(false);
@@ -276,6 +294,7 @@ public class TaskPanel extends JPanel {
     ppRemoveTask.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_remove.png")));
     ppRemoveTask.setEnabled(false);
     
+    //Layout and event listener for undo button in popup menu
     ppUndo.setFont(new java.awt.Font("Dialog", 1, 11));
     ppUndo.setText(Local.getString("Undo Task"));
     ppUndo.addActionListener(new java.awt.event.ActionListener() {
@@ -358,6 +377,8 @@ public class TaskPanel extends JPanel {
         tasksToolBar.add(editTaskB, null);
         tasksToolBar.add(completeTaskB, null);
         tasksToolBar.add(undoTaskB, null);
+        //Determines where the undo button in the toolbar is placed in the GUI
+        tasksToolBar.add(taskToUndo, null);
 
 		//tasksToolBar.add(showActiveOnly, null);
         
@@ -390,7 +411,7 @@ public class TaskPanel extends JPanel {
                 editTaskB.setEnabled(enbl);ppEditTask.setEnabled(enbl);
                 removeTaskB.setEnabled(enbl);ppRemoveTask.setEnabled(enbl);
 				
-                ppUndo.setEnabled(enbl);
+                ppUndo.setEnabled(true);
 				ppCompleteTask.setEnabled(enbl);
 				completeTaskB.setEnabled(enbl);
 
@@ -430,6 +451,7 @@ public class TaskPanel extends JPanel {
 		ppAddSubTask.setEnabled(false);
 		//ppSubTasks.setEnabled(false);
 		//ppParentTask.setEnabled(false);
+    //Where the undo button in the GUI is placed
     taskPPMenu.add(ppUndo);
     taskPPMenu.add(ppEditTask);
     
@@ -720,8 +742,32 @@ public class TaskPanel extends JPanel {
 
     }
     
+    //What happens when undo is clicked in the toolbar or from the popup menu
     void ppUndo_actionPerformed(ActionEvent e) {
-    	this.ppRemoveTask_actionPerformed(e);
+    	//undo is visible all the time
+    	ppUndo.setEnabled(true);
+    	
+    	//All tasks stored in vector
+    	Vector undoTask = new Vector();
+    	for(int i = 0; i < taskTable.getRowCount(); i++)
+    	{
+    	Task task = CurrentProject.getTaskList().getTask(taskTable.getModel()
+    			.getValueAt(i, TaskTable.TASK_ID).toString());
+    	if(task != null)
+    		undoTask.add(task);
+    	}
+    	//If there are no tasks, a message pops up
+    	if(undoTask.size() == 0)
+    	{
+    		JOptionPane.showMessageDialog(App.getFrame(), Local.getString("No tasks to undo!"));
+    	}
+    	else
+    	{
+    	CurrentProject.getTaskList().removeTask((Task)undoTask.get(undoTask.size()-1));
+    	}
+        taskTable.tableChanged();
+        ppUndo.setEnabled(true);
+    	 
     }
 
 	void ppCompleteTask_actionPerformed(ActionEvent e) {

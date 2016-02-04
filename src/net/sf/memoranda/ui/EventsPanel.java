@@ -1,6 +1,7 @@
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -12,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,9 +26,12 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.EventsManager;
 import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.History;
+import net.sf.memoranda.Resource;
+import net.sf.memoranda.Task;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.date.DateListener;
@@ -34,6 +39,7 @@ import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
+import net.sf.memoranda.Event;
 
 /*$Id: EventsPanel.java,v 1.25 2005/02/19 10:06:25 rawsushi Exp $*/
 public class EventsPanel extends JPanel {
@@ -44,10 +50,15 @@ public class EventsPanel extends JPanel {
     JButton newEventB = new JButton();
     JButton editEventB = new JButton();
     JButton removeEventB = new JButton();
+    //Undo button for the toolbar
+    JButton eventToUndo = new JButton();
+    
     JScrollPane scrollPane = new JScrollPane();
     EventsTable eventsTable = new EventsTable();
     JPopupMenu eventPPMenu = new JPopupMenu();
+    //Undo button for the popup menu
     JMenuItem ppUndoEvent = new JMenuItem();
+    
     JMenuItem ppEditEvent = new JMenuItem();
     JMenuItem ppRemoveEvent = new JMenuItem();
     JMenuItem ppNewEvent = new JMenuItem();
@@ -131,13 +142,31 @@ public class EventsPanel extends JPanel {
         removeEventB.setMaximumSize(new Dimension(24, 24));
         removeEventB.setIcon(
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/event_remove.png")));
-
+        
+        //Layout and listener for undo button in toolbar
+        eventToUndo.setBorderPainted(false);
+        eventToUndo.setFocusable(true);
+        eventToUndo.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		//Same functionality as the popup menu undo button
+        		ppUndoEvent_actionPerformed(e);
+        	}
+        });
+        eventToUndo.setPreferredSize(new Dimension(24, 24));
+        eventToUndo.setRequestFocusEnabled(true);
+        eventToUndo.setToolTipText(Local.getString("Undo a Task"));
+        eventToUndo.setMinimumSize(new Dimension(24, 24));
+        eventToUndo.setMaximumSize(new Dimension(24, 24));
+        //image taken from http://findicons.com/icon/219162/undo?id=398871
+        eventToUndo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
+        
         this.setLayout(borderLayout1);
         scrollPane.getViewport().setBackground(Color.white);
         eventsTable.setMaximumSize(new Dimension(32767, 32767));
         eventsTable.setRowHeight(24);
         eventPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
         
+        //Layout and event listener for the popup undo button
         ppUndoEvent.setFont(new java.awt.Font("Dialog", 1, 11));
         ppUndoEvent.setText(Local.getString("Undo Event"));
         ppUndoEvent.addActionListener(new java.awt.event.ActionListener() {
@@ -188,6 +217,8 @@ public class EventsPanel extends JPanel {
         eventsToolBar.add(removeEventB, null);
         eventsToolBar.addSeparator(new Dimension(8, 24));
         eventsToolBar.add(editEventB, null);
+        //Determines where the undo button in the toolbar is placed in the GUI
+        eventsToolBar.add(eventToUndo, null);
 
         this.add(eventsToolBar, BorderLayout.NORTH);
 
@@ -221,6 +252,7 @@ public class EventsPanel extends JPanel {
         });
         editEventB.setEnabled(false);
         removeEventB.setEnabled(false);
+      //Determines where the undo button in the popup menu is placed in the GUI
         eventPPMenu.add(ppUndoEvent);
         eventPPMenu.add(ppEditEvent);
         eventPPMenu.addSeparator();
@@ -239,20 +271,28 @@ public class EventsPanel extends JPanel {
 		});
     }
     void undoEvent_actionPerformed(ActionEvent e) {
-    	//Implementation for undo button for the events section
-        EventDialog dlg = new EventDialog(App.getFrame(), Local.getString("Event"));
-        net.sf.memoranda.Event ev =
-            (net.sf.memoranda.Event) eventsTable.getModel().getValueAt(
-                eventsTable.getSelectedRow(),
-                EventsTable.EVENT);
-       if(dlg.CANCELLED == true)
-        {
-        	this.newEventB_actionPerformed(e);
-        }
-        else
-        {
-        	this.removeEventB_actionPerformed(e);
-        }
+    	//Undo button in the popupmenu is always active
+    	ppUndoEvent.setEnabled(true);
+    	//Stores all events
+    	Vector undoEvent = new Vector();
+    	for(int i = 0; i < eventsTable.getRowCount(); i++)
+    	{
+    	Event event = (Event) eventsTable.getModel().getValueAt(i, EventsTable.EVENT);
+    	if(event != null)
+    		undoEvent.add(event);
+    	}
+    	//If no events are there and undo is clicked, a message pops up saying there is nothing to undo
+    	//otherwise the event to undo is removed and all current events are saved
+    	if(undoEvent.size() == 0)
+    	{
+    		JOptionPane.showMessageDialog(App.getFrame(), Local.getString("No events to undo!"));
+    	}
+    	else
+    	{
+    	EventsManager.removeEvent((Event) undoEvent.get(undoEvent.size()-1));
+    	}
+    	saveEvents(); 
+    	ppUndoEvent.setEnabled(true);
     }
     
     void editEventB_actionPerformed(ActionEvent e) {
