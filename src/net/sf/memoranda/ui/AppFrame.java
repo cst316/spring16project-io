@@ -234,7 +234,7 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuGoToday = new JMenuItem(
             workPanel.dailyItemsPanel.calendar.todayAction);
 
-    JMenuItem jMenuEditPref = new JMenuItem(preferencesAction);
+    JMenuItem jMenuFilePref = new JMenuItem(preferencesAction);
 
     JMenu jMenuInsertSpecial = new JMenu();
     
@@ -271,6 +271,9 @@ public class AppFrame extends JFrame {
         jMenuFile.setText(Local.getString("File"));
         	jMenuFile.setMnemonic(KeyEvent.VK_F);	//Creating hot key mnemonic
         jMenuFileExit.setText(Local.getString("Exit"));
+        	jMenuFileExit.setMnemonic(KeyEvent.VK_X);	//Creating hot key mnemonic
+        	jMenuFileExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4,
+                    InputEvent.CTRL_MASK));
         jMenuFileExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 doExit();
@@ -304,6 +307,7 @@ public class AppFrame extends JFrame {
         });        
         
         jMenuHelpAbout.setText(Local.getString("About Memoranda"));
+        	jMenuHelpAbout.setMnemonic(KeyEvent.VK_A);	//Creating hot key mnemonic
         jMenuHelpAbout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jMenuHelpAbout_actionPerformed(e);
@@ -332,22 +336,28 @@ public class AppFrame extends JFrame {
          });
          */
         jMenuFileNewPrj.setAction(projectsPanel.newProjectAction);
-
+        	jMenuFileNewPrj.setMnemonic(KeyEvent.VK_N);	//Creating hot key mnemonic
         jMenuFileUnpackPrj.setText(Local.getString("Unpack project") + "...");
+        	jMenuFileUnpackPrj.setMnemonic(KeyEvent.VK_U);	//Creating hot key mnemonic
         jMenuFileExportNote.setText(Local.getString("Export current note")
                 + "...");
+        	jMenuFileExportNote.setMnemonic(KeyEvent.VK_E);	//Creating hot key mnemonic
         jMenuFileImportNote.setText(Local.getString("Import one note")
                 + "...");
+        	jMenuFileImportNote.setMnemonic(KeyEvent.VK_I);	//Creating hot key mnemonic
         jMenuFilePackPrj.setText(Local.getString("Pack project") + "...");
+        	jMenuFilePackPrj.setMnemonic(KeyEvent.VK_A);	//Creating hot key mnemonic
         jMenuFileMin.setText(Local.getString("Close the window"));
         jMenuFileMin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10,
-                InputEvent.ALT_MASK));
+                InputEvent.CTRL_MASK));
 
         jMenuEdit.setText(Local.getString("Edit"));
         	jMenuEdit.setMnemonic(KeyEvent.VK_E);	//Creating hot key mnemonic
         jMenuEditUndo.setText(Local.getString("Undo"));
         jMenuEditUndo.setToolTipText(Local.getString("Undo"));
+        	//jMenuEditUndo.setMnemonic(KeyEvent.VK_U);	//Creating hot key mnemonic
         jMenuEditRedo.setText(Local.getString("Redo"));
+        	//jMenuEditRedo.setMnemonic(KeyEvent.VK_R);	//Creating hot key mnemonic
         jMenuEditRedo.setToolTipText(Local.getString("Redo"));
         jMenuEditCut.setText(Local.getString("Cut"));
         jMenuEditCut.setToolTipText(Local.getString("Cut"));
@@ -361,7 +371,8 @@ public class AppFrame extends JFrame {
 
         jMenuEditFind.setText(Local.getString("Find & replace") + "...");
 
-        jMenuEditPref.setText(Local.getString("Preferences") + "...");
+        jMenuFilePref.setText(Local.getString("Preferences") + "...");
+        	jMenuFilePref.setMnemonic(KeyEvent.VK_P);	//Creating hot key mnemonic
 
         jMenuInsert.setText(Local.getString("Insert"));
         	jMenuInsert.setMnemonic(KeyEvent.VK_I);		//Creating hot key mnemonic
@@ -460,7 +471,7 @@ public class AppFrame extends JFrame {
         jMenuFile.add(jMenuFileImportNote);
         jMenuFile.add(jMenuFileImportPrj);
         jMenuFile.addSeparator();
-        jMenuFile.add(jMenuEditPref);
+        jMenuFile.add(jMenuFilePref);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFileMin);
         jMenuFile.addSeparator();
