@@ -502,6 +502,7 @@ public class PreferencesDialog extends JDialog {
 		//added tab for Language Option
 		tabbedPanel.add(languagePanel, Local.getString("Language Options"));
 		languagePanel.setLayout(null);
+		rdbtnEnglish.setSelected(true);
 		rdbtnEnglish.setBounds(164, 109, 123, 57);
 		languagePanel.add(rdbtnEnglish);
 		rdbtnSpanish.setBounds(164, 162, 134, 57);
