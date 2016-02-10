@@ -142,6 +142,7 @@ public class PreferencesDialog extends JDialog {
 	JLabel baseFontSizeLabel = new JLabel();
 	private final JRadioButton rdbtnEnglish = new JRadioButton("English");
 	private final JRadioButton rdbtnSpanish = new JRadioButton("Spanish");
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	public PreferencesDialog(Frame frame) {
 		super(frame, Local.getString("Preferences"), true);
@@ -502,9 +503,11 @@ public class PreferencesDialog extends JDialog {
 		//added tab for Language Option
 		tabbedPanel.add(languagePanel, Local.getString("Language Options"));
 		languagePanel.setLayout(null);
+		buttonGroup.add(rdbtnEnglish);
 		rdbtnEnglish.setSelected(true);
 		rdbtnEnglish.setBounds(164, 109, 123, 57);
 		languagePanel.add(rdbtnEnglish);
+		buttonGroup.add(rdbtnSpanish);
 		rdbtnSpanish.setBounds(164, 162, 134, 57);
 		languagePanel.add(rdbtnSpanish);
 		
