@@ -142,8 +142,6 @@ public class PreferencesDialog extends JDialog {
 	JLabel baseFontSizeLabel = new JLabel();
 	private final JRadioButton rdbtnEnglish = new JRadioButton("English");
 	private final JRadioButton rdbtnSpanish = new JRadioButton("Spanish");
-	private final JTextField txtSelectLanguage = new JTextField();
-	private final JLabel label = new JLabel("");
 
 	public PreferencesDialog(Frame frame) {
 		super(frame, Local.getString("Preferences"), true);
@@ -156,9 +154,6 @@ public class PreferencesDialog extends JDialog {
 
 	public PreferencesDialog() {
 		this(null);
-		txtSelectLanguage.setBackground(UIManager.getColor("Button.background"));
-		txtSelectLanguage.setText("Select Language");
-		txtSelectLanguage.setColumns(10);
 		//this(null);
 	}
 
@@ -506,39 +501,15 @@ public class PreferencesDialog extends JDialog {
 		tabbedPanel.add(editorConfigPanel, Local.getString("Editor"));
 		//added tab for Language Option
 		tabbedPanel.add(languagePanel, Local.getString("Language Options"));
-		GridBagLayout gbl_languagePanel = new GridBagLayout();
-		gbl_languagePanel.columnWidths = new int[]{219, 219, 0};
-		gbl_languagePanel.rowHeights = new int[]{217, 217, 0};
-		gbl_languagePanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_languagePanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		languagePanel.setLayout(gbl_languagePanel);
+		languagePanel.setLayout(null);
+		rdbtnEnglish.setBounds(164, 109, 123, 57);
+		languagePanel.add(rdbtnEnglish);
+		rdbtnSpanish.setBounds(164, 162, 134, 57);
+		languagePanel.add(rdbtnSpanish);
 		
-		GridBagConstraints gbc_txtSelectLanguage = new GridBagConstraints();
-		gbc_txtSelectLanguage.fill = GridBagConstraints.BOTH;
-		gbc_txtSelectLanguage.insets = new Insets(0, 0, 5, 5);
-		gbc_txtSelectLanguage.gridx = 0;
-		gbc_txtSelectLanguage.gridy = 0;
-		languagePanel.add(txtSelectLanguage, gbc_txtSelectLanguage);
-		
-		GridBagConstraints gbc_rdbtnEnglish = new GridBagConstraints();
-		gbc_rdbtnEnglish.fill = GridBagConstraints.BOTH;
-		gbc_rdbtnEnglish.insets = new Insets(0, 0, 5, 0);
-		gbc_rdbtnEnglish.gridx = 1;
-		gbc_rdbtnEnglish.gridy = 0;
-		languagePanel.add(rdbtnEnglish, gbc_rdbtnEnglish);
-		
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.fill = GridBagConstraints.BOTH;
-		gbc_label.insets = new Insets(0, 0, 0, 5);
-		gbc_label.gridx = 0;
-		gbc_label.gridy = 1;
-		languagePanel.add(label, gbc_label);
-		
-		GridBagConstraints gbc_rdbtnSpanish = new GridBagConstraints();
-		gbc_rdbtnSpanish.fill = GridBagConstraints.BOTH;
-		gbc_rdbtnSpanish.gridx = 1;
-		gbc_rdbtnSpanish.gridy = 1;
-		languagePanel.add(rdbtnSpanish, gbc_rdbtnSpanish);
+		JLabel lblSelectLanguage = new JLabel("Select Language:");
+		lblSelectLanguage.setBounds(148, 73, 123, 16);
+		languagePanel.add(lblSelectLanguage);
 
 		// Build TopPanel
 		topPanel.add(tabbedPanel, BorderLayout.CENTER);
