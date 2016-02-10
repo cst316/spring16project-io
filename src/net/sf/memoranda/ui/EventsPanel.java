@@ -52,13 +52,15 @@ public class EventsPanel extends JPanel {
     JButton removeEventB = new JButton();
     //Undo button for the toolbar
     JButton eventToUndo = new JButton();
+    JButton eventToRedo = new JButton();
     
     JScrollPane scrollPane = new JScrollPane();
     EventsTable eventsTable = new EventsTable();
     JPopupMenu eventPPMenu = new JPopupMenu();
     //Undo button for the popup menu
     JMenuItem ppUndoEvent = new JMenuItem();
-    
+    //Redo button for the popup menu
+    JMenuItem ppRedoEvent = new JMenuItem();
     JMenuItem ppEditEvent = new JMenuItem();
     JMenuItem ppRemoveEvent = new JMenuItem();
     JMenuItem ppNewEvent = new JMenuItem();
@@ -154,11 +156,29 @@ public class EventsPanel extends JPanel {
         });
         eventToUndo.setPreferredSize(new Dimension(24, 24));
         eventToUndo.setRequestFocusEnabled(true);
-        eventToUndo.setToolTipText(Local.getString("Undo a Task"));
+        eventToUndo.setToolTipText(Local.getString("Undo an event"));
         eventToUndo.setMinimumSize(new Dimension(24, 24));
         eventToUndo.setMaximumSize(new Dimension(24, 24));
         //image taken from http://findicons.com/icon/219162/undo?id=398871
         eventToUndo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
+        
+      //Layout and listener for redo button in toolbar
+        eventToRedo.setBorderPainted(false);
+        eventToRedo.setFocusable(true);
+        eventToRedo.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		//Same functionality as the popup menu undo button
+        		ppRedo_actionPerformed(e);
+        	}
+        });
+        eventToRedo.setPreferredSize(new Dimension(24, 24));
+        eventToRedo.setRequestFocusEnabled(true);
+        eventToRedo.setToolTipText(Local.getString("Redo an event"));
+        eventToRedo.setMinimumSize(new Dimension(24, 24));
+        eventToRedo.setMaximumSize(new Dimension(24, 24));
+        //image taken from http://findicons.com/icon/219182/redo?id=219350
+        eventToRedo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_redo.png")));
+        
         
         this.setLayout(borderLayout1);
         scrollPane.getViewport().setBackground(Color.white);
@@ -177,6 +197,18 @@ public class EventsPanel extends JPanel {
         ppUndoEvent.setEnabled(true);
         //image taken from http://findicons.com/icon/219162/undo?id=398871
         ppUndoEvent.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
+        
+        //Layout and event listener for the popup redo button
+        ppRedoEvent.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppRedoEvent.setText(Local.getString("Redo Event"));
+        ppRedoEvent.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ppRedo_actionPerformed(e);
+        	}
+        });
+        ppRedoEvent.setEnabled(true);
+        //http://findicons.com/icon/219182/redo?id=219350
+        ppRedoEvent.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_redo.png")));
         
         ppEditEvent.setFont(new java.awt.Font("Dialog", 1, 11));
         ppEditEvent.setText(Local.getString("Edit event") + "...");
@@ -219,6 +251,8 @@ public class EventsPanel extends JPanel {
         eventsToolBar.add(editEventB, null);
         //Determines where the undo button in the toolbar is placed in the GUI
         eventsToolBar.add(eventToUndo, null);
+        //Determines where the redo button in the toolbar is placed in the GUI
+        eventsToolBar.add(eventToRedo, null);
 
         this.add(eventsToolBar, BorderLayout.NORTH);
 
@@ -254,6 +288,7 @@ public class EventsPanel extends JPanel {
         removeEventB.setEnabled(false);
       //Determines where the undo button in the popup menu is placed in the GUI
         eventPPMenu.add(ppUndoEvent);
+        eventPPMenu.add(ppRedoEvent);
         eventPPMenu.add(ppEditEvent);
         eventPPMenu.addSeparator();
         eventPPMenu.add(ppNewEvent);
@@ -293,6 +328,35 @@ public class EventsPanel extends JPanel {
     	}
     	saveEvents(); 
     	ppUndoEvent.setEnabled(true);
+    }
+    
+    void ppRedo_actionPerformed(ActionEvent e) {
+		JOptionPane.showMessageDialog(App.getFrame(), Local.getString("Working on it :)!"));	 
+}
+    
+    void redoEvent_actionPerformed(ActionEvent e) {
+    	//Redo button in the popupmenu is always active
+    	ppRedoEvent.setEnabled(true);
+    	//Stores all events
+    	Vector undoEvent = new Vector();
+    	for(int i = 0; i < eventsTable.getRowCount(); i++)
+    	{
+    	Event event = (Event) eventsTable.getModel().getValueAt(i, EventsTable.EVENT);
+    	if(event != null)
+    		undoEvent.add(event);
+    	}
+    	//If no events are there and undo is clicked, a message pops up saying there is nothing to redo
+    	//otherwise the event to redo is removed and all current events are saved
+    	if(undoEvent.size() == 0)
+    	{
+    		JOptionPane.showMessageDialog(App.getFrame(), Local.getString("No events to redo!"));
+    	}
+    	else
+    	{
+    	   //EventsManager.createDay((Event) undoEvent.get(undoEvent.size()-1));
+    	}
+    	saveEvents(); 
+    	ppRedoEvent.setEnabled(true);
     }
     
     void editEventB_actionPerformed(ActionEvent e) {
