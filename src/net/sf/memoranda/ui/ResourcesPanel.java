@@ -44,15 +44,13 @@ public class ResourcesPanel extends JPanel {
     JButton removeResB = new JButton();
     //Undo button for the toolbar
     JButton resourceToUndo = new JButton();
-    //Redo button for the toolbar
-    JButton resourceToRedo = new JButton();
+    //Resource button help for the toolbar
+    JButton resourceButtonHelp = new JButton();
     JScrollPane scrollPane = new JScrollPane();
     JButton refreshB = new JButton();
   JPopupMenu resPPMenu = new JPopupMenu();
   //Undo button for the popup menu
   JMenuItem ppUndo = new JMenuItem();
-  //Redo button for the popup menu
-  JMenuItem ppRedo = new JMenuItem();
   JMenuItem ppRun = new JMenuItem();
   JMenuItem ppRemoveRes = new JMenuItem();
   JMenuItem ppNewRes = new JMenuItem();
@@ -151,21 +149,20 @@ public class ResourcesPanel extends JPanel {
         //image taken from http://findicons.com/icon/219162/undo?id=398871
         resourceToUndo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
         
-      //Layout and listener for redo button in toolbar
-        resourceToRedo.setBorderPainted(false);
-        resourceToRedo.setFocusable(true);
-        resourceToRedo.addActionListener(new java.awt.event.ActionListener() {
+      //Layout and listener for resourceButtonHelp button in toolbar
+        resourceButtonHelp.setBorderPainted(false);
+        resourceButtonHelp.setFocusable(true);
+        resourceButtonHelp.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		ppRedo_actionPerformed(e);
         	}
         });
-        resourceToRedo.setPreferredSize(new Dimension(24, 24));
-        resourceToRedo.setRequestFocusEnabled(true);
-        resourceToRedo.setToolTipText(Local.getString("Redo a Resource"));
-        resourceToRedo.setMinimumSize(new Dimension(24, 24));
-        resourceToRedo.setMaximumSize(new Dimension(24, 24));
-        //image taken from //http://findicons.com/icon/219182/redo?id=219350
-        resourceToRedo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_redo.png")));
+        resourceButtonHelp.setPreferredSize(new Dimension(24, 24));
+        resourceButtonHelp.setRequestFocusEnabled(true);
+        resourceButtonHelp.setToolTipText(Local.getString("Resource button help"));
+        resourceButtonHelp.setMinimumSize(new Dimension(24, 24));
+        resourceButtonHelp.setMaximumSize(new Dimension(24, 24));
+        resourceButtonHelp.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/help.png")));
         
         resPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
         
@@ -181,18 +178,6 @@ public class ResourcesPanel extends JPanel {
         //image taken from http://findicons.com/icon/219162/undo?id=398871
         ppUndo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_undo.png")));
     
-        //Layout and event listener for redo in popup menu 
-        ppRedo.setFont(new java.awt.Font("Dialog", 1, 11));
-        ppRedo.setText(Local.getString("Redo Resource"));
-        ppRedo.addActionListener(new java.awt.event.ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		ppRedo_actionPerformed(e);
-        	}
-        });
-        ppRedo.setEnabled(true);
-      //image taken from //http://findicons.com/icon/219182/redo?id=219350
-        ppRedo.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/events_redo.png")));
-        
     ppRun.setFont(new java.awt.Font("Dialog", 1, 11));
     ppRun.setText(Local.getString("Open resource")+"...");
     ppRun.addActionListener(new java.awt.event.ActionListener() {
@@ -235,16 +220,14 @@ public class ResourcesPanel extends JPanel {
         toolBar.add(refreshB, null);
         //Where the undo button in the toolbar is placed in the GUI
         toolBar.add(resourceToUndo, null);
-        //Where the redo button in the toolbar is placed in the GUI
-        toolBar.add(resourceToRedo, null);
+        //Where the resourceButtonHelp button in the toolbar is placed in the GUI
+        toolBar.add(resourceButtonHelp, null);
         this.add(scrollPane, BorderLayout.CENTER);
         scrollPane.getViewport().add(resourcesTable, null);
         this.add(toolBar, BorderLayout.NORTH);
     
     //Where the undo button for the popmenu is placed in the GUI
     resPPMenu.add(ppUndo);
-    //Where the redo button for the popmenu is placed in the GUI
-    resPPMenu.add(ppRedo);
     resPPMenu.add(ppRun);
     resPPMenu.addSeparator();
     resPPMenu.add(ppNewRes);
@@ -472,14 +455,20 @@ public class ResourcesPanel extends JPanel {
 	  }
 	  else
 	  {
-	  //Performs undo on the resource regardless of whether it is selected or not	  
+	  //Performs undo on the resource regardless of whether it is selected or not
 	  CurrentProject.getResourcesList().removeResource(
 		  ((Resource) resourcesTable.getModel().getValueAt(undoMostRecentResource.size()-1, ResourcesTable._RESOURCE)).getPath());
 	  }
 	  resourcesTable.tableChanged();
 	 }
   void ppRedo_actionPerformed(ActionEvent e) {
-		JOptionPane.showMessageDialog(App.getFrame(), Local.getString("Working on it :)!"));	 
+      AddResourceButtonHelpDialog dlg = new AddResourceButtonHelpDialog(App.getFrame(), Local.getString("Resource button help"));
+      Dimension frmSize = App.getFrame().getSize();
+      Point loc = App.getFrame().getLocation();
+      dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+      dlg.setVisible(true);
+      if (dlg.OK)
+          return;
 }
   
   void ppRemoveRes_actionPerformed(ActionEvent e) {
