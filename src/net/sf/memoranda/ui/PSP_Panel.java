@@ -16,6 +16,7 @@ import java.awt.Rectangle;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.SystemColor;
 
 public class PSP_Panel extends JPanel {
 	private JLabel lblNewProject;
@@ -32,6 +33,10 @@ public class PSP_Panel extends JPanel {
 		}
 	}
 	
+	public PSP_Panel (String pid) {
+		
+	}
+	
 	void jbInit() throws Exception {
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
@@ -39,7 +44,7 @@ public class PSP_Panel extends JPanel {
 		toolBar = new JToolBar();
 		toolBar.setOrientation(SwingConstants.VERTICAL);
 		toolBar.setBorder(null);
-		toolBar.setBackground(Color.LIGHT_GRAY);
+		toolBar.setBackground(SystemColor.controlHighlight);
 		add(toolBar, BorderLayout.WEST);
 		
 		lblNewProject = new JLabel("New Project");
@@ -90,12 +95,15 @@ public class PSP_Panel extends JPanel {
 	
 	private void newProject_Mouse (String event) {
 		if (event.equals("CLICKED")) {
+			App.getFrame().setEnabled(false);
+			System.out.println("Is it enabled: " + App.getFrame().isEnabled());
 			pnlWizard.setVisible(true);	
 			toolBar.setVisible (false);
+			(new PSP_NPWizardFrame()).setVisible(true);
 		} else if (event.equals("ENTERED")) {
-			lblNewProject.setBackground(Color.GRAY);
-		} else if (event.equals("EXITED")) {
 			lblNewProject.setBackground(Color.WHITE);
+		} else if (event.equals("EXITED")) {
+			lblNewProject.setBackground(Color.RED);
 		}
 	}
 }
