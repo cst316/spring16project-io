@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
+import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
 
 public class PSP_PlanningWizardFrame extends JFrame {
 
@@ -35,6 +37,8 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private PSP_NPWizardFrame goBack;
 	
 	static JFrame pwf = null;
+	private JTextField textField;
+	private JTextField txtModuleSize;
 	
 	/**
 	 * Create the frame.
@@ -124,7 +128,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				buttonAction_Clicked ("BACK");
 			}
 		});
-		button.setBounds(12, 525, 117, 25);
+		button.setBounds(12, 525, 100, 25);
 		contentPane.add(button);
 		
 		JButton btnFinish = new JButton("Finish");
@@ -133,7 +137,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				buttonAction_Clicked ("FINISH");
 			}
 		});
-		btnFinish.setBounds(369, 528, 117, 25);
+		btnFinish.setBounds(390, 525, 100, 25);
 		contentPane.add(btnFinish);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -142,7 +146,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				buttonAction_Clicked ("CANCEL");
 			}
 		});
-		btnCancel.setBounds(180, 525, 117, 25);
+		btnCancel.setBounds(200, 525, 100, 25);
 		contentPane.add(btnCancel);
 		
 		JLabel lblProjectId = new JLabel("Project ID:");
@@ -159,6 +163,52 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		lblNewLabel.setBounds(0, 0, 80, 25);
 		panel_2.add(lblNewLabel);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 330, 480, 175);
+		contentPane.add(scrollPane);
+		
+		JPanel panel_1 = new JPanel();
+		scrollPane.setViewportView(panel_1);
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setLayout(null);
+		
+		JLabel lblModule = new JLabel("MODULE");
+		lblModule.setBounds(205, 5, 70, 25);
+		panel_1.add(lblModule);
+		
+		JLabel lblDescription = new JLabel("Description");
+		lblDescription.setBounds(10, 35, 85, 25);
+		panel_1.add(lblDescription);
+		
+		JLabel lblSize = new JLabel("Size");
+		lblSize.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSize.setBounds(315, 35, 80, 25);
+		panel_1.add(lblSize);
+		
+		textField = new JTextField();
+		textField.setBounds(10, 60, 275, 25);
+		panel_1.add(textField);
+		textField.setColumns(10);
+		
+		txtModuleSize = new JTextField();
+		txtModuleSize.setBounds(315, 60, 80, 25);
+		panel_1.add(txtModuleSize);
+		txtModuleSize.setColumns(10);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBorder(null);
+		panel_3.setBackground(Color.WHITE);
+		panel_3.setBounds(430, 60, 35, 25);
+		panel_1.add(panel_3);
+		panel_3.setLayout(null);
+		
+		JButton btnModuleAdd = new JButton("");
+		btnModuleAdd.setBorder(null);
+		btnModuleAdd.setBackground(Color.WHITE);
+		btnModuleAdd.setBounds(0, 0, 25, 25);
+		btnModuleAdd.setIcon(new ImageIcon(PSP_PlanningWizardFrame.class.getResource("/net/sf/memoranda/ui/resources/icons/plus.png")));
+		panel_3.add(btnModuleAdd);
 		
 
 		setResizable (false);

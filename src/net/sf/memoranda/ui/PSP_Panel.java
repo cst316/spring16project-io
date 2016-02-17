@@ -96,7 +96,6 @@ public class PSP_Panel extends JPanel {
 	private void newProject_Mouse (String event) {
 		if (event.equals("CLICKED")) {
 			App.getFrame().setEnabled(false);
-			System.out.println("Is it enabled: " + App.getFrame().isEnabled());
 			pnlWizard.setVisible(true);	
 			toolBar.setVisible (false);
 			(new PSP_NPWizardFrame()).setVisible(true);
