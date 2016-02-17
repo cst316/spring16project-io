@@ -141,7 +141,7 @@ public class PSP_NPWizardFrame extends JFrame {
 		int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);
 		
 		if (confirm == JOptionPane.YES_OPTION) {
-			if (PSP_PlanningWizardFrame.pwf == null)
+			if (PSP_PlanningWizardFrame.pwf != null)
 				PSP_PlanningWizardFrame.pwf.dispose();
 			this.dispose();
 			App.getFrame().setEnabled(true);
