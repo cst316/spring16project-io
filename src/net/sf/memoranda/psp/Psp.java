@@ -4,7 +4,7 @@ import net.sf.memoranda.date.CurrentDate;
 
 public interface Psp {
 	
-	final int pID = 1;
+	final static int pID = 1;
 
 	public CurrentDate getStDate();
 	public void setStDate(CurrentDate stDate);
