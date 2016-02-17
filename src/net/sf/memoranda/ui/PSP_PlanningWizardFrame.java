@@ -37,8 +37,12 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private PSP_NPWizardFrame goBack;
 	
 	static JFrame pwf = null;
-	private JTextField textField;
+	private JTextField txtDescription;
 	private JTextField txtModuleSize;
+	private JButton btnAddModule;
+	private JPanel pnlFilesAdd;
+	private JLabel lblFilename;
+	private JTextField txtFilePath;
 	
 	/**
 	 * Create the frame.
@@ -82,7 +86,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 50, 475, 150);
+		panel.setBounds(10, 40, 475, 160);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -150,12 +154,12 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		contentPane.add(btnCancel);
 		
 		JLabel lblProjectId = new JLabel("Project ID:");
-		lblProjectId.setBounds(300, 10, 85, 25);
+		lblProjectId.setBounds(300, 5, 85, 25);
 		contentPane.add(lblProjectId);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_2.setBounds(400, 10, 80, 25);
+		panel_2.setBounds(400, 5, 80, 25);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -169,6 +173,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		contentPane.add(scrollPane);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(null);
 		scrollPane.setViewportView(panel_1);
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setLayout(null);
@@ -186,30 +191,68 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		lblSize.setBounds(315, 35, 80, 25);
 		panel_1.add(lblSize);
 		
-		textField = new JTextField();
-		textField.setBounds(10, 60, 275, 25);
-		panel_1.add(textField);
-		textField.setColumns(10);
+		JPanel pnlModules = new JPanel();
+		pnlModules.setBorder(null);
+		pnlModules.setBackground(Color.WHITE);
+		pnlModules.setBounds(10, 60, 450, 25);
+		panel_1.add(pnlModules);
+		pnlModules.setLayout(null);
+		
+		btnAddModule = new JButton("");
+		btnAddModule.setBorder(null);
+		btnAddModule.setBounds(425, 0, 25, 25);
+		pnlModules.add(btnAddModule);
+		btnAddModule.setBackground(new Color(255, 255, 255));
+		btnAddModule.setIcon(new ImageIcon(PSP_PlanningWizardFrame.class.getResource("/net/sf/memoranda/ui/resources/icons/plus.png")));
+		
+		txtDescription = new JTextField();
+		txtDescription.setBounds(0, 0, 275, 25);
+		pnlModules.add(txtDescription);
+		txtDescription.setColumns(10);
 		
 		txtModuleSize = new JTextField();
-		txtModuleSize.setBounds(315, 60, 80, 25);
-		panel_1.add(txtModuleSize);
+		txtModuleSize.setBounds(315, 0, 80, 25);
+		pnlModules.add(txtModuleSize);
 		txtModuleSize.setColumns(10);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 210, 475, 110);
+		contentPane.add(scrollPane_1);
+		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(null);
+		scrollPane_1.setViewportView(panel_3);
 		panel_3.setBackground(Color.WHITE);
-		panel_3.setBounds(430, 60, 35, 25);
-		panel_1.add(panel_3);
 		panel_3.setLayout(null);
 		
-		JButton btnModuleAdd = new JButton("");
-		btnModuleAdd.setBorder(null);
-		btnModuleAdd.setBackground(Color.WHITE);
-		btnModuleAdd.setBounds(0, 0, 25, 25);
-		btnModuleAdd.setIcon(new ImageIcon(PSP_PlanningWizardFrame.class.getResource("/net/sf/memoranda/ui/resources/icons/plus.png")));
-		panel_3.add(btnModuleAdd);
+		JLabel lblFiles = new JLabel("Files");
+		lblFiles.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFiles.setBounds(210, 5, 55, 15);
+		panel_3.add(lblFiles);
 		
+		pnlFilesAdd = new JPanel();
+		pnlFilesAdd.setBorder(null);
+		pnlFilesAdd.setBackground(Color.WHITE);
+		pnlFilesAdd.setBounds(10, 30, 450, 25);
+		panel_3.add(pnlFilesAdd);
+		pnlFilesAdd.setLayout(null);
+		
+		lblFilename = new JLabel("Filename:");
+		lblFilename.setBorder(null);
+		lblFilename.setBackground(Color.WHITE);
+		lblFilename.setBounds(0, 0, 85, 25);
+		pnlFilesAdd.add(lblFilename);
+		
+		txtFilePath = new JTextField();
+		txtFilePath.setBounds(100, 0, 250, 25);
+		pnlFilesAdd.add(txtFilePath);
+		txtFilePath.setColumns(10);
+		
+		JButton btnFileAdd = new JButton("");
+		btnFileAdd.setBackground(Color.WHITE);
+		btnFileAdd.setBorder(null);
+		btnFileAdd.setIcon(new ImageIcon(PSP_PlanningWizardFrame.class.getResource("/net/sf/memoranda/ui/resources/icons/plus.png")));
+		btnFileAdd.setBounds(425, 0, 25, 25);
+		pnlFilesAdd.add(btnFileAdd);
 
 		setResizable (false);
 	}	
