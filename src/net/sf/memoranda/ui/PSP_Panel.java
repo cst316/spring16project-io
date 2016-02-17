@@ -84,7 +84,7 @@ public class PSP_Panel extends JPanel {
 		
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
-		pnlWizard.setBackground(Color.GRAY);
+		//pnlWizard.setBackground(Color.WHITE);
 		add(pnlWizard, BorderLayout.CENTER);
 	}
 	
