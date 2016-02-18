@@ -9,13 +9,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -55,6 +59,7 @@ public class TaskPanel extends JPanel {
     JButton removeTaskB = new JButton();
     JButton completeTaskB = new JButton();
     JButton undoTaskB = new JButton();
+    JButton btnImport = new JButton("Import");
     
 	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 		
@@ -70,6 +75,7 @@ public class TaskPanel extends JPanel {
 	JMenuItem ppAddSubTask = new JMenuItem();
 	JMenuItem ppCalcTask = new JMenuItem();
 	DailyItemsPanel parentPanel = null;
+	
 
     public TaskPanel(DailyItemsPanel _parentPanel) {
         try {
@@ -333,8 +339,7 @@ public class TaskPanel extends JPanel {
 		});
 	ppCalcTask.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_complete.png")));
 	ppCalcTask.setEnabled(false);
-
-    scrollPane.getViewport().add(taskTable, null);
+    scrollPane.setViewportView(taskTable);
         this.add(scrollPane, BorderLayout.CENTER);
         tasksToolBar.add(historyBackB, null);
         tasksToolBar.add(historyForwardB, null);
@@ -354,7 +359,11 @@ public class TaskPanel extends JPanel {
         scrollPane.addMouseListener(ppListener);
         taskTable.addMouseListener(ppListener);
 
-
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                btnImport_actionPerformed(e);
+            }
+        });
 
         CurrentDate.addDateListener(new DateListener() {
             public void dateChange(CalendarDate d) {
@@ -411,6 +420,8 @@ public class TaskPanel extends JPanel {
 		completeTaskB.setEnabled(false);
 		undoTaskB.setVisible(false);
 		undoTaskB.setEnabled(false);
+		
+		tasksToolBar.add(btnImport);
 		ppAddSubTask.setEnabled(false);
 		//ppSubTasks.setEnabled(false);
 		//ppParentTask.setEnabled(false);
@@ -753,6 +764,34 @@ public class TaskPanel extends JPanel {
 		//taskTable.updateUI();
 	}
 	
+	void btnImport_actionPerformed(ActionEvent e)
+	{
+		BufferedImage image = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB);
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		
+		int result = fileChooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) 
+		{
+			File selectedFile = fileChooser.getSelectedFile();
+			System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+			try
+			{
+				if (selectedFile.getName().contains("png"))
+				{
+					ImageIO.write(image, "PNG", selectedFile);
+				}
+				else if (selectedFile.getName().contains(".jpg"))
+				{
+					ImageIO.write(image, "JPEG", selectedFile);
+				}
+			}
+			catch(Exception ex)
+			{
+				throw new RuntimeException("Error saving image, Check image type");
+			}
+		}
+	}
 	
 	
 
@@ -790,6 +829,7 @@ public class TaskPanel extends JPanel {
                 }
 
     }
+    
 
   void ppEditTask_actionPerformed(ActionEvent e) {
     editTaskB_actionPerformed(e);
