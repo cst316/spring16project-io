@@ -17,18 +17,23 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
+
+import net.sf.memoranda.util.Configuration;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
+import javax.swing.ScrollPaneConstants;
 
 public class PSP_PlanningWizardFrame extends JFrame {
 
 	private JPanel contentPane;
-	private String pid;
 	private JTextField txtEstTime;
 	private JTextField txtEstLocHr;
 	private JTextField txtEstSize;
@@ -40,10 +45,20 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private JTextField txtDescription;
 	private JTextField txtModuleSize;
 	private JButton btnAddModule;
-	private JPanel pnlFilesAdd;
+	private JPanel pnlEachFile;
 	private JLabel lblFilename;
 	private JTextField txtFilePath;
 	
+	private ArrayList <JPanel> moduleAdd = new ArrayList <JPanel> ();
+	private ArrayList <JPanel> filesAdd = new ArrayList <JPanel> ();
+	private String pid;
+	private JButton btnFileAdd;
+	private JPanel pnlEachModule;
+	private JPanel pnlModule;
+	private JPanel pnlFiles;
+	private JScrollPane scrollPane_1;
+	private JScrollPane scrollPane;
+		
 	/**
 	 * Create the frame.
 	 */
@@ -68,6 +83,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	}
 	
 	private void jbInit() {
+		setLook ();
 		this.setAlwaysOnTop(true);
 		setTitle("New PSP Project Wizard - Planning");
 		int xsize = 500, ysize = 600;
@@ -168,94 +184,148 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		panel_2.add(lblNewLabel);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 330, 480, 175);
-		contentPane.add(scrollPane);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(null);
-		scrollPane.setViewportView(panel_1);
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setLayout(null);
+		pnlModule = new JPanel();
+		pnlModule.setBounds(10, 330, 480, 190);
+		contentPane.add(pnlModule);
+		pnlModule.setBorder(null);
+		pnlModule.setBackground(Color.WHITE);
+		pnlModule.setLayout(null);
 		
 		JLabel lblModule = new JLabel("MODULE");
 		lblModule.setBounds(205, 5, 70, 25);
-		panel_1.add(lblModule);
+		pnlModule.add(lblModule);
 		
 		JLabel lblDescription = new JLabel("Description");
 		lblDescription.setBounds(10, 35, 85, 25);
-		panel_1.add(lblDescription);
+		pnlModule.add(lblDescription);
 		
 		JLabel lblSize = new JLabel("Size");
 		lblSize.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSize.setBounds(315, 35, 80, 25);
-		panel_1.add(lblSize);
+		pnlModule.add(lblSize);
 		
-		JPanel pnlModules = new JPanel();
-		pnlModules.setBorder(null);
-		pnlModules.setBackground(Color.WHITE);
-		pnlModules.setBounds(10, 60, 450, 25);
-		panel_1.add(pnlModules);
-		pnlModules.setLayout(null);
+		scrollPane = new JScrollPane();
+		scrollPane.setBorder(null);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(10, 60, 450, 125);
+		pnlModule.add(scrollPane);
+		
+		pnlEachModule = new JPanel();
+		scrollPane.setViewportView(pnlEachModule);
+		pnlEachModule.setBorder(null);
+		pnlEachModule.setLayout(null);
+		pnlEachModule.setBackground(Color.WHITE);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 210, 475, 110);
+		contentPane.add(scrollPane_1);
+		
+		pnlFiles = new JPanel();
+		scrollPane_1.setViewportView(pnlFiles);
+		pnlFiles.setBackground(Color.WHITE);
+		pnlFiles.setLayout(null);
+		
+		JLabel lblFiles = new JLabel("Files");
+		lblFiles.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFiles.setBounds(210, 5, 55, 15);
+		pnlFiles.add(lblFiles);
+		
+		pnlEachFile = new JPanel();
+		pnlEachFile.setBorder(null);
+		pnlEachFile.setBackground(Color.WHITE);
+		pnlEachFile.setBounds(10, 30, 450, 25);
+		pnlEachFile.setLayout(null);
+		//filesAdd.add(pnlEachFile);
+		pnlFiles.add(pnlEachFile);//filesAdd.get(0));
+				
+		lblFilename = new JLabel("Filename:");
+		lblFilename.setBorder(null);
+		lblFilename.setBackground(Color.WHITE);
+		lblFilename.setBounds(0, 0, 85, 25);
+		pnlEachFile.add(lblFilename);
+		
+		txtFilePath = new JTextField();
+		txtFilePath.setBounds(100, 0, 250, 25);
+		pnlEachFile.add(txtFilePath);
+		txtFilePath.setColumns(10);
+		
+		btnFileAdd = new JButton("");
+		btnFileAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonAction_Clicked ("ADD_FILE");
+			}
+		});
+		btnFileAdd.setBackground(Color.WHITE);
+		btnFileAdd.setBorder(null);
+		btnFileAdd.setIcon(new ImageIcon(PSP_PlanningWizardFrame.class.getResource("/net/sf/memoranda/ui/resources/icons/plus.png")));
+		btnFileAdd.setBounds(425, 0, 25, 25);
+		pnlEachFile.add(btnFileAdd);
+
+		setResizable (false);
+	}
+	
+	private void addPnlFiles () {
+		int width = pnlEachModule.getWidth();
+		int height = pnlEachModule.getHeight();
+		int x = pnlEachModule.getX();
+		int y = pnlEachModule.getY() + height + 5;
+		
+		pnlEachFile.setBounds(x, y, width, height);
+		filesAdd.add(pnlEachFile);
+		pnlFiles.add(filesAdd.get(filesAdd.size() - 1));
+	}
+	
+	private void addPnlModules () {	
+		int width = 475;
+		int height = 25;
+		int x = 10;
+		int y = (moduleAdd.size() == 0 ? 0 : 
+			moduleAdd.get(moduleAdd.size() - 1).getY() + height + 5);
 		
 		btnAddModule = new JButton("");
 		btnAddModule.setBorder(null);
 		btnAddModule.setBounds(425, 0, 25, 25);
-		pnlModules.add(btnAddModule);
 		btnAddModule.setBackground(new Color(255, 255, 255));
 		btnAddModule.setIcon(new ImageIcon(PSP_PlanningWizardFrame.class.getResource("/net/sf/memoranda/ui/resources/icons/plus.png")));
 		
 		txtDescription = new JTextField();
 		txtDescription.setBounds(0, 0, 275, 25);
-		pnlModules.add(txtDescription);
 		txtDescription.setColumns(10);
 		
 		txtModuleSize = new JTextField();
 		txtModuleSize.setBounds(315, 0, 80, 25);
-		pnlModules.add(txtModuleSize);
 		txtModuleSize.setColumns(10);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 210, 475, 110);
-		contentPane.add(scrollPane_1);
+		JPanel holdItems = new JPanel();
 		
-		JPanel panel_3 = new JPanel();
-		scrollPane_1.setViewportView(panel_3);
-		panel_3.setBackground(Color.WHITE);
-		panel_3.setLayout(null);
+		holdItems.add(txtDescription);
+		holdItems.add(txtModuleSize);
+		holdItems.add(btnAddModule);
+		holdItems.setBounds(10, y, 475, 25);
 		
-		JLabel lblFiles = new JLabel("Files");
-		lblFiles.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFiles.setBounds(210, 5, 55, 15);
-		panel_3.add(lblFiles);
-		
-		pnlFilesAdd = new JPanel();
-		pnlFilesAdd.setBorder(null);
-		pnlFilesAdd.setBackground(Color.WHITE);
-		pnlFilesAdd.setBounds(10, 30, 450, 25);
-		panel_3.add(pnlFilesAdd);
-		pnlFilesAdd.setLayout(null);
-		
-		lblFilename = new JLabel("Filename:");
-		lblFilename.setBorder(null);
-		lblFilename.setBackground(Color.WHITE);
-		lblFilename.setBounds(0, 0, 85, 25);
-		pnlFilesAdd.add(lblFilename);
-		
-		txtFilePath = new JTextField();
-		txtFilePath.setBounds(100, 0, 250, 25);
-		pnlFilesAdd.add(txtFilePath);
-		txtFilePath.setColumns(10);
-		
-		JButton btnFileAdd = new JButton("");
-		btnFileAdd.setBackground(Color.WHITE);
-		btnFileAdd.setBorder(null);
-		btnFileAdd.setIcon(new ImageIcon(PSP_PlanningWizardFrame.class.getResource("/net/sf/memoranda/ui/resources/icons/plus.png")));
-		btnFileAdd.setBounds(425, 0, 25, 25);
-		pnlFilesAdd.add(btnFileAdd);
-
-		setResizable (false);
-	}	
+		moduleAdd.add(holdItems);
+				
+		for (int i = 0; i < moduleAdd.size(); i++) {
+			pnlEachModule.add(moduleAdd.get(i));
+		}
+	}
+	
+	private void setLook () {
+		try {
+			if (Configuration.get("LOOK_AND_FEEL").equals("system"))
+				UIManager.setLookAndFeel(
+					UIManager.getSystemLookAndFeelClassName());
+			else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
+				UIManager.setLookAndFeel(
+					UIManager.getCrossPlatformLookAndFeelClassName());					
+			else if (
+				Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+				UIManager.setLookAndFeel(
+					Configuration.get("LOOK_AND_FEEL").toString());
+		} catch (Exception e) {		    
+			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", "Make sure that specified look-and-feel library classes are on the CLASSPATH.");
+		}
+	}
 	
 	private void buttonAction_Clicked (String pan) {
 		pwf = this;
@@ -273,6 +343,11 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				this.dispose();
 				App.getFrame().setEnabled(true);
 			}
-		}
+		} else if (pan.equals("ADD_MOD")) {			
+			addPnlModules ();
+			
+		} else if (pan.equals("ADD_FILE")) {	
+			addPnlFiles ();
+		}			
 	}
 }
