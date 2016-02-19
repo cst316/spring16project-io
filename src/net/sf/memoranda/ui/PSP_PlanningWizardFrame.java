@@ -14,6 +14,8 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -25,9 +27,11 @@ import net.sf.memoranda.util.Configuration;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 import javax.swing.JScrollPane;
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.ScrollPaneConstants;
 
@@ -49,15 +53,20 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private JLabel lblFilename;
 	private JTextField txtFilePath;
 	
-	private ArrayList <JPanel> moduleAdd = new ArrayList <JPanel> ();
-	private ArrayList <JPanel> filesAdd = new ArrayList <JPanel> ();
+
+	List <JTextField> test = new ArrayList<JTextField>();	
+	private List <JPanel> moduleAdd = new ArrayList <JPanel> ();
+	private List <JPanel> filesAdd = new ArrayList <JPanel> ();
+	private List <JButton> modAction = new ArrayList <JButton> ();
+	private List <JButton> fileAction = new ArrayList <JButton> ();
 	private String pid;
 	private JButton btnFileAdd;
 	private JPanel pnlEachModule;
 	private JPanel pnlModule;
 	private JPanel pnlFiles;
-	private JScrollPane scrollPane_1;
-	private JScrollPane scrollPane;
+	private JScrollPane spFile;
+	private JScrollPane spModule;
+	private JPanel panel_1;
 		
 	/**
 	 * Create the frame.
@@ -187,7 +196,6 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		pnlModule = new JPanel();
 		pnlModule.setBounds(10, 330, 480, 190);
 		contentPane.add(pnlModule);
-		pnlModule.setBorder(null);
 		pnlModule.setBackground(Color.WHITE);
 		pnlModule.setLayout(null);
 		
@@ -201,27 +209,33 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		
 		JLabel lblSize = new JLabel("Size");
 		lblSize.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSize.setBounds(315, 35, 80, 25);
+		lblSize.setBounds(305, 35, 80, 25);
 		pnlModule.add(lblSize);
 		
-		scrollPane = new JScrollPane();
-		scrollPane.setBorder(null);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(10, 60, 450, 125);
-		pnlModule.add(scrollPane);
+		panel_1 = new JPanel();
+		panel_1.setBounds(10, 60, 450, 125);
+		pnlModule.add(panel_1);
+		panel_1.setLayout(new BorderLayout());//(0, 0));
+		
+		spModule = new JScrollPane();
+		spModule.setBorder(null);
+		panel_1.add(spModule);
+		spModule.setHorizontalScrollBarPolicy
+				(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);		
 		
 		pnlEachModule = new JPanel();
-		scrollPane.setViewportView(pnlEachModule);
-		pnlEachModule.setBorder(null);
+		spModule.setViewportView(pnlEachModule);
 		pnlEachModule.setLayout(null);
 		pnlEachModule.setBackground(Color.WHITE);
 		
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 210, 475, 110);
-		contentPane.add(scrollPane_1);
+		addPnlModules ();
+		
+		spFile = new JScrollPane();
+		spFile.setBounds(10, 210, 475, 110);
+		contentPane.add(spFile);
 		
 		pnlFiles = new JPanel();
-		scrollPane_1.setViewportView(pnlFiles);
+		spFile.setViewportView(pnlFiles);
 		pnlFiles.setBackground(Color.WHITE);
 		pnlFiles.setLayout(null);
 		
@@ -233,7 +247,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		pnlEachFile = new JPanel();
 		pnlEachFile.setBorder(null);
 		pnlEachFile.setBackground(Color.WHITE);
-		pnlEachFile.setBounds(10, 30, 450, 25);
+		//pnlEachFile.setBounds(10, 30, 450, 25);
 		pnlEachFile.setLayout(null);
 		//filesAdd.add(pnlEachFile);
 		pnlFiles.add(pnlEachFile);//filesAdd.get(0));
@@ -257,7 +271,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		});
 		btnFileAdd.setBackground(Color.WHITE);
 		btnFileAdd.setBorder(null);
-		btnFileAdd.setIcon(new ImageIcon(PSP_PlanningWizardFrame.class.getResource("/net/sf/memoranda/ui/resources/icons/plus.png")));
+		btnFileAdd.setIcon(new ImageIcon(
+				PSP_PlanningWizardFrame.class.getResource(
+				"/net/sf/memoranda/ui/resources/icons/plus.png")));
 		btnFileAdd.setBounds(425, 0, 25, 25);
 		pnlEachFile.add(btnFileAdd);
 
@@ -276,39 +292,130 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	}
 	
 	private void addPnlModules () {	
-		int width = 475;
+		int width = 425;
 		int height = 25;
-		int x = 10;
+		int x = 0;
+		int y = (moduleAdd.size() == 0 ? 0 : 
+			moduleAdd.get(moduleAdd.size() - 1).getY() + height + 5);
+		String icon;
+		
+		btnAddModule = new JButton("");
+		btnAddModule.setBorder(null);
+		btnAddModule.setBounds(395, 0, 25, 25);
+		btnAddModule.setBackground(new Color(255, 255, 255));
+		modAction.add(btnAddModule);
+	
+		txtDescription = new JTextField();
+		txtDescription.setBounds(0, 0, 275, 25);
+		txtDescription.setColumns(10);
+
+		test.add(txtDescription);
+		
+		txtModuleSize = new JTextField();
+		txtModuleSize.setBounds(295, 0, 80, 25);
+		txtModuleSize.setColumns(10);
+		
+		JPanel holdItems = new JPanel();
+		holdItems.setBackground(Color.WHITE);
+		holdItems.setLayout(null);
+		holdItems.add(txtDescription);
+		holdItems.add(txtModuleSize);
+		holdItems.add(btnAddModule);
+		holdItems.setBounds(x, y, width, height);
+		
+		for (int i = 0; i < modAction.size(); i++) {
+			for (ActionListener al : modAction.get(i).getActionListeners()) 
+				modAction.get(i).removeActionListener(al);			
+		}
+		
+		//pnlEachModule.invalidate();
+				
+		moduleAdd.add(holdItems);
+				
+		for (int i = 0; i < moduleAdd.size(); i++) {
+			if (i < moduleAdd.size() - 1) {
+				icon = "/net/sf/memoranda/ui/resources/icons/plus.png";
+				test.get(i).setText("True");
+			} else {
+				icon = "/net/sf/memoranda/ui/resources/icons/plus.png";
+				test.get(i).setText("False");
+			}
+			
+			modAction.get(i).setIcon(new ImageIcon(
+							PSP_PlanningWizardFrame.class.getResource(icon)));
+			pnlEachModule.add(moduleAdd.get(i));
+			modAction.get(i).addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					buttonAction_Clicked ("ADD_MOD");
+				}
+			});
+		}
+		
+		//pnlEachModule.validate();
+		pnlEachModule.repaint();
+
+		pnlEachModule.setPreferredSize(new Dimension (450, y + height));
+		spModule.setVerticalScrollBarPolicy
+			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+	}
+	
+	private void removeModule () {	
+		int width = 425;
+		int height = 25;
+		int x = 0;
 		int y = (moduleAdd.size() == 0 ? 0 : 
 			moduleAdd.get(moduleAdd.size() - 1).getY() + height + 5);
 		
 		btnAddModule = new JButton("");
 		btnAddModule.setBorder(null);
-		btnAddModule.setBounds(425, 0, 25, 25);
+		btnAddModule.setBounds(395, 0, 25, 25);
 		btnAddModule.setBackground(new Color(255, 255, 255));
-		btnAddModule.setIcon(new ImageIcon(PSP_PlanningWizardFrame.class.getResource("/net/sf/memoranda/ui/resources/icons/plus.png")));
-		
+		modAction.add(btnAddModule);
+	
 		txtDescription = new JTextField();
 		txtDescription.setBounds(0, 0, 275, 25);
 		txtDescription.setColumns(10);
 		
 		txtModuleSize = new JTextField();
-		txtModuleSize.setBounds(315, 0, 80, 25);
+		txtModuleSize.setBounds(295, 0, 80, 25);
 		txtModuleSize.setColumns(10);
 		
 		JPanel holdItems = new JPanel();
-		
+		holdItems.setBackground(Color.WHITE);
+		holdItems.setLayout(null);
 		holdItems.add(txtDescription);
 		holdItems.add(txtModuleSize);
 		holdItems.add(btnAddModule);
-		holdItems.setBounds(10, y, 475, 25);
+		holdItems.setBounds(x, y, width, height);
 		
+		for (int i = 0; i < modAction.size(); i++) {
+			for (ActionListener al : modAction.get(i).getActionListeners()) 
+				modAction.get(i).removeActionListener(al);			
+		}
+		
+		//pnlEachModule.invalidate();
+				
 		moduleAdd.add(holdItems);
 				
 		for (int i = 0; i < moduleAdd.size(); i++) {
 			pnlEachModule.add(moduleAdd.get(i));
+			modAction.get(i).addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					buttonAction_Clicked ("ADD_MOD");
+				}
+			});	
+			btnAddModule.setIcon(new ImageIcon(PSP_PlanningWizardFrame.class.getResource("/net/sf/memoranda/ui/resources/icons/plus.png")));
+			
 		}
+		
+		//pnlEachModule.validate();
+		pnlEachModule.repaint();
+
+		pnlEachModule.setPreferredSize(new Dimension (450, y + height));
+		spModule.setVerticalScrollBarPolicy
+			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
+	
 	
 	private void setLook () {
 		try {
@@ -323,7 +430,8 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				UIManager.setLookAndFeel(
 					Configuration.get("LOOK_AND_FEEL").toString());
 		} catch (Exception e) {		    
-			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", "Make sure that specified look-and-feel library classes are on the CLASSPATH.");
+			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", 
+					"Make sure that specified look-and-feel library classes are on the CLASSPATH.");
 		}
 	}
 	
@@ -333,14 +441,17 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			PSP_NPWizardFrame.npw.setVisible(true);
 			this.setVisible(false);
 		} else if (pan.equals("FINISH")) {
-			goBack.dispose();
-			this.dispose();
+			PSP_NPWizardFrame.npw.dispose();
+			pwf = null;
+			PSP_NPWizardFrame.npw = null;
+			dispose();
 		} else if (pan.equals("CANCEL")) {
 			int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);
 			
 			if (confirm == JOptionPane.YES_OPTION) {
+				pwf = null;
 				PSP_NPWizardFrame.npw.dispose();
-				this.dispose();
+				dispose();
 				App.getFrame().setEnabled(true);
 			}
 		} else if (pan.equals("ADD_MOD")) {			

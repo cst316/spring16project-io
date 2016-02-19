@@ -98,7 +98,7 @@ public class PSP_Panel extends JPanel {
 			App.getFrame().setEnabled(false);
 			pnlWizard.setVisible(true);	
 			toolBar.setVisible (false);
-			(new PSP_NPWizardFrame()).setVisible(true);
+			(new PSP_NPWizardFrame()).setVisible(true);			
 		} else if (event.equals("ENTERED")) {
 			lblNewProject.setBackground(Color.WHITE);
 		} else if (event.equals("EXITED")) {
