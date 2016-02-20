@@ -1,7 +1,5 @@
 package net.sf.memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -13,7 +11,11 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
+import net.sf.memoranda.util.Configuration;
+
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
@@ -21,6 +23,15 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * 
+ * @author Cephas Armstrong-Mensah
+ * @author Team-IO
+ * CST316 - Spring 2016, ASU Poly
+ * This class is part of the PSP Startup wizard
+ * it is invoked when a new PSP Project is started
+ * 02/19/2016
+ */
 public class PSP_NPWizardFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -29,10 +40,11 @@ public class PSP_NPWizardFrame extends JFrame {
 	private JTextField txtPrjName;
 	private JTextPane txtPrjDescription;
 	
-	//private JFrame nextFrame;
-	
 	static JFrame npw = null;
 	
+	/**
+	 * General constructor
+	 */
 	public PSP_NPWizardFrame() {		
 		try {
 			jbInit();
@@ -46,7 +58,8 @@ public class PSP_NPWizardFrame extends JFrame {
 	 * using init() style to create GUI details
 	 */
 	public void jbInit() {
-		this.setAlwaysOnTop(true);
+		//this.setAlwaysOnTop(true);
+		setLook();
 		int xsize = 450, ysize = 300;
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((dim.width - xsize)/2, (dim.height - ysize)/2);		
@@ -73,17 +86,17 @@ public class PSP_NPWizardFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		lblPID = new JLabel("100000001");
+		lblPID = new JLabel("100000001");	//once the back-end is done, can get rid of this magic number
 		lblPID.setBounds(0, 0, 80, 25);
 		panel.add(lblPID);
 		lblPID.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		lblNewLabel = new JLabel("Project Name:");
+		lblNewLabel = new JLabel("Project Name:");	
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setBounds(10, 70, 100, 25);
 		contentPane.add(lblNewLabel);
 		
-		txtPrjName = new JTextField();
+		txtPrjName = new JTextField("Testing Project");	//once the back-end is done, can get rid of this magic string
 		txtPrjName.setBounds(125, 70, 300, 25);
 		contentPane.add(txtPrjName);
 		txtPrjName.setColumns(10);
@@ -98,6 +111,7 @@ public class PSP_NPWizardFrame extends JFrame {
 		contentPane.add(scrollPane);
 		
 		txtPrjDescription = new JTextPane();
+		txtPrjDescription.setText("Only a test");	//once the back-end is done, can get rid of this magic string
 		scrollPane.setViewportView(txtPrjDescription);
 		txtPrjDescription.setBackground(Color.WHITE);
 		
@@ -120,11 +134,14 @@ public class PSP_NPWizardFrame extends JFrame {
 		contentPane.add(btnNewButton_1);
 	}
 	
+	/**
+	 * Calling the next frame
+	 */	
 	protected void btnNext_Clicked() {
 		if (!txtPrjName.getText().isEmpty() && !txtPrjDescription.getText().isEmpty()) {
 			npw = this;
 			if (PSP_PlanningWizardFrame.pwf == null) {
-				(new PSP_PlanningWizardFrame (this, lblPID.getText().trim())).setVisible(true);
+				(new PSP_PlanningWizardFrame (lblPID.getText().trim())).setVisible(true);
 			} else { 
 				PSP_PlanningWizardFrame.pwf.setVisible(true);
 			}
@@ -138,6 +155,30 @@ public class PSP_NPWizardFrame extends JFrame {
 		}		
 	}
 	
+	/**
+	 * Sets the look and feel for this frame based on look and feel for parent frame
+	 */
+	private void setLook () {
+		try {
+			if (Configuration.get("LOOK_AND_FEEL").equals("system"))
+				UIManager.setLookAndFeel(
+					UIManager.getSystemLookAndFeelClassName());
+			else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
+				UIManager.setLookAndFeel(
+					UIManager.getCrossPlatformLookAndFeelClassName());					
+			else if (
+				Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+				UIManager.setLookAndFeel(
+					Configuration.get("LOOK_AND_FEEL").toString());
+		} catch (Exception e) {		    
+			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", 
+					"Make sure that specified look-and-feel library classes are on the CLASSPATH.");
+		}
+	}
+	
+	/**
+	 * Canceling the project creation
+	 */
 	protected void btnCancel_Clicked() {		
 		int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);
 		

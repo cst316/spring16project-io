@@ -11,6 +11,10 @@ import javax.swing.JToolBar;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
+import net.sf.memoranda.util.Configuration;
+
 import javax.swing.JSeparator;
 import java.awt.Rectangle;
 import java.awt.Point;
@@ -18,12 +22,23 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.SystemColor;
 
+/**
+ * 
+ * @author Cephas Armstrong-Mensah
+ * @author Team-IO
+ * CST316 - Spring 2016, ASU Poly
+ * This class lists the different options available in PSP View
+ * 02/19/2016
+ */
 public class PSP_Panel extends JPanel {
 	private JLabel lblNewProject;
 	private JLabel lblOpenProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
 	
+	/**
+	 * General constructor for creating Panel
+	 */
 	public PSP_Panel() {
 		try {
 			jbInit();
@@ -33,10 +48,18 @@ public class PSP_Panel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Constructor to create Panel and receiving PID from back end once it is tied in
+	 * @param pid
+	 */
 	public PSP_Panel (String pid) {
 		
 	}
 	
+	/**
+	 * Used to create GUI Layout and interface
+	 * @throws Exception
+	 */
 	void jbInit() throws Exception {
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
@@ -89,10 +112,14 @@ public class PSP_Panel extends JPanel {
 		
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
-		//pnlWizard.setBackground(Color.WHITE);
 		add(pnlWizard, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * To start the PSP New project wizard once clicked and other 
+	 * Mouse events for New Project on the auto hide tool bar
+	 * @param event - Used to know which action to perform
+	 */
 	private void newProject_Mouse (String event) {
 		if (event.equals("CLICKED")) {
 			App.getFrame().setEnabled(false);
