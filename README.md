@@ -15,4 +15,4 @@ Your first steps should be to get your team set up with this code, ensure you ca
 Enjoy!
 Dr. Gary
 
-Added channel in slack to commit 02/12/2015 to #commit_github
+Testing push to branch us-54, test 1
