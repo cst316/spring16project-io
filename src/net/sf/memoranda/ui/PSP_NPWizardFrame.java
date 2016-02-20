@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.util.Configuration;
 
 import javax.swing.JTextField;
@@ -41,6 +42,7 @@ public class PSP_NPWizardFrame extends JFrame {
 	private JTextPane txtPrjDescription;
 	
 	static JFrame npw = null;
+	static int lastID = 0;
 	
 	/**
 	 * General constructor
@@ -59,6 +61,7 @@ public class PSP_NPWizardFrame extends JFrame {
 	 */
 	public void jbInit() {
 		//this.setAlwaysOnTop(true);
+		lastID = PspImpl.getLastID();
 		setLook();
 		int xsize = 450, ysize = 300;
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -86,7 +89,7 @@ public class PSP_NPWizardFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		lblPID = new JLabel("100000001");	//once the back-end is done, can get rid of this magic number
+		lblPID = new JLabel(lastID + "");	//once the back-end is done, can get rid of this magic number
 		lblPID.setBounds(0, 0, 80, 25);
 		panel.add(lblPID);
 		lblPID.setHorizontalAlignment(SwingConstants.CENTER);
@@ -141,7 +144,7 @@ public class PSP_NPWizardFrame extends JFrame {
 		if (!txtPrjName.getText().isEmpty() && !txtPrjDescription.getText().isEmpty()) {
 			npw = this;
 			if (PSP_PlanningWizardFrame.pwf == null) {
-				(new PSP_PlanningWizardFrame (lblPID.getText().trim())).setVisible(true);
+				(new PSP_PlanningWizardFrame (lastID+"")).setVisible(true);
 			} else { 
 				PSP_PlanningWizardFrame.pwf.setVisible(true);
 			}

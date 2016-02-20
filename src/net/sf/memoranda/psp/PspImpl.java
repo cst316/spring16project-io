@@ -8,13 +8,12 @@ public class PspImpl implements Psp {
 	private CurrentDate stDate;
 	private String name;
 	private String description;
-	static int lastID;
+	static int lastID = 100020001;
 	
 	public PspImpl() {
 		stDate = null;
 		name = "";
 		description = "";
-		lastID = 0;
 	}
 	public PspImpl(CurrentDate stDate, String name, String description) {
 		super();

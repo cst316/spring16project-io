@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 
+import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.util.Configuration;
 
 import javax.swing.JTextField;
@@ -69,7 +70,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private JPanel pnlFiles;
 	private JScrollPane spModule;
 	private JScrollPane spFile;
-		
+	
+	static int lastID = 0;
+	
 	/**
 	 * General constructor
 	 */
@@ -101,6 +104,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 * Creating the different components 
 	 */	
 	private void jbInit() {
+		lastID = PspImpl.getLastID();
 		setLook ();
 		//this.setAlwaysOnTop(true);
 		setTitle("New PSP Project Wizard - Planning");
@@ -197,7 +201,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("100000001");
+		JLabel lblNewLabel = new JLabel(lastID+"");
 		lblNewLabel.setBounds(0, 0, 80, 25);
 		panel_2.add(lblNewLabel);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -534,7 +538,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			PSP_NPWizardFrame.npw.setVisible(true);
 			this.setVisible(false);
 		} else if (pan.equals("FINISH")) {
-			PSP_NPWizardFrame.npw.dispose();
+			App.getFrame().setEnabled(true);
+			PspImpl.setLastID(lastID + 1);
+			PSP_NPWizardFrame.npw.dispose();			
 			pwf = null;
 			PSP_NPWizardFrame.npw = null;
 			dispose();
