@@ -122,8 +122,7 @@ public class Planning implements Psp {
 
 	@Override
 	public String toString() {
-		return "Planning:\n"
-				+ "Estimated Time = " + this.getEstTime() + ", Lines of Code = " + this.getLocHr() + 
+		return "Planning:\n" + "Estimated Time = " + this.getEstTime() + ", Lines of Code = " + this.getLocHr() + 
 				", Estimated Size = " + this.getEstSize() + ", Estimated Defects = " + this.getEstDefect() + 
 				", Filename=" + this.getFilename() + ", projectDescription=" + this.getProjectDescription();
 	}
