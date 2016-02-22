@@ -11,6 +11,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Vector;
@@ -766,30 +769,39 @@ public class TaskPanel extends JPanel {
 	
 	void btnImport_actionPerformed(ActionEvent e)
 	{
-		BufferedImage image = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB);
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-		
-		int result = fileChooser.showOpenDialog(this);
-		if (result == JFileChooser.APPROVE_OPTION) 
+		BufferedImage image = null; //new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB);
+		try
 		{
-			File selectedFile = fileChooser.getSelectedFile();
-			System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-			try
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+			
+			int result = fileChooser.showOpenDialog(this);
+			if (result == JFileChooser.APPROVE_OPTION) 
 			{
-				if (selectedFile.getName().contains("png"))
+				File selectedFile = fileChooser.getSelectedFile();
+				image = ImageIO.read(selectedFile);
+				System.out.println("Selected file: " + selectedFile.getName());
+				
+				if(!Files.exists(Paths.get("C:\\Users\\Joe\\Documents\\memorandaFiles")))
 				{
-					ImageIO.write(image, "PNG", selectedFile);
+					File file = new File("C:\\Users\\Joe\\Documents\\memorandaFiles");
+					file.mkdirs();
+				}
+			
+				if (selectedFile.getName().contains(".png"))
+				{
+					ImageIO.write(image, "png", new File("C:\\Users\\Joe\\Documents\\memorandaFiles\\out.png"));
 				}
 				else if (selectedFile.getName().contains(".jpg"))
 				{
-					ImageIO.write(image, "JPEG", selectedFile);
+					ImageIO.write(image, "png", new File("C:\\Users\\Joe\\Documents\\memorandaFiles\\out.jpg"));
 				}
 			}
-			catch(Exception ex)
-			{
-				throw new RuntimeException("Error saving image, Check image type");
-			}
+				
+		}
+		catch(Exception ex)
+		{
+			throw new RuntimeException("Error saving image, Check image type");
 		}
 	}
 	
