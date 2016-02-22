@@ -148,8 +148,7 @@ public class PSP_NPWizardFrame extends JFrame {
 			} else { 
 				PSP_PlanningWizardFrame.pwf.setVisible(true);
 			}
-			this.setVisible(false);
-			//dispose();
+			dispose();
 		} else {
 			if (txtPrjName.getText().isEmpty())
 				txtPrjName.requestFocus();
@@ -188,9 +187,9 @@ public class PSP_NPWizardFrame extends JFrame {
 		if (confirm == JOptionPane.YES_OPTION) {
 			if (PSP_PlanningWizardFrame.pwf != null) {
 				PSP_PlanningWizardFrame.pwf = null;
-				PSP_PlanningWizardFrame.pwf.dispose();
 			}
-			this.dispose();
+			npw = null;
+			dispose();			
 			App.getFrame().setEnabled(true);
 		}
 	}

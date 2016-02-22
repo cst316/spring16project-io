@@ -85,12 +85,11 @@ public class PSP_Panel extends JPanel {
 				newProject_Mouse("EXITED");
 			}
 		});
+		lblNewProject.setLocation(new Point(0, 50));
 		lblNewProject.setPreferredSize(new Dimension(100, 50));
-		lblNewProject.setLocation(new Point(0, 20));
 		lblNewProject.setMinimumSize(new Dimension(100, 50));
 		lblNewProject.setMaximumSize(new Dimension(100, 50));
-		lblNewProject.setBounds(new Rectangle(0, 20, 0, 0));
-		lblNewProject.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblNewProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblNewProject);
 		
 		lblOpenProject = new JLabel("Open Project");
@@ -108,6 +107,7 @@ public class PSP_Panel extends JPanel {
 		lblOpenProject.setMinimumSize(new Dimension(100, 50));
 		lblOpenProject.setMaximumSize(new Dimension(100, 50));
 		lblOpenProject.setPreferredSize(new Dimension(100, 50));
+		lblOpenProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblOpenProject);
 		
 		pnlWizard = new JPanel();

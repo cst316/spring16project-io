@@ -45,9 +45,6 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private JTextField txtEstSize;
 	private JTextField txtEstDefect;
 	
-	private PSP_NPWizardFrame goBack;
-	
-	static JFrame pwf = null;
 	private JTextField txtDescription;
 	private JTextField txtModuleSize;
 	private JButton btnAddModule;
@@ -72,7 +69,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private JScrollPane spFile;
 	
 	static int lastID = 0;
-	
+	static JFrame pwf = null;	
 	/**
 	 * General constructor
 	 */
@@ -91,7 +88,6 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 */
 	public PSP_PlanningWizardFrame (String pid) {
 		try {
-			this.goBack = goBack;
 			this.pid = pid;
 			jbInit();
 		} catch (Exception ex) {
@@ -436,7 +432,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 * @param whichPnl - panel to repaint changes onto
 	 */
 	private void repaintPanel (List<JPanel> repaintPnl, List<JButton> iconBtn, JPanel whichPnl) {
-		String icon = "/net/sf/memoranda/ui/resources/icons/minus.png";			
+		String icon = "/net/sf/memoranda/ui/resources/icons/minus.png";		
 		
 		whichPnl.removeAll();
 		for (int i = 0; i < repaintPnl.size(); i++) {
@@ -536,20 +532,19 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		pwf = this;
 		if (pan.equals("BACK")) {
 			PSP_NPWizardFrame.npw.setVisible(true);
-			this.setVisible(false);
+			dispose();
 		} else if (pan.equals("FINISH")) {
 			App.getFrame().setEnabled(true);
 			PspImpl.setLastID(lastID + 1);
-			PSP_NPWizardFrame.npw.dispose();			
 			pwf = null;
 			PSP_NPWizardFrame.npw = null;
 			dispose();
 		} else if (pan.equals("CANCEL")) {
-			int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);
-			
+			int confirm = JOptionPane.showConfirmDialog(null, 
+					"Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);			
 			if (confirm == JOptionPane.YES_OPTION) {
 				pwf = null;
-				PSP_NPWizardFrame.npw.dispose();
+				PSP_NPWizardFrame.npw = null;
 				dispose();
 				App.getFrame().setEnabled(true);
 			}
