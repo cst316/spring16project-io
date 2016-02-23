@@ -26,6 +26,14 @@ public class PspImpl implements Psp {
 		this.description = description;
 	}
 	
+	//PspImpl that accepts parameters for all attributes except pID since pID can be accessed through Psp
+	public PspImpl(String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
+	
+	
+	
 	//Accessor method that returns the project ID using the Psp interface
 	public static int getpID() {
 		return Psp.pID;
