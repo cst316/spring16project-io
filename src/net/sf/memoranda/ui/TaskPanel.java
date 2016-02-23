@@ -62,7 +62,7 @@ public class TaskPanel extends JPanel {
     JButton removeTaskB = new JButton();
     JButton completeTaskB = new JButton();
     JButton undoTaskB = new JButton();
-    JButton btnImport = new JButton("Import");
+    
     
 	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 		
@@ -362,11 +362,7 @@ public class TaskPanel extends JPanel {
         scrollPane.addMouseListener(ppListener);
         taskTable.addMouseListener(ppListener);
 
-        btnImport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                btnImport_actionPerformed(e);
-            }
-        });
+        
 
         CurrentDate.addDateListener(new DateListener() {
             public void dateChange(CalendarDate d) {
@@ -424,7 +420,6 @@ public class TaskPanel extends JPanel {
 		undoTaskB.setVisible(false);
 		undoTaskB.setEnabled(false);
 		
-		tasksToolBar.add(btnImport);
 		ppAddSubTask.setEnabled(false);
 		//ppSubTasks.setEnabled(false);
 		//ppParentTask.setEnabled(false);
@@ -767,43 +762,7 @@ public class TaskPanel extends JPanel {
 		//taskTable.updateUI();
 	}
 	
-	void btnImport_actionPerformed(ActionEvent e)
-	{
-		BufferedImage image = null; //new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB);
-		try
-		{
-			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-			
-			int result = fileChooser.showOpenDialog(this);
-			if (result == JFileChooser.APPROVE_OPTION) 
-			{
-				File selectedFile = fileChooser.getSelectedFile();
-				image = ImageIO.read(selectedFile);
-				System.out.println("Selected file: " + selectedFile.getName());
-				
-				if(!Files.exists(Paths.get("C:\\Users\\Joe\\Documents\\memorandaFiles")))
-				{
-					File file = new File("C:\\Users\\Joe\\Documents\\memorandaFiles");
-					file.mkdirs();
-				}
-			
-				if (selectedFile.getName().contains(".png"))
-				{
-					ImageIO.write(image, "png", new File("C:\\Users\\Joe\\Documents\\memorandaFiles\\out.png"));
-				}
-				else if (selectedFile.getName().contains(".jpg"))
-				{
-					ImageIO.write(image, "png", new File("C:\\Users\\Joe\\Documents\\memorandaFiles\\out.jpg"));
-				}
-			}
-				
-		}
-		catch(Exception ex)
-		{
-			throw new RuntimeException("Error saving image, Check image type");
-		}
-	}
+	
 	
 	
 
