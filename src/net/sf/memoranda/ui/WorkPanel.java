@@ -304,6 +304,10 @@ public class WorkPanel extends JPanel {
 		Context.put("CURRENT_PANEL", "FILES");
 	}
 
+	/**
+	 * This is called when psp button is clicked
+	 * @param e - takes in an ActionEvent
+	 */
 	public void pspB_actionPerformed(ActionEvent e) {
 		cardLayout1.show(panel, "PSP");
 		setCurrentButton(pspButton);

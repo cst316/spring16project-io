@@ -41,7 +41,10 @@ public class PSP_NPWizardFrame extends JFrame {
 	private JTextField txtPrjName;
 	private JTextPane txtPrjDescription;
 	
-	static JFrame npw = null;
+	//private 
+	
+	public static PSP_NPWizardFrame npw = null;
+	private PSP_NPWizardFrame newWizard = null;
 	static int lastID = 0;
 	
 	/**
@@ -54,6 +57,13 @@ public class PSP_NPWizardFrame extends JFrame {
 			new ExceptionDialog(ex);
 			ex.printStackTrace();
 		}
+	}
+	
+	/**
+	 * General constructor
+	 */
+	public PSP_NPWizardFrame(PSP_NPWizardFrame npw) {		
+		newWizard = npw;
 	}
 		
 	/**
@@ -78,10 +88,10 @@ public class PSP_NPWizardFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblProjectId = new JLabel("Project ID:");
-		lblProjectId.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblProjectId.setBounds(10, 25, 100, 25);
-		contentPane.add(lblProjectId);
+		JLabel Label = new JLabel("Project ID:");
+		Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		Label.setBounds(10, 25, 100, 25);
+		contentPane.add(Label);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, null, TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -135,6 +145,18 @@ public class PSP_NPWizardFrame extends JFrame {
 		});
 		btnNewButton_1.setBounds(125, 225, 100, 25);
 		contentPane.add(btnNewButton_1);
+	}
+	
+	public int getPID() {
+		return Integer.parseInt(lblPID.getText().trim());
+	}
+	
+	public String getName () {
+		return txtPrjName.getText().trim();
+	}
+	
+	public String getDescription () {
+		return txtPrjDescription.getText().trim();
 	}
 	
 	/**

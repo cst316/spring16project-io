@@ -41,9 +41,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtEstTime;
-	private JTextField txtEstLocHr;
 	private JTextField txtEstSize;
 	private JTextField txtEstDefect;
+	private JTextField txtEstLocHr;
 	
 	private JTextField txtDescription;
 	private JTextField txtModuleSize;
@@ -68,8 +68,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private JScrollPane spModule;
 	private JScrollPane spFile;
 	
-	static int lastID = 0;
+	int lastID = 0;
 	static JFrame pwf = null;	
+	private JLabel lblPID;
 	/**
 	 * General constructor
 	 */
@@ -145,20 +146,20 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		pnlEstimates.add(txtEstTime);
 		txtEstTime.setColumns(10);
 		
-		txtEstLocHr = new JTextField();
-		txtEstLocHr.setColumns(10);
-		txtEstLocHr.setBounds(180, 80, 80, 25);
-		pnlEstimates.add(txtEstLocHr);
-		
 		txtEstSize = new JTextField();
 		txtEstSize.setColumns(10);
-		txtEstSize.setBounds(180, 115, 80, 25);
+		txtEstSize.setBounds(180, 80, 80, 25);
 		pnlEstimates.add(txtEstSize);
 		
 		txtEstDefect = new JTextField();
 		txtEstDefect.setColumns(10);
-		txtEstDefect.setBounds(180, 45, 80, 25);
+		txtEstDefect.setBounds(180, 115, 80, 25);
 		pnlEstimates.add(txtEstDefect);
+		
+		txtEstLocHr = new JTextField();
+		txtEstLocHr.setColumns(10);
+		txtEstLocHr.setBounds(180, 45, 80, 25);
+		pnlEstimates.add(txtEstLocHr);
 		
 		JButton button = new JButton("<< Back");
 		button.addActionListener(new ActionListener() {
@@ -197,10 +198,10 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel(lastID+"");
-		lblNewLabel.setBounds(0, 0, 80, 25);
-		panel_2.add(lblNewLabel);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPID = new JLabel(lastID+"");
+		lblPID.setBounds(0, 0, 80, 25);
+		panel_2.add(lblPID);
+		lblPID.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		pnlModule = new JPanel();
 		pnlModule.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -531,11 +532,17 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private void buttonAction_Clicked (String pan) {
 		pwf = this;
 		if (pan.equals("BACK")) {
-			PSP_NPWizardFrame.npw.setVisible(true);
+			PSP_NPWizardFrame.npw.setVisible(true);			
 			dispose();
 		} else if (pan.equals("FINISH")) {
 			App.getFrame().setEnabled(true);
+			PSP_NPWizardFrame npw = new PSP_NPWizardFrame (PSP_NPWizardFrame.npw);
+			PspImpl psp = new PspImpl (npw.getName().trim(), npw.getDescription().trim());
+			
 			PspImpl.setLastID(lastID + 1);
+			psp.setName(npw.getName().trim());
+			psp.setDescription(npw.getDescription().trim());
+			
 			pwf = null;
 			PSP_NPWizardFrame.npw = null;
 			dispose();
