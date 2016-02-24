@@ -99,6 +99,8 @@ public class ProjectSummaryCreator {
 	 */
 	private static void createTimeTable(int [] estimatedTime, int [] actualTime){
 		
+		Paragraph table1 = new Paragraph();
+		
 		PdfPTable timeTable = new PdfPTable(3);
 		
 	    PdfPCell tableHeading = new PdfPCell(new Phrase("Time in Phase\n(Minutes)", headingFont));
@@ -121,6 +123,46 @@ public class ProjectSummaryCreator {
 	    tableHeading.setHorizontalAlignment(Element.ALIGN_CENTER);
 	    timeTable.addCell(tableHeading);
 	    timeTable.setHeaderRows(1);
+	    
+	    for(int i = 0; i < 8; ++i){
+	    	switch(i){	    	
+	    	case 0:
+	    		timeTable.addCell("Planning");
+	    		break;
+	    	case 1:
+	    		timeTable.addCell("Design");
+	    		break;
+	    	case 2:
+	    		timeTable.addCell("Code");
+	    		break;
+	    	case 3:
+	    		timeTable.addCell("Code Review");
+	    		break;
+	    	case 4:
+	    		timeTable.addCell("Compile");
+	    		break;
+	    	case 5:
+	    		timeTable.addCell("Test");
+	    		break;
+	    	case 6:
+	    		timeTable.addCell("Postmortem");
+	    		break;
+	    	case 7:
+	    		timeTable.addCell("TOTAL");
+	    		break;
+	    	}
+	    	timeTable.addCell(String.valueOf(estimatedTime[i]));
+	    	timeTable.addCell(String.valueOf(actualTime[i]));
+	    	
+	    	
+	    	for(int totalSoFar = i; totalSoFar >= 0; --totalSoFar){
+	    		//sum up the actual time
+	    	}
+	    	
+	    	
+	    }
+	    
+	    table1.add(timeTable);
 		
 	}
 	
