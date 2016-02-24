@@ -30,15 +30,111 @@ import com.itextpdf.text.pdf.PdfWriter;
  */
 public class ProjectSummaryCreator {
 	
-	  public static void main(String[] args) {
-		    try {
-		      Document document = new Document();
-		      PdfWriter.getInstance(document, new FileOutputStream(FILE));
-		      document.open();
-		      //
-		      document.close();
-		    } catch (Exception e) {
-		      e.printStackTrace();
-		    }
-		  }
+	private static String FILE = "c:/temp/PSPProjectSummary.pdf";
+	private static Font headingFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+		      Font.BOLD);
+	private static Font normalFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
+		      Font.NORMAL);
+	  
+	  
+	/**
+	 * 
+	 * @param author the name of the author if the PSP Summary Form
+	 * @param programName the name of the program being summarized
+	 * @param date the date that the summary is being created
+	 * 
+	 * Creates a PSP Summary Form with all specified data
+	 * 
+	 */
+	public static void createFileSummary(String author, String programName, String date, int [] estimatedTime, int [] actualTime){
+		try {
+			Document document = new Document();
+		    PdfWriter.getInstance(document, new FileOutputStream(FILE));
+		    document.open();
+		    //do stuff to document
+		    addPDFTitle(document, author, programName, date);
+		    
+		    createTimeTable(estimatedTime, actualTime);
+		    document.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param document the document that was created in createFileSummary
+	 * @param author the name of the author if the PSP Summary Form
+	 * @param programName the name of the program being summarized
+	 * @param date the date that the summary is being created
+	 * 
+	 * Adds the title section of the PSP Summary Form
+	 * 
+	 */
+	private static void addPDFTitle(Document document, String author, String programName, String date){
+		 Paragraph title = new Paragraph();
+		 addEmptyLine(title, 1);
+		 title.setAlignment(Element.ALIGN_CENTER);
+		 title.add(new Paragraph("PSP Summary Form", headingFont));
+		 
+		 document.addAuthor(author);
+		 
+		 addEmptyLine(title, 2);
+		 
+		 Paragraph introSection = new Paragraph();
+		 introSection.add(new Paragraph("Name: " + author, normalFont));
+		 introSection.add(new Paragraph("Program Name: " + programName, normalFont));
+		 introSection.add(new Paragraph("Date: " + date, normalFont));
+
+	}
+	
+	/**
+	 * 
+	 * @param estimatedTime the estimated times that it would take for a task
+	 * @param actualTime the actual time that it took for a task
+	 * 
+	 * Creates the table with Estimated Time, Actual Time, To Date, and
+	 * % To Date
+	 * 
+	 */
+	private static void createTimeTable(int [] estimatedTime, int [] actualTime){
+		
+		PdfPTable timeTable = new PdfPTable(3);
+		
+	    PdfPCell tableHeading = new PdfPCell(new Phrase("Time in Phase\n(Minutes)", headingFont));
+	    tableHeading.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    timeTable.addCell(tableHeading);
+	    
+	    tableHeading = new PdfPCell(new Phrase("Estimated", headingFont));
+	    tableHeading.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    timeTable.addCell(tableHeading);
+	    
+	    tableHeading = new PdfPCell(new Phrase("Actual", headingFont));
+	    tableHeading.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    timeTable.addCell(tableHeading);
+	    
+	    tableHeading = new PdfPCell(new Phrase("To Date", headingFont));
+	    tableHeading.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    timeTable.addCell(tableHeading);
+	    
+	    tableHeading = new PdfPCell(new Phrase("% To Date", headingFont));
+	    tableHeading.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    timeTable.addCell(tableHeading);
+	    timeTable.setHeaderRows(1);
+		
+	}
+	
+	/**
+	 * 
+	 * @param paragraphName name of paragraph being targeted
+	 * @param numLines the number of blank lines to be added
+	 * 
+	 * Adds the specified number of blank lines to the specified paragraph
+	 * 
+	 */
+	private static void addEmptyLine(Paragraph paragraphName, int numLines) {
+		for (int i = 0; i < numLines; i++) {
+			paragraphName.add(new Paragraph(" "));
+		}
+	}
 }
