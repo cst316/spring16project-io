@@ -31,10 +31,10 @@ public interface Planning extends Psp {
 	public void setEstDefect(int estDefect);
 
 	//Accessor abstract method that returns the name of the file to be used in the project (fileName)
-	public File getFilename();
+	public String getFilename();
 
-	//Mutator abstract method that sets the fileName given a file as a parameter
-	public void setFilename(File filename);
+	//Mutator abstract method that sets the fileName given a String as a parameter
+	public void setFilename(String filename);
 
 	//Accessor abstract method that gets the project description as a hash map based on a unique key
 	public HashMap<String, Integer> getProjectDescription();

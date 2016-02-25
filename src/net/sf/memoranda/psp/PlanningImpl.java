@@ -1,9 +1,13 @@
 package net.sf.memoranda.psp;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.ExceptionDialog;
 
 public class PlanningImpl implements Psp, Planning {
 	
@@ -15,7 +19,9 @@ public class PlanningImpl implements Psp, Planning {
 	int locHr;
 	int estSize;
 	int estDefect;
-	File filename;
+	int descriptionSize;
+
+	String filename;
 	HashMap <String, Integer> projectDescription;
 	
 	//PlanningImpl class constructor with empty values and no parameters
@@ -25,13 +31,14 @@ public class PlanningImpl implements Psp, Planning {
 		int locHr = 0;
 		int estSize = 0; 
 		int estDefect = 0;
+		int descriptionSize = 0;
 		String filename = "";
 		HashMap <String, Integer> projectDescription = null;
 	}
 	
 	//PlanningImpl class constructor initialized to variables specified in the method parameter header  
 	public PlanningImpl(float estimatedTime, int linesOfCodePerHour, int estimatedSize, int estimatedDefect, 
-			String nameOfFile, HashMap <String, Integer> projDesc) {
+			int descriptionSize, String nameOfFile, HashMap <String, Integer> projDesc) {
 		// TODO Auto-generated constructor stub
 		float estTime = estimatedTime;
 		int locHr = linesOfCodePerHour;
@@ -80,14 +87,24 @@ public class PlanningImpl implements Psp, Planning {
 	public void setEstDefect(int estDefect) {
 		this.estDefect = estDefect;
 	}
+	
+	//Returns the size associated with the description
+	public int getDescriptionSize() {
+		return descriptionSize;
+	}
+
+	//Sets the size associated with the description
+	public void setDescriptionSize(int descriptionSize) {
+		this.descriptionSize = descriptionSize;
+	}
 
 	//Accessor method that returns the name of the file to be used in the project (fileName)
-	public File getFilename() {
+	public String getFilename() {
 		return filename;
 	}
 
 	//Mutator method that sets the fileName given a file as a parameter
-	public void setFilename(File filename) {
+	public void setFilename(String fileName) {
 		this.filename = filename;
 	}
 
@@ -140,6 +157,34 @@ public class PlanningImpl implements Psp, Planning {
 	public void setDescription(String description) {
 		String projDesc = pspValues.getDescription();
 		projDesc = description;
+	}
+	
+	//Models the saveDocument() method in FileStorage.java (.util package)
+	//Takes 
+	public void save(String thePathOfTheFile)
+	{
+        try {
+            OutputStreamWriter fw =
+                new OutputStreamWriter(new FileOutputStream(thePathOfTheFile), "UTF-8");
+            fw.write((int) this.getEstTime());
+            fw.write(this.getLocHr());
+            fw.write(this.getEstSize());
+            fw.write(this.getEstDefect());
+            fw.write(this.getFilename());
+            fw.write(this.getDescription());
+            fw.write(this.getDescriptionSize());
+        
+            fw.flush();
+            fw.close();
+        }
+        catch (IOException ioException) {
+            new ExceptionDialog(
+                ioException,
+                "Saving the estimated time, estimated lines of code per hour, "
+                + " estimated size, and estimated number of defects, the file name and"
+                + " the description and the size of the description for use in XML file has failed" 
+                + thePathOfTheFile, "");
+        }
 	}
 
 	//toString method returns a String of all the instance variables
