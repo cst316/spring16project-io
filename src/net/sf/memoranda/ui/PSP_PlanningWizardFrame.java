@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,17 +18,21 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 
+import net.sf.memoranda.psp.PlanningImpl;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.util.Configuration;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
 
 /**
  * 
@@ -41,16 +47,20 @@ public class PSP_PlanningWizardFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtEstTime;
+	private JTextField txtEstLocHr;
 	private JTextField txtEstSize;
 	private JTextField txtEstDefect;
-	private JTextField txtEstLocHr;
 	
+	private PSP_NPWizardFrame goBack;
+	
+	static JFrame pwf = null;
 	private JTextField txtDescription;
 	private JTextField txtModuleSize;
 	private JButton btnAddModule;
 	private JPanel pnlEachFile;
 	private JLabel lblFilename;
 	private JTextField txtFilePath;	
+	private JButton btnFileFind;
 
 	private List <JTextField> modDescription = new ArrayList <JTextField>();
 	private List <JTextField> modSize = new ArrayList <JTextField>();
@@ -59,6 +69,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private List <JPanel> fileAdd = new ArrayList <JPanel> ();
 	private List <JButton> modAction = new ArrayList <JButton> ();
 	private List <JButton> fileAction = new ArrayList <JButton> ();
+	private List <JButton> fileFind = new ArrayList <JButton> ();
 	
 	private String pid;
 	private JButton btnFileAdd;
@@ -68,9 +79,10 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private JScrollPane spModule;
 	private JScrollPane spFile;
 	
-	int lastID = 0;
-	static JFrame pwf = null;	
-	private JLabel lblPID;
+	static int lastID = 0;
+	final JFileChooser fc = new JFileChooser ();
+	private JLabel lblProjId;
+	
 	/**
 	 * General constructor
 	 */
@@ -146,20 +158,20 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		pnlEstimates.add(txtEstTime);
 		txtEstTime.setColumns(10);
 		
+		txtEstLocHr = new JTextField();
+		txtEstLocHr.setColumns(10);
+		txtEstLocHr.setBounds(180, 80, 80, 25);
+		pnlEstimates.add(txtEstLocHr);
+		
 		txtEstSize = new JTextField();
 		txtEstSize.setColumns(10);
-		txtEstSize.setBounds(180, 80, 80, 25);
+		txtEstSize.setBounds(180, 115, 80, 25);
 		pnlEstimates.add(txtEstSize);
 		
 		txtEstDefect = new JTextField();
 		txtEstDefect.setColumns(10);
-		txtEstDefect.setBounds(180, 115, 80, 25);
+		txtEstDefect.setBounds(180, 45, 80, 25);
 		pnlEstimates.add(txtEstDefect);
-		
-		txtEstLocHr = new JTextField();
-		txtEstLocHr.setColumns(10);
-		txtEstLocHr.setBounds(180, 45, 80, 25);
-		pnlEstimates.add(txtEstLocHr);
 		
 		JButton button = new JButton("<< Back");
 		button.addActionListener(new ActionListener() {
@@ -198,10 +210,10 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		lblPID = new JLabel(lastID+"");
-		lblPID.setBounds(0, 0, 80, 25);
-		panel_2.add(lblPID);
-		lblPID.setHorizontalAlignment(SwingConstants.CENTER);
+		lblProjId = new JLabel(lastID+"");
+		lblProjId.setBounds(0, 0, 80, 25);
+		panel_2.add(lblProjId);
+		lblProjId.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		pnlModule = new JPanel();
 		pnlModule.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -278,7 +290,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 * Adding in the File names
 	 */
 	private void addPnlFile () {
-		int width = 425;
+		int width = 450;
 		int height = 25;
 		int x = 0;
 		int y = (fileAdd.size() == 0 ? 0 : 
@@ -297,21 +309,29 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		btnFileAdd = new JButton("");
 		btnFileAdd.setBackground(Color.WHITE);
 		btnFileAdd.setBorder(null);
-		btnFileAdd.setBounds(395, 0, 25, 25);
+		btnFileAdd.setBounds(360, 0, 25, 25);
 		fileAction.add(btnFileAdd);
 		
+		btnFileFind = new JButton("Open");
+		btnFileFind.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		btnFileFind.setBounds(390, 0, 60, 25);
+		fileFind.add(btnFileFind);
+					
 		JPanel holdItems = new JPanel();
 		holdItems.setBackground(Color.WHITE);
 		holdItems.setLayout(null);
 		holdItems.add(txtFilePath);
 		holdItems.add(lblFilename);		
 		holdItems.add(btnFileAdd);
+		holdItems.add(btnFileFind);
 		holdItems.setBounds(x, y, width, height);
 		fileAdd.add(holdItems);
 		
-		remActionListener(fileAction);
+		remActionListener (fileAction);
+		remActionListener (fileFind);
 		repaintPanel (fileAdd, fileAction, pnlEachFile);
-		addFileActionListner(fileAction);
+		addFileActionListner(fileAction, 0);
+		addFileActionListner(fileFind, 1);
 		pnlEachFile.setPreferredSize(new Dimension (width, y + height));
 	}
 	
@@ -322,17 +342,19 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 *  
 	 */
 	private void removePnlFile (ActionEvent e) {	
-		int width = 425;
+		int width = 450;
 		int height = 25;
 		int x = 0;
 		int y = 0;
 		
 		remActionListener (fileAction);
+		remActionListener (fileFind);
 		for (int i = 0; i < fileAction.size(); i++) {
 			if (e.getSource() == fileAction.get(i)) {
 				fileAction.remove(i);
 				fileAdd.remove(i);
 				filePath.remove(i);
+				fileFind.remove(i);
 				break;
 			}
 		}
@@ -343,7 +365,8 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		}
 		
 		repaintPanel (fileAdd, fileAction, pnlEachFile);
-		addFileActionListner(fileAction);
+		addFileActionListner(fileAction, 0);
+		addFileActionListner(fileFind, 1);		
 		pnlEachFile.setPreferredSize(new Dimension (width, y));
 		spFile.setVerticalScrollBarPolicy
 			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -353,7 +376,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 * Adding in the Module Items
 	 */
 	private void addPnlModule () {	
-		int width = 425;
+		int width = 450;
 		int height = 25;
 		int x = 0;
 		int y = (modAdd.size() == 0 ? 0 : 
@@ -398,7 +421,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 * item to remove from the display of file items
 	 */
 	private void removePnlModule (ActionEvent e) {	
-		int width = 425;
+		int width = 450;
 		int height = 25;
 		int x = 0;
 		int y = 0;
@@ -433,7 +456,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 * @param whichPnl - panel to repaint changes onto
 	 */
 	private void repaintPanel (List<JPanel> repaintPnl, List<JButton> iconBtn, JPanel whichPnl) {
-		String icon = "/net/sf/memoranda/ui/resources/icons/minus.png";		
+		String icon = "/net/sf/memoranda/ui/resources/icons/minus.png";			
 		
 		whichPnl.removeAll();
 		for (int i = 0; i < repaintPnl.size(); i++) {
@@ -458,13 +481,13 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			if (i == addB.size() - 1) {
 				addB.get(i).addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-							buttonAction_Clicked ("ADD_MOD");
-						}
-					});
+						buttonAction_Clicked ("ADD_MOD");
+					}
+				});
 			} else {
 				addB.get(i).addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-							removePnlModule (e);
+						removePnlModule (e);
 					}
 				});
 			}
@@ -475,18 +498,30 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 * Adding action listeners
 	 * @param addB - file buttons to add action listener to
 	 */
-	private void addFileActionListner (List<JButton> addB) {
+	private void addFileActionListner (List<JButton> addB, int code) {
 		for (int i = 0; i < addB.size(); i++) {
-			if (i == addB.size() - 1) {
-				addB.get(i).addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+			if (code == 0) {
+				if (i == addB.size() - 1) {
+					addB.get(i).addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
 							buttonAction_Clicked ("ADD_FILE");
 						}
 					});
-			} else {
+				} else {
+					addB.get(i).addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							removePnlFile (e);
+						}
+					});
+				}	
+			} else if (code == 1) {
 				addB.get(i).addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-							removePnlFile (e);
+						for (int i=0; i< addB.size(); i++)
+						{
+							if (e.getSource() == addB.get(i))
+								buttonAction_Clicked ("OPEN_FILE " + i);
+						}						
 					}
 				});
 			}
@@ -526,32 +561,52 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	}
 	
 	/**
+	 * Implementing open file dialog to help user select file location or name
+	 * @param i - the index of the text field to place the result in
+	 */
+	private void openFileDialog (int i) {
+		int returnVal = fc.showOpenDialog(this);
+		
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			filePath.get(i).setText(file.getName());			
+		}
+	}
+	
+	/**
 	 * Controls some action events, intermediary method
 	 * @param pan - has the value for which condition needs to be entered
 	 */
 	private void buttonAction_Clicked (String pan) {
 		pwf = this;
 		if (pan.equals("BACK")) {
-			PSP_NPWizardFrame.npw.setVisible(true);			
-			dispose();
+			PSP_NPWizardFrame.npw.setVisible(true);
+			this.setVisible(false);
 		} else if (pan.equals("FINISH")) {
 			App.getFrame().setEnabled(true);
-			PSP_NPWizardFrame npw = new PSP_NPWizardFrame (PSP_NPWizardFrame.npw);
-			PspImpl psp = new PspImpl (npw.getName().trim(), npw.getDescription().trim());
-			
+			int pid = Integer.parseInt(this.pid);
+			PSP_NPWizardFrame.npw.dispose();
+			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), 
+					PSP_NPWizardFrame.getProjDescription());
+			float estTime = Float.parseFloat(txtEstTime.getText().trim());
+			int estSize = Integer.parseInt(txtEstSize.getText().trim());
+			int estLocHr = Integer.parseInt(txtEstLocHr.getText().trim());
+			int estDefect = Integer.parseInt(txtEstDefect.getText().trim());
+			ArrayList<String> fn = getFileName ();
+			HashMap<String, Integer> pj = getProjDescription();
+ 			PlanningImpl plan = new PlanningImpl (estTime, estLocHr, estSize, estDefect, fn, pj);
+			plan.save(plan);
 			PspImpl.setLastID(lastID + 1);
-			psp.setName(npw.getName().trim());
-			psp.setDescription(npw.getDescription().trim());
-			
 			pwf = null;
 			PSP_NPWizardFrame.npw = null;
 			dispose();
 		} else if (pan.equals("CANCEL")) {
 			int confirm = JOptionPane.showConfirmDialog(null, 
-					"Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);			
+					"Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);
+			
 			if (confirm == JOptionPane.YES_OPTION) {
 				pwf = null;
-				PSP_NPWizardFrame.npw = null;
+				PSP_NPWizardFrame.npw.dispose();
 				dispose();
 				App.getFrame().setEnabled(true);
 			}
@@ -559,6 +614,31 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			addPnlModule ();	
 		} else if (pan.equals("ADD_FILE")) {	
 			addPnlFile ();
+		} else if (pan.contains("OPEN_FILE")) {
+			openFileDialog (Integer.parseInt(pan.trim().substring(10, pan.length())));
 		} 
+	}
+
+	private HashMap<String, Integer> getProjDescription() {
+		HashMap<String, Integer> modDesc = new HashMap<String, Integer>();
+		
+		for (int i = 0; i < modDescription.size(); i++)
+		{
+			String mod = modDescription.get(i).getText();
+			String size = modSize.get(i).getText();
+			if (!mod.isEmpty() && !size.isEmpty())
+				modDesc.put(mod, Integer.parseInt(size));
+		}		
+		
+		return modDesc;
+	}
+
+	private ArrayList<String> getFileName() {
+		ArrayList <String> fileNames = new ArrayList<String> ();
+		for (int i = 0; i < filePath.size(); i++) {
+			if (!filePath.get(i).getText().trim().isEmpty())
+				fileNames.add(filePath.get(i).getText().trim()); 
+		}
+		return fileNames;
 	}
 }

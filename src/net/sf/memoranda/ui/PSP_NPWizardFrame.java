@@ -38,8 +38,8 @@ public class PSP_NPWizardFrame extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblPID;
 	private JLabel lblNewLabel;
-	private JTextField txtPrjName;
-	private JTextPane txtPrjDescription;
+	private static JTextField txtPrjName;
+	private static JTextPane txtPrjDescription;
 	
 	//private 
 	
@@ -151,11 +151,11 @@ public class PSP_NPWizardFrame extends JFrame {
 		return Integer.parseInt(lblPID.getText().trim());
 	}
 	
-	public String getName () {
+	public static String getProjName () {
 		return txtPrjName.getText().trim();
 	}
 	
-	public String getDescription () {
+	public static String getProjDescription () {
 		return txtPrjDescription.getText().trim();
 	}
 	

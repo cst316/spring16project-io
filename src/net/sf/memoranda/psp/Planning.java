@@ -1,6 +1,7 @@
 package net.sf.memoranda.psp;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.sf.memoranda.date.CurrentDate;
@@ -31,7 +32,7 @@ public interface Planning extends Psp {
 	public void setEstDefect(int estDefect);
 
 	//Accessor abstract method that returns the name of the file to be used in the project (fileName)
-	public String getFilename();
+	public ArrayList<String> getFilename();
 
 	//Mutator abstract method that sets the fileName given a String as a parameter
 	public void setFilename(String filename);

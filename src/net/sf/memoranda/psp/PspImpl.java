@@ -2,12 +2,12 @@ package net.sf.memoranda.psp;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 
 
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.ExceptionDialog;
-import nu.xom.Attribute;
 
 public class PspImpl implements Psp {
 	
@@ -104,8 +104,25 @@ public class PspImpl implements Psp {
             fw.write(this.getName());
             fw.write(this.getDescription());
             fw.flush();
-            fw.close();
-    
+            fw.close();    
+        }
+        catch (IOException ioException) {
+            new ExceptionDialog(
+                ioException,
+                "Saving the Project ID, Project Name, and Project Description for use in XML file has failed" 
+                + thePathOfTheFile, "");
+        }
+	}
+	
+	//Models the saveDocument() method in FileStorage.java (.util package)
+	//Takes the file path as a parameter and object, and writes it to file
+	public void save(String thePathOfTheFile, PspImpl p)
+	{
+        try {
+            ObjectOutputStream os =
+                new ObjectOutputStream (new FileOutputStream(thePathOfTheFile));
+            os.writeObject(p);
+            os.close();    
         }
         catch (IOException ioException) {
             new ExceptionDialog(

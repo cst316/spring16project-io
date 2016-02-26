@@ -3,7 +3,9 @@ package net.sf.memoranda.psp;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.sf.memoranda.date.CurrentDate;
@@ -21,31 +23,31 @@ public class PlanningImpl implements Psp, Planning {
 	int estDefect;
 	int descriptionSize;
 
-	String filename;
-	HashMap <String, Integer> projectDescription;
+	ArrayList <String> filename = new ArrayList<String>();
+	HashMap <String, Integer> moduleDescription;
 	
 	//PlanningImpl class constructor with empty values and no parameters
 	public PlanningImpl() {
 		// TODO Auto-generated constructor stub
-		float estTime = 0;
-		int locHr = 0;
-		int estSize = 0; 
-		int estDefect = 0;
-		int descriptionSize = 0;
-		String filename = "";
-		HashMap <String, Integer> projectDescription = null;
+		this.estTime = 0.0f;
+		this.locHr = 0;
+		this.estSize = 0; 
+		this.estDefect = 0;
+		this.descriptionSize = 0;
+		this.filename = new ArrayList<String>();
+		this.moduleDescription = new HashMap <String, Integer> ();
 	}
 	
 	//PlanningImpl class constructor initialized to variables specified in the method parameter header  
 	public PlanningImpl(float estimatedTime, int linesOfCodePerHour, int estimatedSize, int estimatedDefect, 
-			int descriptionSize, String nameOfFile, HashMap <String, Integer> projDesc) {
+			ArrayList<String> nameOfFile, HashMap <String, Integer> projDesc) {
 		// TODO Auto-generated constructor stub
-		float estTime = estimatedTime;
-		int locHr = linesOfCodePerHour;
-		int estSize = estimatedSize; 
-		int estDefect = estimatedDefect;
-		String filename = nameOfFile;
-		HashMap <String, Integer> projectDescription = projDesc;
+		this.estTime = estimatedTime;
+		this.locHr = linesOfCodePerHour;
+		this.estSize = estimatedSize; 
+		this.estDefect = estimatedDefect;
+		this.filename = nameOfFile;
+		this.moduleDescription = projDesc;
 	}
 	
 	//Accessor method that gets the estimated time (estTime)
@@ -99,8 +101,8 @@ public class PlanningImpl implements Psp, Planning {
 	}
 
 	//Accessor method that returns the name of the file to be used in the project (fileName)
-	public String getFilename() {
-		return filename;
+	public ArrayList<String> getFilename() {
+		return this.filename;
 	}
 
 	//Mutator method that sets the fileName given a file as a parameter
@@ -110,12 +112,12 @@ public class PlanningImpl implements Psp, Planning {
 
 	//Accessor method that gets the project description as a hash map based on a unique key
 	public HashMap<String, Integer> getProjectDescription() {
-		return projectDescription;
+		return moduleDescription;
 	}
 
 	//Mutator method that sets the project description
 	public void setProjectDescription(HashMap<String, Integer> projectDescription) {
-		this.projectDescription = projectDescription;
+		this.moduleDescription = projectDescription;
 	}
 
 	//Accessor method that gets the start date (stDate)
@@ -170,7 +172,7 @@ public class PlanningImpl implements Psp, Planning {
             fw.write(this.getLocHr());
             fw.write(this.getEstSize());
             fw.write(this.getEstDefect());
-            fw.write(this.getFilename());
+            //fw.write(this.getFilename());
             fw.write(this.getDescription());
             fw.write(this.getDescriptionSize());
         
@@ -185,6 +187,22 @@ public class PlanningImpl implements Psp, Planning {
                 + " the description and the size of the description for use in XML file has failed" 
                 + thePathOfTheFile, "");
         }
+	}
+	
+	public void save (PlanningImpl p) {
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (""));
+			oos.writeObject(p);
+			oos.flush();
+			oos.close();
+		} catch (IOException ioException) {
+			new ExceptionDialog(
+	                ioException,
+	                "Saving the estimated time, estimated lines of code per hour, "
+	                + " estimated size, and estimated number of defects, the file name and"
+	                + " the description and the size of the description for use in XML file has failed" 
+	                + "thePathOfTheFile", "");
+		}
 	}
 
 	//toString method returns a String of all the instance variables
