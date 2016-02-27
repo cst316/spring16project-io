@@ -115,20 +115,23 @@ public class PspImpl implements Psp {
 	}
 	
 	//Models the saveDocument() method in FileStorage.java (.util package)
-	//Takes the file path as a parameter and object, and writes it to file
-	public void save(String thePathOfTheFile, PspImpl p)
+	//Takes the file stream as a parameter and object, and writes it to a file stream
+	public void save(FileOutputStream streamOfFile)
 	{
         try {
-            ObjectOutputStream os =
-                new ObjectOutputStream (new FileOutputStream(thePathOfTheFile));
-            os.writeObject(p);
-            os.close();    
+            ObjectOutputStream fw =
+                new ObjectOutputStream(streamOfFile);
+            fw.write(Psp.pID);
+            fw.writeObject(this.getName());
+            fw.writeObject(this.getDescription());
+            fw.flush();
+            fw.close();
+    
         }
         catch (IOException ioException) {
             new ExceptionDialog(
                 ioException,
-                "Saving the Project ID, Project Name, and Project Description for use in XML file has failed" 
-                + thePathOfTheFile, "");
+                "Saving the Project ID, Project Name, and Project Description for use in XML file has failed", "");
         }
 	}
 	

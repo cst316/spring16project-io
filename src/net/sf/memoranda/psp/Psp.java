@@ -1,5 +1,7 @@
 package net.sf.memoranda.psp;
 
+import java.io.FileOutputStream;
+
 import net.sf.memoranda.date.CurrentDate;
 
 public interface Psp {
@@ -26,5 +28,5 @@ public interface Psp {
 	public void setDescription(String description);
 	
 	//Abstract method to save all the values entered into the Psp wizard
-	public void save(String pathOfFile);
+	public void save(FileOutputStream stream);
 }

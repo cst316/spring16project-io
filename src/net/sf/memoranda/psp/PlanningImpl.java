@@ -171,20 +171,20 @@ public class PlanningImpl implements Psp, Planning {
 	}
 	
 	//Models the saveDocument() method in FileStorage.java (.util package)
-	//Takes 
-	public void save(String thePathOfTheFile)
+	//Takes the FileOutputStream as a parameter and saves the attributes of the PlanningImpl class to the file 
+	public void save(FileOutputStream streamOfFile)
 	{
-        try {
-            OutputStreamWriter fw =
-                new OutputStreamWriter(new FileOutputStream(thePathOfTheFile), "UTF-8");
-            fw.write((int) this.getEstTime());
+		try {
+            ObjectOutputStream fw =
+                new ObjectOutputStream(streamOfFile);
+            fw.writeFloat(this.getEstTime());
             fw.write(this.getLocHr());
             fw.write(this.getEstSize());
             fw.write(this.getEstDefect());
-            fw.write(this.getFilename());
-            fw.write(this.getDescription());
+            fw.writeObject(this.getFilename());;
+            fw.writeObject(this.getDescription());
             fw.write(this.getDescriptionSize());
-        
+            
             fw.flush();
             fw.close();
         }
@@ -193,8 +193,7 @@ public class PlanningImpl implements Psp, Planning {
                 ioException,
                 "Saving the estimated time, estimated lines of code per hour, "
                 + " estimated size, and estimated number of defects, the file name and"
-                + " the description and the size of the description for use in XML file has failed" 
-                + thePathOfTheFile, "");
+                + " the description and the size of the description for use in XML file has failed" , "");
         }
 	}
 	
