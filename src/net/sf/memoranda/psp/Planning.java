@@ -32,8 +32,12 @@ public interface Planning extends Psp {
 	public void setEstDefect(int estDefect);
 
 	//Accessor abstract method that returns the name of the file to be used in the project (fileName)
-	public ArrayList<String> getFilename();
+	public String getFilename();
 
+	//Accessor abstract method that returns the list of filenames in the planning (<fileName>)
+	public ArrayList<String> getFilenames();
+
+	
 	//Mutator abstract method that sets the fileName given a String as a parameter
 	public void setFilename(String filename);
 

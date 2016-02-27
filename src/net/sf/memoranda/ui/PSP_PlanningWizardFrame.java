@@ -70,6 +70,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private List <JButton> modAction = new ArrayList <JButton> ();
 	private List <JButton> fileAction = new ArrayList <JButton> ();
 	private List <JButton> fileFind = new ArrayList <JButton> ();
+	private List <String> planFiles = new ArrayList <String>();
 	
 	private String pid;
 	private JButton btnFileAdd;
@@ -80,7 +81,8 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private JScrollPane spFile;
 	
 	static int lastID = 0;
-	final JFileChooser fc = new JFileChooser ();
+	final JFileChooser fc = new JFileChooser(
+			new File(System.getProperty("user.dir") + File.separator + ".memoranda"));    
 	private JLabel lblProjId;
 	
 	/**
@@ -355,6 +357,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				fileAdd.remove(i);
 				filePath.remove(i);
 				fileFind.remove(i);
+				planFiles.remove(i);
 				break;
 			}
 		}
@@ -569,7 +572,8 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
-			filePath.get(i).setText(file.getName());			
+			filePath.get(i).setText(file.getName());
+			planFiles.add(file.getAbsolutePath());
 		}
 	}
 	
@@ -636,8 +640,12 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private ArrayList<String> getFileName() {
 		ArrayList <String> fileNames = new ArrayList<String> ();
 		for (int i = 0; i < filePath.size(); i++) {
-			if (!filePath.get(i).getText().trim().isEmpty())
-				fileNames.add(filePath.get(i).getText().trim()); 
+			if (!filePath.get(i).getText().trim().isEmpty()) {
+				if (filePath.get(i).getText().trim().contains(planFiles.get(i).trim()))
+					fileNames.add(planFiles.get(i).trim());
+				else
+					fileNames.add(filePath.get(i).getText().trim());
+			}
 		}
 		return fileNames;
 	}

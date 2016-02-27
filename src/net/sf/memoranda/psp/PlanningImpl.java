@@ -22,8 +22,9 @@ public class PlanningImpl implements Psp, Planning {
 	int estSize;
 	int estDefect;
 	int descriptionSize;
-
-	ArrayList <String> filename = new ArrayList<String>();
+	String filename;
+	
+	ArrayList <String> files = new ArrayList<String>();
 	HashMap <String, Integer> moduleDescription;
 	
 	//PlanningImpl class constructor with empty values and no parameters
@@ -34,7 +35,8 @@ public class PlanningImpl implements Psp, Planning {
 		this.estSize = 0; 
 		this.estDefect = 0;
 		this.descriptionSize = 0;
-		this.filename = new ArrayList<String>();
+		this.files = new ArrayList<String>();
+		this.filename = "";
 		this.moduleDescription = new HashMap <String, Integer> ();
 	}
 	
@@ -46,7 +48,8 @@ public class PlanningImpl implements Psp, Planning {
 		this.locHr = linesOfCodePerHour;
 		this.estSize = estimatedSize; 
 		this.estDefect = estimatedDefect;
-		this.filename = nameOfFile;
+		this.files = nameOfFile;
+		this.filename="";
 		this.moduleDescription = projDesc;
 	}
 	
@@ -100,9 +103,15 @@ public class PlanningImpl implements Psp, Planning {
 		this.descriptionSize = descriptionSize;
 	}
 
-	//Accessor method that returns the name of the file to be used in the project (fileName)
-	public ArrayList<String> getFilename() {
+	//Accessor abstract method that returns the name of the file to be used in the project (fileName)
+	public String getFilename() {
+		// TODO Auto-generated method stub
 		return this.filename;
+	}
+
+	//Accessor method that returns the name of the file to be used in the project (fileName)
+	public ArrayList<String> getFilenames () {
+		return this.files;
 	}
 
 	//Mutator method that sets the fileName given a file as a parameter
@@ -172,7 +181,7 @@ public class PlanningImpl implements Psp, Planning {
             fw.write(this.getLocHr());
             fw.write(this.getEstSize());
             fw.write(this.getEstDefect());
-            //fw.write(this.getFilename());
+            fw.write(this.getFilename());
             fw.write(this.getDescription());
             fw.write(this.getDescriptionSize());
         
@@ -212,5 +221,4 @@ public class PlanningImpl implements Psp, Planning {
 				", Estimated Size = " + this.getEstSize() + ", Estimated Defects = " + this.getEstDefect() + 
 				", Filename=" + this.getFilename() + ", projectDescription=" + this.getProjectDescription();
 	}
-
 }
