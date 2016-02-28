@@ -7,12 +7,15 @@ import java.awt.BorderLayout;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
+import net.sf.memoranda.util.Local;
+
 import java.awt.Color;
 
 import javax.swing.JSpinner;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
@@ -25,6 +28,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JFormattedTextField;
 
 public class PSPTestingFrame extends JFrame {
 	private JTable table_1;
@@ -32,13 +36,6 @@ public class PSPTestingFrame extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
 	private JTextField textField_11;
 	private JTextField textField_12;
 	private JTextField textField_13;
@@ -60,6 +57,16 @@ public class PSPTestingFrame extends JFrame {
 	private JTextField textField_29;
 	private JTextField textField_30;
 	private JTextField textField_31;
+	
+	private JPanel panel;
+	private JPanel panel_1;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
+	private JTextField textField_8;
+	private JTextField textField_9;
+	private JTextField textField_10;
 
 	public PSPTestingFrame() {
 		getContentPane().setLayout(null);
@@ -72,6 +79,7 @@ public class PSPTestingFrame extends JFrame {
 		"\n40 Assignment\t\t90 System" + "\n50 Interface\t\t100 Environment");
 		
 		txtrD.setBounds(897, 13, 343, 121);
+		txtrD.setEditable(false);
 		getContentPane().add(txtrD);
 		
 		JLabel lblStudent = new JLabel("Student:");
@@ -91,126 +99,46 @@ public class PSPTestingFrame extends JFrame {
 		getContentPane().add(label_2);
 		
 		textField = new JTextField();
-		textField.setText("PSP Defect Recording Log");
+		textField.setText("");
 		textField.setColumns(10);
 		textField.setBounds(92, 46, 166, 22);
 		getContentPane().add(textField);
 		
 		textField_1 = new JTextField();
-		textField_1.setText("PSP Defect Recording Log");
+		textField_1.setText("");
 		textField_1.setColumns(10);
 		textField_1.setBounds(92, 98, 166, 22);
 		getContentPane().add(textField_1);
 		
 		textField_2 = new JTextField();
-		textField_2.setText("PSP Defect Recording Log");
+		textField_2.setText("");
 		textField_2.setColumns(10);
 		textField_2.setBounds(344, 48, 166, 22);
 		getContentPane().add(textField_2);
 		
 		textField_3 = new JTextField();
-		textField_3.setText("PSP Defect Recording Log");
+		textField_3.setText("");
 		textField_3.setColumns(10);
 		textField_3.setBounds(344, 98, 166, 22);
 		getContentPane().add(textField_3);
 		
-		JLabel lblPspDefectRecording = new JLabel("PSP Defect Recording Log");
-		lblPspDefectRecording.setBounds(506, 16, 159, 16);
+		JLabel lblPspDefectRecording = new JLabel("Testing and Defects Log");
+		lblPspDefectRecording.setBounds(590, 16, 159, 16);
 		getContentPane().add(lblPspDefectRecording);
 		
-		JLabel lblNewLabel = new JLabel("Project");
-		lblNewLabel.setBounds(74, 158, 56, 16);
-		getContentPane().add(lblNewLabel);
-		
-		JLabel lblDate = new JLabel("Date");
-		lblDate.setBounds(217, 158, 56, 16);
-		getContentPane().add(lblDate);
-		
-		JLabel lblNumber = new JLabel("Number");
-		lblNumber.setBounds(311, 158, 56, 16);
-		getContentPane().add(lblNumber);
-		
-		JLabel lblNewLabel_1 = new JLabel("Type");
-		lblNewLabel_1.setBounds(428, 158, 56, 16);
-		getContentPane().add(lblNewLabel_1);
-		
-		JLabel label_3 = new JLabel("Inject");
-		label_3.setBounds(556, 158, 56, 16);
-		getContentPane().add(label_3);
-		
-		JLabel label_4 = new JLabel("Remove");
-		label_4.setBounds(670, 158, 56, 16);
-		getContentPane().add(label_4);
-		
-		JLabel label_5 = new JLabel("Fix");
-		label_5.setBounds(886, 158, 56, 16);
-		getContentPane().add(label_5);
-		
-		JLabel label_6 = new JLabel("Fix Ref.");
-		label_6.setBounds(1106, 158, 56, 16);
-		getContentPane().add(label_6);
-		
-		JEditorPane textPane = new JEditorPane();
-		textPane.setBounds(772, 187, 291, 62);
-		getContentPane().add(textPane);
-		
-		textField_4 = new JTextField();
-		textField_4.setBounds(27, 186, 147, 22);
-		getContentPane().add(textField_4);
-		textField_4.setColumns(10);
-		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(186, 187, 87, 22);
-		getContentPane().add(textField_5);
-		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(292, 187, 87, 22);
-		getContentPane().add(textField_6);
-		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(405, 186, 87, 22);
-		getContentPane().add(textField_7);
-		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(535, 186, 87, 22);
-		getContentPane().add(textField_8);
-		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(651, 186, 87, 22);
-		getContentPane().add(textField_9);
-		
-		textField_10 = new JTextField();
-		textField_10.setBounds(1095, 186, 70, 22);
-		getContentPane().add(textField_10);
-		textField_10.setColumns(10);
-		
-		JButton btnNewButton = new JButton();
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton.setBounds(1191, 186, 49, 22);
-		btnNewButton.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/addbookmark.png")));
-		getContentPane().add(btnNewButton);		
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(12, 261, 1236, 379);
+		panel = new JPanel();
+		panel.setBounds(12, 147, 1236, 493);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 	
 		
 		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(1203, 122, 21, 48);
+		scrollBar.setBounds(1203, 192, 21, 48);
 		panel.add(scrollBar);
 		
 		
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panel_1.setBounds(12, 13, 1153, 77);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
@@ -274,7 +202,7 @@ public class PSPTestingFrame extends JFrame {
 		label_13.setBounds(827, 13, 56, 16);
 		panel_1.add(label_13);
 		
-		JEditorPane editorPane = new JEditorPane();
+		JTextField editorPane = new JTextField();
 		editorPane.setBounds(738, 42, 216, 22);
 		panel_1.add(editorPane);
 		
@@ -289,11 +217,12 @@ public class PSPTestingFrame extends JFrame {
 		
 		JButton button = new JButton();
 		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				buttonActionPerformed(e);
 			}
 		});
 		button.setBounds(1068, 41, 49, 22);
-		button.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/addbookmark.png")));
+		button.setText("+");;
 		panel_1.add(button);
 		
 		JPanel panel_2 = new JPanel();
@@ -359,7 +288,7 @@ public class PSPTestingFrame extends JFrame {
 		label_21.setBounds(827, 13, 56, 16);
 		panel_2.add(label_21);
 		
-		JEditorPane editorPane_1 = new JEditorPane();
+		JTextField editorPane_1 = new JTextField();
 		editorPane_1.setBounds(738, 42, 216, 22);
 		panel_2.add(editorPane_1);
 		
@@ -374,6 +303,7 @@ public class PSPTestingFrame extends JFrame {
 		
 		JButton button_1 = new JButton();
 		button_1.setBounds(1068, 41, 49, 22);
+		button_1.setText("+");
 		panel_2.add(button_1);
 		
 		JPanel panel_3 = new JPanel();
@@ -439,7 +369,7 @@ public class PSPTestingFrame extends JFrame {
 		label_29.setBounds(827, 13, 56, 16);
 		panel_3.add(label_29);
 		
-		JEditorPane editorPane_2 = new JEditorPane();
+		JTextField editorPane_2 = new JTextField();
 		editorPane_2.setBounds(738, 42, 216, 22);
 		panel_3.add(editorPane_2);
 		
@@ -453,8 +383,99 @@ public class PSPTestingFrame extends JFrame {
 		panel_3.add(textField_31);
 		
 		JButton button_2 = new JButton();
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		button_2.setBounds(1068, 41, 49, 22);
+		button_2.setText("+");
 		panel_3.add(button_2);
-		// TODO Auto-generated constructor stub
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setLayout(null);
+		panel_4.setBounds(12, 352, 1153, 77);
+		panel.add(panel_4);
+		
+		JLabel label_3 = new JLabel("Project");
+		label_3.setBounds(66, 13, 49, 22);
+		panel_4.add(label_3);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(12, 42, 147, 22);
+		panel_4.add(textField_4);
+		
+		JLabel label_4 = new JLabel("Date");
+		label_4.setBounds(220, 13, 56, 16);
+		panel_4.add(label_4);
+		
+		textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		textField_5.setBounds(188, 42, 87, 22);
+		panel_4.add(textField_5);
+		
+		JLabel label_5 = new JLabel("Number");
+		label_5.setBounds(321, 13, 56, 16);
+		panel_4.add(label_5);
+		
+		textField_6 = new JTextField();
+		textField_6.setColumns(10);
+		textField_6.setBounds(298, 42, 87, 22);
+		panel_4.add(textField_6);
+		
+		JLabel label_6 = new JLabel("Type");
+		label_6.setBounds(433, 13, 56, 16);
+		panel_4.add(label_6);
+		
+		textField_7 = new JTextField();
+		textField_7.setColumns(10);
+		textField_7.setBounds(410, 42, 87, 22);
+		panel_4.add(textField_7);
+		
+		JLabel label_31 = new JLabel("Inject");
+		label_31.setBounds(540, 13, 56, 16);
+		panel_4.add(label_31);
+		
+		textField_8 = new JTextField();
+		textField_8.setColumns(10);
+		textField_8.setBounds(521, 42, 87, 22);
+		panel_4.add(textField_8);
+		
+		JLabel label_32 = new JLabel("Remove");
+		label_32.setBounds(652, 13, 56, 16);
+		panel_4.add(label_32);
+		
+		textField_9 = new JTextField();
+		textField_9.setColumns(10);
+		textField_9.setBounds(635, 42, 87, 22);
+		panel_4.add(textField_9);
+		
+		JLabel label_33 = new JLabel("Fix");
+		label_33.setBounds(827, 13, 56, 16);
+		panel_4.add(label_33);
+		
+		JTextField editorPane_3 = new JTextField();
+		editorPane_3.setBounds(738, 42, 216, 22);
+		panel_4.add(editorPane_3);
+		
+		JLabel label_34 = new JLabel("Fix Ref.");
+		label_34.setBounds(973, 13, 56, 16);
+		panel_4.add(label_34);
+		
+		textField_10 = new JTextField();
+		textField_10.setColumns(10);
+		textField_10.setBounds(966, 42, 70, 22);
+		panel_4.add(textField_10);
+		
+		JButton button_3 = new JButton();
+		button_3.setBounds(1068, 41, 49, 22);
+		button_3.setText("+");
+		panel_4.add(button_3);
+		
+	}
+	
+	void buttonActionPerformed(ActionEvent e)
+	{
+		panel.add(panel_1).setBounds(12, 122, 1153, 77);	
 	}
 }
