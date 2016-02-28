@@ -57,7 +57,6 @@ public class TaskDialogClose extends JDialog {
 //    Border border5;
 //    Border border6;
     JPanel jPanel2 = new JPanel(new GridLayout(3, 2));
-    JTextField todoField = new JTextField();
     
     // added by rawsushi
     JTextField effortField = new JTextField();
@@ -76,7 +75,6 @@ public class TaskDialogClose extends JDialog {
     JPanel jPanel4 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     JPanel jPanel6 = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JLabel jLabel6 = new JLabel();
-    JButton setStartDateB = new JButton();
     JPanel jPanel1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     JLabel jLabel2 = new JLabel();
     JSpinner startDate;
@@ -86,18 +84,11 @@ public class TaskDialogClose extends JDialog {
     //JPanel jPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JPanel jPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JPanel jPanelEffort = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//    JPanel jPanelNotes = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    
-    JButton setNotifB = new JButton();
-    JComboBox priorityCB = new JComboBox(priority);
-    JLabel jLabel7 = new JLabel();
     // added by rawsushi
     JLabel jLabelEffort = new JLabel();
 	JCheckBox chkEndDate = new JCheckBox();
 	
 	JPanel jPanelProgress = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-	JLabel jLabelProgress = new JLabel();
-	JSpinner progress = new JSpinner(new SpinnerNumberModel(0, 0, 100, 5));
 	
 	//Forbid to set dates outside the bounds
 	CalendarDate startDateMin = CurrentProject.get().getStartDate();
@@ -123,7 +114,7 @@ public class TaskDialogClose extends JDialog {
         border2 = BorderFactory.createEtchedBorder(Color.white, 
             new Color(142, 142, 142));
         border3 = new TitledBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0), 
-        Local.getString("Description"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
+        Local.getString("Comments"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
         border4 = BorderFactory.createEmptyBorder(0, 5, 0, 5);
 //        border5 = BorderFactory.createEmptyBorder();
 //        border6 = BorderFactory.createBevelBorder(BevelBorder.LOWERED,
@@ -183,7 +174,6 @@ public class TaskDialogClose extends JDialog {
         GridBagConstraints gbCon = new GridBagConstraints();
         gbCon.gridwidth = GridBagConstraints.REMAINDER;
         gbCon.weighty = 1;
-        gbLayout.setConstraints(todoField,gbCon);
         gbCon = new GridBagConstraints();
         gbCon.gridwidth = GridBagConstraints.REMAINDER;
         gbCon.weighty = 1;
@@ -244,16 +234,6 @@ public class TaskDialogClose extends JDialog {
         //jLabel6.setPreferredSize(new Dimension(60, 16));
         jLabel6.setMinimumSize(new Dimension(60, 16));
         jLabel6.setMaximumSize(new Dimension(100, 16));
-        setStartDateB.setMinimumSize(new Dimension(24, 24));
-        setStartDateB.setPreferredSize(new Dimension(24, 24));
-        setStartDateB.setText("");
-        setStartDateB.setIcon(
-            new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/calendar.png")));
-        setStartDateB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setStartDateB_actionPerformed(e);
-            }
-        });
         jLabel2.setMaximumSize(new Dimension(270, 16));
         //jLabel2.setPreferredSize(new Dimension(60, 16));
         jLabel2.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -301,22 +281,6 @@ public class TaskDialogClose extends JDialog {
                 setEndDateB_actionPerformed(e);
             }
         });
-        
-        setNotifB.setText(Local.getString("Set notification"));
-        setNotifB.setIcon(
-            new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/notify.png")));
-        setNotifB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setNotifB_actionPerformed(e);
-            }
-        });
-        jLabel7.setMaximumSize(new Dimension(100, 16));
-        jLabel7.setMinimumSize(new Dimension(60, 16));
-        //jLabel7.setPreferredSize(new Dimension(60, 16));
-        jLabel7.setText(Local.getString("Priority"));
-
-        priorityCB.setFont(new java.awt.Font("Dialog", 0, 11));
-        jPanel4.add(jLabel7, null);
         getContentPane().add(mPanel);
         mPanel.add(areaPanel, BorderLayout.CENTER);
         mPanel.add(buttonsPanel, BorderLayout.SOUTH);
@@ -325,13 +289,11 @@ public class TaskDialogClose extends JDialog {
         this.getContentPane().add(dialogTitlePanel, BorderLayout.NORTH);
         dialogTitlePanel.add(header, null);
         areaPanel.add(jPanel8, BorderLayout.NORTH);
-        jPanel8.add(todoField, null);
         jPanel8.add(descriptionScrollPane, null);
         areaPanel.add(jPanel2, BorderLayout.CENTER);
         jPanel2.add(jPanel6, null);
         jPanel6.add(jLabel6, null);
         jPanel6.add(startDate, null);
-        jPanel6.add(setStartDateB, null);
         jPanel2.add(jPanel1, null);
 		jPanel1.add(chkEndDate, null);
         jPanel1.add(jLabel2, null);
@@ -343,17 +305,8 @@ public class TaskDialogClose extends JDialog {
         jPanelEffort.add(effortField, null);
 
         jPanel2.add(jPanel4, null);
-        jPanel4.add(priorityCB, null);
         jPanel2.add(jPanel3, null);
-        
-        jPanel3.add(setNotifB, null);
-        
-        jLabelProgress.setText(Local.getString("Progress"));
-        jPanelProgress.add(jLabelProgress, null);
-        jPanelProgress.add(progress, null);
         jPanel2.add(jPanelProgress);
-        
-        priorityCB.setSelectedItem(Local.getString("Normal"));
         startCalFrame.cal.addSelectionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (ignoreStartChanged)
@@ -412,24 +365,11 @@ public class TaskDialogClose extends JDialog {
 		}
 	}
 
-    void setStartDateB_actionPerformed(ActionEvent e) {
-        startCalFrame.setLocation(setStartDateB.getLocation());
-        startCalFrame.setSize(200, 200);
-        this.getLayeredPane().add(startCalFrame);
-        startCalFrame.show();
-
-    }
-
     void setEndDateB_actionPerformed(ActionEvent e) {
         endCalFrame.setLocation(setEndDateB.getLocation());
         endCalFrame.setSize(200, 200);
         this.getLayeredPane().add(endCalFrame);
         endCalFrame.show();
-    }
-    
-    void setNotifB_actionPerformed(ActionEvent e) {
-    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
     }
 
 }

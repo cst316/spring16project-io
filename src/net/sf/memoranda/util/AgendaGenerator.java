@@ -139,7 +139,7 @@ public class AgendaGenerator {
 		if (pg == 100)
 			progress = "<font color=\"green\">"+Local.getString("Completed")+"</font>";
 		else
-			progress = pg + Local.getString("% done");
+			progress = pg + Local.getString("% donetest");
 
 		//		String nbsp = "&nbsp;&nbsp;";
 		//		String spacing = "";
