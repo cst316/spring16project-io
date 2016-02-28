@@ -54,9 +54,13 @@ public interface Planning extends Psp {
 	//Mutator abstract method that sets the start date (stDate)
 	@Override
 	public void setStDate(CurrentDate stDate);
+	
 	//Accessor abstract method that gets the name by returning the pspValues object reference variable's getName() method
 	@Override
 	public String getName();
+	
+	//Gives access to Psp that corresponds to this Plan
+	public void setPspValues (Psp pspValues);
 
 	//Mutator abstract method that sets the name by using the pspValues object reference variable
 	@Override

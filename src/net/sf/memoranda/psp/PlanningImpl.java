@@ -14,15 +14,15 @@ import net.sf.memoranda.ui.ExceptionDialog;
 public class PlanningImpl implements Psp, Planning {
 	
 	//Psp interface reference variable used to get access to the Psp pID constant
-	Psp pspValues;
+	private Psp pspValues;
 
 	//Attributes related to the Planning class
-	float estTime;
-	int locHr;
-	int estSize;
-	int estDefect;
-	int descriptionSize;
-	String filename;
+	private float estTime;
+	private int locHr;
+	private int estSize;
+	private int estDefect;
+	private int descriptionSize;
+	private String filename;
 	
 	ArrayList <String> files = new ArrayList<String>();
 	HashMap <String, Integer> moduleDescription;
@@ -219,5 +219,11 @@ public class PlanningImpl implements Psp, Planning {
 		return "Planning:\n" + "Estimated Time = " + this.getEstTime() + ", Lines of Code = " + this.getLocHr() + 
 				", Estimated Size = " + this.getEstSize() + ", Estimated Defects = " + this.getEstDefect() + 
 				", Filename=" + this.getFilename() + ", projectDescription=" + this.getProjectDescription();
+	}
+
+	@Override
+	public void setPspValues(Psp pspValues) {
+		// TODO Auto-generated method stub
+		this.pspValues = pspValues;
 	}
 }

@@ -588,7 +588,6 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			this.setVisible(false);
 		} else if (pan.equals("FINISH")) {
 			App.getFrame().setEnabled(true);
-			int pid = Integer.parseInt(this.pid);
 			PSP_NPWizardFrame.npw.dispose();
 			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), 
 					PSP_NPWizardFrame.getProjDescription());
@@ -600,6 +599,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			HashMap<String, Integer> pj = getProjDescription();
  			PlanningImpl plan = new PlanningImpl (estTime, estLocHr, estSize, estDefect, fn, pj);
 			plan.save(plan);
+			plan.setPspValues(psp);
 			PspImpl.setLastID(lastID + 1);
 			pwf = null;
 			PSP_NPWizardFrame.npw = null;
