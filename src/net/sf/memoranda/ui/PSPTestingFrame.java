@@ -31,451 +31,452 @@ import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
 
 public class PSPTestingFrame extends JFrame {
-	private JTable table_1;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_11;
-	private JTextField textField_12;
-	private JTextField textField_13;
-	private JTextField textField_14;
-	private JTextField textField_15;
-	private JTextField textField_16;
-	private JTextField textField_17;
-	private JTextField textField_18;
-	private JTextField textField_19;
-	private JTextField textField_20;
-	private JTextField textField_21;
-	private JTextField textField_22;
-	private JTextField textField_23;
-	private JTextField textField_24;
-	private JTextField textField_25;
-	private JTextField textField_26;
-	private JTextField textField_27;
-	private JTextField textField_28;
-	private JTextField textField_29;
-	private JTextField textField_30;
-	private JTextField textField_31;
 	
-	private JPanel panel;
-	private JPanel panel_1;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
+	private JTextField studentTextField;
+	private JTextField dateTextField;
+	private JTextField programTextField;
+	private JTextField programNumberTextField;
+	private JTextField projectTextField_1;
+	private JTextField dateTextField_1;
+	private JTextField numberTextField_1;
+	private JTextField typeTextField_1;
+	private JTextField injectTextField_1;
+	private JTextField removeTextField_1;
+	private JTextField fixRefTextField_1;
+	private JTextField projectTextField_2;
+	private JTextField dateTextField_2;
+	private JTextField numberTextField_2;
+	private JTextField typeTextField_2;
+	private JTextField injectTextField_2;
+	private JTextField removeTextField_2;
+	private JTextField fixRefTextField_2;
+	private JTextField projectTextField_3;
+	private JTextField dateTextField_3;
+	private JTextField numberTextField_3;
+	private JTextField typeTextField_3;
+	private JTextField injectTextField_3;
+	private JTextField removeTextField_3;
+	private JTextField fixRefTextField_3;
+	private JTextField projectTextField_4;
+	private JTextField dateTextField_4;
+	private JTextField numberTextField_4;
+	private JTextField typeTextField_4;
+	private JTextField injectTextField_4;
+	private JTextField removeTextField_4;
+	private JTextField fixRefTextField_4;
+	
+	private JPanel containsLogsPanel;
+	private JPanel eachLogPanel_1;
+
 
 	public PSPTestingFrame() {
 		getContentPane().setLayout(null);
 		this.setTitle("Testing Log");
 		this.setBounds(0, 0, 1290, 700);
 		
-		JTextArea txtrD = new JTextArea();
-		txtrD.setText("Defect Types" + "\n10 Documentation\t60 Checking" +
+		JTextArea defectContentKey = new JTextArea();
+		defectContentKey.setText("Defect Types" + "\n10 Documentation\t60 Checking" +
 		"\n20 Syntax\t\t70 Data" + "\n30 Build, Package\t80 Function" + 
 		"\n40 Assignment\t\t90 System" + "\n50 Interface\t\t100 Environment");
 		
-		txtrD.setBounds(897, 13, 343, 121);
-		txtrD.setEditable(false);
-		getContentPane().add(txtrD);
+		defectContentKey.setBounds(897, 13, 343, 121);
+		defectContentKey.setEditable(false);
+		getContentPane().add(defectContentKey);
 		
-		JLabel lblStudent = new JLabel("Student:");
-		lblStudent.setBounds(37, 49, 56, 16);
-		getContentPane().add(lblStudent);
+		JLabel studentLabel = new JLabel("Student:");
+		studentLabel.setBounds(37, 49, 56, 16);
+		getContentPane().add(studentLabel);
 		
-		JLabel label = new JLabel("Date:");
-		label.setBounds(37, 101, 56, 16);
-		getContentPane().add(label);
+		JLabel dateLabel = new JLabel("Date:");
+		dateLabel.setBounds(37, 101, 56, 16);
+		getContentPane().add(dateLabel);
 		
-		JLabel label_1 = new JLabel("Program:");
-		label_1.setBounds(270, 49, 56, 16);
-		getContentPane().add(label_1);
+		JLabel programLabel = new JLabel("Program:");
+		programLabel.setBounds(270, 49, 56, 16);
+		getContentPane().add(programLabel);
 		
-		JLabel label_2 = new JLabel("Program #:");
-		label_2.setBounds(268, 101, 87, 16);
-		getContentPane().add(label_2);
+		JLabel programNoLabel = new JLabel("Program #:");
+		programNoLabel.setBounds(268, 101, 87, 16);
+		getContentPane().add(programNoLabel);
 		
-		textField = new JTextField();
-		textField.setText("");
-		textField.setColumns(10);
-		textField.setBounds(92, 46, 166, 22);
-		getContentPane().add(textField);
+		studentTextField = new JTextField();
+		studentTextField.setText("");
+		studentTextField.setColumns(10);
+		studentTextField.setBounds(92, 46, 166, 22);
+		getContentPane().add(studentTextField);
 		
-		textField_1 = new JTextField();
-		textField_1.setText("");
-		textField_1.setColumns(10);
-		textField_1.setBounds(92, 98, 166, 22);
-		getContentPane().add(textField_1);
+		dateTextField = new JTextField();
+		dateTextField.setText("");
+		dateTextField.setColumns(10);
+		dateTextField.setBounds(92, 98, 166, 22);
+		getContentPane().add(dateTextField);
 		
-		textField_2 = new JTextField();
-		textField_2.setText("");
-		textField_2.setColumns(10);
-		textField_2.setBounds(344, 48, 166, 22);
-		getContentPane().add(textField_2);
+		programTextField = new JTextField();
+		programTextField.setText("");
+		programTextField.setColumns(10);
+		programTextField.setBounds(344, 48, 166, 22);
+		getContentPane().add(programTextField);
 		
-		textField_3 = new JTextField();
-		textField_3.setText("");
-		textField_3.setColumns(10);
-		textField_3.setBounds(344, 98, 166, 22);
-		getContentPane().add(textField_3);
+		programNumberTextField = new JTextField();
+		programNumberTextField.setText("");
+		programNumberTextField.setColumns(10);
+		programNumberTextField.setBounds(344, 98, 166, 22);
+		getContentPane().add(programNumberTextField);
 		
-		JLabel lblPspDefectRecording = new JLabel("Testing and Defects Log");
-		lblPspDefectRecording.setBounds(590, 16, 159, 16);
-		getContentPane().add(lblPspDefectRecording);
+		JLabel testingFrameTitleLbl = new JLabel("Testing and Defects Page");
+		testingFrameTitleLbl.setBounds(590, 16, 159, 16);
+		getContentPane().add(testingFrameTitleLbl);
 		
-		panel = new JPanel();
-		panel.setBounds(12, 147, 1236, 493);
-		getContentPane().add(panel);
-		panel.setLayout(null);
+		containsLogsPanel = new JPanel();
+		containsLogsPanel.setBounds(12, 147, 1236, 493);
+		getContentPane().add(containsLogsPanel);
+		containsLogsPanel.setLayout(null);
 		
 	
 		
 		JScrollBar scrollBar = new JScrollBar();
 		scrollBar.setBounds(1203, 192, 21, 48);
-		panel.add(scrollBar);
+		containsLogsPanel.add(scrollBar);
 		
 		
-		panel_1 = new JPanel();
-		panel_1.setBounds(12, 13, 1153, 77);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
+		eachLogPanel_1 = new JPanel();
+		eachLogPanel_1.setBounds(12, 13, 1153, 77);
+		containsLogsPanel.add(eachLogPanel_1);
+		eachLogPanel_1.setLayout(null);
 
 		
-		JLabel label_7 = new JLabel("Project");
-		label_7.setBounds(66, 13, 49, 22);
-		panel_1.add(label_7);
+		JLabel projectLabel_1 = new JLabel("Project");
+		projectLabel_1.setBounds(66, 13, 49, 22);
+		eachLogPanel_1.add(projectLabel_1);
 		
-		textField_11 = new JTextField();
-		textField_11.setColumns(10);
-		textField_11.setBounds(12, 42, 147, 22);
-		panel_1.add(textField_11);
+		projectTextField_1 = new JTextField();
+		projectTextField_1.setColumns(10);
+		projectTextField_1.setBounds(12, 42, 147, 22);
+		eachLogPanel_1.add(projectTextField_1);
 		
-		JLabel label_8 = new JLabel("Date");
-		label_8.setBounds(220, 13, 56, 16);
-		panel_1.add(label_8);
+		JLabel dateLabel_1 = new JLabel("Date");
+		dateLabel_1.setBounds(220, 13, 56, 16);
+		eachLogPanel_1.add(dateLabel_1);
 		
-		textField_12 = new JTextField();
-		textField_12.setColumns(10);
-		textField_12.setBounds(188, 42, 87, 22);
-		panel_1.add(textField_12);
+		dateTextField_1 = new JTextField();
+		dateTextField_1.setColumns(10);
+		dateTextField_1.setBounds(188, 42, 87, 22);
+		eachLogPanel_1.add(dateTextField_1);
 		
-		JLabel label_9 = new JLabel("Number");
-		label_9.setBounds(321, 13, 56, 16);
-		panel_1.add(label_9);
+		JLabel numberLabel_1 = new JLabel("Number");
+		numberLabel_1.setBounds(321, 13, 56, 16);
+		eachLogPanel_1.add(numberLabel_1);
 		
-		textField_13 = new JTextField();
-		textField_13.setColumns(10);
-		textField_13.setBounds(298, 42, 87, 22);
-		panel_1.add(textField_13);
+		numberTextField_1 = new JTextField();
+		numberTextField_1.setColumns(10);
+		numberTextField_1.setBounds(298, 42, 87, 22);
+		eachLogPanel_1.add(numberTextField_1);
 		
-		JLabel label_10 = new JLabel("Type");
-		label_10.setBounds(433, 13, 56, 16);
-		panel_1.add(label_10);
+		JLabel typeLabel_1 = new JLabel("Type");
+		typeLabel_1.setBounds(433, 13, 56, 16);
+		eachLogPanel_1.add(typeLabel_1);
 		
-		textField_14 = new JTextField();
-		textField_14.setColumns(10);
-		textField_14.setBounds(410, 42, 87, 22);
-		panel_1.add(textField_14);
+		typeTextField_1 = new JTextField();
+		typeTextField_1.setColumns(10);
+		typeTextField_1.setBounds(410, 42, 87, 22);
+		eachLogPanel_1.add(typeTextField_1);
 		
-		JLabel label_11 = new JLabel("Inject");
-		label_11.setBounds(540, 13, 56, 16);
-		panel_1.add(label_11);
+		JLabel injectLabel_1 = new JLabel("Inject");
+		injectLabel_1.setBounds(540, 13, 56, 16);
+		eachLogPanel_1.add(injectLabel_1);
 		
-		textField_15 = new JTextField();
-		textField_15.setColumns(10);
-		textField_15.setBounds(521, 42, 87, 22);
-		panel_1.add(textField_15);
+		injectTextField_1 = new JTextField();
+		injectTextField_1.setColumns(10);
+		injectTextField_1.setBounds(521, 42, 87, 22);
+		eachLogPanel_1.add(injectTextField_1);
 		
-		JLabel label_12 = new JLabel("Remove");
-		label_12.setBounds(652, 13, 56, 16);
-		panel_1.add(label_12);
+		JLabel removeLabel_1 = new JLabel("Remove");
+		removeLabel_1.setBounds(652, 13, 56, 16);
+		eachLogPanel_1.add(removeLabel_1);
 		
-		textField_16 = new JTextField();
-		textField_16.setColumns(10);
-		textField_16.setBounds(635, 42, 87, 22);
-		panel_1.add(textField_16);
+		removeTextField_1 = new JTextField();
+		removeTextField_1.setColumns(10);
+		removeTextField_1.setBounds(635, 42, 87, 22);
+		eachLogPanel_1.add(removeTextField_1);
 		
-		JLabel label_13 = new JLabel("Fix");
-		label_13.setBounds(827, 13, 56, 16);
-		panel_1.add(label_13);
+		JLabel fixLabel_1 = new JLabel("Fix");
+		fixLabel_1.setBounds(827, 13, 56, 16);
+		eachLogPanel_1.add(fixLabel_1);
 		
-		JTextField editorPane = new JTextField();
-		editorPane.setBounds(738, 42, 216, 22);
-		panel_1.add(editorPane);
+		JTextField fixEditorPane_1 = new JTextField();
+		fixEditorPane_1.setBounds(738, 42, 216, 22);
+		eachLogPanel_1.add(fixEditorPane_1);
 		
-		JLabel label_14 = new JLabel("Fix Ref.");
-		label_14.setBounds(973, 13, 56, 16);
-		panel_1.add(label_14);
+		JLabel fixRefLabel_1 = new JLabel("Fix Ref.");
+		fixRefLabel_1.setBounds(973, 13, 56, 16);
+		eachLogPanel_1.add(fixRefLabel_1);
 		
-		textField_17 = new JTextField();
-		textField_17.setColumns(10);
-		textField_17.setBounds(966, 42, 70, 22);
-		panel_1.add(textField_17);
+		fixRefTextField_1 = new JTextField();
+		fixRefTextField_1.setColumns(10);
+		fixRefTextField_1.setBounds(966, 42, 70, 22);
+		eachLogPanel_1.add(fixRefTextField_1);
 		
-		JButton button = new JButton();
-		button.addActionListener(new ActionListener() {
+		JButton addButton = new JButton();
+		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonActionPerformed(e);
 			}
 		});
-		button.setBounds(1068, 41, 49, 22);
-		button.setText("+");;
-		panel_1.add(button);
+		addButton.setBounds(1068, 41, 49, 22);
+		addButton.setText("+");;
+		eachLogPanel_1.add(addButton);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setLayout(null);
-		panel_2.setBounds(12, 122, 1153, 77);
-		panel.add(panel_2);
+		JPanel eachLogPanel_2 = new JPanel();
+		eachLogPanel_2.setLayout(null);
+		eachLogPanel_2.setBounds(12, 122, 1153, 77);
+		containsLogsPanel.add(eachLogPanel_2);
 		
-		JLabel label_15 = new JLabel("Project");
-		label_15.setBounds(66, 13, 49, 22);
-		panel_2.add(label_15);
+		JLabel projectLabel_2 = new JLabel("Project");
+		projectLabel_2.setBounds(66, 13, 49, 22);
+		eachLogPanel_2.add(projectLabel_2);
 		
-		textField_18 = new JTextField();
-		textField_18.setColumns(10);
-		textField_18.setBounds(12, 42, 147, 22);
-		panel_2.add(textField_18);
+		projectTextField_2 = new JTextField();
+		projectTextField_2.setColumns(10);
+		projectTextField_2.setBounds(12, 42, 147, 22);
+		eachLogPanel_2.add(projectTextField_2);
 		
-		JLabel label_16 = new JLabel("Date");
-		label_16.setBounds(220, 13, 56, 16);
-		panel_2.add(label_16);
+		JLabel dateLabel_2 = new JLabel("Date");
+		dateLabel_2.setBounds(220, 13, 56, 16);
+		eachLogPanel_2.add(dateLabel_2);
 		
-		textField_19 = new JTextField();
-		textField_19.setColumns(10);
-		textField_19.setBounds(188, 42, 87, 22);
-		panel_2.add(textField_19);
+		dateTextField_2 = new JTextField();
+		dateTextField_2.setColumns(10);
+		dateTextField_2.setBounds(188, 42, 87, 22);
+		eachLogPanel_2.add(dateTextField_2);
 		
-		JLabel label_17 = new JLabel("Number");
-		label_17.setBounds(321, 13, 56, 16);
-		panel_2.add(label_17);
+		JLabel numberLabel_2 = new JLabel("Number");
+		numberLabel_2.setBounds(321, 13, 56, 16);
+		eachLogPanel_2.add(numberLabel_2);
 		
-		textField_20 = new JTextField();
-		textField_20.setColumns(10);
-		textField_20.setBounds(298, 42, 87, 22);
-		panel_2.add(textField_20);
+		numberTextField_2 = new JTextField();
+		numberTextField_2.setColumns(10);
+		numberTextField_2.setBounds(298, 42, 87, 22);
+		eachLogPanel_2.add(numberTextField_2);
 		
-		JLabel label_18 = new JLabel("Type");
-		label_18.setBounds(433, 13, 56, 16);
-		panel_2.add(label_18);
+		JLabel typeLabel_2 = new JLabel("Type");
+		typeLabel_2.setBounds(433, 13, 56, 16);
+		eachLogPanel_2.add(typeLabel_2);
 		
-		textField_21 = new JTextField();
-		textField_21.setColumns(10);
-		textField_21.setBounds(410, 42, 87, 22);
-		panel_2.add(textField_21);
+		typeTextField_2 = new JTextField();
+		typeTextField_2.setColumns(10);
+		typeTextField_2.setBounds(410, 42, 87, 22);
+		eachLogPanel_2.add(typeTextField_2);
 		
-		JLabel label_19 = new JLabel("Inject");
-		label_19.setBounds(540, 13, 56, 16);
-		panel_2.add(label_19);
+		JLabel injectLabel_2 = new JLabel("Inject");
+		injectLabel_2.setBounds(540, 13, 56, 16);
+		eachLogPanel_2.add(injectLabel_2);
 		
-		textField_22 = new JTextField();
-		textField_22.setColumns(10);
-		textField_22.setBounds(521, 42, 87, 22);
-		panel_2.add(textField_22);
+		injectTextField_2 = new JTextField();
+		injectTextField_2.setColumns(10);
+		injectTextField_2.setBounds(521, 42, 87, 22);
+		eachLogPanel_2.add(injectTextField_2);
 		
-		JLabel label_20 = new JLabel("Remove");
-		label_20.setBounds(652, 13, 56, 16);
-		panel_2.add(label_20);
+		JLabel removeLabel_2 = new JLabel("Remove");
+		removeLabel_2.setBounds(652, 13, 56, 16);
+		eachLogPanel_2.add(removeLabel_2);
 		
-		textField_23 = new JTextField();
-		textField_23.setColumns(10);
-		textField_23.setBounds(635, 42, 87, 22);
-		panel_2.add(textField_23);
+		removeTextField_2 = new JTextField();
+		removeTextField_2.setColumns(10);
+		removeTextField_2.setBounds(635, 42, 87, 22);
+		eachLogPanel_2.add(removeTextField_2);
 		
-		JLabel label_21 = new JLabel("Fix");
-		label_21.setBounds(827, 13, 56, 16);
-		panel_2.add(label_21);
+		JLabel fixLabel_2 = new JLabel("Fix");
+		fixLabel_2.setBounds(827, 13, 56, 16);
+		eachLogPanel_2.add(fixLabel_2);
 		
-		JTextField editorPane_1 = new JTextField();
-		editorPane_1.setBounds(738, 42, 216, 22);
-		panel_2.add(editorPane_1);
+		JTextField fixEditorPane_2 = new JTextField();
+		fixEditorPane_2.setBounds(738, 42, 216, 22);
+		eachLogPanel_2.add(fixEditorPane_2);
 		
-		JLabel label_22 = new JLabel("Fix Ref.");
-		label_22.setBounds(973, 13, 56, 16);
-		panel_2.add(label_22);
+		JLabel fixRefLabel_2 = new JLabel("Fix Ref.");
+		fixRefLabel_2.setBounds(973, 13, 56, 16);
+		eachLogPanel_2.add(fixRefLabel_2);
 		
-		textField_24 = new JTextField();
-		textField_24.setColumns(10);
-		textField_24.setBounds(966, 42, 70, 22);
-		panel_2.add(textField_24);
+		fixRefTextField_2 = new JTextField();
+		fixRefTextField_2.setColumns(10);
+		fixRefTextField_2.setBounds(966, 42, 70, 22);
+		eachLogPanel_2.add(fixRefTextField_2);
 		
-		JButton button_1 = new JButton();
-		button_1.setBounds(1068, 41, 49, 22);
-		button_1.setText("+");
-		panel_2.add(button_1);
+		JButton addButton_2 = new JButton();
+		addButton_2.setBounds(1068, 41, 49, 22);
+		addButton_2.setText("+");
+		eachLogPanel_2.add(addButton_2);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setLayout(null);
-		panel_3.setBounds(12, 229, 1153, 77);
-		panel.add(panel_3);
+		JPanel eachLogPanel_3 = new JPanel();
+		eachLogPanel_3.setLayout(null);
+		eachLogPanel_3.setBounds(12, 229, 1153, 77);
+		containsLogsPanel.add(eachLogPanel_3);
 		
-		JLabel label_23 = new JLabel("Project");
-		label_23.setBounds(66, 13, 49, 22);
-		panel_3.add(label_23);
+		JLabel projectLabel_3 = new JLabel("Project");
+		projectLabel_3.setBounds(66, 13, 49, 22);
+		eachLogPanel_3.add(projectLabel_3);
 		
-		textField_25 = new JTextField();
-		textField_25.setColumns(10);
-		textField_25.setBounds(12, 42, 147, 22);
-		panel_3.add(textField_25);
+		projectTextField_3 = new JTextField();
+		projectTextField_3.setColumns(10);
+		projectTextField_3.setBounds(12, 42, 147, 22);
+		eachLogPanel_3.add(projectTextField_3);
 		
-		JLabel label_24 = new JLabel("Date");
-		label_24.setBounds(220, 13, 56, 16);
-		panel_3.add(label_24);
+		JLabel dateLabel_3 = new JLabel("Date");
+		dateLabel_3.setBounds(220, 13, 56, 16);
+		eachLogPanel_3.add(dateLabel_3);
 		
-		textField_26 = new JTextField();
-		textField_26.setColumns(10);
-		textField_26.setBounds(188, 42, 87, 22);
-		panel_3.add(textField_26);
+		dateTextField_3 = new JTextField();
+		dateTextField_3.setColumns(10);
+		dateTextField_3.setBounds(188, 42, 87, 22);
+		eachLogPanel_3.add(dateTextField_3);
 		
-		JLabel label_25 = new JLabel("Number");
-		label_25.setBounds(321, 13, 56, 16);
-		panel_3.add(label_25);
+		JLabel numberLabel_3 = new JLabel("Number");
+		numberLabel_3.setBounds(321, 13, 56, 16);
+		eachLogPanel_3.add(numberLabel_3);
 		
-		textField_27 = new JTextField();
-		textField_27.setColumns(10);
-		textField_27.setBounds(298, 42, 87, 22);
-		panel_3.add(textField_27);
+		numberTextField_3 = new JTextField();
+		numberTextField_3.setColumns(10);
+		numberTextField_3.setBounds(298, 42, 87, 22);
+		eachLogPanel_3.add(numberTextField_3);
 		
-		JLabel label_26 = new JLabel("Type");
-		label_26.setBounds(433, 13, 56, 16);
-		panel_3.add(label_26);
+		JLabel typeLabel_3 = new JLabel("Type");
+		typeLabel_3.setBounds(433, 13, 56, 16);
+		eachLogPanel_3.add(typeLabel_3);
 		
-		textField_28 = new JTextField();
-		textField_28.setColumns(10);
-		textField_28.setBounds(410, 42, 87, 22);
-		panel_3.add(textField_28);
+		typeTextField_3 = new JTextField();
+		typeTextField_3.setColumns(10);
+		typeTextField_3.setBounds(410, 42, 87, 22);
+		eachLogPanel_3.add(typeTextField_3);
 		
-		JLabel label_27 = new JLabel("Inject");
-		label_27.setBounds(540, 13, 56, 16);
-		panel_3.add(label_27);
+		JLabel injectLabel_3 = new JLabel("Inject");
+		injectLabel_3.setBounds(540, 13, 56, 16);
+		eachLogPanel_3.add(injectLabel_3);
 		
-		textField_29 = new JTextField();
-		textField_29.setColumns(10);
-		textField_29.setBounds(521, 42, 87, 22);
-		panel_3.add(textField_29);
+		injectTextField_3 = new JTextField();
+		injectTextField_3.setColumns(10);
+		injectTextField_3.setBounds(521, 42, 87, 22);
+		eachLogPanel_3.add(injectTextField_3);
 		
-		JLabel label_28 = new JLabel("Remove");
-		label_28.setBounds(652, 13, 56, 16);
-		panel_3.add(label_28);
+		JLabel removeLabel_3 = new JLabel("Remove");
+		removeLabel_3.setBounds(652, 13, 56, 16);
+		eachLogPanel_3.add(removeLabel_3);
 		
-		textField_30 = new JTextField();
-		textField_30.setColumns(10);
-		textField_30.setBounds(635, 42, 87, 22);
-		panel_3.add(textField_30);
+		removeTextField_3 = new JTextField();
+		removeTextField_3.setColumns(10);
+		removeTextField_3.setBounds(635, 42, 87, 22);
+		eachLogPanel_3.add(removeTextField_3);
 		
-		JLabel label_29 = new JLabel("Fix");
-		label_29.setBounds(827, 13, 56, 16);
-		panel_3.add(label_29);
+		JLabel fixLabel_3 = new JLabel("Fix");
+		fixLabel_3.setBounds(827, 13, 56, 16);
+		eachLogPanel_3.add(fixLabel_3);
 		
-		JTextField editorPane_2 = new JTextField();
-		editorPane_2.setBounds(738, 42, 216, 22);
-		panel_3.add(editorPane_2);
+		JTextField fixEditorPane_3 = new JTextField();
+		fixEditorPane_3.setBounds(738, 42, 216, 22);
+		eachLogPanel_3.add(fixEditorPane_3);
 		
-		JLabel label_30 = new JLabel("Fix Ref.");
-		label_30.setBounds(973, 13, 56, 16);
-		panel_3.add(label_30);
+		JLabel fixRefLabel_3 = new JLabel("Fix Ref.");
+		fixRefLabel_3.setBounds(973, 13, 56, 16);
+		eachLogPanel_3.add(fixRefLabel_3);
 		
-		textField_31 = new JTextField();
-		textField_31.setColumns(10);
-		textField_31.setBounds(966, 42, 70, 22);
-		panel_3.add(textField_31);
+		fixRefTextField_3 = new JTextField();
+		fixRefTextField_3.setColumns(10);
+		fixRefTextField_3.setBounds(966, 42, 70, 22);
+		eachLogPanel_3.add(fixRefTextField_3);
 		
-		JButton button_2 = new JButton();
-		button_2.addActionListener(new ActionListener() {
+		JButton addButton_3 = new JButton();
+		addButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		button_2.setBounds(1068, 41, 49, 22);
-		button_2.setText("+");
-		panel_3.add(button_2);
+		addButton_3.setBounds(1068, 41, 49, 22);
+		addButton_3.setText("+");
+		eachLogPanel_3.add(addButton_3);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setLayout(null);
-		panel_4.setBounds(12, 352, 1153, 77);
-		panel.add(panel_4);
+		JPanel eachLogPanel_4 = new JPanel();
+		eachLogPanel_4.setLayout(null);
+		eachLogPanel_4.setBounds(12, 352, 1153, 77);
+		containsLogsPanel.add(eachLogPanel_4);
 		
-		JLabel label_3 = new JLabel("Project");
-		label_3.setBounds(66, 13, 49, 22);
-		panel_4.add(label_3);
+		JLabel projectLabel_4 = new JLabel("Project");
+		projectLabel_4.setBounds(66, 13, 49, 22);
+		eachLogPanel_4.add(projectLabel_4);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(12, 42, 147, 22);
-		panel_4.add(textField_4);
+		projectTextField_4 = new JTextField();
+		projectTextField_4.setColumns(10);
+		projectTextField_4.setBounds(12, 42, 147, 22);
+		eachLogPanel_4.add(projectTextField_4);
 		
-		JLabel label_4 = new JLabel("Date");
-		label_4.setBounds(220, 13, 56, 16);
-		panel_4.add(label_4);
+		JLabel dateLabel_4 = new JLabel("Date");
+		dateLabel_4.setBounds(220, 13, 56, 16);
+		eachLogPanel_4.add(dateLabel_4);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(188, 42, 87, 22);
-		panel_4.add(textField_5);
+		dateTextField_4 = new JTextField();
+		dateTextField_4.setColumns(10);
+		dateTextField_4.setBounds(188, 42, 87, 22);
+		eachLogPanel_4.add(dateTextField_4);
 		
-		JLabel label_5 = new JLabel("Number");
-		label_5.setBounds(321, 13, 56, 16);
-		panel_4.add(label_5);
+		JLabel numberLabel_4 = new JLabel("Number");
+		numberLabel_4.setBounds(321, 13, 56, 16);
+		eachLogPanel_4.add(numberLabel_4);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(298, 42, 87, 22);
-		panel_4.add(textField_6);
+		numberTextField_4 = new JTextField();
+		numberTextField_4.setColumns(10);
+		numberTextField_4.setBounds(298, 42, 87, 22);
+		eachLogPanel_4.add(numberTextField_4);
 		
-		JLabel label_6 = new JLabel("Type");
-		label_6.setBounds(433, 13, 56, 16);
-		panel_4.add(label_6);
+		JLabel typeLabel_4 = new JLabel("Type");
+		typeLabel_4.setBounds(433, 13, 56, 16);
+		eachLogPanel_4.add(typeLabel_4);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(410, 42, 87, 22);
-		panel_4.add(textField_7);
+		typeTextField_4 = new JTextField();
+		typeTextField_4.setColumns(10);
+		typeTextField_4.setBounds(410, 42, 87, 22);
+		eachLogPanel_4.add(typeTextField_4);
 		
-		JLabel label_31 = new JLabel("Inject");
-		label_31.setBounds(540, 13, 56, 16);
-		panel_4.add(label_31);
+		JLabel injectLabel_4 = new JLabel("Inject");
+		injectLabel_4.setBounds(540, 13, 56, 16);
+		eachLogPanel_4.add(injectLabel_4);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(521, 42, 87, 22);
-		panel_4.add(textField_8);
+		injectTextField_4 = new JTextField();
+		injectTextField_4.setColumns(10);
+		injectTextField_4.setBounds(521, 42, 87, 22);
+		eachLogPanel_4.add(injectTextField_4);
 		
-		JLabel label_32 = new JLabel("Remove");
-		label_32.setBounds(652, 13, 56, 16);
-		panel_4.add(label_32);
+		JLabel removeLabel_4 = new JLabel("Remove");
+		removeLabel_4.setBounds(652, 13, 56, 16);
+		eachLogPanel_4.add(removeLabel_4);
 		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(635, 42, 87, 22);
-		panel_4.add(textField_9);
+		removeTextField_4 = new JTextField();
+		removeTextField_4.setColumns(10);
+		removeTextField_4.setBounds(635, 42, 87, 22);
+		eachLogPanel_4.add(removeTextField_4);
 		
-		JLabel label_33 = new JLabel("Fix");
-		label_33.setBounds(827, 13, 56, 16);
-		panel_4.add(label_33);
+		JLabel fixLabel_4 = new JLabel("Fix");
+		fixLabel_4.setBounds(827, 13, 56, 16);
+		eachLogPanel_4.add(fixLabel_4);
 		
-		JTextField editorPane_3 = new JTextField();
-		editorPane_3.setBounds(738, 42, 216, 22);
-		panel_4.add(editorPane_3);
+		JTextField fixEditorPane_4 = new JTextField();
+		fixEditorPane_4.setBounds(738, 42, 216, 22);
+		eachLogPanel_4.add(fixEditorPane_4);
 		
-		JLabel label_34 = new JLabel("Fix Ref.");
-		label_34.setBounds(973, 13, 56, 16);
-		panel_4.add(label_34);
+		JLabel fixRefLabel_4 = new JLabel("Fix Ref.");
+		fixRefLabel_4.setBounds(973, 13, 56, 16);
+		eachLogPanel_4.add(fixRefLabel_4);
 		
-		textField_10 = new JTextField();
-		textField_10.setColumns(10);
-		textField_10.setBounds(966, 42, 70, 22);
-		panel_4.add(textField_10);
+		fixRefTextField_4 = new JTextField();
+		fixRefTextField_4.setColumns(10);
+		fixRefTextField_4.setBounds(966, 42, 70, 22);
+		eachLogPanel_4.add(fixRefTextField_4);
 		
-		JButton button_3 = new JButton();
-		button_3.setBounds(1068, 41, 49, 22);
-		button_3.setText("+");
-		panel_4.add(button_3);
+		JButton addButton_4 = new JButton();
+		addButton_4.setBounds(1068, 41, 49, 22);
+		addButton_4.setText("+");
+		eachLogPanel_4.add(addButton_4);
 		
 	}
 	
 	void buttonActionPerformed(ActionEvent e)
 	{
-		panel.add(panel_1).setBounds(12, 122, 1153, 77);	
+		containsLogsPanel.add(eachLogPanel_1).setBounds(12, 122, 1153, 77);	
 	}
 }
