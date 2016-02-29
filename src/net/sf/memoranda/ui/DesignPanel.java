@@ -26,7 +26,7 @@ public class DesignPanel extends JPanel implements FocusListener{
 	
 	JPanel backPanel = new JPanel();
 	JPanel designView = new JPanel();
-	JPanel panel_1 = new JPanel();
+	JPanel listPanel = new JPanel();
 	JPanel viewPanel = new JPanel();
 	
 	JButton btnImportDesign = new JButton("Import Design");
@@ -38,7 +38,7 @@ public class DesignPanel extends JPanel implements FocusListener{
 	 * may need to write xml importer for such info if I can't pull from super.
 	 */
 	
-	//not sure how to get these right now
+	//not sure how to get these right now, probably don't need the pid
 	private int pID;
 	private String projectName;
 	
@@ -67,11 +67,10 @@ public class DesignPanel extends JPanel implements FocusListener{
 		backPanel.add(btnImportDesign);
 		
 		
-		panel_1.setBounds(0, 55, 91, 234);
-		add(panel_1);
+		listPanel.setBounds(0, 55, 91, 234);
+		add(listPanel);
 		
-		panel_1.add(fileList);
-		
+		listPanel.add(fileList);
 		
 		viewPanel.setBounds(101, 0, 339, 289);
 		add(viewPanel);
@@ -86,7 +85,7 @@ public class DesignPanel extends JPanel implements FocusListener{
 	
 	
 	public void btnImportDesign_actionPerformed(ActionEvent e)
-	{
+	{//import file  and save in memoranda directory
 		BufferedImage image = null; 
 		try
 		{
@@ -100,20 +99,26 @@ public class DesignPanel extends JPanel implements FocusListener{
 				image = ImageIO.read(selectedFile);
 				System.out.println("Selected file: " + selectedFile.getName());
 				
-				//pathways need to be updated to be relative. left here for testing purposes
-				if(!Files.exists(Paths.get("projects\\"+projectName+"\\images\\design")))
+				//pathways need to be updated to be relative.
+				if(!Files.exists(Paths.get("projects" + File.separator + 
+						projectName +  File.separator + "images" + File.separator + "design")))
 				{
-					File file = new File("projects\\"+projectName+"\\images\\design");
+					File file = new File("projects" + File.separator + 
+							"projectName" + File.separator + "images"  + File.separator + "design");
 					file.mkdirs();
 				}
 			
 				if (selectedFile.getName().contains(".png"))
 				{
-					ImageIO.write(image, "png", new File("projects\\"+projectName+"\\images\\design"));
+					ImageIO.write(image, "png", new File("projects" + 
+							File.separator +"projectName" + File.separator + "images" +
+							File.separator + "design"));
 				}
 				else if (selectedFile.getName().contains(".jpg"))
 				{
-					ImageIO.write(image, "jpg", new File("projects\\"+projectName+"\\images\\design"));
+					ImageIO.write(image, "jpg", new File("projects" + 
+							File.separator + "projectName" + File.separator + "images" + 
+							File.separator + "design"));
 				}
 			}
 				
@@ -122,6 +127,11 @@ public class DesignPanel extends JPanel implements FocusListener{
 		{
 			throw new RuntimeException("Error saving image, Check image type");
 		}
+		//reinitialize filelist after import is run
+		fileList = new JList<String>(getFileList());
+		listPanel.invalidate();
+		listPanel.validate();
+		listPanel.repaint();
 	}
 	
 	/*
@@ -131,7 +141,8 @@ public class DesignPanel extends JPanel implements FocusListener{
 	public DefaultListModel<String> getFileList()
 	{
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
-		String path = "projects\\"+projectName+"\\images\\design";
+		String path = "projects" + File.separator +projectName + 
+				File.separator + "images" + File.separator + "design";
 		
 		File data = new File(path);
 		File[] files = data.listFiles();
@@ -147,7 +158,8 @@ public class DesignPanel extends JPanel implements FocusListener{
 		//display picture in main panel
 		
 		try{
-			viewPanel.add(new BackGround(event.getSource().toString(), viewPanel.getWidth(), viewPanel.getHeight()));	
+			viewPanel.add(new BackGround(event.getSource().toString(), 
+					viewPanel.getWidth(), viewPanel.getHeight()));	
 		}catch(RuntimeException ex){
 			ex.getMessage();
 		}catch(Exception e){
