@@ -736,11 +736,11 @@ public class TaskPanel extends JPanel {
         //populates task
         
         //Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
-        Task newTask = CurrentProject.getTaskList().createTask(null, null, null, dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+        //Task newTask = CurrentProject.getTaskList().createTask(null, null, null, dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
         
         
 //		CurrentProject.getTaskList().adjustParentTasks(newTask);
-		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
+		//newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
         parentPanel.updateIndicators();
