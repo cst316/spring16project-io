@@ -16,19 +16,48 @@ import java.awt.Color;
 import javax.swing.JList;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Vector;
 import java.awt.Dimension;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import net.sf.memoranda.psp.Planning;
+
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-public class PSP_Planning extends JPanel {
+public class PSP_Planning extends JPanel implements ListSelectionListener {
 	private JLabel lblImages;
 	private JPanel pnlCurrMod;
-
+	private JList lstImages;
+	private JButton btnAddImage;
+	private JButton btnAddMod;
+	
+	private static Planning planning;
+	
+	private String newFile = "";
+	
 	/**
 	 * Create the panel.
 	 */
 	public PSP_Planning() {
+		jInit();
+	}
+	
+	public PSP_Planning (Planning planning) {
+		PSP_Plannnig (planning);
+		jInit();
+	}
+	
+	
+	public static void PSP_Plannnig (Planning pl) {
+		planning = pl;
+	}
+	
+	private void jInit () {
 		
 		JPanel panel = new JPanel();
 		
@@ -51,12 +80,12 @@ public class PSP_Planning extends JPanel {
 		JLabel label = new JLabel("MODULE ESTIMATES");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JButton btnAddMod = new JButton("Add Module");
+		btnAddMod = new JButton("Add Module");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setMinimumSize(new Dimension(200, 300));
 		scrollPane.setBorder(null);
-		scrollPane.setPreferredSize(new Dimension(200, 300));
+		scrollPane.setPreferredSize(new Dimension(200, 250));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -83,7 +112,7 @@ public class PSP_Planning extends JPanel {
 		
 		pnlCurrMod = new JPanel();
 		pnlCurrMod.setBorder(null);
-		pnlCurrMod.setPreferredSize(new Dimension(200, 300));
+		pnlCurrMod.setPreferredSize(new Dimension(200, 250));
 		scrollPane.setViewportView(pnlCurrMod);
 		pnlCurrMod.setLayout(null);
 		
@@ -161,16 +190,16 @@ public class PSP_Planning extends JPanel {
 		JLabel lblImageFiles = new JLabel("IMAGE FILES");
 		lblImageFiles.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JList list = new JList();
+		lstImages = new JList();
 		
-		JButton btnAddImage = new JButton("Add Image");
+		btnAddImage = new JButton("Add Image");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(list, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+						.addComponent(lstImages, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
 						.addComponent(lblImageFiles, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
 						.addComponent(btnAddImage, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addContainerGap())
@@ -181,13 +210,52 @@ public class PSP_Planning extends JPanel {
 					.addContainerGap()
 					.addComponent(lblImageFiles)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(list, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+					.addComponent(lstImages, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
 					.addGap(18)
 					.addComponent(btnAddImage)
 					.addGap(22))
 		);
 		panel_1.setLayout(gl_panel_1);
 		setLayout(groupLayout);
+	}
+	
+	public void setFileNames (ArrayList <String> files) {
+		lstImages.removeAll();
+		
+		lstImages = new JList (files.toArray());
+		lstImages.addListSelectionListener(this);
+	}
+	
 
+	public void setFile (String file) {
+		newFile = file;
+		lstImages.setSelectedValue(newFile,true);
+	}
+	
+	public void setImages (String iconPath) {
+		lblImages.setIcon(new ImageIcon(iconPath));		
+	}
+	
+	public void setModules () {
+		
+	}
+	
+	public void getFileNames (ArrayList <String> files) {
+		
+	}
+	
+	public void getImages () {
+		
+	}
+	
+	public void getModules () {
+		
+	}
+
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+		int index = lstImages.getSelectedIndex();
+		setImages (planning.getFilenames().get(index));		
 	}
 }
