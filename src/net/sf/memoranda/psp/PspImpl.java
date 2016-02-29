@@ -18,7 +18,8 @@ public class PspImpl implements Psp {
 	static int lastID = 100020001;
 	
 	//PspImpl constructor where values are initialized to empty values
-	public PspImpl() {
+	public PspImpl () {
+		super();
 		stDate = null;
 		name = "";
 		description = "";
@@ -27,30 +28,30 @@ public class PspImpl implements Psp {
 	//PspImpl that accepts parameters for all attributes except pID since pID can be accessed through Psp
 	public PspImpl(CurrentDate stDate, String name, String description) {
 		super();
-		pID = Psp.pID;
+		pID = lastID;
 		this.stDate = stDate;
 		this.name = name;
 		this.description = description;
 	}
 	
 	//PspImpl that accepts the project name and project description parameters
-	public PspImpl(String name, String description) {
+	public PspImpl(String name, String description, int id) {
+		super();
+		this.pID = id;
 		this.name = name;
 		this.description = description;
+		this.stDate = new CurrentDate ();
 	}
-	
-	
-	
+		
 	//Accessor method that returns the project ID using the Psp interface
-	public static int getpID() {
-		return Psp.pID;
+	public int getpId() {
+		return pID;
 	}
 	
 	//Mutator method that should set the project ID from a file, but returns an integer temporarily
-	public static void setpID(int pID) {
+	public void setpId (int pID) {
 		//Will change to accept a static file as a parameter 2/17/2016 - Josh K.
-		int theProjectID = Psp.pID;
-		theProjectID = pID;
+		this.pID = pID;
 	}
 	
 	//Accessor method that returns the start date (stDate)
@@ -139,8 +140,7 @@ public class PspImpl implements Psp {
 	@Override
 	public String toString() {
 		return "PSP Project Information:\n"
-				+ "Project ID = " + PspImpl.getpID() + ", Project Start Date = " + this.getStDate() 
+				+ "Project ID = " + getpId() + ", Project Start Date = " + this.getStDate() 
 				+ ", Project Name=" + this.getName() + ", Project Description=" + this.getDescription();
 	}
-
 }

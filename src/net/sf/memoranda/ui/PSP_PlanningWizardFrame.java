@@ -25,6 +25,8 @@ import net.sf.memoranda.util.Configuration;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,13 +47,16 @@ import javax.swing.border.LineBorder;
  */
 public class PSP_PlanningWizardFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2269259832152879602L;
+	
 	private JPanel contentPane;
 	private JTextField txtEstTime;
 	private JTextField txtEstLocHr;
 	private JTextField txtEstSize;
 	private JTextField txtEstDefect;
-	
-	private PSP_NPWizardFrame goBack;
 	
 	static JFrame pwf = null;
 	private JTextField txtDescription;
@@ -212,7 +217,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		lblProjId = new JLabel(lastID+"");
+		lblProjId = new JLabel(this.pid.isEmpty() ? lastID+"" : this.pid);
 		lblProjId.setBounds(0, 0, 80, 25);
 		panel_2.add(lblProjId);
 		lblProjId.setHorizontalAlignment(SwingConstants.CENTER);
@@ -587,23 +592,37 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			PSP_NPWizardFrame.npw.setVisible(true);
 			this.setVisible(false);
 		} else if (pan.equals("FINISH")) {
-			App.getFrame().setEnabled(true);
-			PSP_NPWizardFrame.npw.dispose();
-			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), 
-					PSP_NPWizardFrame.getProjDescription());
-			float estTime = Float.parseFloat(txtEstTime.getText().trim());
-			int estSize = Integer.parseInt(txtEstSize.getText().trim());
-			int estLocHr = Integer.parseInt(txtEstLocHr.getText().trim());
-			int estDefect = Integer.parseInt(txtEstDefect.getText().trim());
-			ArrayList<String> fn = getFileName ();
-			HashMap<String, Integer> pj = getProjDescription();
- 			PlanningImpl plan = new PlanningImpl (estTime, estLocHr, estSize, estDefect, fn, pj);
-			plan.save(plan);
-			plan.setPspValues(psp);
-			PspImpl.setLastID(lastID + 1);
-			pwf = null;
-			PSP_NPWizardFrame.npw = null;
-			dispose();
+			try {
+				App.getFrame().setEnabled(true);
+				PSP_NPWizardFrame.npw.dispose();
+				PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), 
+						PSP_NPWizardFrame.getProjDescription(), Integer.parseInt(lblProjId.getText().trim()));
+				float estTime = Float.parseFloat(txtEstTime.getText().trim());
+				int estSize = Integer.parseInt(txtEstSize.getText().trim());
+				int estLocHr = Integer.parseInt(txtEstLocHr.getText().trim());
+				int estDefect = Integer.parseInt(txtEstDefect.getText().trim());
+				psp.save("proj/" + lblProjId.getText() + "_.pspx");
+				
+				ArrayList<String> fn = getFileNames ();
+				HashMap<String, Integer> pj = getProjDescription();
+				
+	 			PlanningImpl plan = new PlanningImpl (estTime, estLocHr, estSize, estDefect, fn, pj);
+	 			plan.setPspValues(psp);
+	 			plan.setFilenames(fn);
+				plan.save(new FileOutputStream ("proj/" + psp.getpId ()+"_planning"));
+				
+				PspImpl.setLastID(lastID + 1);
+				pwf = null;
+				PSP_Panel p = new PSP_Panel();
+				p = PSP_NPWizardFrame.getPspPanel();
+				PSP_Planning pp = new PSP_Planning (plan);
+				p.addJPanel(pp);
+				PSP_NPWizardFrame.npw = null;
+				dispose();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else if (pan.equals("CANCEL")) {
 			int confirm = JOptionPane.showConfirmDialog(null, 
 					"Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);
@@ -637,14 +656,11 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		return modDesc;
 	}
 
-	private ArrayList<String> getFileName() {
+	private ArrayList<String> getFileNames() {
 		ArrayList <String> fileNames = new ArrayList<String> ();
 		for (int i = 0; i < filePath.size(); i++) {
 			if (!filePath.get(i).getText().trim().isEmpty()) {
-				if (filePath.get(i).getText().trim().contains(planFiles.get(i).trim()))
-					fileNames.add(planFiles.get(i).trim());
-				else
-					fileNames.add(filePath.get(i).getText().trim());
+				fileNames.add(planFiles.get(i).trim());
 			}
 		}
 		return fileNames;

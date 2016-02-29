@@ -35,16 +35,19 @@ import java.awt.event.ActionEvent;
  */
 public class PSP_NPWizardFrame extends JFrame {
 
+	private static final long serialVersionUID = 8329758838967365636L;
+
 	private JPanel contentPane;
 	private JLabel lblPID;
 	private JLabel lblNewLabel;
 	private static JTextField txtPrjName;
 	private static JTextPane txtPrjDescription;
+	private static PSP_Panel psp;
 	
 	//private 
 	
 	public static PSP_NPWizardFrame npw = null;
-	private PSP_NPWizardFrame newWizard = null;
+	//private PSP_NPWizardFrame newWizard = null;
 	static int lastID = 0;
 	
 	/**
@@ -59,11 +62,29 @@ public class PSP_NPWizardFrame extends JFrame {
 		}
 	}
 	
+	public PSP_NPWizardFrame(PSP_Panel psp) {		
+		try {
+			setPspPanel(psp);
+			jbInit();
+		} catch (Exception ex) {
+			new ExceptionDialog(ex);
+			ex.printStackTrace();
+		}
+	}
+	
 	/**
 	 * General constructor
 	 */
-	public PSP_NPWizardFrame(PSP_NPWizardFrame npw) {		
+	/*public PSP_NPWizardFrame(PSP_NPWizardFrame npw) {		
 		newWizard = npw;
+	}*/
+	
+	public static void setPspPanel (PSP_Panel p) {
+		psp = p;
+	}
+	
+	public static PSP_Panel getPspPanel () {
+		return psp;
 	}
 		
 	/**

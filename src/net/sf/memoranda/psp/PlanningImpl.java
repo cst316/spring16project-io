@@ -1,17 +1,15 @@
 package net.sf.memoranda.psp;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.ExceptionDialog;
 
-public class PlanningImpl implements Psp, Planning {
+public class PlanningImpl implements Planning {
 	
 	//Psp interface reference variable used to get access to the Psp pID constant
 	private Psp pspValues;
@@ -38,6 +36,7 @@ public class PlanningImpl implements Psp, Planning {
 		this.files = new ArrayList<String>();
 		this.filename = "";
 		this.moduleDescription = new HashMap <String, Integer> ();
+		pspValues = new PspImpl ();
 	}
 	
 	//PlanningImpl class constructor initialized to variables specified in the method parameter header  
@@ -51,6 +50,8 @@ public class PlanningImpl implements Psp, Planning {
 		this.files = nameOfFile;
 		this.filename="";
 		this.moduleDescription = projDesc;
+
+		pspValues = new PspImpl ();
 	}
 	
 	//Accessor method that gets the estimated time (estTime)
@@ -108,15 +109,30 @@ public class PlanningImpl implements Psp, Planning {
 		// TODO Auto-generated method stub
 		return this.filename;
 	}
+	
+	//Accessor abstract method that returns the name of the file to be used in the project (fileName)
+	public String getFilename(int index) {
+		// TODO Auto-generated method stub
+		return this.files.get(index);
+	}
+	
 
 	//Accessor method that returns the name of the file to be used in the project (fileName)
 	public ArrayList<String> getFilenames () {
+		System.out.println(files + " queried " + files.size());
 		return this.files;
 	}
 
+	//Accessor method that sets the name of the file to be used in the project (fileName)
+	public void setFilenames (ArrayList<String> filenames) {
+		this.files = filenames;
+	}
+	
 	//Mutator method that sets the fileName given a file as a parameter
-	public void setFilename(String fileName) {
-		this.filename = filename;
+	public void setFilename(String filename) {
+		this.files.add(filename);
+
+		System.out.println(files.get(files.size() - 1) + " set " + files.size());
 	}
 
 	//Accessor method that gets the project description as a hash map based on a unique key
@@ -139,9 +155,9 @@ public class PlanningImpl implements Psp, Planning {
 	@Override
 	public void setStDate(CurrentDate stDate) {
 		CurrentDate startDate = pspValues.getStDate();
-		startDate = stDate; 
-		
+		startDate = stDate; 		
 	}
+	
 	//Accessor method that gets the name by returning the pspValues object reference variable's getName() method
 	@Override
 	public String getName() {
@@ -153,7 +169,6 @@ public class PlanningImpl implements Psp, Planning {
 	public void setName(String name) {
 		String projectName = pspValues.getName();
 		projectName = name; 
-
 	}
 
 	//Accessor method that gets the description by using the pspValues object reference variable's
@@ -177,6 +192,7 @@ public class PlanningImpl implements Psp, Planning {
 		try {
             ObjectOutputStream fw =
                 new ObjectOutputStream(streamOfFile);
+            fw.write(pspValues.getpId());
             fw.writeFloat(this.getEstTime());
             fw.write(this.getLocHr());
             fw.write(this.getEstSize());
@@ -199,9 +215,8 @@ public class PlanningImpl implements Psp, Planning {
 	
 	public void save (PlanningImpl p) {
 		try {
-			ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (""));
+			ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream ("proj/" + pspValues.getpId ()+"_planning"));
 			oos.writeObject(p);
-			oos.flush();
 			oos.close();
 		} catch (IOException ioException) {
 			new ExceptionDialog(
@@ -222,8 +237,20 @@ public class PlanningImpl implements Psp, Planning {
 	}
 
 	@Override
-	public void setPspValues(Psp pspValues) {
+	public void setPspValues(Psp values) {
 		// TODO Auto-generated method stub
-		this.pspValues = pspValues;
+		this.pspValues = values;
+	}
+
+	@Override
+	public void setpId(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getpId() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

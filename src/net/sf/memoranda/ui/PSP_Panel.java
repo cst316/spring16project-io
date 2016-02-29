@@ -2,21 +2,16 @@ package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
-import net.sf.memoranda.util.Configuration;
+//import net.sf.memoranda.util.Configuration;
 
-import javax.swing.JSeparator;
-import java.awt.Rectangle;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -31,6 +26,8 @@ import java.awt.SystemColor;
  * 02/19/2016
  */
 public class PSP_Panel extends JPanel {
+	
+	private static final long serialVersionUID = -1815200458278347624L;
 	private JLabel lblNewProject;
 	private JLabel lblOpenProject;
 	private JPanel pnlWizard;
@@ -113,6 +110,16 @@ public class PSP_Panel extends JPanel {
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
 		add(pnlWizard, BorderLayout.CENTER);
+		pnlWizard.setLayout(new BorderLayout(0, 0));
+	}
+	
+	public void addJPanel (JPanel toAdd) {
+		pnlWizard.add(toAdd, BorderLayout.CENTER);
+		toAdd.setVisible(true);
+		toolBar.setVisible(false);
+		this.setEnabled(true);
+		pnlWizard.setVisible(true);
+		this.revalidate();
 	}
 	
 	/**
@@ -123,9 +130,8 @@ public class PSP_Panel extends JPanel {
 	private void newProject_Mouse (String event) {
 		if (event.equals("CLICKED")) {
 			App.getFrame().setEnabled(false);
-			pnlWizard.setVisible(true);	
 			toolBar.setVisible (false);
-			(new PSP_NPWizardFrame()).setVisible(true);			
+			(new PSP_NPWizardFrame(this)).setVisible(true);			
 		} else if (event.equals("ENTERED")) {
 			lblNewProject.setBackground(Color.WHITE);
 		} else if (event.equals("EXITED")) {
