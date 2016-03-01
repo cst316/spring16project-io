@@ -51,6 +51,7 @@
 		<fileset dir="lib">
 			<include name="*.jar"/>
 			<include name="*.zip"/>
+			<include name="itext*"/> <!-- updated to imcluse pdf import lib files-->
 		</fileset>
 	</path>
 	<!-- =================================================================== -->
