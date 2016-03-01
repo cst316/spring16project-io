@@ -30,7 +30,7 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	 * it is used when design view button is clicked
 	 * 03/01/2016
 	 */
-	
+	private static final long serialVersionUID = -4697829421699112193L;
 	BorderLayout borderLayout1 = new BorderLayout();
 	DailyItemsPanel parentPanel = null;
 	
@@ -52,9 +52,9 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	private int pID;
 	private String projectName;
 	
-	public PSP_DesignPanel(DailyItemsPanel _parentPanel) {
+	public PSP_DesignPanel() {
 		setLayout(null);
-		
+		//this.projectName = projectName;
 		try {
             //parentPanel = _parentPanel;
             //pID = parentPanel;
