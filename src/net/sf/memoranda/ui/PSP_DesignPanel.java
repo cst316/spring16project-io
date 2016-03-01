@@ -19,7 +19,17 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 
-public class DesignPanel extends JPanel implements FocusListener{
+public class PSP_DesignPanel extends JPanel implements FocusListener {
+	
+	/**
+	 * 
+	 * @author Joe Michaels
+	 * @author Team-IO
+	 * CST316 - Spring 2016
+	 * This class is part of the PSP options view
+	 * it is used when design view button is clicked
+	 * 03/01/2016
+	 */
 	
 	BorderLayout borderLayout1 = new BorderLayout();
 	DailyItemsPanel parentPanel = null;
@@ -42,7 +52,7 @@ public class DesignPanel extends JPanel implements FocusListener{
 	private int pID;
 	private String projectName;
 	
-	public DesignPanel(DailyItemsPanel _parentPanel) {
+	public PSP_DesignPanel(DailyItemsPanel _parentPanel) {
 		setLayout(null);
 		
 		try {
