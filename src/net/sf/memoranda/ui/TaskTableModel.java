@@ -41,9 +41,12 @@ import java.util.Hashtable;
  */
 public class TaskTableModel extends AbstractTreeTableModel implements TreeTableModel {
 
-    String[] columnNames = {"", Local.getString("To-do"),
-            Local.getString("Start date"), Local.getString("End date"),
-            Local.getString("Priority"), Local.getString("Status"),
+    String[] columnNames = {"", Local.getString("TESTING"),
+            Local.getString("Start date"), 
+            //Local.getString("Start date"),
+            Local.getString("End date"),
+            Local.getString("Priority"), 
+            Local.getString("Status"),
             "% " + Local.getString("done") };
 
     protected EventListenerList listenerList = new EventListenerList();
@@ -54,6 +57,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
      * JAVADOC: Constructor of <code>TaskTableModel</code>
      * 
      * @param root
+     * @wbp.parser.entryPoint
      */
     public TaskTableModel(){
         super(CurrentProject.get());
@@ -61,6 +65,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
 
     /**
      * @see net.sf.memoranda.ui.treetable.TreeTableModel#getColumnCount()
+     * @wbp.parser.entryPoint
      */
     public int getColumnCount() {
         return columnNames.length;
@@ -92,7 +97,13 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
             if (t.getEndDate() == null)
                 return null;
             else
-                return t.getEndDate().getDate();        
+                return t.getEndDate().getDate();     
+            
+        /*case 4:
+            if (t.getEndDate() == null)
+                return null;
+            else
+                return t.getEndDate().getDate(); */
         case 4:
             return getPriorityString(t.getPriority());
         case 5:
