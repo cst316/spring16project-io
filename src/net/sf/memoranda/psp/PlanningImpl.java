@@ -135,16 +135,6 @@ public class PlanningImpl implements Planning {
 		System.out.println(files.get(files.size() - 1) + " set " + files.size());
 	}
 
-	//Accessor method that gets the project description as a hash map based on a unique key
-	public HashMap<String, Integer> getProjectDescription() {
-		return moduleDescription;
-	}
-
-	//Mutator method that sets the project description
-	public void setProjectDescription(HashMap<String, Integer> projectDescription) {
-		this.moduleDescription = projectDescription;
-	}
-
 	//Accessor method that gets the start date (stDate)
 	@Override
 	public CurrentDate getStDate() {
@@ -233,7 +223,7 @@ public class PlanningImpl implements Planning {
 	public String toString() {
 		return "Planning:\n" + "Estimated Time = " + this.getEstTime() + ", Lines of Code = " + this.getLocHr() + 
 				", Estimated Size = " + this.getEstSize() + ", Estimated Defects = " + this.getEstDefect() + 
-				", Filename=" + this.getFilename() + ", projectDescription=" + this.getProjectDescription();
+				", Filename=" + this.getFilename() + ", additional modulue(s)=" + this.getAdditionalMod();
 	}
 
 	@Override
@@ -252,5 +242,16 @@ public class PlanningImpl implements Planning {
 	public int getpId() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public HashMap<String, Integer> getAdditionalMod() {
+		// TODO Auto-generated method stub
+		return this.moduleDescription;
+	}
+
+	@Override
+	public void setAdditionalMod(HashMap<String, Integer> modDescription) {
+		this.moduleDescription = modDescription;
 	}
 }

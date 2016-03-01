@@ -15,6 +15,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import javax.swing.JList;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.Dimension;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -63,7 +64,8 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 		jInit();
 	}	
 	
-	private void jInit () {		
+	private void jInit () {	
+		modY = 180;
 		JPanel panel = new JPanel();
 		JSplitPane panImages = new JSplitPane();
 		panImages.setBackground(Color.WHITE);
@@ -85,21 +87,26 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		btnAddMod = new JButton("Add Module");
+		btnAddMod.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setMinimumSize(new Dimension(200, 300));
+		scrollPane.setMaximumSize(new Dimension(200, 250));
+		scrollPane.setMinimumSize(new Dimension(200, 250));
 		scrollPane.setBorder(null);
 		scrollPane.setPreferredSize(new Dimension(200, 250));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(label, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-						.addComponent(btnAddMod, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+						.addComponent(label, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+						.addComponent(btnAddMod, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
@@ -108,13 +115,14 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 					.addContainerGap()
 					.addComponent(label)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 165, Short.MAX_VALUE)
-					.addGap(105)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
 					.addComponent(btnAddMod)
 					.addGap(22))
 		);
 		
 		pnlCurrMod = new JPanel();
+		pnlCurrMod.setMaximumSize(new Dimension(200, 250));
 		pnlCurrMod.setBorder(null);
 		pnlCurrMod.setPreferredSize(new Dimension(200, 250));
 		scrollPane.setViewportView(pnlCurrMod);
@@ -185,6 +193,8 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 		pnlCurrMod.add(lblEstLocHr);
 		panel.setLayout(gl_panel);
 		
+		addModules();
+		
 		lblImages = new JLabel("");
 		panImages.setRightComponent(lblImages);
 		
@@ -234,22 +244,58 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 	public void addFilenames (ArrayList <String> files) {
 		listModel.clear();	
 		for (int i = 0; i < files.size(); i++) {
-			String[] parts = files.get(i).split(File.separator);		
-			listModel.addElement(parts[parts.length - 1]);			
+			File f = new File (files.get(i));	
+			listModel.addElement(f.getName());			
 		}
 	}
 	
 	public void addFile (String file) {
-		String[] parts = file.split(File.separator);
-		listModel.addElement(parts[parts.length - 1]);
+		File f = new File (file);	
+		listModel.addElement(f.getName());	
 	}
 	
 	public void setImages (String iconPath) {
 		lblImages.setIcon(new ImageIcon(iconPath));		
 	}
 	
-	public void setModules () {
+	public void addModules () {
+		HashMap <String, Integer> hm = plan.getAdditionalMod();
+		for (String key : hm.keySet()) {
+			addModule (key, hm.get(key));
+		}
+	}
+	
+	public ArrayList <JLabel> buildLabel (String des, int size) {
+		ArrayList <JLabel> mod = new ArrayList<JLabel>();
 		
+		modWidth = 130;
+		modX = 0;
+		
+		JLabel label_1 = new JLabel(des);
+		label_1.setPreferredSize(new Dimension(modWidth, modHeight));
+		label_1.setBounds(modX, modY, modWidth, modHeight);
+				
+		modWidth = 80;
+		modX = 135;
+		
+		JLabel newEst = new JLabel (size + "");
+		newEst.setPreferredSize(new Dimension(modWidth, modHeight));
+		newEst.setHorizontalAlignment(SwingConstants.CENTER);
+		newEst.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		newEst.setBounds(modX, modY, modWidth, modHeight);
+		
+		mod.add(label_1);
+		mod.add(newEst);
+		
+		modY += 40;
+		
+		return mod; 
+	}
+	
+	public void addModule (String des, int size) {
+		ArrayList <JLabel> addThis = buildLabel (des, size);
+		pnlCurrMod.add(addThis.get(0));
+		pnlCurrMod.add(addThis.get(1));
 	}
 	
 	public void getFileNames () {
