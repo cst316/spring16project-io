@@ -362,7 +362,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				fileAdd.remove(i);
 				filePath.remove(i);
 				fileFind.remove(i);
-				planFiles.remove(i);
+				if (planFiles.size() > 0) {
+					planFiles.remove(i);
+				}
 				break;
 			}
 		}
@@ -612,12 +614,12 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				plan.save(new FileOutputStream ("proj" + File.separator + psp.getpId ()+"_planning"));
 				
 				PspImpl.setLastID(lastID + 1);
-				pwf = null;
 				PSP_Panel p = new PSP_Panel();
 				p = PSP_NPWizardFrame.getPspPanel();
 				PSP_Planning pp = new PSP_Planning (plan);
 				p.addJPanel(pp);
 				PSP_NPWizardFrame.npw = null;
+				pwf = null;
 				dispose();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
