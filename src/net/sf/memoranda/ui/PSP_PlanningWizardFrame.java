@@ -362,7 +362,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				fileAdd.remove(i);
 				filePath.remove(i);
 				fileFind.remove(i);
-				planFiles.remove(i);
+				if (planFiles.size() > 0) {
+					planFiles.remove(i);
+				}
 				break;
 			}
 		}
@@ -601,7 +603,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				int estSize = Integer.parseInt(txtEstSize.getText().trim());
 				int estLocHr = Integer.parseInt(txtEstLocHr.getText().trim());
 				int estDefect = Integer.parseInt(txtEstDefect.getText().trim());
-				psp.save("proj/" + lblProjId.getText() + "_.pspx");
+				psp.save("proj" + File.separator + lblProjId.getText() + "_.pspx");
 				
 				ArrayList<String> fn = getFileNames ();
 				HashMap<String, Integer> pj = getProjDescription();
@@ -609,7 +611,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 			PlanningImpl plan = new PlanningImpl (estTime, estLocHr, estSize, estDefect, fn, pj);
 	 			plan.setPspValues(psp);
 	 			plan.setFilenames(fn);
-				plan.save(new FileOutputStream ("proj/" + psp.getpId ()+"_planning"));
+				plan.save(new FileOutputStream ("proj" + File.separator + psp.getpId ()+"_planning"));
 				
 				PspImpl.setLastID(lastID + 1);
 				pwf = null;
