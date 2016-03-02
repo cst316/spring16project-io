@@ -624,37 +624,51 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			PSP_NPWizardFrame.npw.dispose();
 			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), PSP_NPWizardFrame
 					.getProjDescription(), Integer.parseInt(lblProjId.getText().trim()));
-			float estTime = Float.parseFloat(txtEstTime.getText().trim());
-			int estSize = Integer.parseInt(txtEstSize.getText().trim());
-			int estLocHr = Integer.parseInt(txtEstLocHr.getText().trim());
-			int estDefect = Integer.parseInt(txtEstDefect.getText().trim());
-			
 			File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + File.separator + ".proj");
 			psp.save(fs + File.separator + PspImpl.getLastID() + ".pspx");
 						
 			createProjectFiles(PspImpl.getLastID());
 			HashMap<String, Integer> pj = getProjDescription();
 			
-			PlanningImpl plan = new PlanningImpl (estTime, estLocHr, estSize, estDefect, getFilenames(), pj);
+			PSP_Panel.setNewPlanningWizard(this);
+			PSP_Panel.setPspValues(psp);
+			
+			PlanningImpl plan = new PlanningImpl (getEstTime(), getEstLocHr(), 
+					getEstSize(), getEstDefect(), getFilenames(), getProjDescription());
 			plan.setPspValues(psp);
 			plan.save(new FileOutputStream (fs + File.separator + psp.getpId ()+"_planning"));
 			
 			PspImpl.setLastID(PspImpl.getLastID() + 1);
 			writepID(PspImpl.getLastID());
-			PSP_Panel p = new PSP_Panel();
-			p = PSP_NPWizardFrame.getPspPanel();
+			PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
 			PSP_Planning pp = new PSP_Planning (plan);
 			p.addJPanel(pp);
 			addToolItems();
 			PSP_NPWizardFrame.npw = null;			
 			pwf = null;
 			dispose();
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}			
 	}
+	
+	public float getEstTime () {
+		return Float.parseFloat(txtEstTime.getText().trim());
+	}
+	
+	public int getEstSize() {
+		return Integer.parseInt(txtEstSize.getText().trim());
+	}
+	
+	public int getEstLocHr () {
+		return Integer.parseInt(txtEstLocHr.getText().trim());
+	}
 
+	public int getEstDefect () {
+		return Integer.parseInt(txtEstDefect.getText().trim());
+	}
+	
 	private void addToolItems() {
 		// TODO Auto-generated method stub
 		JLabel lblPlanningProject = new JLabel("Planning");
@@ -664,7 +678,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		lblPlanningProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				p.newProject_Mouse("PLANNING");
+				p.project_MouseEvent("PLANNING");
 			}
 		});
 		lblPlanningProject.setLocation(new Point(150, 50));
@@ -677,7 +691,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		lblDesigningProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				p.newProject_Mouse("DESIGN");
+				p.project_MouseEvent("DESIGN");
 			}
 		});
 		lblDesigningProject.setLocation(new Point (200, 50));
@@ -690,7 +704,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		lblTestingProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				p.newProject_Mouse("TESTING");
+				p.project_MouseEvent("TESTING");
 			}
 		});
 		lblTestingProject.setLocation(new Point (250, 50));
@@ -754,7 +768,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		} 		
 	}
 
-	private HashMap<String, Integer> getProjDescription() {
+	public HashMap<String, Integer> getProjDescription() {
 		HashMap<String, Integer> modDesc = new HashMap<String, Integer>();
 		
 		for (int i = 0; i < modDescription.size(); i++)
@@ -768,7 +782,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		return modDesc;
 	}
 
-	private ArrayList<String> getFilenames() {
+	public ArrayList<String> getFilenames() {
 		ArrayList <String> fileNames = new ArrayList<String> ();
 		for (int i = 0; i < filePath.size(); i++) {
 			if (!filePath.get(i).getText().trim().isEmpty()) {

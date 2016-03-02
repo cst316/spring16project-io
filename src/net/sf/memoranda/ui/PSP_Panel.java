@@ -10,11 +10,18 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import net.sf.memoranda.psp.PlanningImpl;
+import net.sf.memoranda.psp.Psp;
+import net.sf.memoranda.psp.PspImpl;
+
 //import net.sf.memoranda.util.Configuration;
 
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.awt.SystemColor;
 
 /**
@@ -32,6 +39,9 @@ public class PSP_Panel extends JPanel {
 	private JLabel lblOpenProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
+	
+	static PSP_PlanningWizardFrame pwf;
+	static PspImpl pspI;
 	
 	/**
 	 * General constructor for creating Panel
@@ -71,7 +81,7 @@ public class PSP_Panel extends JPanel {
 		lblNewProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				newProject_Mouse("NEW PROJECT");
+				project_MouseEvent("NEW PROJECT");
 			}
 		});
 		lblNewProject.setLocation(new Point(50, 50));
@@ -85,13 +95,7 @@ public class PSP_Panel extends JPanel {
 		lblOpenProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				newProject_Mouse("OPEN PROJECT");
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
+				project_MouseEvent("OPEN PROJECT");
 			}
 		});
 		lblOpenProject.setLocation(new Point (100, 50));
@@ -121,7 +125,7 @@ public class PSP_Panel extends JPanel {
 	 * Mouse events for New Project on the auto hide tool bar
 	 * @param event - Used to know which action to perform
 	 */
-	public void newProject_Mouse (String event) {
+	public void project_MouseEvent (String event) {
 		if (event.equals("NEW PROJECT")) {
 			App.getFrame().setEnabled(false);
 			toolBar.setVisible (false);
@@ -130,7 +134,18 @@ public class PSP_Panel extends JPanel {
 			//Implementation required
 			System.out.println("Yeah Open Project");
 		} else if (event.equals("PLANNING")) {
-			//Implementation required
+			/*try {
+				File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + File.separator + ".proj");
+				PlanningImpl plan = new PlanningImpl (pwf.getEstTime(), pwf.getEstLocHr(), pwf.getEstSize(), 
+						pwf.getEstDefect(), pwf.getFilenames(), pwf.getProjDescription());
+				plan.setPspValues(pspI);
+				
+				plan.save(new FileOutputStream (fs + File.separator + PspImpl.getLastID() + "_planning"));
+				addJPanel(new PSP_Planning (plan));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/			
 			System.out.println("Yeah Planning");
 		} else if (event.equals("DESIGN")) {
 			//Implementation required
@@ -139,5 +154,13 @@ public class PSP_Panel extends JPanel {
 			//Implementation required
 			System.out.println("Yeah Testing");
 		} 
+	}
+	
+	public static void setPspValues (PspImpl pspI) {
+		PSP_Panel.pspI = pspI;
+	}
+	
+	public static void setNewPlanningWizard (PSP_PlanningWizardFrame pwf) {
+		PSP_Panel.pwf = pwf;
 	}
 }
