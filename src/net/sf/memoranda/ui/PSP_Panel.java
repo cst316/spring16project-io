@@ -151,9 +151,12 @@ public class PSP_Panel extends JPanel {
 			//Implementation required
 			System.out.println("Yeah Design");
 		} else if (event.equals("TESTING")) {
-			//Implementation required
-			System.out.println("Yeah Testing");
+			App.getFrame().setEnabled(false);
+			toolBar.setVisible (false);
+			(new PSPTestingFrame(this)).setVisible(true);
+			App.getFrame().setEnabled(true);
 		} 
+
 	}
 	
 	public static void setPspValues (PspImpl pspI) {
