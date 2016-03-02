@@ -13,6 +13,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import net.sf.memoranda.util.Util;
+
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -22,6 +25,8 @@ import javax.swing.JList;
 public class PSP_DesignPanel extends JPanel implements FocusListener {
 	
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 
 	 * @author Joe Michaels
@@ -41,7 +46,7 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	JPanel viewPanel = new JPanel();
 	
 	JButton btnImportDesign = new JButton("Import Design");
-	JList<String> fileList = new JList<String>(getFileList());
+	//JList<String> fileList;
 	
 	
 	/*
@@ -51,10 +56,25 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	
 	//not sure how to get these right now, probably don't need the pid
 	private int pID;
-	private String projectName;
+	private String projectName; // same as pid
+	private static PSP_Panel pspForm;
+	
+	public PSP_DesignPanel(PSP_Panel psp){
+		
+		PSP_DesignPanel.pspForm = psp;
+		pID = pspForm.pspI.getpId();
+		try {
+            //parentPanel = _parentPanel;
+            //pID = parentPanel;
+            jbInit();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+	}
 	
 	public PSP_DesignPanel() {
-		setLayout(null);
+		
 		
 		try {
             //parentPanel = _parentPanel;
@@ -68,8 +88,10 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
     }
 	private void jbInit() throws Exception 
 	{
-		fileList.addFocusListener(this);
 		
+		//fileList = new JList<String>(getFileList());
+		//fileList.addFocusListener(this);
+		setLayout(null);
 		backPanel.setBounds(0, 0, 91, 44);
 		add(backPanel);
 		backPanel.setLayout(null);
@@ -81,13 +103,14 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 		listPanel.setBounds(0, 55, 91, 234);
 		add(listPanel);
 		
-		listPanel.add(fileList);
+		//listPanel.add(fileList);
 		
 		viewPanel.setBounds(101, 0, 339, 289);
 		add(viewPanel);
         
 		btnImportDesign.addActionListener(new java.awt.event.ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
+	        	Util.debug("import click.");
 	            btnImportDesign_actionPerformed(e);
 	        }
 	    });
@@ -97,6 +120,7 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	
 	public void btnImportDesign_actionPerformed(ActionEvent e)
 	{//import file  and save in memoranda directory
+		Util.debug("enter method.");
 		BufferedImage image = null; 
 		try
 		{
@@ -111,25 +135,27 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 				System.out.println("Selected file: " + selectedFile.getName());
 				
 				//pathways need to be updated to be relative.
-				if(!Files.exists(Paths.get("projects" + File.separator + 
-						projectName +  File.separator + "images" + File.separator + "design")))
+				if(!Files.exists(Paths.get(System.getProperty("user.home") + File.separator + ".memoranda" + File.separator + ".proj" + File.separator + 
+						 "." + pID +  File.separator + ".images" + File.separator 
+						+ ".design")))
 				{
-					File file = new File("projects" + File.separator + 
-							"projectName" + File.separator + "images"  + File.separator + "design");
+					File file = new File(System.getProperty("user.home") + File.separator + ".memoranda" + File.separator + ".proj" + File.separator + 
+							 "." + pID +  File.separator + ".images" + File.separator 
+								+ ".design");
 					file.mkdirs();
 				}
 			
 				if (selectedFile.getName().contains(".png"))
 				{
-					ImageIO.write(image, "png", new File("projects" + 
-							File.separator +"projectName" + File.separator + "images" +
-							File.separator + "design"));
+					ImageIO.write(image, "png", new File(System.getProperty("user.home") + File.separator + ".memoranda" + File.separator + ".proj" + File.separator + 
+							 "." + pID +  File.separator + ".images" + File.separator 
+								+ ".design" + File.separator + selectedFile.getName()));
 				}
 				else if (selectedFile.getName().contains(".jpg"))
 				{
-					ImageIO.write(image, "jpg", new File("projects" + 
-							File.separator + "projectName" + File.separator + "images" + 
-							File.separator + "design"));
+					ImageIO.write(image, "jpg", new File(System.getProperty("user.home") + File.separator + ".memoranda" + File.separator + ".proj" + File.separator + 
+							 "." + pID +  File.separator + ".images" + File.separator 
+								+ ".design" + File.separator + selectedFile.getName()));
 				}
 			}
 				
@@ -139,7 +165,7 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 			throw new RuntimeException("Error saving image, Check image type");
 		}
 		//reinitialize filelist after import is run
-		fileList = new JList<String>(getFileList());
+		//fileList = new JList<String>(getFileList());
 		listPanel.invalidate();
 		listPanel.validate();
 		listPanel.repaint();
@@ -154,7 +180,7 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		String path = "projects" + File.separator +projectName + 
 				File.separator + "images" + File.separator + "design";
-		
+		//only search for picture files ... png, jpg, etc...
 		File data = new File(path);
 		File[] files = data.listFiles();
 		for(int i = 0; i < files.length; ++i)

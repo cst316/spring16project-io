@@ -13,10 +13,12 @@ import javax.swing.SwingConstants;
 import net.sf.memoranda.psp.PlanningImpl;
 import net.sf.memoranda.psp.Psp;
 import net.sf.memoranda.psp.PspImpl;
+import net.sf.memoranda.util.Util;
 
 //import net.sf.memoranda.util.Configuration;
 
 import java.awt.Point;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -32,7 +34,7 @@ import java.awt.SystemColor;
  * This class lists the different options available in PSP View
  * 02/19/2016
  */
-public class PSP_Panel extends JPanel {
+public class PSP_Panel extends JPanel{
 	
 	private static final long serialVersionUID = -1815200458278347624L;
 	private JLabel lblNewProject;
@@ -150,7 +152,7 @@ public class PSP_Panel extends JPanel {
 				e.printStackTrace();
 			}*/	
 		} else if (event.equals("DESIGN")) {
-			//Implementation required
+			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
 		} else if (event.equals("TESTING")) {
 			addJPanel(new PSPTestingFrame());
