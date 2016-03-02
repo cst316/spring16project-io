@@ -71,18 +71,10 @@ public class PSP_Panel extends JPanel {
 		lblNewProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				newProject_Mouse("CLICKED");
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				newProject_Mouse("ENTERED");
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				newProject_Mouse("EXITED");
+				newProject_Mouse("NEW PROJECT");
 			}
 		});
-		lblNewProject.setLocation(new Point(0, 50));
+		lblNewProject.setLocation(new Point(50, 50));
 		lblNewProject.setPreferredSize(new Dimension(100, 50));
 		lblNewProject.setMinimumSize(new Dimension(100, 50));
 		lblNewProject.setMaximumSize(new Dimension(100, 50));
@@ -93,6 +85,7 @@ public class PSP_Panel extends JPanel {
 		lblOpenProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				newProject_Mouse("OPEN PROJECT");
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -101,6 +94,7 @@ public class PSP_Panel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 			}
 		});
+		lblOpenProject.setLocation(new Point (100, 50));
 		lblOpenProject.setMinimumSize(new Dimension(100, 50));
 		lblOpenProject.setMaximumSize(new Dimension(100, 50));
 		lblOpenProject.setPreferredSize(new Dimension(100, 50));
@@ -127,15 +121,23 @@ public class PSP_Panel extends JPanel {
 	 * Mouse events for New Project on the auto hide tool bar
 	 * @param event - Used to know which action to perform
 	 */
-	private void newProject_Mouse (String event) {
-		if (event.equals("CLICKED")) {
+	public void newProject_Mouse (String event) {
+		if (event.equals("NEW PROJECT")) {
 			App.getFrame().setEnabled(false);
 			toolBar.setVisible (false);
 			(new PSP_NPWizardFrame(this)).setVisible(true);			
-		} else if (event.equals("ENTERED")) {
-			lblNewProject.setBackground(Color.WHITE);
-		} else if (event.equals("EXITED")) {
-			lblNewProject.setBackground(Color.RED);
-		}
+		} else if (event.equals("OPEN PROJECT")) {
+			//Implementation required
+			System.out.println("Yeah Open Project");
+		} else if (event.equals("PLANNING")) {
+			//Implementation required
+			System.out.println("Yeah Planning");
+		} else if (event.equals("DESIGN")) {
+			//Implementation required
+			System.out.println("Yeah Design");
+		} else if (event.equals("TESTING")) {
+			//Implementation required
+			System.out.println("Yeah Testing");
+		} 
 	}
 }

@@ -2,6 +2,8 @@ package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,11 +26,14 @@ import net.sf.memoranda.util.Configuration;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,15 +84,12 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private List <JButton> fileFind = new ArrayList <JButton> ();
 	private List <String> planFiles = new ArrayList <String>();
 	
-	private String pid;
 	private JButton btnFileAdd;
 	private JPanel pnlEachModule;
 	private JPanel pnlModule;
 	private JPanel pnlFiles;
 	private JScrollPane spModule;
 	private JScrollPane spFile;
-	
-	static int lastID = 0;
 	
 	private JLabel lblProjId;
 	
@@ -107,21 +109,20 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 * 
 	 * @param pid - project assigned ID from the initial first screen
 	 */
-	public PSP_PlanningWizardFrame (String pid) {
+	/*public PSP_PlanningWizardFrame (int pid) {
 		try {
-			this.pid = pid;
+			lastID = pid;
 			jbInit();
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);
 			ex.printStackTrace();
 		}		
-	}
+	}*/
 	
 	/**
 	 * Creating the different components 
 	 */	
 	private void jbInit() {
-		lastID = PspImpl.getLastID();
 		setLook ();
 		//this.setAlwaysOnTop(true);
 		setTitle("New PSP Project Wizard - Planning");
@@ -218,7 +219,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		lblProjId = new JLabel(this.pid.isEmpty() ? lastID+"" : this.pid);
+		lblProjId = new JLabel(PspImpl.getLastID() + "");
 		lblProjId.setBounds(0, 0, 80, 25);
 		panel_2.add(lblProjId);
 		lblProjId.setHorizontalAlignment(SwingConstants.CENTER);
@@ -597,43 +598,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			PSP_NPWizardFrame.npw.setVisible(true);
 			this.setVisible(false);
 		} else if (pan.equals("FINISH")) {
-			try {
-				App.getFrame().setEnabled(true);
-				PSP_NPWizardFrame.npw.dispose();
-				PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), 
-						PSP_NPWizardFrame.getProjDescription(), Integer.parseInt(lblProjId.getText().trim()));
-				float estTime = Float.parseFloat(txtEstTime.getText().trim());
-				int estSize = Integer.parseInt(txtEstSize.getText().trim());
-				int estLocHr = Integer.parseInt(txtEstLocHr.getText().trim());
-				int estDefect = Integer.parseInt(txtEstDefect.getText().trim());
-				
-				File dir = new File (System.getProperty("user.home") + 
-						File.separator + ".memoranda" + File.separator + ".proj");
-				if (!dir.exists()) {
-					dir.mkdir();
-				} 
-				psp.save(new FileOutputStream(dir + File.separator + lblProjId.getText() + ".pspx"));
-								
-				ArrayList<String> fn = getFileNames ();
-				HashMap<String, Integer> pj = getProjDescription();
-				
-	 			PlanningImpl plan = new PlanningImpl (estTime, estLocHr, estSize, estDefect, fn, pj);
-	 			plan.setPspValues(psp);
-	 			plan.setFilenames(fn);
-				plan.save(new FileOutputStream (dir + File.separator + psp.getpId ()+"_planning"));
-				
-				PspImpl.setLastID(lastID + 1);
-				PSP_Panel p = new PSP_Panel();
-				p = PSP_NPWizardFrame.getPspPanel();
-				PSP_Planning pp = new PSP_Planning (plan);
-				p.addJPanel(pp);
-				PSP_NPWizardFrame.npw = null;
-				pwf = null;
-				dispose();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			callFinish();			
 		} else if (pan.equals("CANCEL")) {
 			int confirm = JOptionPane.showConfirmDialog(null, 
 					"Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);
@@ -653,6 +618,142 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		} 
 	}
 
+	private void callFinish() {
+		try {			
+			App.getFrame().setEnabled(true);
+			PSP_NPWizardFrame.npw.dispose();
+			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), PSP_NPWizardFrame
+					.getProjDescription(), Integer.parseInt(lblProjId.getText().trim()));
+			float estTime = Float.parseFloat(txtEstTime.getText().trim());
+			int estSize = Integer.parseInt(txtEstSize.getText().trim());
+			int estLocHr = Integer.parseInt(txtEstLocHr.getText().trim());
+			int estDefect = Integer.parseInt(txtEstDefect.getText().trim());
+			
+			File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + File.separator + ".proj");
+			psp.save(fs + File.separator + PspImpl.getLastID() + ".pspx");
+						
+			createProjectFiles(PspImpl.getLastID());
+			HashMap<String, Integer> pj = getProjDescription();
+			
+			PlanningImpl plan = new PlanningImpl (estTime, estLocHr, estSize, estDefect, getFilenames(), pj);
+			plan.setPspValues(psp);
+			plan.save(new FileOutputStream (fs + File.separator + psp.getpId ()+"_planning"));
+			
+			PspImpl.setLastID(PspImpl.getLastID() + 1);
+			writepID(PspImpl.getLastID());
+			PSP_Panel p = new PSP_Panel();
+			p = PSP_NPWizardFrame.getPspPanel();
+			PSP_Planning pp = new PSP_Planning (plan);
+			p.addJPanel(pp);
+			addToolItems();
+			PSP_NPWizardFrame.npw = null;			
+			pwf = null;
+			dispose();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}			
+	}
+
+	private void addToolItems() {
+		// TODO Auto-generated method stub
+		JLabel lblPlanningProject = new JLabel("Planning");
+		
+		PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
+		
+		lblPlanningProject.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				p.newProject_Mouse("PLANNING");
+			}
+		});
+		lblPlanningProject.setLocation(new Point(150, 50));
+		lblPlanningProject.setMinimumSize(new Dimension(100, 50));
+		lblPlanningProject.setMaximumSize(new Dimension(100, 50));
+		lblPlanningProject.setPreferredSize(new Dimension(100, 50));
+		lblPlanningProject.setFont(new Font("Dialog", Font.BOLD, 12));
+		
+		JLabel lblDesigningProject = new JLabel("Designing");
+		lblDesigningProject.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				p.newProject_Mouse("DESIGN");
+			}
+		});
+		lblDesigningProject.setLocation(new Point (200, 50));
+		lblDesigningProject.setMinimumSize(new Dimension(100, 50));
+		lblDesigningProject.setMaximumSize(new Dimension(100, 50));
+		lblDesigningProject.setPreferredSize(new Dimension(100, 50));
+		lblDesigningProject.setFont(new Font("Dialog", Font.BOLD, 12));
+		
+		JLabel lblTestingProject = new JLabel("Testing");
+		lblTestingProject.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				p.newProject_Mouse("TESTING");
+			}
+		});
+		lblTestingProject.setLocation(new Point (250, 50));
+		lblTestingProject.setMinimumSize(new Dimension(100, 50));
+		lblTestingProject.setMaximumSize(new Dimension(100, 50));
+		lblTestingProject.setPreferredSize(new Dimension(100, 50));
+		lblTestingProject.setFont(new Font("Dialog", Font.BOLD, 12));		
+
+
+		p.toolBar.add(lblPlanningProject);
+		p.toolBar.add(lblDesigningProject);
+		p.toolBar.add(lblTestingProject);		
+	}
+
+	private void createProjectFiles(int lastID) {
+		File dir = new File (System.getProperty("user.home") + 
+				File.separator + ".memoranda" + File.separator + ".proj");
+		File inf = null;// = new File(dir + File.separator + "psp_id");
+		ObjectOutputStream fos = null;
+		try {
+			
+			if (!dir.exists()) {
+				dir.mkdir();		
+			} 
+			
+			inf = new File (dir + File.separator + lastID + "_designing");
+			inf.createNewFile();
+			
+			inf = new File (dir + File.separator + lastID + "_planning");			
+			inf.createNewFile();
+			
+			inf = new File (dir + File.separator + lastID + "_testing");
+			inf.createNewFile();						
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 				
+	}
+
+	private void writepID(int lastID) {
+		File idFile = new File(System.getProperty("user.home") + File.separator + 
+				".memoranda" + File.separator + ".proj" + File.separator + "psp_id");
+		ObjectOutputStream dos = null;
+		try {
+			if (!idFile.exists()) {			
+				idFile.createNewFile();				
+			} 
+			
+			dos = new ObjectOutputStream (new FileOutputStream(idFile));
+			dos.writeInt(lastID);
+			dos.close();			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 		
+	}
+
 	private HashMap<String, Integer> getProjDescription() {
 		HashMap<String, Integer> modDesc = new HashMap<String, Integer>();
 		
@@ -667,7 +768,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		return modDesc;
 	}
 
-	private ArrayList<String> getFileNames() {
+	private ArrayList<String> getFilenames() {
 		ArrayList <String> fileNames = new ArrayList<String> ();
 		for (int i = 0; i < filePath.size(); i++) {
 			if (!filePath.get(i).getText().trim().isEmpty()) {

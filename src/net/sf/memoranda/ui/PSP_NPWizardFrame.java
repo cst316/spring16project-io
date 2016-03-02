@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import net.sf.memoranda.psp.Psp;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.util.Configuration;
 
@@ -22,6 +23,15 @@ import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.awt.event.ActionEvent;
 
 /**
@@ -44,10 +54,7 @@ public class PSP_NPWizardFrame extends JFrame {
 	private static JTextPane txtPrjDescription;
 	private static PSP_Panel psp;
 	
-	//private 
-	
 	public static PSP_NPWizardFrame npw = null;
-	//private PSP_NPWizardFrame newWizard = null;
 	static int lastID = 0;
 	
 	/**
@@ -92,7 +99,7 @@ public class PSP_NPWizardFrame extends JFrame {
 	 */
 	public void jbInit() {
 		//this.setAlwaysOnTop(true);
-		lastID = PspImpl.getLastID();
+		retrieveID();
 		setLook();
 		int xsize = 450, ysize = 300;
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -120,7 +127,7 @@ public class PSP_NPWizardFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		lblPID = new JLabel(lastID + "");	//once the back-end is done, can get rid of this magic number
+		lblPID = new JLabel(lastID + "");
 		lblPID.setBounds(0, 0, 80, 25);
 		panel.add(lblPID);
 		lblPID.setHorizontalAlignment(SwingConstants.CENTER);
@@ -130,7 +137,7 @@ public class PSP_NPWizardFrame extends JFrame {
 		lblNewLabel.setBounds(10, 70, 100, 25);
 		contentPane.add(lblNewLabel);
 		
-		txtPrjName = new JTextField("Testing Project");	//once the back-end is done, can get rid of this magic string
+		txtPrjName = new JTextField("");
 		txtPrjName.setBounds(125, 70, 300, 25);
 		contentPane.add(txtPrjName);
 		txtPrjName.setColumns(10);
@@ -145,7 +152,7 @@ public class PSP_NPWizardFrame extends JFrame {
 		contentPane.add(scrollPane);
 		
 		txtPrjDescription = new JTextPane();
-		txtPrjDescription.setText("Only a test");	//once the back-end is done, can get rid of this magic string
+		txtPrjDescription.setText("");	//once the back-end is done, can get rid of this magic string
 		scrollPane.setViewportView(txtPrjDescription);
 		txtPrjDescription.setBackground(Color.WHITE);
 		
@@ -168,6 +175,52 @@ public class PSP_NPWizardFrame extends JFrame {
 		contentPane.add(btnNewButton_1);
 	}
 	
+	private void retrieveID() {
+		File idFile = new File(System.getProperty("user.home") + File.separator + 
+				".memoranda" + File.separator + ".proj" + File.separator + "psp_id");
+		try {
+			if (!checkFile()) {			
+				idFile.createNewFile();
+				ObjectOutputStream dos = new ObjectOutputStream (new FileOutputStream(idFile));
+				lastID = Psp.pID;
+				System.out.println("ID: " + lastID);
+				dos.writeInt(lastID);
+				dos.close();
+			} else {
+				ObjectInputStream dis = new ObjectInputStream (new FileInputStream (idFile));
+				lastID = dis.readInt();
+				PspImpl.setLastID(lastID);
+				dis.close();
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+	
+	private void makeDir() {
+		File dir = new File (System.getProperty("user.home") + 
+				File.separator + ".memoranda" + File.separator + ".proj");
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+	}
+
+	private boolean checkFile() {
+		boolean ifExists = false;
+		File yourFile = new File(System.getProperty("user.home") + File.separator + 
+				".memoranda" + File.separator + ".proj" + File.separator + "psp_id");
+		if(yourFile.exists()) {
+		   ifExists = true;
+		} else {
+			makeDir();
+		}
+		return ifExists;
+	}
+
 	public int getPID() {
 		return Integer.parseInt(lblPID.getText().trim());
 	}
@@ -187,7 +240,7 @@ public class PSP_NPWizardFrame extends JFrame {
 		if (!txtPrjName.getText().isEmpty() && !txtPrjDescription.getText().isEmpty()) {
 			npw = this;
 			if (PSP_PlanningWizardFrame.pwf == null) {
-				(new PSP_PlanningWizardFrame (lastID+"")).setVisible(true);
+				new PSP_PlanningWizardFrame().setVisible(true);
 			} else { 
 				PSP_PlanningWizardFrame.pwf.setVisible(true);
 			}
