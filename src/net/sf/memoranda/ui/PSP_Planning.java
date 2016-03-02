@@ -293,7 +293,7 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 	}
 	
 	public void addModule (String des, int size) {
-		ArrayList <JLabel> addThis = buildLabel (des, size);
+		ArrayList <JLabel> addThis = buildLabel (des + ":", size);
 		pnlCurrMod.add(addThis.get(0));
 		pnlCurrMod.add(addThis.get(1));
 	}
@@ -321,8 +321,9 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 	 * @param i - the index of the text field to place the result in
 	 */
 	private void openFileDialog () {
+		//Using user.home instead of user.dir
 		JFileChooser fc =  new JFileChooser(new File(System.getProperty
-				("user.dir") + File.separator + ".memoranda"));  
+				("user.home") + File.separator + ".memoranda"));
 		int returnVal = fc.showOpenDialog(this);
 		File file;
 				

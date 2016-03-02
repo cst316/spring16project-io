@@ -27,6 +27,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,8 +88,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private JScrollPane spFile;
 	
 	static int lastID = 0;
-	final JFileChooser fc = new JFileChooser(
-			new File(System.getProperty("user.dir") + File.separator + ".memoranda"));    
+	
 	private JLabel lblProjId;
 	
 	/**
@@ -575,6 +576,8 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	 * @param i - the index of the text field to place the result in
 	 */
 	private void openFileDialog (int i) {
+		JFileChooser fc = new JFileChooser(
+				new File(System.getProperty("user.home") + File.separator + "Pictures"));    
 		int returnVal = fc.showOpenDialog(this);
 		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -603,15 +606,21 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				int estSize = Integer.parseInt(txtEstSize.getText().trim());
 				int estLocHr = Integer.parseInt(txtEstLocHr.getText().trim());
 				int estDefect = Integer.parseInt(txtEstDefect.getText().trim());
-				psp.save("proj" + File.separator + lblProjId.getText() + "_.pspx");
 				
+				File dir = new File (System.getProperty("user.home") + 
+						File.separator + ".memoranda" + File.separator + ".proj");
+				if (!dir.exists()) {
+					dir.mkdir();
+				} 
+				psp.save(new FileOutputStream(dir + File.separator + lblProjId.getText() + ".pspx"));
+								
 				ArrayList<String> fn = getFileNames ();
 				HashMap<String, Integer> pj = getProjDescription();
 				
 	 			PlanningImpl plan = new PlanningImpl (estTime, estLocHr, estSize, estDefect, fn, pj);
 	 			plan.setPspValues(psp);
 	 			plan.setFilenames(fn);
-				plan.save(new FileOutputStream ("proj" + File.separator + psp.getpId ()+"_planning"));
+				plan.save(new FileOutputStream (dir + File.separator + psp.getpId ()+"_planning"));
 				
 				PspImpl.setLastID(lastID + 1);
 				PSP_Panel p = new PSP_Panel();
