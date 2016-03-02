@@ -1,5 +1,6 @@
 /**
- * 
+ * @author Julie
+ * Tests the class ProjectSummaryCreator
  */
 package net.sf.memoranda.tests;
 
@@ -8,16 +9,16 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @author Julie
- * Tests the class ProjectSummaryCreator
- */
+import net.sf.memoranda.psp.ProjectSummaryCreator;
+
+
 public class ProjectSummaryCreatorTest {
 	private String author;
 	private String programName;
 	private String date;
 	private double[] estimatedTime;
 	private double[] actualTime;
+	private int[] estimatedDefects;
 	private int[] actualDefects;
 	private double[] estimatedTotal; 
 	private double[] actualTotal;
@@ -32,6 +33,7 @@ public class ProjectSummaryCreatorTest {
 		date = "Febuary 29 2016";
 		estimatedTime = new double[] {5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 35.0};
 		actualTime = new double[] {5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 35.0};
+		estimatedDefects = new int[] {1, 1, 1, 1, 1, 1, 1, 7};
 		actualDefects = new int[] {1, 1, 1, 1, 1, 1, 1, 7};
 		estimatedTotal = new double[] {50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 350.0};
 		actualTotal = new double[] {50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 350.0};
@@ -42,7 +44,7 @@ public class ProjectSummaryCreatorTest {
 	 */
 	@Test
 	public void testCreateFileSummary() {
-		fail("Not yet implemented");
+		ProjectSummaryCreator.createFileSummary(author, programName, date, estimatedTime, actualTime, estimatedDefects, actualDefects, estimatedTotal, actualTotal);
 	}
 
 }

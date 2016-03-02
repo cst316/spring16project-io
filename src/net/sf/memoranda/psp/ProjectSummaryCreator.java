@@ -30,6 +30,7 @@ import com.itextpdf.text.pdf.PdfWriter;
  */
 public class ProjectSummaryCreator {
 	
+	
 	private static String FILE = "c:/temp/PSPProjectSummary.pdf";
 	private static Font headingFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
 		      Font.BOLD);
@@ -46,16 +47,17 @@ public class ProjectSummaryCreator {
 	 * Creates a PSP Summary Form with all specified data
 	 * 
 	 */
-	public static void createFileSummary(String author, String programName, String date, double[] estimatedTime, double[] actualTime,
+	public static void createFileSummary(String author, String programName, String date, 
+			double[] estimatedTime, double[] actualTime, int [] estimatedDefects,
 			int[] actualDefects, double[] estimatedTotal, double[] actualTotal){
 		try {
 			Document document = new Document();
 		    PdfWriter.getInstance(document, new FileOutputStream(FILE));
 		    document.open();
 		    addPDFTitle(document, author, programName, date);
-		    createTimeTable(estimatedTime, actualTime);
-		    createDefectTable(actualDefects);
-		    createSummaryTable(estimatedTotal, actualTotal);
+		    createTimeTable(document, estimatedTime, actualTime);
+		    createDefectTable(document, estimatedDefects, actualDefects);
+		    createSummaryTable(document, estimatedTotal, actualTotal);
 		    document.close();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -72,21 +74,29 @@ public class ProjectSummaryCreator {
 	 * Adds the title section of the PSP Summary Form
 	 * 
 	 */
-	private static void addPDFTitle(Document document, String author, String programName, String date){
-		 Paragraph title = new Paragraph();
-		 addEmptyLine(title, 1);
-		 title.setAlignment(Element.ALIGN_CENTER);
-		 title.add(new Paragraph("PSP Summary Form", headingFont));
-		 
-		 document.addAuthor(author);
-		 
-		 addEmptyLine(title, 2);
-		 
-		 Paragraph introSection = new Paragraph();
-		 introSection.add(new Paragraph("Name: " + author, normalFont));
-		 introSection.add(new Paragraph("Program Name: " + programName, normalFont));
-		 introSection.add(new Paragraph("Date: " + date, normalFont));
+	private static void addPDFTitle(Document document, String author, String programName, String date){	    
+	    
+		Paragraph title = new Paragraph("PSP Summary Form", headingFont);
+	    title.setAlignment(Element.ALIGN_CENTER);
+	    addEmptyLine(title, 1);
+	    try {
+			document.add(title);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
 
+	    
+	    Paragraph introSection = new Paragraph();
+	    introSection.add(new Paragraph("Name: " + author, normalFont));
+	    introSection.add(new Paragraph("Program Name: " + programName, normalFont));
+	    introSection.add(new Paragraph("Date: " + date, normalFont));
+	    
+	    try {
+			document.add(introSection);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+	   
 	}
 	
 	/**
@@ -98,18 +108,18 @@ public class ProjectSummaryCreator {
 	 * % To Date
 	 * 
 	 */
-	private static void createTimeTable(double [] estimatedTime, double [] actualTime){
+	private static void createTimeTable(Document document, double [] estimatedTime, double [] actualTime){
 		
 		Paragraph table1 = new Paragraph();
 		PdfPTable timeTable = new PdfPTable(5);
-		
+		addEmptyLine(table1, 2);
 		double totalEstimated = 0;
 		double totalActual = 0;
 		double actualToDate = 0;
 		double totalActualToDate = 0;
 		double actualToDatePercent = 0;
 
-		 addEmptyLine(table1, 5);
+		 addEmptyLine(table1, 1);
 		
 		//Add headers to table
 	    PdfPCell tableHeading = new PdfPCell(new Phrase("Time in Phase\n(Minutes)", headingFont));
@@ -133,10 +143,9 @@ public class ProjectSummaryCreator {
 	    timeTable.addCell(tableHeading);
 	    timeTable.setHeaderRows(1);
 	    
-  	  	//Calculate total actual to date
-	    for(int j = 0; j < 7; ++j){ 
-	    	totalActualToDate += actualTime[j];
-	    }
+  	  	//Save total actual to date
+	    totalActualToDate = actualTime[7];
+
 	    
 	    //Add the data to the table
 	    for(int i = 0; i < 8; ++i){
@@ -179,9 +188,10 @@ public class ProjectSummaryCreator {
 	    	totalActual += actualTime[i];
 	    	
 	    	//Calculate how much time has been spent to date
-	    	for(int totalSoFar = i; totalSoFar >= 0; --totalSoFar){
+	    	if(i != 7){
 	    		actualToDate += actualTime[i];
 	    	}
+
 	    	
 	    	//Add To Date to table
 	    	String formattedActualToDate = String.format("%.2f", actualToDate);
@@ -197,26 +207,34 @@ public class ProjectSummaryCreator {
 	    }
 	    
 	    table1.add(timeTable);
+	    
+	    try {
+			document.add(table1);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * 
 	 * @param actualDefects array of defects injected
 	 * 
-	 * Creates the defect table with the Estimated column starred out (***) and
-	 * with the Actual Defects Injected, the To Date Defects Injected, and the
+	 * Creates the defect table with the Estimated column, the 
+	 * Actual Defects Injected, the To Date Defects Injected, and the
 	 * %To Date Defects Injected
 	 */
-	private static void createDefectTable(int [] actualDefects){
+	private static void createDefectTable(Document document, int [] estimatedDefects, int [] actualDefects){
 		Paragraph table2 = new Paragraph();
+		addEmptyLine(table2, 2);
 		PdfPTable defectTable = new PdfPTable(5);
 		
-		double totalActual = 0;
+		int totalEstimated = 0;
+		int totalActual = 0;
 		double actualToDate = 0;
 		double totalActualToDate = 0;
 		double actualToDatePercent = 0;
 		
-		addEmptyLine(table2, 5);
+		addEmptyLine(table2, 2);
 		
 		//Add headers to table
 	    PdfPCell tableHeading = new PdfPCell(new Phrase("Defects Injected", headingFont));
@@ -240,10 +258,9 @@ public class ProjectSummaryCreator {
 	    defectTable.addCell(tableHeading);
 	    defectTable.setHeaderRows(1);
 	    
-  	  	//Calculate total actual to date
-	    for(int j = 0; j < 7; ++j){ 
-	    	totalActualToDate += actualDefects[j];
-	    }
+  	  	//Save total actual to date
+	    totalActualToDate = actualDefects[7];
+
 	    
 	    //Add the data to the table
 	    for(int i = 0; i < 8; ++i){
@@ -275,17 +292,19 @@ public class ProjectSummaryCreator {
 	    		break;
 	    	}
 	    	
-	    	//Add estimated defects to table - at this point, they are starred out (***)
-	    	defectTable.addCell("***");
-	    	
+	    	//Add estimated time to table
+	    	String formattedEstimatedDefects = String.valueOf(estimatedDefects[i]);
+	    	defectTable.addCell(formattedEstimatedDefects);
+	    	totalEstimated += estimatedDefects[i];
+	    		    	
 	    	
 	    	//Add actual time to table
-	    	String formattedAcutalTime = String.format("%.2f", actualDefects[i]);
+	    	String formattedAcutalTime = String.valueOf(actualDefects[i]);
 	    	defectTable.addCell(formattedAcutalTime);
 	    	totalActual += actualDefects[i];
 	    	
 	    	//Calculate how much time has been spent to date
-	    	for(int totalSoFar = i; totalSoFar >= 0; --totalSoFar){
+	    	if(i != 7){
 	    		actualToDate += actualDefects[i];
 	    	}
 	    	
@@ -303,6 +322,12 @@ public class ProjectSummaryCreator {
 	    }
 	    
 	    table2.add(defectTable);
+	    
+	    try {
+			document.add(table2);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -319,14 +344,15 @@ public class ProjectSummaryCreator {
 	 * To Date is starred out currently (***)
 	 */
 	
-	private static void createSummaryTable(double[] estimatedTotal, double[] actualTotal){
+	private static void createSummaryTable(Document document, double[] estimatedTotal, double[] actualTotal){
 		Paragraph table3 = new Paragraph();
+		addEmptyLine(table3, 2);
 		PdfPTable summaryTable = new PdfPTable(4);
 		
-		addEmptyLine(table3, 7);
+		addEmptyLine(table3, 3);
 		
 		//Add headers to table
-	    PdfPCell tableHeading = new PdfPCell(new Phrase("")); //First row, first column is blank
+	    PdfPCell tableHeading = new PdfPCell(new Phrase("SUMMARY", normalFont)); //First row, first column is blank
 	    summaryTable.addCell(tableHeading);
 	    
 	    tableHeading = new PdfPCell(new Phrase("Estimated", headingFont));
@@ -355,16 +381,22 @@ public class ProjectSummaryCreator {
 	    		break;
 	    	}
 	    	
-	    	String formattedEstimatedTotal = String.format(".2f", estimatedTotal[i]);
+	    	String formattedEstimatedTotal = String.format("%.2f", estimatedTotal[i]);
 	    	summaryTable.addCell(formattedEstimatedTotal);
 	    	
-	    	String formattedActualTotal = String.format(".2f", actualTotal[i]);
+	    	String formattedActualTotal = String.format("%.2f", actualTotal[i]);
 	    	summaryTable.addCell(formattedActualTotal);
 	    	
 	    	summaryTable.addCell("***");
 	    }
 	    
 	    table3.add(summaryTable);
+	    
+	    try {
+			document.add(table3);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
