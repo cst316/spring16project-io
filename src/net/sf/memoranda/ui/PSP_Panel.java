@@ -153,10 +153,8 @@ public class PSP_Panel extends JPanel {
 			//Implementation required
 			System.out.println("Yeah Design");
 		} else if (event.equals("TESTING")) {
-			App.getFrame().setEnabled(false);
-			toolBar.setVisible (false);
-			(new PSPTestingFrame(this)).setVisible(true);
-			App.getFrame().setEnabled(true);
+			addJPanel(new PSPTestingFrame());
+			
 		} 
 	}
 	
