@@ -50,10 +50,25 @@ public class NewTaskTable extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		JButton btnNewTask = new JButton("New Task");
+		btnNewTask.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+								
+				//opens NewTaskDialog
+				NewTaskDialog nw = new NewTaskDialog();
+				nw.NewScreen();
+				
+				
+			}
+		});
 		
 		JButton btnCloseTask = new JButton("Complete Task");
 		btnCloseTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+			//opens NewTaskDialog
+			NewTaskDialogClose nw = new NewTaskDialogClose();
+			nw.NewScreen();
+				
 			}
 		});
 		
@@ -94,7 +109,7 @@ public class NewTaskTable extends JFrame {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"testing", null, "", null, null, null, null, null},
+				{null, null, "", null, null, null, null, null},
 				{null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null},
