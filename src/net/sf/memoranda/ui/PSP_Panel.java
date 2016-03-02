@@ -78,6 +78,7 @@ public class PSP_Panel extends JPanel {
 		add(toolBar, BorderLayout.WEST);
 		
 		lblNewProject = new JLabel("New Project");
+		lblNewProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -92,6 +93,7 @@ public class PSP_Panel extends JPanel {
 		toolBar.add(lblNewProject);
 		
 		lblOpenProject = new JLabel("Open Project");
+		lblOpenProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpenProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -112,6 +114,7 @@ public class PSP_Panel extends JPanel {
 	}
 	
 	public void addJPanel (JPanel toAdd) {
+		pnlWizard.removeAll();
 		pnlWizard.add(toAdd, BorderLayout.CENTER);
 		toAdd.setVisible(true);
 		toolBar.setVisible(false);
@@ -145,8 +148,7 @@ public class PSP_Panel extends JPanel {
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/			
-			System.out.println("Yeah Planning");
+			}*/	
 		} else if (event.equals("DESIGN")) {
 			//Implementation required
 			System.out.println("Yeah Design");
@@ -156,7 +158,6 @@ public class PSP_Panel extends JPanel {
 			(new PSPTestingFrame(this)).setVisible(true);
 			App.getFrame().setEnabled(true);
 		} 
-
 	}
 	
 	public static void setPspValues (PspImpl pspI) {

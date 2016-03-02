@@ -671,10 +671,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	
 	private void addToolItems() {
 		// TODO Auto-generated method stub
-		JLabel lblPlanningProject = new JLabel("Planning");
-		
+		JLabel lblPlanningProject = new JLabel("Planning");		
 		PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
-		
+		lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlanningProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -688,6 +687,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		lblPlanningProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		JLabel lblDesigningProject = new JLabel("Designing");
+		lblDesigningProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDesigningProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -701,6 +701,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		lblDesigningProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		JLabel lblTestingProject = new JLabel("Testing");
+		lblTestingProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTestingProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -712,7 +713,6 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		lblTestingProject.setMaximumSize(new Dimension(100, 50));
 		lblTestingProject.setPreferredSize(new Dimension(100, 50));
 		lblTestingProject.setFont(new Font("Dialog", Font.BOLD, 12));		
-
 
 		p.toolBar.add(lblPlanningProject);
 		p.toolBar.add(lblDesigningProject);
