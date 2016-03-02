@@ -146,8 +146,7 @@ public class PSP_Panel extends JPanel {
 	}
 	
 	private void designView_MouseClicked(){
-		System.out.println("mouse clicked");
-		App.getFrame().setEnabled(false);
+		
 		new PSP_DesignPanel().setVisible(true);
 	}
 }

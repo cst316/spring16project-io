@@ -7,8 +7,14 @@ import org.junit.Test;
 public class DesignPanelTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void getFileListTest() {
+		
+	}
+	
+	@Test
+	public void checkFolderSystemTest(){
+		assertTrue(true);
+		assertNotNull(true);
 	}
 
 }

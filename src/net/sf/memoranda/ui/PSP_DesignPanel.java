@@ -30,6 +30,7 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	 * it is used when design view button is clicked
 	 * 03/01/2016
 	 */
+	
 	private static final long serialVersionUID = -4697829421699112193L;
 	BorderLayout borderLayout1 = new BorderLayout();
 	DailyItemsPanel parentPanel = null;
@@ -40,7 +41,7 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	JPanel viewPanel = new JPanel();
 	
 	JButton btnImportDesign = new JButton("Import Design");
-	JList<String> fileList = new JList<String>(getFileList());
+	JList<String> fileList;
 	
 	
 	/*
@@ -67,6 +68,11 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
     }
 	private void jbInit() throws Exception 
 	{
+		System.out.println("jbinit");
+		//init gui and needed filesystem
+		checkFolderSystem();
+		fileList = new JList<String>(getFileList());
+		
 		fileList.addFocusListener(this);
 		
 		backPanel.setBounds(0, 0, 91, 44);
@@ -94,8 +100,12 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	
 	
 	
-	public void btnImportDesign_actionPerformed(ActionEvent e)
-	{//import file  and save in memoranda directory
+	public void btnImportDesign_actionPerformed(ActionEvent e){
+		importGraphic();
+	}
+	
+	public void importGraphic(){
+		//import file  and save in memoranda directory
 		BufferedImage image = null; 
 		try
 		{
@@ -108,15 +118,6 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 				File selectedFile = fileChooser.getSelectedFile();
 				image = ImageIO.read(selectedFile);
 				System.out.println("Selected file: " + selectedFile.getName());
-				
-				//pathways need to be updated to be relative.
-				if(!Files.exists(Paths.get("projects" + File.separator + 
-						projectName +  File.separator + "images" + File.separator + "design")))
-				{
-					File file = new File("projects" + File.separator + 
-							"projectName" + File.separator + "images"  + File.separator + "design");
-					file.mkdirs();
-				}
 			
 				if (selectedFile.getName().contains(".png"))
 				{
@@ -151,7 +152,7 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	public DefaultListModel<String> getFileList()
 	{
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
-		String path = "projects" + File.separator +projectName + 
+		String path = "projects" + File.separator + projectName + 
 				File.separator + "images" + File.separator + "design";
 		
 		File data = new File(path);
@@ -184,5 +185,24 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	public void focusLost(FocusEvent event) {
 		// TODO Auto-generated method stub
 		
+	}
+	public boolean checkFolderSystem(){
+		boolean success= true;
+		try{
+			if(!Files.exists(Paths.get("projects" + File.separator + 
+					projectName +  File.separator + "images" + File.separator + "design")))
+			{
+				File file = new File("projects" + File.separator + 
+						"projectName" + File.separator + "images"  + File.separator + "design");
+				file.mkdirs();
+			}
+		}catch(RuntimeException e){
+			e.getMessage();
+			success = false;
+		}catch(Exception e){
+			e.getMessage();
+			success = false;
+		}
+		return success;
 	}
 }
