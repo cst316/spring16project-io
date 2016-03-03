@@ -23,11 +23,14 @@ import javax.swing.border.EtchedBorder;
 import net.sf.memoranda.psp.PlanningImpl;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.util.Util;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -130,7 +133,14 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((dim.width - xsize)/2, (dim.height - ysize)/2);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener( new WindowAdapter()
+		{
+		    public void windowClosing(WindowEvent e)
+		    {
+		    	buttonAction_Clicked ("CANCEL");
+		    }
+		});
 		setSize(xsize, ysize);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -292,7 +302,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		
 		addPnlFile();
 
-		setResizable (false);
+		setResizable (false);		
 	}
 	
 	/**
@@ -600,6 +610,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		} else if (pan.equals("FINISH")) {
 			callFinish();			
 		} else if (pan.equals("CANCEL")) {
+			UIManager.put("OptionPane.background",Color.white);
+			UIManager.put("Panel.background",Color.white);
+			
 			int confirm = JOptionPane.showConfirmDialog(null, 
 					"Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);
 			
@@ -624,7 +637,8 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			PSP_NPWizardFrame.npw.dispose();
 			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), PSP_NPWizardFrame
 					.getProjDescription(), Integer.parseInt(lblProjId.getText().trim()));
-			File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + File.separator + ".proj");
+			File fs = new File (System.getProperty("user.home") +  File.separator + 
+					".memoranda" + File.separator + ".proj");
 			psp.save(fs + File.separator + PspImpl.getLastID() + ".pspx");
 						
 			createProjectFiles(PspImpl.getLastID());
@@ -727,17 +741,19 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		try {
 			
 			if (!dir.exists()) {
-				dir.mkdir();		
+				dir.mkdir();				
 			} 
 			
-			inf = new File (dir + File.separator + lastID + "_designing");
-			inf.createNewFile();
+			File des = new File (dir.getPath() + File.separator + '.' + lastID + 
+					File.separator + ".images" + File.separator + ".design");
+			des.mkdirs();
+			File pl = new File (dir.getPath() + File.separator + '.' + lastID + 
+					File.separator + ".images" + File.separator + ".plan");
+			pl.mkdirs();
 			
 			inf = new File (dir + File.separator + lastID + "_planning");			
 			inf.createNewFile();
 			
-			inf = new File (dir + File.separator + lastID + "_testing");
-			inf.createNewFile();						
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

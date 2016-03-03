@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 import net.sf.memoranda.psp.Psp;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.util.Util;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -33,6 +34,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * 
@@ -60,7 +63,7 @@ public class PSP_NPWizardFrame extends JFrame {
 	/**
 	 * General constructor
 	 */
-	public PSP_NPWizardFrame() {		
+	public PSP_NPWizardFrame() {
 		try {
 			jbInit();
 		} catch (Exception ex) {
@@ -108,7 +111,14 @@ public class PSP_NPWizardFrame extends JFrame {
 		setTitle("New PSP Project Wizard");
 		setResizable(false);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener( new WindowAdapter()
+		{
+		    public void windowClosing(WindowEvent e)
+		    {
+		    	btnCancel_Clicked ();
+		    }
+		});
 		setSize (xsize, ysize);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -277,7 +287,10 @@ public class PSP_NPWizardFrame extends JFrame {
 	/**
 	 * Canceling the project creation
 	 */
-	protected void btnCancel_Clicked() {		
+	protected void btnCancel_Clicked() {
+		UIManager.put("OptionPane.background",Color.white);
+		UIManager.put("Panel.background",Color.white);
+		
 		int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?","Confirm", JOptionPane.YES_NO_OPTION);
 		
 		if (confirm == JOptionPane.YES_OPTION) {
