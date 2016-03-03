@@ -3,14 +3,15 @@ package net.sf.memoranda.ui;
 import java.awt.BorderLayout;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import net.sf.memoranda.util.Util;
 
@@ -22,7 +23,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-public class PSP_DesignPanel extends JPanel implements FocusListener {
+public class PSP_DesignPanel extends JPanel{
 	
 
 	private static final long serialVersionUID = 1L;
@@ -37,13 +38,10 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	 * 03/01/2016
 	 */
 	
-	BorderLayout borderLayout1 = new BorderLayout();
-	DailyItemsPanel parentPanel = null;
-	
 	JPanel backPanel = new JPanel();
 	JPanel designView = new JPanel();
 	JPanel listPanel = new JPanel();
-	JPanel viewPanel = new JPanel();
+	JScrollPane viewPane = new JScrollPane();
 	
 	JButton btnImportDesign = new JButton("Import Design");
 	JList<String> fileList;
@@ -94,12 +92,19 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 		backPanel.add(btnImportDesign);
 		
 		
-		listPanel.setBounds(0, 55, 139, 234);
+		listPanel.setBounds(0, 55, 139, 650);
 		add(listPanel);
 		
+		//gets file list and displays selected file
 		if (fileList != null){
+			
 			listPanel.add(fileList);
-			fileList.addFocusListener(this);
+			fileList.addMouseListener(new MouseAdapter(){
+		          @Override
+		          public void mouseClicked(MouseEvent e) {
+		        	  mouseEvent(e);
+		          }
+		    });
 			listPanel.invalidate();
 			listPanel.validate();
 			listPanel.repaint();
@@ -107,8 +112,10 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 			Util.debug("file list is empty");
 		}
 		
-		viewPanel.setBounds(149, 0, 291, 289);
-		add(viewPanel);
+		viewPane.setBounds(149, 0, 765, 705);
+		add(viewPane);
+		viewPane.setLayout(null);
+		
         
 		btnImportDesign.addActionListener(new java.awt.event.ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
@@ -157,22 +164,22 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 					ImageIO.write(image, "tif", new File(getPath() + File.separator + selectedFile.getName()));
 				}
 			}
-				
+			
+			fileList = new JList<String>(getFileList());
+			fileList.addMouseListener(new MouseAdapter(){
+		          @Override
+		          public void mouseClicked(MouseEvent e) {
+		        	  mouseEvent(e);
+		              
+		          }
+		    });
+			jbInit();
 		}
 		catch(Exception ex)
 		{
 			throw new RuntimeException("Error saving image, Check image type");
 		}
-		//reinitialize filelist after import is run
-		try{
-			fileList = new JList<String>(getFileList());
-			fileList.addFocusListener(this);
-			listPanel.invalidate();
-			listPanel.validate();
-			listPanel.repaint();
-		}catch (Exception ex){
-			ex.getMessage();
-		}
+
 	}
 	
 	/*
@@ -192,34 +199,6 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 		
 		return listModel;
 	}
-	@Override
-	public void focusGained(FocusEvent event) {
-		//display picture in main panel
-		Util.debug("focus gained");
-		try{
-			ImageIcon icon = new ImageIcon(getPath() + File.separator + event.getSource().toString());
-			JLabel imgLabel = new JLabel();
-			imgLabel.setIcon(icon);
-			viewPanel.add(imgLabel);
-/*			viewPanel.setBackground(new BackGround(event.getSource().toString(), 
-					viewPanel.getWidth(), viewPanel.getHeight()));
-*/			viewPanel.setAutoscrolls(true);
-		}catch(RuntimeException ex){
-			Util.debug(ex.getMessage());
-		}catch(Exception e){
-			Util.debug(e.getMessage());
-		}
-		Util.debug("background added to panel... revalidating");
-		viewPanel.invalidate();
-		viewPanel.validate();
-		viewPanel.repaint();
-		Util.debug("revalidating done");
-	}
-	@Override
-	public void focusLost(FocusEvent event) {
-		// TODO Auto-generated method stub
-		//do nothing
-	}
 	
 	public boolean setPath(String pId){
 		this.path = System.getProperty("user.home") + File.separator + 
@@ -234,6 +213,32 @@ public class PSP_DesignPanel extends JPanel implements FocusListener {
 	
 	public int getPID(){
 		return this.pID;
+	}
+	
+	public boolean mouseEvent(MouseEvent e){
+		String fileName = (String) fileList.getSelectedValue();
+        Util.debug("focus gained");
+		Util.debug("image: " + getPath() + File.separator + fileName);
+		try{
+			ImageIcon icon = new ImageIcon(getPath() + File.separator 
+					+ fileName);
+			JLabel imgLabel = new JLabel("", icon, JLabel.CENTER);
+			imgLabel.setIcon(icon);
+			imgLabel.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
+			viewPane.scrollRectToVisible(getBounds());
+			viewPane.add(imgLabel);
+		}catch(RuntimeException ex){
+			Util.debug(ex.getMessage());
+		}catch(Exception ex){
+			Util.debug(ex.getMessage());
+		}
+		Util.debug("background added to panel... revalidating");
+		viewPane.invalidate();
+		viewPane.validate();
+		viewPane.repaint();
+		Util.debug("revalidating done");
+		fileList.clearSelection();
+		return true;
 	}
 }
 
