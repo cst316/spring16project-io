@@ -16,7 +16,7 @@ public class PspImpl implements Psp {
 	private String name;
 	private String description;
 	
-	static int lastID = Psp.pID;
+	public static int lastID = Psp.pID;
 	
 	//PspImpl constructor where values are initialized to empty values
 	public PspImpl () {
@@ -102,10 +102,8 @@ public class PspImpl implements Psp {
         try {
             OutputStreamWriter fw =
                 new OutputStreamWriter(new FileOutputStream(thePathOfTheFile), "UTF-8");
-            fw.write(lastID);
-            fw.write(System.getProperty("line.separator"));
+            fw.write(Psp.pID);
             fw.write(this.getName());
-            fw.write(System.getProperty("line.separator"));            
             fw.write(this.getDescription());
             fw.flush();
             fw.close();    

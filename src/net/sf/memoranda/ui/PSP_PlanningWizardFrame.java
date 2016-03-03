@@ -23,7 +23,6 @@ import javax.swing.border.EtchedBorder;
 import net.sf.memoranda.psp.PlanningImpl;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.util.Configuration;
-import net.sf.memoranda.util.Util;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -31,7 +30,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -64,9 +62,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	
 	private JPanel contentPane;
 	private JTextField txtEstTime;
-	private JTextField txtEstLocHr;
 	private JTextField txtEstSize;
 	private JTextField txtEstDefect;
+	private JTextField txtEstLocHr;
 	
 	static JFrame pwf = null;
 	private JTextField txtDescription;
@@ -107,21 +105,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			ex.printStackTrace();
 		}
 	}
-	
-	/**
-	 * 
-	 * @param pid - project assigned ID from the initial first screen
-	 */
-	/*public PSP_PlanningWizardFrame (int pid) {
-		try {
-			lastID = pid;
-			jbInit();
-		} catch (Exception ex) {
-			new ExceptionDialog(ex);
-			ex.printStackTrace();
-		}		
-	}*/
-	
+		
 	/**
 	 * Creating the different components 
 	 */	
@@ -177,20 +161,20 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		pnlEstimates.add(txtEstTime);
 		txtEstTime.setColumns(10);
 		
-		txtEstLocHr = new JTextField();
-		txtEstLocHr.setColumns(10);
-		txtEstLocHr.setBounds(180, 80, 80, 25);
-		pnlEstimates.add(txtEstLocHr);
-		
 		txtEstSize = new JTextField();
 		txtEstSize.setColumns(10);
-		txtEstSize.setBounds(180, 115, 80, 25);
+		txtEstSize.setBounds(180, 80, 80, 25);
 		pnlEstimates.add(txtEstSize);
 		
 		txtEstDefect = new JTextField();
 		txtEstDefect.setColumns(10);
-		txtEstDefect.setBounds(180, 45, 80, 25);
+		txtEstDefect.setBounds(180, 115, 80, 25);
 		pnlEstimates.add(txtEstDefect);
+		
+		txtEstLocHr = new JTextField();
+		txtEstLocHr.setColumns(10);
+		txtEstLocHr.setBounds(180, 45, 80, 25);
+		pnlEstimates.add(txtEstLocHr);
 		
 		JButton button = new JButton("<< Back");
 		button.addActionListener(new ActionListener() {
@@ -628,7 +612,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			addPnlFile ();
 		} else if (pan.contains("OPEN_FILE")) {
 			openFileDialog (Integer.parseInt(pan.trim().substring(10, pan.length())));
-		} 
+		} else {
+			//Do nothing
+		}
 	}
 
 	private void callFinish() {
@@ -642,104 +628,154 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			psp.save(fs + File.separator + PspImpl.getLastID() + ".pspx");
 						
 			createProjectFiles(PspImpl.getLastID());
-			HashMap<String, Integer> pj = getProjDescription();
 			
 			PSP_Panel.setNewPlanningWizard(this);
 			PSP_Panel.setPspValues(psp);
 			
-			PlanningImpl plan = new PlanningImpl (getEstTime(), getEstLocHr(), 
-					getEstSize(), getEstDefect(), getFilenames(), getProjDescription());
-			plan.setPspValues(psp);
-			plan.save(new FileOutputStream (fs + File.separator + psp.getpId ()+"_planning"));
+			float time = getEstTime();
+			int loc = getEstLocHr();
+			int size = getEstSize();
+			int defect = getEstDefect ();
 			
-			PspImpl.setLastID(PspImpl.getLastID() + 1);
-			writepID(PspImpl.getLastID());
-			PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
-			PSP_Planning pp = new PSP_Planning (plan);
-			p.addJPanel(pp);
-			addToolItems();
-			PSP_NPWizardFrame.npw = null;			
-			pwf = null;
-			dispose();
+			if (time != -1.0 && loc != -1 && size != -1 && defect != -1) {			
+				PlanningImpl plan = new PlanningImpl (time, loc, size, defect,
+						getFilenames(), getProjDescription(), getPID());
+				plan.setPspValues(psp);
+				plan.save(new FileOutputStream (fs + File.separator + getPID ()+"_planning"));
+				
+				PspImpl.setLastID(PspImpl.getLastID() + 1);
+				writepID(PspImpl.getLastID());
+				PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
+				PSP_Planning pp = new PSP_Planning (plan);
+				p.addJPanel(pp);
+				addToolItems();
+				PSP_NPWizardFrame.npw = null;			
+				pwf = null;
+				dispose();
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ExceptionDialog (e, "Something happened", "");
 		}			
 	}
 	
+	private int getPID() {
+		int n = -1;
+		try {
+			n = Integer.parseInt(lblProjId.getText().trim());
+		} catch (NumberFormatException e) {
+			new ExceptionDialog(e, "Parsing error" , "");
+		}
+		return n;
+	}
+
 	public float getEstTime () {
-		return Float.parseFloat(txtEstTime.getText().trim());
+		float n = -1.0f;
+		try {
+			n = Float.parseFloat(txtEstTime.getText().trim());
+		} catch (NumberFormatException e) {
+			new ExceptionDialog(e, "Parsing error" , "");
+			this.txtEstTime.requestFocus();
+			this.txtEstTime.selectAll();
+		}
+		return n;
 	}
 	
 	public int getEstSize() {
-		return Integer.parseInt(txtEstSize.getText().trim());
+		int n = -1;
+		try {
+			n = Integer.parseInt(txtEstSize.getText().trim());
+		} catch (NumberFormatException e) {
+			new ExceptionDialog(e, "Parsing error" , "");
+			this.txtEstSize.requestFocus();
+			this.txtEstSize.selectAll();
+		}
+		return n;
 	}
 	
 	public int getEstLocHr () {
-		return Integer.parseInt(txtEstLocHr.getText().trim());
+		int n = -1;
+		try {
+			n = Integer.parseInt(txtEstLocHr.getText().trim());
+		} catch (NumberFormatException e) {
+			new ExceptionDialog(e, "Parsing error" , "");
+			this.txtEstLocHr.requestFocus();
+			this.txtEstLocHr.selectAll();
+		}
+		return n;
 	}
 
 	public int getEstDefect () {
-		return Integer.parseInt(txtEstDefect.getText().trim());
+		int n = -1;
+		try {
+			n = Integer.parseInt(txtEstDefect.getText().trim());
+		} catch (NumberFormatException e) {
+			new ExceptionDialog(e, "Parsing error" , "");
+			this.txtEstDefect.requestFocus();
+			this.txtEstDefect.selectAll();			
+		}
+		return n;
 	}
 	
 	private void addToolItems() {
 		// TODO Auto-generated method stub
 		JLabel lblPlanningProject = new JLabel("Planning");		
 		PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
-		lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPlanningProject.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				p.project_MouseEvent("PLANNING");
-			}
-		});
-		lblPlanningProject.setLocation(new Point(150, 50));
-		lblPlanningProject.setMinimumSize(new Dimension(100, 50));
-		lblPlanningProject.setMaximumSize(new Dimension(100, 50));
-		lblPlanningProject.setPreferredSize(new Dimension(100, 50));
-		lblPlanningProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		
-		JLabel lblDesigningProject = new JLabel("Designing");
-		lblDesigningProject.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDesigningProject.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				p.project_MouseEvent("DESIGN");
-			}
-		});
-		lblDesigningProject.setLocation(new Point (200, 50));
-		lblDesigningProject.setMinimumSize(new Dimension(100, 50));
-		lblDesigningProject.setMaximumSize(new Dimension(100, 50));
-		lblDesigningProject.setPreferredSize(new Dimension(100, 50));
-		lblDesigningProject.setFont(new Font("Dialog", Font.BOLD, 12));
-		
-		JLabel lblTestingProject = new JLabel("Testing");
-		lblTestingProject.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTestingProject.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				p.project_MouseEvent("TESTING");
-			}
-		});
-		lblTestingProject.setLocation(new Point (250, 50));
-		lblTestingProject.setMinimumSize(new Dimension(100, 50));
-		lblTestingProject.setMaximumSize(new Dimension(100, 50));
-		lblTestingProject.setPreferredSize(new Dimension(100, 50));
-		lblTestingProject.setFont(new Font("Dialog", Font.BOLD, 12));		
 
-		p.toolBar.add(lblPlanningProject);
-		p.toolBar.add(lblDesigningProject);
-		p.toolBar.add(lblTestingProject);		
+		if (p.toolBar.getComponentCount() <= 2 ) {
+			lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
+			lblPlanningProject.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					p.project_MouseEvent("PLANNING");
+				}
+			});
+			lblPlanningProject.setLocation(new Point(150, 50));
+			lblPlanningProject.setMinimumSize(new Dimension(100, 50));
+			lblPlanningProject.setMaximumSize(new Dimension(100, 50));
+			lblPlanningProject.setPreferredSize(new Dimension(100, 50));
+			lblPlanningProject.setFont(new Font("Dialog", Font.BOLD, 12));
+			
+			JLabel lblDesigningProject = new JLabel("Designing");
+			lblDesigningProject.setHorizontalAlignment(SwingConstants.CENTER);
+			lblDesigningProject.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					p.project_MouseEvent("DESIGN");
+				}
+			});
+			lblDesigningProject.setLocation(new Point (200, 50));
+			lblDesigningProject.setMinimumSize(new Dimension(100, 50));
+			lblDesigningProject.setMaximumSize(new Dimension(100, 50));
+			lblDesigningProject.setPreferredSize(new Dimension(100, 50));
+			lblDesigningProject.setFont(new Font("Dialog", Font.BOLD, 12));
+			
+			JLabel lblTestingProject = new JLabel("Testing");
+			lblTestingProject.setHorizontalAlignment(SwingConstants.CENTER);
+			lblTestingProject.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					p.project_MouseEvent("TESTING");
+				}
+			});
+			lblTestingProject.setLocation(new Point (250, 50));
+			lblTestingProject.setMinimumSize(new Dimension(100, 50));
+			lblTestingProject.setMaximumSize(new Dimension(100, 50));
+			lblTestingProject.setPreferredSize(new Dimension(100, 50));
+			lblTestingProject.setFont(new Font("Dialog", Font.BOLD, 12));		
+		
+			p.toolBar.add(lblPlanningProject);
+			p.toolBar.add(lblDesigningProject);
+			p.toolBar.add(lblTestingProject);	
+		}
 	}
 
 	private void createProjectFiles(int lastID) {
 		File dir = new File (System.getProperty("user.home") + 
 				File.separator + ".memoranda" + File.separator + ".proj");
-		File inf = null;// = new File(dir + File.separator + "psp_id");
-		ObjectOutputStream fos = null;
-		try {
-			
+		File inf = null;
+		try {			
 			if (!dir.exists()) {
 				dir.mkdir();				
 			} 
@@ -752,8 +788,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			pl.mkdirs();
 			
 			inf = new File (dir + File.separator + lastID + "_planning");			
-			inf.createNewFile();
-			
+			inf.createNewFile();			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

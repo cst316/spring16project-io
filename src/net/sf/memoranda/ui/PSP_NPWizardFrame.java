@@ -17,15 +17,12 @@ import javax.swing.border.TitledBorder;
 import net.sf.memoranda.psp.Psp;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.util.Configuration;
-import net.sf.memoranda.util.Util;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -1,16 +1,9 @@
 package net.sf.memoranda.ui;
 
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.DefaultListModel;
@@ -26,7 +19,6 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.Dimension;
-import java.awt.Point;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -69,15 +61,11 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 	private static BackGround bg;
 	private JPanel panel_2;
 	private JPanel pnlModules;
-	
-	private JInternalFrame fr;
-	private JDesktopPane df;
-	
+		
 	/**
 	 * Create the panel.
 	 */
 	public PSP_Planning() {
-		setBackground(Color.WHITE);
 		jInit();
 	}
 	
@@ -87,6 +75,8 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 	}	
 	
 	private void jInit () {	
+		setBackground(Color.WHITE);
+		
 		modY = 180;
 		pnlModules = new JPanel();
 		pnlModules.setBackground(Color.WHITE);

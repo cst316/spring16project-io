@@ -10,20 +10,19 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import net.sf.memoranda.psp.Planning;
 import net.sf.memoranda.psp.PlanningImpl;
-import net.sf.memoranda.psp.Psp;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.util.Util;
 
 //import net.sf.memoranda.util.Configuration;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.awt.SystemColor;
 
 /**
@@ -90,11 +89,12 @@ public class PSP_Panel extends JPanel{
 		lblNewProject.setLocation(new Point(50, 50));
 		lblNewProject.setPreferredSize(new Dimension(100, 50));
 		lblNewProject.setMinimumSize(new Dimension(100, 50));
-		lblNewProject.setMaximumSize(new Dimension(100, 50));
+		lblNewProject.setMaximumSize(new Dimension(150, 50));
 		lblNewProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblNewProject);
 		
 		lblOpenProject = new JLabel("Open Project");
+		lblOpenProject.setEnabled(false);
 		lblOpenProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpenProject.addMouseListener(new MouseAdapter() {
 			@Override
@@ -139,18 +139,20 @@ public class PSP_Panel extends JPanel{
 			//Implementation required
 			System.out.println("Yeah Open Project");
 		} else if (event.equals("PLANNING")) {
-			/*try {
-				File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + File.separator + ".proj");
-				PlanningImpl plan = new PlanningImpl (pwf.getEstTime(), pwf.getEstLocHr(), pwf.getEstSize(), 
-						pwf.getEstDefect(), pwf.getFilenames(), pwf.getProjDescription());
-				plan.setPspValues(pspI);
+			try {
+				Util.debug("PID: " + pspI);
+				File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" 
+						+ File.separator + ".proj" + File.separator + pspI.getpId() + "_planning");
 				
-				plan.save(new FileOutputStream (fs + File.separator + PspImpl.getLastID() + "_planning"));
-				addJPanel(new PSP_Planning (plan));
+				Planning plan = new PlanningImpl ();
+				plan.open (new FileInputStream (fs));				
+				
+				PSP_Planning pp = new PSP_Planning (plan);
+				addJPanel (pp);				
+				
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/	
+				new ExceptionDialog(e, "File not found!" , "");
+			}	
 		} else if (event.equals("DESIGN")) {
 			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
