@@ -29,7 +29,6 @@ public class PSP_Panel extends JPanel {
 	
 	private static final long serialVersionUID = -1815200458278347624L;
 	private JLabel lblNewProject;
-	private JLabel designLabel;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
 	private JLabel label;
@@ -99,20 +98,6 @@ public class PSP_Panel extends JPanel {
 		label.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(label);
 		
-		designLabel = new JLabel("Open Design");
-		designLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				designView_MouseClicked();
-				
-			}
-		});
-		designLabel.setMinimumSize(new Dimension(100, 50));
-		designLabel.setMaximumSize(new Dimension(100, 50));
-		designLabel.setPreferredSize(new Dimension(100, 50));
-		designLabel.setFont(new Font("Dialog", Font.BOLD, 12));
-		toolBar.add(designLabel);
-		
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
 		add(pnlWizard, BorderLayout.CENTER);
@@ -143,10 +128,5 @@ public class PSP_Panel extends JPanel {
 		} else if (event.equals("EXITED")) {
 			lblNewProject.setBackground(Color.RED);
 		}
-	}
-	
-	private void designView_MouseClicked(){
-		
-		new PSP_DesignPanel().setVisible(true);
 	}
 }
