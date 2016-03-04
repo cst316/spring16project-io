@@ -249,4 +249,3 @@ public class PSP_DesignPanel extends JPanel{
 		return true;
 	}
 }
-
