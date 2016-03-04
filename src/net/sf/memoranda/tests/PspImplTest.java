@@ -2,6 +2,11 @@ package net.sf.memoranda.tests;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -10,6 +15,7 @@ import org.junit.Test;
 
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.psp.Psp;
 
 public class PspImplTest {
 	
@@ -18,6 +24,7 @@ public class PspImplTest {
 	private String name;
 	private String description;
 	static int lastID;
+	private ObjectOutputStream fw;
 
 	@Before
 	public void setUp() throws Exception {
@@ -26,6 +33,8 @@ public class PspImplTest {
 		name = "Adam";
 		description = "Finance tracker keeps track of finances";
 		lastID = 100020001;
+		fw = new ObjectOutputStream(new FileOutputStream("save.txt"));
+		
 	}
 
 	@Test
@@ -120,13 +129,9 @@ public class PspImplTest {
 	}
 
 	@Test
-	public void testSaveString() {
+	public void testSaveString() throws FileNotFoundException, IOException {
+		ObjectOutputStream fw_2 = new ObjectOutputStream(new FileOutputStream("dontSave.txt"));
+		assertFalse(fw.equals(fw_2));
 		
 	}
-
-	@Test
-	public void testSaveFileOutputStream() {
-		
-	}
-
 }
