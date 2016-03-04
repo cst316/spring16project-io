@@ -37,11 +37,9 @@ public class PSP_Panel extends JPanel{
 	
 	private static final long serialVersionUID = -1815200458278347624L;
 	private JLabel lblNewProject;
+	private JLabel lblOpenProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
-	private JLabel label;
-	
-	//private String projectName = "temp";
 	
 	static PSP_PlanningWizardFrame pwf;
 	static PspImpl pspI;
@@ -94,15 +92,6 @@ public class PSP_Panel extends JPanel{
 		lblNewProject.setMaximumSize(new Dimension(150, 50));
 		lblNewProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblNewProject);
-<<<<<<< HEAD
-				
-		label = new JLabel("Open Project");
-		label.setPreferredSize(new Dimension(100, 50));
-		label.setMinimumSize(new Dimension(100, 50));
-		label.setMaximumSize(new Dimension(100, 50));
-		label.setFont(new Font("Dialog", Font.BOLD, 12));
-		toolBar.add(label);
-=======
 		
 		lblOpenProject = new JLabel("Open Project");
 		lblOpenProject.setEnabled(false);
@@ -119,7 +108,6 @@ public class PSP_Panel extends JPanel{
 		lblOpenProject.setPreferredSize(new Dimension(100, 50));
 		lblOpenProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblOpenProject);
->>>>>>> us-45
 		
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
@@ -169,8 +157,7 @@ public class PSP_Panel extends JPanel{
 			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
 		} else if (event.equals("TESTING")) {
-			addJPanel(new PSPTestingFrame());
-			
+			addJPanel(new PSPTestingFrame());			
 		} 
 	}
 	

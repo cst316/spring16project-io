@@ -1,34 +1,14 @@
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
-<<<<<<< HEAD
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-=======
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
->>>>>>> us-45
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-<<<<<<< HEAD
-import java.util.ArrayList;
-
-import javax.swing.JPanel;
-import javax.imageio.ImageIO;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JList;
-
-public class PSP_DesignPanel extends JPanel implements FocusListener {
-=======
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -47,7 +27,6 @@ public class PSP_DesignPanel extends JPanel{
 	
 
 	private static final long serialVersionUID = 1L;
->>>>>>> us-45
 	
 	/**
 	 * 
@@ -59,43 +38,14 @@ public class PSP_DesignPanel extends JPanel{
 	 * 03/01/2016
 	 */
 	
-<<<<<<< HEAD
-	private static final long serialVersionUID = -4697829421699112193L;
-	BorderLayout borderLayout1 = new BorderLayout();
-	DailyItemsPanel parentPanel = null;
-	
-	JPanel backPanel = new JPanel();
-	JPanel designView = new JPanel();
-	JPanel listPanel = new JPanel();
-	JPanel viewPanel = new JPanel();
-=======
 	JPanel backPanel = new JPanel();
 	JPanel designView = new JPanel();
 	JPanel listPanel = new JPanel();
 	JScrollPane viewPane = new JScrollPane();
->>>>>>> us-45
 	
 	JButton btnImportDesign = new JButton("Import Design");
 	JList<String> fileList;
 	
-<<<<<<< HEAD
-	
-	/*
-	 * note: need to know current project name and/or pID, 
-	 * may need to write xml importer for such info if I can't pull from super.
-	 */
-	
-	//not sure how to get these right now, probably don't need the pid
-	private int pID;
-	private String projectName;
-	
-	public PSP_DesignPanel() {
-		setLayout(null);
-		//this.projectName = projectName;
-		try {
-            //parentPanel = _parentPanel;
-            //pID = parentPanel;
-=======
 	private String path;
 	private int pID; // no setter made for pID yet. want to minimize ways to change this value.
 	private static PSP_Panel pspForm;
@@ -118,7 +68,6 @@ public class PSP_DesignPanel extends JPanel{
 		
 		
 		try {
->>>>>>> us-45
             jbInit();
         }
         catch (Exception ex) {
@@ -128,33 +77,6 @@ public class PSP_DesignPanel extends JPanel{
     }
 	private void jbInit() throws Exception 
 	{
-<<<<<<< HEAD
-		System.out.println("jbinit");
-		//init gui and needed filesystem
-		checkFolderSystem();
-		fileList = new JList<String>(getFileList());
-		
-		fileList.addFocusListener(this);
-		
-		backPanel.setBounds(0, 0, 91, 44);
-		add(backPanel);
-		backPanel.setLayout(null);
-		
-		btnImportDesign.setBounds(0, 11, 89, 23);
-		backPanel.add(btnImportDesign);
-		
-		
-		listPanel.setBounds(0, 55, 91, 234);
-		add(listPanel);
-		
-		listPanel.add(fileList);
-		
-		viewPanel.setBounds(101, 0, 339, 289);
-		add(viewPanel);
-        
-		btnImportDesign.addActionListener(new java.awt.event.ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-=======
 		try{
 			fileList = new JList<String>(getFileList());
 		}catch (Exception e){
@@ -195,7 +117,6 @@ public class PSP_DesignPanel extends JPanel{
 		btnImportDesign.addActionListener(new java.awt.event.ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	Util.debug("import click.");
->>>>>>> us-45
 	            btnImportDesign_actionPerformed(e);
 	        }
 	    });
@@ -203,17 +124,8 @@ public class PSP_DesignPanel extends JPanel{
 	
 	
 	
-<<<<<<< HEAD
-	public void btnImportDesign_actionPerformed(ActionEvent e){
-		importGraphic();
-	}
-	
-	public void importGraphic(){
-		//import file  and save in memoranda directory
-=======
 	public void btnImportDesign_actionPerformed(ActionEvent e)
 	{//import file  and save in memoranda directory
->>>>>>> us-45
 		BufferedImage image = null; 
 		try
 		{
@@ -226,23 +138,6 @@ public class PSP_DesignPanel extends JPanel{
 				File selectedFile = fileChooser.getSelectedFile();
 				image = ImageIO.read(selectedFile);
 				System.out.println("Selected file: " + selectedFile.getName());
-<<<<<<< HEAD
-			
-				if (selectedFile.getName().contains(".png"))
-				{
-					ImageIO.write(image, "png", new File("projects" + 
-							File.separator +"projectName" + File.separator + "images" +
-							File.separator + "design"));
-				}
-				else if (selectedFile.getName().contains(".jpg"))
-				{
-					ImageIO.write(image, "jpg", new File("projects" + 
-							File.separator + "projectName" + File.separator + "images" + 
-							File.separator + "design"));
-				}
-			}
-				
-=======
 				
 				//pathways need to be updated to be relative.
 				if(!Files.exists(Paths.get(getPath())))
@@ -287,21 +182,12 @@ public class PSP_DesignPanel extends JPanel{
 				    });
 				}
 			}
->>>>>>> us-45
 		}
 		catch(Exception ex)
 		{
 			throw new RuntimeException("Error saving image, Check image type");
 		}
-<<<<<<< HEAD
-		//reinitialize filelist after import is run
-		fileList = new JList<String>(getFileList());
-		listPanel.invalidate();
-		listPanel.validate();
-		listPanel.repaint();
-=======
 
->>>>>>> us-45
 	}
 	
 	/*
@@ -311,71 +197,16 @@ public class PSP_DesignPanel extends JPanel{
 	public DefaultListModel<String> getFileList()
 	{
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
-<<<<<<< HEAD
-		String path = "projects" + File.separator + projectName + 
-				File.separator + "images" + File.separator + "design";
-		
-		File data = new File(path);
-		File[] files = data.listFiles();
-		for(int i = 0; i < files.length; ++i)
-		{
-			listModel.addElement(files[i].toString());
-=======
 		//need to narrow its search to display only picture files types like png, jpg, img etc...
 		File data = new File(getPath());
 		File[] files = data.listFiles();
 		for(int i = 0; i < files.length; ++i)
 		{
 			listModel.addElement(files[i].getName());
->>>>>>> us-45
 		}
 		
 		return listModel;
 	}
-<<<<<<< HEAD
-	@Override
-	public void focusGained(FocusEvent event) {
-		//display picture in main panel
-		
-		try{
-			viewPanel.add(new BackGround(event.getSource().toString(), 
-					viewPanel.getWidth(), viewPanel.getHeight()));	
-		}catch(RuntimeException ex){
-			ex.getMessage();
-		}catch(Exception e){
-			e.getMessage();
-		}
-		viewPanel.invalidate();
-		viewPanel.validate();
-		viewPanel.repaint();
-		
-	}
-	@Override
-	public void focusLost(FocusEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
-	public boolean checkFolderSystem(){
-		boolean success= true;
-		try{
-			if(!Files.exists(Paths.get("projects" + File.separator + 
-					projectName +  File.separator + "images" + File.separator + "design")))
-			{
-				File file = new File("projects" + File.separator + 
-						"projectName" + File.separator + "images"  + File.separator + "design");
-				file.mkdirs();
-			}
-		}catch(RuntimeException e){
-			e.getMessage();
-			success = false;
-		}catch(Exception e){
-			e.getMessage();
-			success = false;
-		}
-		return success;
-	}
-}
-=======
 	
 	public boolean setPath(String pId){
 		this.path = System.getProperty("user.home") + File.separator + 
@@ -418,5 +249,3 @@ public class PSP_DesignPanel extends JPanel{
 		return true;
 	}
 }
-
->>>>>>> us-45
