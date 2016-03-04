@@ -51,7 +51,7 @@
 		<fileset dir="lib">
 			<include name="*.jar"/>
 			<include name="*.zip"/>
-			<exclude name="itext*.jar.*"/>
+			<exclude name="itext*.jar.*"/><!-- excludes line 54 - 57 added in by Cephas, 04MAR2016-->
 			<exclude name="itext*.pom.*"/>
 			<exclude name="itext*.pom"/>
 			<exclude name="*util*.zip.Zip"/>
