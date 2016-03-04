@@ -51,6 +51,8 @@
 		<fileset dir="lib">
 			<include name="*.jar"/>
 			<include name="*.zip"/>
+			<exclude name="itext*.jar.*"/>
+			<exclude name="itext*.pom.*"/>
 		</fileset>
 	</path>
 	<!-- =================================================================== -->
