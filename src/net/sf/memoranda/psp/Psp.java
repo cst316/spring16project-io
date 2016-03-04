@@ -1,5 +1,6 @@
 package net.sf.memoranda.psp;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import net.sf.memoranda.date.CurrentDate;
@@ -35,4 +36,7 @@ public interface Psp {
 	
 	//Abstract method to save all the values entered into the Psp wizard
 	public void save(FileOutputStream stream);
+	
+	//Takes the FileInputStream as a parameter and reads the attributes of the PlanningImpl class to the file 
+	public void open (FileInputStream streamOfFile);
 }

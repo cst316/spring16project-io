@@ -210,7 +210,6 @@ public class PlanningImpl implements Planning {
 	//Takes the FileInputStream as a parameter and reads the attributes of the PlanningImpl class to the file 
 	public void open (FileInputStream streamOfFile)
 	{
-		
 		try {
         	ObjectInputStream ois = new ObjectInputStream(streamOfFile);        
         	this.pId = ois.readInt();

@@ -314,25 +314,26 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 		UIManager.put("OptionPane.background",Color.white);
 		UIManager.put("Panel.background",Color.white);
 		
-		int ans;
+		int ans = -1;
+		int size = -1;
 		
-		do {
-			ans = JOptionPane.showConfirmDialog(null,pnl,"Add Aditional Modules",JOptionPane.OK_CANCEL_OPTION);
+		do {			
 			try {
-				Integer.parseInt(txtNewSize.getText());
+				ans = JOptionPane.showConfirmDialog(null,pnl,"Add Aditional Modules",JOptionPane.OK_CANCEL_OPTION);
+				String temp = txtNewSize.getText().trim();
+				if (ans != JOptionPane.CANCEL_OPTION)
+					size = (temp.isEmpty() ? -1 : Integer.parseInt(temp));
 			} catch (NumberFormatException e) {
+				new ExceptionDialog (e, "Could not Parse Integer", "");
 				txtNewSize.requestFocus();
 				txtNewSize.selectAll();
-				ans = -1;
-			}
-			
-		} while (txtNewEst.getText().isEmpty() && ans != -1);
+			}			
+		} while (size < 0 && ans != JOptionPane.CANCEL_OPTION);
 			
 		if (ans == JOptionPane.OK_OPTION) {
-			addModule (txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()));			
-		}
-		
-		Util.debug("Added: " + txtNewEst.getText() + "\t" + txtNewSize.getText());
+			addModule (txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()));
+			Util.debug("Added: " + txtNewEst.getText() + "\t" + txtNewSize.getText());
+		}	
 	}
 
 	private void addFilenames (ArrayList <String> files) {
