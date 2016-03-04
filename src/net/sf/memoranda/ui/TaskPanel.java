@@ -9,13 +9,20 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -56,6 +63,7 @@ public class TaskPanel extends JPanel {
     JButton completeTaskB = new JButton();
     JButton undoTaskB = new JButton();
     
+    
 	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 		
     JScrollPane scrollPane = new JScrollPane();
@@ -70,6 +78,7 @@ public class TaskPanel extends JPanel {
 	JMenuItem ppAddSubTask = new JMenuItem();
 	JMenuItem ppCalcTask = new JMenuItem();
 	DailyItemsPanel parentPanel = null;
+	
 
     public TaskPanel(DailyItemsPanel _parentPanel) {
         try {
@@ -333,8 +342,7 @@ public class TaskPanel extends JPanel {
 		});
 	ppCalcTask.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_complete.png")));
 	ppCalcTask.setEnabled(false);
-
-    scrollPane.getViewport().add(taskTable, null);
+    scrollPane.setViewportView(taskTable);
         this.add(scrollPane, BorderLayout.CENTER);
         tasksToolBar.add(historyBackB, null);
         tasksToolBar.add(historyForwardB, null);
@@ -354,7 +362,7 @@ public class TaskPanel extends JPanel {
         scrollPane.addMouseListener(ppListener);
         taskTable.addMouseListener(ppListener);
 
-
+        
 
         CurrentDate.addDateListener(new DateListener() {
             public void dateChange(CalendarDate d) {
@@ -411,6 +419,7 @@ public class TaskPanel extends JPanel {
 		completeTaskB.setEnabled(false);
 		undoTaskB.setVisible(false);
 		undoTaskB.setEnabled(false);
+		
 		ppAddSubTask.setEnabled(false);
 		//ppSubTasks.setEnabled(false);
 		//ppParentTask.setEnabled(false);
@@ -535,7 +544,10 @@ public class TaskPanel extends JPanel {
  			ed = null;
         long effort = Util.getMillisFromHours(dlg.effortField.getText());
 		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+		
+        //populates task
+        
+        Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
 //		CurrentProject.getTaskList().adjustParentTasks(newTask);
 		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
@@ -704,9 +716,47 @@ public class TaskPanel extends JPanel {
 
     }
     
+    // "Complete" button triggers action that calls TaskDialogClose window.
 
 	void ppCompleteTask_actionPerformed(ActionEvent e) {
-		String msg;
+		
+		TaskDialogClose dlg = new TaskDialogClose(App.getFrame(), Local.getString("Complete task"));
+        
+        //XXX String parentTaskId = taskTable.getCurrentRootTask();
+        
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+        dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
+        dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setVisible(true);
+        if (dlg.CANCELLED)
+            return;
+        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
+//        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+          CalendarDate ed;
+ 		if(dlg.chkEndDate.isSelected())
+ 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+ 		else
+ 			ed = null;
+        long effort = Util.getMillisFromHours(dlg.effortField.getText());
+		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
+		
+        //populates task
+        
+        //Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+        //Task newTask = CurrentProject.getTaskList().createTask(null, null, null, dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+        
+        
+//		CurrentProject.getTaskList().adjustParentTasks(newTask);
+		//newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
+        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        taskTable.tableChanged();
+        parentPanel.updateIndicators();
+        //taskTable.updateUI();		
+		
+				
+/*		String msg;
 		Vector tocomplete = new Vector();
 		for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
 			Task t =
@@ -725,7 +775,7 @@ public class TaskPanel extends JPanel {
 		
 		taskTable.tableChanged();
 		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
-		parentPanel.updateIndicators();
+		parentPanel.updateIndicators();*/
 		//taskTable.updateUI();
 	}
 	
@@ -752,6 +802,7 @@ public class TaskPanel extends JPanel {
 		parentPanel.updateIndicators();
 		//taskTable.updateUI();
 	}
+	
 	
 	
 	
@@ -790,6 +841,7 @@ public class TaskPanel extends JPanel {
                 }
 
     }
+    
 
   void ppEditTask_actionPerformed(ActionEvent e) {
     editTaskB_actionPerformed(e);
