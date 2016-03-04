@@ -97,7 +97,7 @@ public class PSP_DesignPanel extends JPanel{
 		
 		//gets file list and displays selected file
 		if (fileList != null){
-			
+			listPanel.removeAll();
 			listPanel.add(fileList);
 			fileList.addMouseListener(new MouseAdapter(){
 		          @Override
@@ -105,9 +105,6 @@ public class PSP_DesignPanel extends JPanel{
 		        	  mouseEvent(e);
 		          }
 		    });
-			listPanel.invalidate();
-			listPanel.validate();
-			listPanel.repaint();
 		}else{
 			Util.debug("file list is empty");
 		}
@@ -163,17 +160,28 @@ public class PSP_DesignPanel extends JPanel{
 				{
 					ImageIO.write(image, "tif", new File(getPath() + File.separator + selectedFile.getName()));
 				}
+				fileList = new JList<String>(getFileList());
 			}
-			
-			fileList = new JList<String>(getFileList());
-			fileList.addMouseListener(new MouseAdapter(){
-		          @Override
-		          public void mouseClicked(MouseEvent e) {
-		        	  mouseEvent(e);
-		              
-		          }
-		    });
-			jbInit();
+			if(fileList.getModel().getSize() != 0){
+				
+				listPanel.removeAll();
+				listPanel.add(fileList);
+				
+				listPanel.invalidate();
+				listPanel.validate();
+				listPanel.repaint();
+				
+				Util.debug("ml.length = " + fileList.getMouseListeners().length);
+				if(fileList.getMouseListeners().length == 0){
+					Util.debug("ML is not null");
+					fileList.addMouseListener(new MouseAdapter(){
+				          @Override
+				          public void mouseClicked(MouseEvent e) {
+				        	  mouseEvent(e);
+				          }
+				    });
+				}
+			}
 		}
 		catch(Exception ex)
 		{
