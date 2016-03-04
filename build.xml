@@ -53,6 +53,8 @@
 			<include name="*.zip"/>
 			<exclude name="itext*.jar.*"/>
 			<exclude name="itext*.pom.*"/>
+			<exclude name="itext*.pom"/>
+			<exclude name="*util*.zip.Zip"/>
 			<include name="itext*"/> <!-- updated to imcluse pdf import lib files-->
 		</fileset>
 	</path>
