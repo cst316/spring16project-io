@@ -10,11 +10,19 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import net.sf.memoranda.psp.Planning;
+import net.sf.memoranda.psp.PlanningImpl;
+import net.sf.memoranda.psp.PspImpl;
+import net.sf.memoranda.util.Util;
+
 //import net.sf.memoranda.util.Configuration;
 
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.awt.SystemColor;
 
 /**
@@ -25,13 +33,16 @@ import java.awt.SystemColor;
  * This class lists the different options available in PSP View
  * 02/19/2016
  */
-public class PSP_Panel extends JPanel {
+public class PSP_Panel extends JPanel{
 	
 	private static final long serialVersionUID = -1815200458278347624L;
 	private JLabel lblNewProject;
 	private JLabel lblOpenProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
+	
+	static PSP_PlanningWizardFrame pwf;
+	static PspImpl pspI;
 	
 	/**
 	 * General constructor for creating Panel
@@ -68,39 +79,30 @@ public class PSP_Panel extends JPanel {
 		add(toolBar, BorderLayout.WEST);
 		
 		lblNewProject = new JLabel("New Project");
+		lblNewProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				newProject_Mouse("CLICKED");
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				newProject_Mouse("ENTERED");
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				newProject_Mouse("EXITED");
+				project_MouseEvent("NEW PROJECT");
 			}
 		});
-		lblNewProject.setLocation(new Point(0, 50));
+		lblNewProject.setLocation(new Point(50, 50));
 		lblNewProject.setPreferredSize(new Dimension(100, 50));
 		lblNewProject.setMinimumSize(new Dimension(100, 50));
-		lblNewProject.setMaximumSize(new Dimension(100, 50));
+		lblNewProject.setMaximumSize(new Dimension(150, 50));
 		lblNewProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblNewProject);
 		
 		lblOpenProject = new JLabel("Open Project");
+		lblOpenProject.setEnabled(false);
+		lblOpenProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpenProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
+				project_MouseEvent("OPEN PROJECT");
 			}
 		});
+		lblOpenProject.setLocation(new Point (100, 50));
 		lblOpenProject.setMinimumSize(new Dimension(100, 50));
 		lblOpenProject.setMaximumSize(new Dimension(100, 50));
 		lblOpenProject.setPreferredSize(new Dimension(100, 50));
@@ -114,6 +116,7 @@ public class PSP_Panel extends JPanel {
 	}
 	
 	public void addJPanel (JPanel toAdd) {
+		pnlWizard.removeAll();
 		pnlWizard.add(toAdd, BorderLayout.CENTER);
 		toAdd.setVisible(true);
 		toolBar.setVisible(false);
@@ -127,15 +130,43 @@ public class PSP_Panel extends JPanel {
 	 * Mouse events for New Project on the auto hide tool bar
 	 * @param event - Used to know which action to perform
 	 */
-	private void newProject_Mouse (String event) {
-		if (event.equals("CLICKED")) {
+	public void project_MouseEvent (String event) {
+		if (event.equals("NEW PROJECT")) {
 			App.getFrame().setEnabled(false);
 			toolBar.setVisible (false);
 			(new PSP_NPWizardFrame(this)).setVisible(true);			
-		} else if (event.equals("ENTERED")) {
-			lblNewProject.setBackground(Color.WHITE);
-		} else if (event.equals("EXITED")) {
-			lblNewProject.setBackground(Color.RED);
-		}
+		} else if (event.equals("OPEN PROJECT")) {
+			//Implementation required
+			System.out.println("Yeah Open Project");
+		} else if (event.equals("PLANNING")) {
+			try {
+				Util.debug("PID: " + pspI);
+				File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" 
+						+ File.separator + ".proj" + File.separator + pspI.getpId() + "_planning");
+				
+				Planning plan = new PlanningImpl ();
+				plan.open (new FileInputStream (fs));				
+				
+				PSP_Planning pp = new PSP_Planning (plan);
+				addJPanel (pp);				
+				
+			} catch (FileNotFoundException e) {
+				new ExceptionDialog(e, "File not found!" , "");
+			}	
+		} else if (event.equals("DESIGN")) {
+			addJPanel(new PSP_DesignPanel(this));
+			System.out.println("Yeah Design");
+		} else if (event.equals("TESTING")) {
+			addJPanel(new PSPTestingFrame());
+			
+		} 
+	}
+	
+	public static void setPspValues (PspImpl pspI) {
+		PSP_Panel.pspI = pspI;
+	}
+	
+	public static void setNewPlanningWizard (PSP_PlanningWizardFrame pwf) {
+		PSP_Panel.pwf = pwf;
 	}
 }

@@ -1,5 +1,6 @@
 package net.sf.memoranda.psp;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -76,5 +77,8 @@ public interface Planning extends Psp {
 	public void setDescription(String description);
 	
 	public void setPspValues (Psp values);
+	
+	//Takes the FileInputStream as a parameter and reads the attributes of the PlanningImpl class to the file 
+	public void open (FileInputStream streamOfFile);
 
 }

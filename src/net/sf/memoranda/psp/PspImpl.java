@@ -15,7 +15,8 @@ public class PspImpl implements Psp {
 	private CurrentDate stDate;
 	private String name;
 	private String description;
-	static int lastID = 100020001;
+	
+	public static int lastID = Psp.pID;
 	
 	//PspImpl constructor where values are initialized to empty values
 	public PspImpl () {
