@@ -30,7 +30,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
 
-public class PSPTestingFrame extends JFrame {
+public class PSPTestingFrame extends JPanel {
 	
 	private JTextField studentTextField;
 	private JTextField dateTextField;
@@ -67,11 +67,43 @@ public class PSPTestingFrame extends JFrame {
 	
 	private JPanel containsLogsPanel;
 	private JPanel eachLogPanel_1;
+	
+	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	private static PSP_Panel psp;
 
-
-	public PSPTestingFrame() {
-		getContentPane().setLayout(null);
-		this.setTitle("Testing Log");
+	public PSPTestingFrame() {		
+		try {
+			jbInit();
+		} catch (Exception ex) {
+			new ExceptionDialog(ex);
+			ex.printStackTrace();
+		}
+	}
+	
+	//Modeled after PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	public PSPTestingFrame(PSP_Panel psp) {		
+		try {
+			setPspPanel(psp);
+			jbInit();
+		} catch (Exception ex) {
+			new ExceptionDialog(ex);
+			ex.printStackTrace();
+		}
+	}
+	
+	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	public static void setPspPanel (PSP_Panel p) {
+		psp = p;
+	}
+	
+	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	public static PSP_Panel getPspPanel () {
+		return psp;
+	}
+	
+	
+	public void jbInit() {
+		setLayout(null);
 		this.setBounds(0, 0, 1290, 700);
 		
 		JTextArea defectContentKey = new JTextArea();
@@ -81,55 +113,55 @@ public class PSPTestingFrame extends JFrame {
 		
 		defectContentKey.setBounds(897, 13, 343, 121);
 		defectContentKey.setEditable(false);
-		getContentPane().add(defectContentKey);
+
 		
 		JLabel studentLabel = new JLabel("Student:");
 		studentLabel.setBounds(37, 49, 56, 16);
-		getContentPane().add(studentLabel);
+		add(studentLabel);
 		
 		JLabel dateLabel = new JLabel("Date:");
 		dateLabel.setBounds(37, 101, 56, 16);
-		getContentPane().add(dateLabel);
+		add(dateLabel);
 		
 		JLabel programLabel = new JLabel("Program:");
 		programLabel.setBounds(270, 49, 56, 16);
-		getContentPane().add(programLabel);
+		add(programLabel);
 		
 		JLabel programNoLabel = new JLabel("Program #:");
 		programNoLabel.setBounds(268, 101, 87, 16);
-		getContentPane().add(programNoLabel);
+		add(programNoLabel);
 		
 		studentTextField = new JTextField();
 		studentTextField.setText("");
 		studentTextField.setColumns(10);
 		studentTextField.setBounds(92, 46, 166, 22);
-		getContentPane().add(studentTextField);
+		add(studentTextField);
 		
 		dateTextField = new JTextField();
 		dateTextField.setText("");
 		dateTextField.setColumns(10);
 		dateTextField.setBounds(92, 98, 166, 22);
-		getContentPane().add(dateTextField);
+		add(dateTextField);
 		
 		programTextField = new JTextField();
 		programTextField.setText("");
 		programTextField.setColumns(10);
 		programTextField.setBounds(344, 48, 166, 22);
-		getContentPane().add(programTextField);
+		add(programTextField);
 		
 		programNumberTextField = new JTextField();
 		programNumberTextField.setText("");
 		programNumberTextField.setColumns(10);
 		programNumberTextField.setBounds(344, 98, 166, 22);
-		getContentPane().add(programNumberTextField);
+		add(programNumberTextField);
 		
 		JLabel testingFrameTitleLbl = new JLabel("Testing and Defects Page");
 		testingFrameTitleLbl.setBounds(590, 16, 159, 16);
-		getContentPane().add(testingFrameTitleLbl);
+		add(testingFrameTitleLbl);
 		
 		containsLogsPanel = new JPanel();
 		containsLogsPanel.setBounds(12, 147, 1236, 493);
-		getContentPane().add(containsLogsPanel);
+		add(containsLogsPanel);
 		containsLogsPanel.setLayout(null);
 		
 	
@@ -219,7 +251,7 @@ public class PSPTestingFrame extends JFrame {
 		JButton addButton = new JButton();
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				buttonActionPerformed(e);
+				
 			}
 		});
 		addButton.setBounds(1068, 41, 49, 22);
@@ -473,10 +505,5 @@ public class PSPTestingFrame extends JFrame {
 		addButton_4.setText("+");
 		eachLogPanel_4.add(addButton_4);
 		
-	}
-	
-	void buttonActionPerformed(ActionEvent e)
-	{
-		containsLogsPanel.add(eachLogPanel_1).setBounds(12, 122, 1153, 77);	
 	}
 }

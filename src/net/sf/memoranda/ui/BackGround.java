@@ -11,6 +11,10 @@ import javax.swing.JPanel;
 
 class BackGround extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2755213468898545438L;
 	private BufferedImage img;
 	private int deg;
 	

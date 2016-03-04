@@ -1,5 +1,6 @@
 package net.sf.memoranda.psp;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -45,11 +46,11 @@ public interface Planning extends Psp {
 	//Accessor method that sets the name of the file to be used in the project (fileName)
 	public void setFilenames (ArrayList<String> filenames);
 		
-	//Accessor abstract method that gets the project description as a hash map based on a unique key
-	public HashMap<String, Integer> getProjectDescription();
+	//Accessor abstract method returns additional modules added during the wizard phase
+	public HashMap<String, Integer> getAdditionalMod();
 	
 	//Mutator abstract method that sets the project description
-	public void setProjectDescription(HashMap<String, Integer> projectDescription);
+	public void setAdditionalMod(HashMap<String, Integer> modDescription);
 
 	//Accessor abstract method that gets the start date (stDate)
 	@Override
@@ -76,5 +77,8 @@ public interface Planning extends Psp {
 	public void setDescription(String description);
 	
 	public void setPspValues (Psp values);
+	
+	//Takes the FileInputStream as a parameter and reads the attributes of the PlanningImpl class to the file 
+	public void open (FileInputStream streamOfFile);
 
 }

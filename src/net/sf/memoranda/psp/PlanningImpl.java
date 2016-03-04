@@ -1,7 +1,9 @@
 package net.sf.memoranda.psp;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +23,7 @@ public class PlanningImpl implements Planning {
 	private int estDefect;
 	private int descriptionSize;
 	private String filename;
+	private int pId;
 	
 	ArrayList <String> files = new ArrayList<String>();
 	HashMap <String, Integer> moduleDescription;
@@ -41,7 +44,7 @@ public class PlanningImpl implements Planning {
 	
 	//PlanningImpl class constructor initialized to variables specified in the method parameter header  
 	public PlanningImpl(float estimatedTime, int linesOfCodePerHour, int estimatedSize, int estimatedDefect, 
-			ArrayList<String> nameOfFile, HashMap <String, Integer> projDesc) {
+			ArrayList<String> nameOfFile, HashMap <String, Integer> projDesc, int pId) {
 		// TODO Auto-generated constructor stub
 		this.estTime = estimatedTime;
 		this.locHr = linesOfCodePerHour;
@@ -50,6 +53,7 @@ public class PlanningImpl implements Planning {
 		this.files = nameOfFile;
 		this.filename="";
 		this.moduleDescription = projDesc;
+		this.pId = pId;
 
 		pspValues = new PspImpl ();
 	}
@@ -135,16 +139,6 @@ public class PlanningImpl implements Planning {
 		System.out.println(files.get(files.size() - 1) + " set " + files.size());
 	}
 
-	//Accessor method that gets the project description as a hash map based on a unique key
-	public HashMap<String, Integer> getProjectDescription() {
-		return moduleDescription;
-	}
-
-	//Mutator method that sets the project description
-	public void setProjectDescription(HashMap<String, Integer> projectDescription) {
-		this.moduleDescription = projectDescription;
-	}
-
 	//Accessor method that gets the start date (stDate)
 	@Override
 	public CurrentDate getStDate() {
@@ -192,14 +186,14 @@ public class PlanningImpl implements Planning {
 		try {
             ObjectOutputStream fw =
                 new ObjectOutputStream(streamOfFile);
-            fw.write(pspValues.getpId());
+            fw.writeInt(pId);
+            //fw.writeObject (pspValues);
             fw.writeFloat(this.getEstTime());
-            fw.write(this.getLocHr());
-            fw.write(this.getEstSize());
-            fw.write(this.getEstDefect());
-            fw.writeObject(this.getFilename());;
-            fw.writeObject(this.getDescription());
-            fw.write(this.getDescriptionSize());
+            fw.writeInt(this.getLocHr());
+            fw.writeInt(this.getEstSize());
+            fw.writeInt(this.getEstDefect());
+            fw.writeObject(this.getFilenames());;
+            fw.writeObject(this.getAdditionalMod());
             
             fw.flush();
             fw.close();
@@ -211,6 +205,27 @@ public class PlanningImpl implements Planning {
                 + " estimated size, and estimated number of defects, the file name and"
                 + " the description and the size of the description for use in XML file has failed" , "");
         }
+	}
+	
+	//Takes the FileInputStream as a parameter and reads the attributes of the PlanningImpl class to the file 
+	public void open (FileInputStream streamOfFile)
+	{
+		try {
+        	ObjectInputStream ois = new ObjectInputStream(streamOfFile);        
+        	this.pId = ois.readInt();
+        	//this.pspValues = (Psp) ois.readObject();
+            this.estTime = ois.readFloat();
+            this.locHr = ois.readInt();
+            this.estSize = ois.readInt();
+            this.estDefect = ois.readInt();
+            this.files = (ArrayList<String>) ois.readObject();
+            this.moduleDescription = (HashMap<String, Integer>) ois.readObject(); 
+            ois.close();
+        } catch (IOException ioException) {
+            new ExceptionDialog(ioException, "File not found!" , "");
+        } catch (ClassNotFoundException e) {
+        	new ExceptionDialog(e, "Error encountered during read" , "");
+        } 
 	}
 	
 	public void save (PlanningImpl p) {
@@ -233,7 +248,7 @@ public class PlanningImpl implements Planning {
 	public String toString() {
 		return "Planning:\n" + "Estimated Time = " + this.getEstTime() + ", Lines of Code = " + this.getLocHr() + 
 				", Estimated Size = " + this.getEstSize() + ", Estimated Defects = " + this.getEstDefect() + 
-				", Filename=" + this.getFilename() + ", projectDescription=" + this.getProjectDescription();
+				", Filename=" + this.getFilename() + ", additional modulue(s)=" + this.getAdditionalMod();
 	}
 
 	@Override
@@ -252,5 +267,16 @@ public class PlanningImpl implements Planning {
 	public int getpId() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public HashMap<String, Integer> getAdditionalMod() {
+		// TODO Auto-generated method stub
+		return this.moduleDescription;
+	}
+
+	@Override
+	public void setAdditionalMod(HashMap<String, Integer> modDescription) {
+		this.moduleDescription = modDescription;
 	}
 }
