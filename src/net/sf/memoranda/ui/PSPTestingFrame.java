@@ -30,7 +30,11 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
 
+<<<<<<< HEAD
 public class PSPTestingFrame extends JFrame {
+=======
+public class PSPTestingFrame extends JPanel {
+>>>>>>> us-45
 	
 	private JTextField studentTextField;
 	private JTextField dateTextField;
@@ -67,11 +71,51 @@ public class PSPTestingFrame extends JFrame {
 	
 	private JPanel containsLogsPanel;
 	private JPanel eachLogPanel_1;
+<<<<<<< HEAD
 
 
 	public PSPTestingFrame() {
 		getContentPane().setLayout(null);
 		this.setTitle("Testing Log");
+=======
+	
+	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	private static PSP_Panel psp;
+
+	public PSPTestingFrame() {		
+		try {
+			jbInit();
+		} catch (Exception ex) {
+			new ExceptionDialog(ex);
+			ex.printStackTrace();
+		}
+	}
+	
+	//Modeled after PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	public PSPTestingFrame(PSP_Panel psp) {		
+		try {
+			setPspPanel(psp);
+			jbInit();
+		} catch (Exception ex) {
+			new ExceptionDialog(ex);
+			ex.printStackTrace();
+		}
+	}
+	
+	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	public static void setPspPanel (PSP_Panel p) {
+		psp = p;
+	}
+	
+	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	public static PSP_Panel getPspPanel () {
+		return psp;
+	}
+	
+	
+	public void jbInit() {
+		setLayout(null);
+>>>>>>> us-45
 		this.setBounds(0, 0, 1290, 700);
 		
 		JTextArea defectContentKey = new JTextArea();
@@ -81,6 +125,7 @@ public class PSPTestingFrame extends JFrame {
 		
 		defectContentKey.setBounds(897, 13, 343, 121);
 		defectContentKey.setEditable(false);
+<<<<<<< HEAD
 		getContentPane().add(defectContentKey);
 		
 		JLabel studentLabel = new JLabel("Student:");
@@ -98,29 +143,61 @@ public class PSPTestingFrame extends JFrame {
 		JLabel programNoLabel = new JLabel("Program #:");
 		programNoLabel.setBounds(268, 101, 87, 16);
 		getContentPane().add(programNoLabel);
+=======
+
+		
+		JLabel studentLabel = new JLabel("Student:");
+		studentLabel.setBounds(37, 49, 56, 16);
+		add(studentLabel);
+		
+		JLabel dateLabel = new JLabel("Date:");
+		dateLabel.setBounds(37, 101, 56, 16);
+		add(dateLabel);
+		
+		JLabel programLabel = new JLabel("Program:");
+		programLabel.setBounds(270, 49, 56, 16);
+		add(programLabel);
+		
+		JLabel programNoLabel = new JLabel("Program #:");
+		programNoLabel.setBounds(268, 101, 87, 16);
+		add(programNoLabel);
+>>>>>>> us-45
 		
 		studentTextField = new JTextField();
 		studentTextField.setText("");
 		studentTextField.setColumns(10);
 		studentTextField.setBounds(92, 46, 166, 22);
+<<<<<<< HEAD
 		getContentPane().add(studentTextField);
+=======
+		add(studentTextField);
+>>>>>>> us-45
 		
 		dateTextField = new JTextField();
 		dateTextField.setText("");
 		dateTextField.setColumns(10);
 		dateTextField.setBounds(92, 98, 166, 22);
+<<<<<<< HEAD
 		getContentPane().add(dateTextField);
+=======
+		add(dateTextField);
+>>>>>>> us-45
 		
 		programTextField = new JTextField();
 		programTextField.setText("");
 		programTextField.setColumns(10);
 		programTextField.setBounds(344, 48, 166, 22);
+<<<<<<< HEAD
 		getContentPane().add(programTextField);
+=======
+		add(programTextField);
+>>>>>>> us-45
 		
 		programNumberTextField = new JTextField();
 		programNumberTextField.setText("");
 		programNumberTextField.setColumns(10);
 		programNumberTextField.setBounds(344, 98, 166, 22);
+<<<<<<< HEAD
 		getContentPane().add(programNumberTextField);
 		
 		JLabel testingFrameTitleLbl = new JLabel("Testing and Defects Page");
@@ -130,6 +207,17 @@ public class PSPTestingFrame extends JFrame {
 		containsLogsPanel = new JPanel();
 		containsLogsPanel.setBounds(12, 147, 1236, 493);
 		getContentPane().add(containsLogsPanel);
+=======
+		add(programNumberTextField);
+		
+		JLabel testingFrameTitleLbl = new JLabel("Testing and Defects Page");
+		testingFrameTitleLbl.setBounds(590, 16, 159, 16);
+		add(testingFrameTitleLbl);
+		
+		containsLogsPanel = new JPanel();
+		containsLogsPanel.setBounds(12, 147, 1236, 493);
+		add(containsLogsPanel);
+>>>>>>> us-45
 		containsLogsPanel.setLayout(null);
 		
 	
@@ -219,7 +307,11 @@ public class PSPTestingFrame extends JFrame {
 		JButton addButton = new JButton();
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 				buttonActionPerformed(e);
+=======
+				
+>>>>>>> us-45
 			}
 		});
 		addButton.setBounds(1068, 41, 49, 22);
@@ -474,9 +566,12 @@ public class PSPTestingFrame extends JFrame {
 		eachLogPanel_4.add(addButton_4);
 		
 	}
+<<<<<<< HEAD
 	
 	void buttonActionPerformed(ActionEvent e)
 	{
 		containsLogsPanel.add(eachLogPanel_1).setBounds(12, 122, 1153, 77);	
 	}
+=======
+>>>>>>> us-45
 }

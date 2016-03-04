@@ -1,5 +1,6 @@
 package net.sf.memoranda.psp;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import net.sf.memoranda.date.CurrentDate;
@@ -8,7 +9,7 @@ public interface Psp {
 	
 	//Static integer value that is a unique project ID (pID) to every project
 	final static int pID = 100000001;
-
+	
 	//Abstract method to get the start date
 	public CurrentDate getStDate();
 	
@@ -35,4 +36,7 @@ public interface Psp {
 	
 	//Abstract method to save all the values entered into the Psp wizard
 	public void save(FileOutputStream stream);
+	
+	//Takes the FileInputStream as a parameter and reads the attributes of the PlanningImpl class to the file 
+	public void open (FileInputStream streamOfFile);
 }
