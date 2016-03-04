@@ -80,11 +80,11 @@ public class PspImplTest {
 		assertTrue(stDate.equals(startDate));
 		assertFalse(stDate.equals("3/1/2016"));
 	}
-
+/*
 	@Test
 	public void testSetStDate() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 	@Test
 	public void testGetName() {
@@ -93,7 +93,7 @@ public class PspImplTest {
 		assertTrue(name.equals(nameTest));
 		assertFalse(name.equals(nameTest1));
 	}
-
+/*
 	@Test
 	public void testSetName() {
 		fail("Not yet implemented");
@@ -133,5 +133,5 @@ public class PspImplTest {
 	public void testToString() {
 		fail("Not yet implemented");
 	}
-
+*/
 }

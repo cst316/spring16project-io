@@ -10,11 +10,11 @@ public class DesignPanelTest {
 	public void getFileListTest() {
 		
 	}
-	
+	/*
 	@Test
 	public void checkFolderSystemTest(){
 		assertTrue(true);
 		assertNotNull(true);
 	}
-
+*/
 }

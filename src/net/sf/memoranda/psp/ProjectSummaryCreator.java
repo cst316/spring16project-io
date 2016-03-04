@@ -1,6 +1,9 @@
 package net.sf.memoranda.psp;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 
 import com.itextpdf.text.Anchor;
@@ -31,7 +34,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class ProjectSummaryCreator {
 	
 	
-	private static String FILE = "c:/temp/PSPProjectSummary.pdf";
+	private static String FILE = "c:" + File.separator + "temp" + File.separator + "PSPProjectSummary.pdf";
 	private static Font headingFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
 		      Font.BOLD);
 	private static Font normalFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
@@ -52,6 +55,7 @@ public class ProjectSummaryCreator {
 			int[] actualDefects, double[] estimatedTotal, double[] actualTotal){
 		try {
 			Document document = new Document();
+			checkFolderSystem();
 		    PdfWriter.getInstance(document, new FileOutputStream(FILE));
 		    document.open();
 		    addPDFTitle(document, author, programName, date);
@@ -411,5 +415,23 @@ public class ProjectSummaryCreator {
 		for (int i = 0; i < numLines; i++) {
 			paragraphName.add(new Paragraph(" "));
 		}
+	}
+	
+	public static boolean checkFolderSystem(){
+		boolean success= true;
+		try{
+			if(!Files.exists(Paths.get("C:" + File.separator + "temp")))
+			{
+				File file = new File("C:" + File.separator + "temp");
+				file.mkdirs();
+			}
+		}catch(RuntimeException e){
+			e.getMessage();
+			success = false;
+		}catch(Exception e){
+			e.getMessage();
+			success = false;
+		}
+		return success;
 	}
 }
