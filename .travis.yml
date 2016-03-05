@@ -7,4 +7,4 @@ script:
     - ant checkstyle
 
 notifications:
-	slack: ser316-teamio:AdOwJIUopZsT5XGTtR44utfC
+	- slack: ser316-teamio:AdOwJIUopZsT5XGTtR44utfC
