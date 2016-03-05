@@ -5,6 +5,3 @@ script:
     - ant junit
     - ant findbugs
     - ant checkstyle
-
-notifications:
-	slack: ser316-teamio:AdOwJIUopZsT5XGTtR44utfC
