@@ -417,12 +417,18 @@ public class ProjectSummaryCreator {
 		}
 	}
 	
+	/**
+	 * Checks to see if all the files in the file path exist. If they don't,
+	 * create them
+	 * @return success whether or not mkdir was successful.
+	 */
+	
 	public static boolean checkFolderSystem(){
 		boolean success= true;
 		try{
-			if(!Files.exists(Paths.get("C:" + File.separator + "temp")))
+			if(!Files.exists(Paths.get(FILE)))
 			{
-				File file = new File("C:" + File.separator + "temp");
+				File file = new File(FILE);
 				file.mkdirs();
 			}
 		}catch(RuntimeException e){
