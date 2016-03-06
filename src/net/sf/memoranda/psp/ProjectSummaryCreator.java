@@ -56,7 +56,7 @@ public class ProjectSummaryCreator {
 		try {
 			Document document = new Document();
 			checkFolderSystem();
-		    PdfWriter.getInstance(document, new FileOutputStream(FILE));
+		    PdfWriter.getInstance(document, new FileOutputStream(FILE + File.separator + "PSPProjectSummary.pdf"));
 		    document.open();
 		    addPDFTitle(document, author, programName, date);
 		    createTimeTable(document, estimatedTime, actualTime);
