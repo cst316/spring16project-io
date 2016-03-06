@@ -104,6 +104,7 @@ public class PSPTestingFrame extends JPanel {
 	
 	public void jbInit() {
 		setLayout(null);
+		this.setBackground(Color.WHITE);
 		this.setBounds(0, 0, 1290, 700);
 		
 		JTextArea defectContentKey = new JTextArea();
@@ -163,6 +164,7 @@ public class PSPTestingFrame extends JPanel {
 		containsLogsPanel.setBounds(12, 147, 1236, 493);
 		add(containsLogsPanel);
 		containsLogsPanel.setLayout(null);
+		containsLogsPanel.setBackground(Color.WHITE);
 		
 	
 		
@@ -175,6 +177,7 @@ public class PSPTestingFrame extends JPanel {
 		eachLogPanel_1.setBounds(12, 13, 1153, 77);
 		containsLogsPanel.add(eachLogPanel_1);
 		eachLogPanel_1.setLayout(null);
+		eachLogPanel_1.setBackground(Color.WHITE);
 
 		
 		JLabel projectLabel_1 = new JLabel("Project");
@@ -261,6 +264,7 @@ public class PSPTestingFrame extends JPanel {
 		JPanel eachLogPanel_2 = new JPanel();
 		eachLogPanel_2.setLayout(null);
 		eachLogPanel_2.setBounds(12, 122, 1153, 77);
+		eachLogPanel_2.setBackground(Color.WHITE);
 		containsLogsPanel.add(eachLogPanel_2);
 		
 		JLabel projectLabel_2 = new JLabel("Project");
@@ -342,6 +346,7 @@ public class PSPTestingFrame extends JPanel {
 		JPanel eachLogPanel_3 = new JPanel();
 		eachLogPanel_3.setLayout(null);
 		eachLogPanel_3.setBounds(12, 229, 1153, 77);
+		eachLogPanel_3.setBackground(Color.WHITE);
 		containsLogsPanel.add(eachLogPanel_3);
 		
 		JLabel projectLabel_3 = new JLabel("Project");
@@ -427,6 +432,7 @@ public class PSPTestingFrame extends JPanel {
 		JPanel eachLogPanel_4 = new JPanel();
 		eachLogPanel_4.setLayout(null);
 		eachLogPanel_4.setBounds(12, 352, 1153, 77);
+		eachLogPanel_4.setBackground(Color.WHITE);
 		containsLogsPanel.add(eachLogPanel_4);
 		
 		JLabel projectLabel_4 = new JLabel("Project");

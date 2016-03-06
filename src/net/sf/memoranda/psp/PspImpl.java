@@ -64,8 +64,8 @@ public class PspImpl implements Psp {
 	}
 	
 	//Mutator method that sets the start date (stDate) given a parameter
-	public void setStDate(CurrentDate stDate) {
-		this.stDate = stDate;
+	public void setStDate(CurrentDate startDate) {
+		stDate = startDate;
 	}
 	
 	//Accessor method that gets the name
@@ -74,8 +74,8 @@ public class PspImpl implements Psp {
 	}
 	
 	//Mutator method sets the name given a parameter
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String projectName) {
+		name = projectName;
 	}
 	
 	//Accessor method that gets the description 
@@ -84,8 +84,8 @@ public class PspImpl implements Psp {
 	}
 	
 	//Mutator method that sets the description given a String value
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescription(String theDescription) {
+		description = theDescription;
 	}
 	
 	//Accessor method that gets the last ID
