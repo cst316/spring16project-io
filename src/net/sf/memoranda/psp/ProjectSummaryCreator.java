@@ -34,7 +34,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class ProjectSummaryCreator {
 	
 	
-	private static String FILE = "c:" + File.separator + "temp" + File.separator + "PSPProjectSummary.pdf";
+	private static String FILE = System.getProperty("user.home") + File.separator + ".memoranda" + File.separator + "proj" + File.separator + "PSPProjectSummary.pdf";
 	private static Font headingFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
 		      Font.BOLD);
 	private static Font normalFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
