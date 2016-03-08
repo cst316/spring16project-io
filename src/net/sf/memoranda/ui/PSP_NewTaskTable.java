@@ -16,7 +16,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class NewTaskTable extends JFrame {
+public class PSP_NewTaskTable extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
@@ -24,11 +24,11 @@ public class NewTaskTable extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void NewScreen(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NewTaskTable frame = new NewTaskTable();
+					PSP_NewTaskTable frame = new PSP_NewTaskTable();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class NewTaskTable extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewTaskTable() {
+	public PSP_NewTaskTable() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 619, 517);
 		contentPane = new JPanel();
@@ -54,7 +54,7 @@ public class NewTaskTable extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 								
 				//opens NewTaskDialog
-				NewTaskDialog nw = new NewTaskDialog();
+				PSP_NewTaskDialog nw = new PSP_NewTaskDialog();
 				nw.NewScreen();
 				
 				
@@ -66,7 +66,7 @@ public class NewTaskTable extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 			//opens NewTaskDialog
-			NewTaskDialogClose nw = new NewTaskDialogClose();
+			PSP_NewTaskDialogClose nw = new PSP_NewTaskDialogClose();
 			nw.NewScreen();
 				
 			}

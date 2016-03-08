@@ -11,15 +11,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import net.sf.memoranda.ui.NewTaskDialog;
-import net.sf.memoranda.ui.NewTaskDialogClose;
-import net.sf.memoranda.ui.NewTaskTable;
+import net.sf.memoranda.ui.PSP_NewTaskDialog;
+import net.sf.memoranda.ui.PSP_NewTaskDialogClose;
+import net.sf.memoranda.ui.PSP_NewTaskTable;
 
 public class NewTaskTableTest {
 	
-	NewTaskTable tabletest;
-	NewTaskDialog newtasktest;
-	NewTaskDialogClose closetasktest;
+	PSP_NewTaskTable tabletest;
+	PSP_NewTaskDialog newtasktest;
+	PSP_NewTaskDialogClose closetasktest;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -32,13 +32,13 @@ public class NewTaskTableTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		tabletest = new NewTaskTable();
+		tabletest = new PSP_NewTaskTable();
 		tabletest.setVisible(true);
 		
-		newtasktest = new NewTaskDialog();
+		newtasktest = new PSP_NewTaskDialog();
 		newtasktest.setVisible(false);
 		
-		closetasktest = new NewTaskDialogClose();
+		closetasktest = new PSP_NewTaskDialogClose();
 		closetasktest.setVisible(true);
 	}
 

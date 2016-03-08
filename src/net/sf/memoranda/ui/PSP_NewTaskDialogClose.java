@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 
-public class NewTaskDialogClose extends JFrame {
+public class PSP_NewTaskDialogClose extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -27,7 +27,7 @@ public class NewTaskDialogClose extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NewTaskDialogClose frame = new NewTaskDialogClose();
+					PSP_NewTaskDialogClose frame = new PSP_NewTaskDialogClose();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +39,7 @@ public class NewTaskDialogClose extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewTaskDialogClose() {
+	public PSP_NewTaskDialogClose() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 536, 389);
 		contentPane = new JPanel();

@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 
-public class NewTaskDialog extends JFrame {
+public class PSP_NewTaskDialog extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -34,7 +34,7 @@ public class NewTaskDialog extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NewTaskDialog frame = new NewTaskDialog();
+					PSP_NewTaskDialog frame = new PSP_NewTaskDialog();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +46,7 @@ public class NewTaskDialog extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewTaskDialog() {
+	public PSP_NewTaskDialog() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 589, 468);
 		contentPane = new JPanel();
