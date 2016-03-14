@@ -260,6 +260,7 @@ public class PSP_TestingPanel extends JPanel {
 		
 		addButton.setBounds(1068, 30, 49, 33);
 		addButton.setContentAreaFilled(false);
+		addButton.setBorderPainted(false);
 		addButton.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_1.add(addButton);
 		
@@ -347,6 +348,7 @@ public class PSP_TestingPanel extends JPanel {
 		});
 		addButton_2.setBounds(1068, 30, 49, 33);
 		addButton_2.setContentAreaFilled(false);
+		addButton_2.setBorderPainted(false);
 		addButton_2.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_2.add(addButton_2);
 		
@@ -434,6 +436,7 @@ public class PSP_TestingPanel extends JPanel {
 		});
 		addButton_3.setBounds(1068, 35, 49, 28);
 		addButton_3.setContentAreaFilled(false);
+		addButton_3.setBorderPainted(false);
 		addButton_3.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_3.add(addButton_3);
 		
@@ -516,6 +519,7 @@ public class PSP_TestingPanel extends JPanel {
 		
 		JButton addButton_4 = new JButton();
 		addButton_4.setBounds(1068, 30, 49, 33);
+		addButton_4.setBorderPainted(false);
 		addButton_4.setContentAreaFilled(false);
 		addButton_4.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_4.add(addButton_4);
