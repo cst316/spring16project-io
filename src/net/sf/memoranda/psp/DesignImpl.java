@@ -130,6 +130,7 @@ public class DesignImpl implements Design {
 	//Models Joe Michael's code for PSP_DesignPanel.java for btnImport_Clicked() method
 	@Override
 	public boolean importImageFiles(File theFileToUse, String thePathOfFile) {
+		boolean testVar = true;
 		try{
 			myImage = ImageIO.read(theFileToUse);
 			
@@ -162,8 +163,9 @@ public class DesignImpl implements Design {
 		{
 			e.getStackTrace();
 			System.out.println("Invalid file.");
+			testVar = false; // want to flag in a test if an error is thrown.
 		}
 		
-		return true;
+		return testVar;
 	}
 }
