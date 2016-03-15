@@ -157,7 +157,7 @@ public class PSP_Panel extends JPanel{
 			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
 		} else if (event.equals("TESTING")) {
-			//addJPanel(new PSPTestingFrame());			
+			addJPanel(new PSPTestingFrame());			
 		} 
 	}
 	
