@@ -257,8 +257,11 @@ public class PSPTestingFrame extends JPanel {
 				
 			}
 		});
-		addButton.setBounds(1068, 41, 49, 22);
-		addButton.setText("+");;
+		
+		addButton.setBounds(1068, 30, 49, 33);
+		addButton.setContentAreaFilled(false);
+		addButton.setBorderPainted(false);
+		addButton.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_1.add(addButton);
 		
 		JPanel eachLogPanel_2 = new JPanel();
@@ -339,8 +342,14 @@ public class PSPTestingFrame extends JPanel {
 		eachLogPanel_2.add(fixRefTextField_2);
 		
 		JButton addButton_2 = new JButton();
-		addButton_2.setBounds(1068, 41, 49, 22);
-		addButton_2.setText("+");
+		addButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		addButton_2.setBounds(1068, 30, 49, 33);
+		addButton_2.setContentAreaFilled(false);
+		addButton_2.setBorderPainted(false);
+		addButton_2.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_2.add(addButton_2);
 		
 		JPanel eachLogPanel_3 = new JPanel();
@@ -425,8 +434,10 @@ public class PSPTestingFrame extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		addButton_3.setBounds(1068, 41, 49, 22);
-		addButton_3.setText("+");
+		addButton_3.setBounds(1068, 35, 49, 28);
+		addButton_3.setContentAreaFilled(false);
+		addButton_3.setBorderPainted(false);
+		addButton_3.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_3.add(addButton_3);
 		
 		JPanel eachLogPanel_4 = new JPanel();
@@ -507,9 +518,28 @@ public class PSPTestingFrame extends JPanel {
 		eachLogPanel_4.add(fixRefTextField_4);
 		
 		JButton addButton_4 = new JButton();
-		addButton_4.setBounds(1068, 41, 49, 22);
-		addButton_4.setText("+");
+		addButton_4.setBounds(1068, 30, 49, 33);
+		addButton_4.setBorderPainted(false);
+		addButton_4.setContentAreaFilled(false);
+		addButton_4.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_4.add(addButton_4);
+		
+		JButton update = new JButton("Update");
+		update.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		update.setBounds(1019, 455, 97, 25);
+		update.setToolTipText("Update values");
+		containsLogsPanel.add(update);
+		
+		JTextArea defectsKey = new JTextArea();
+		defectsKey.setBounds(879, 13, 342, 116);
+		defectsKey.setText("Defect Types" + "\n10 Documentation\t60 Checking" + 
+				"\n20 Syntax\t\t70 Data" + "\n30 Build, Package\t80 Function" +  
+				"\n40 Assignment\t\t90 System" + "\n50 Interface\t\t100 Environment");
+		defectsKey.setEditable(false);
+		add(defectsKey);
 		
 	}
 }
