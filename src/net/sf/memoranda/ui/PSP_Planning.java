@@ -354,7 +354,7 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 	private void setImages (String img) {
 		try {
 			panel_2.removeAll();
-			bg = new BackGround (img, 475, 350);
+			bg = new BackGround (img, panel_2);
 			bg.setPreferredSize(new Dimension(300, 500));
 			bg.setMinimumSize(new Dimension(200, 600));
 			bg.setMaximumSize(new Dimension(32767, 32767));
