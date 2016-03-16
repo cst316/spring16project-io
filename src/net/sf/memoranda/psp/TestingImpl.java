@@ -3,9 +3,12 @@ package net.sf.memoranda.psp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Date;
 
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.ExceptionDialog;
 
 public class TestingImpl implements Testing {
 	
@@ -179,8 +182,23 @@ public class TestingImpl implements Testing {
 
 	@Override
 	public boolean loadTestData(File file) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean status = true;
+		
+		try{
+			
+			FileInputStream fileStream = new FileInputStream(file);
+			ObjectInputStream obj = new ObjectInputStream(fileStream);
+			
+			
+			
+		}catch (IOException e) {
+            new ExceptionDialog(e, "File not found!" , "");
+            status = false;
+        }catch(Exception e){
+			e.getMessage();
+			status = false;
+		}
+		return status;
 	}
 
 	@Override
