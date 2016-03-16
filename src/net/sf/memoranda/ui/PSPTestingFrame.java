@@ -178,7 +178,6 @@ public class PSPTestingFrame extends JPanel {
 		containsLogsPanel.add(eachLogPanel_1);
 		eachLogPanel_1.setLayout(null);
 		eachLogPanel_1.setBackground(Color.WHITE);
-
 		
 		JLabel projectLabel_1 = new JLabel("Project");
 		projectLabel_1.setBounds(66, 13, 49, 22);
