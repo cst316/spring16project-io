@@ -628,8 +628,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			File fs = new File (System.getProperty("user.home") +  File.separator + 
 					".memoranda" + File.separator + ".proj");
 			
-			createProjectFiles(PspImpl.getLastID());
-			psp.save(fs + File.separator + "." + PspImpl.getLastID() + 
+			createProjectFiles(PspImpl.getLastID()); // creates all needed directories
+			
+			psp.save(fs + File.separator + ".pspxFiles" + 
 					File.separator + PspImpl.getLastID() + ".pspx");
 			PSP_Panel.setNewPlanningWizard(this);
 			PSP_Panel.setPspValues(psp);
@@ -784,11 +785,18 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			
 			File des = new File (dir.getPath() + File.separator + '.' + Integer.toString(lastID) + 
 					File.separator + ".images" + File.separator + ".design");
-			des.mkdirs();
+			if (!des.exists()){
+				des.mkdirs();
+			}
 			File pl = new File (dir.getPath() + File.separator + '.' + Integer.toString(lastID) + 
 					File.separator + ".images" + File.separator + ".plan");
-			pl.mkdirs();
-			
+			if(!pl.exists()){
+				pl.mkdirs();
+			}
+			File pspx = new File (dir.getPath() + File.separator + ".pspxFiles");
+			if (!pspx.exists()){
+				pspx.mkdir();
+			}
 			inf = new File (dir + File.separator + Integer.toString(lastID) +
 					File.separator + Integer.toString(lastID) + "_planning");			
 			inf.createNewFile();			

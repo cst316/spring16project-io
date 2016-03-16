@@ -127,7 +127,7 @@ public class DesignImpl implements Design {
 		pspValues.open(streamOfFile);
 	}
 	
-	//Models Joe Michael's code for PSP_DesignPanel.java for btnImport_Clicked() method
+	//Models Joe Michaels' code for PSP_DesignPanel.java for btnImport_Clicked() method
 	@Override
 	public boolean importImageFiles(File theFileToUse, String thePathOfFile) {
 		boolean testVar = true;

@@ -1,9 +1,24 @@
 package net.sf.memoranda.psp;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TestRowObject {
+/**
+ * 
+ * @author Joe Michaels
+ * @author Team-IO
+ * CST316 - Spring 2016
+ * This class is designed to easily hold and manipulate data
+ * from a row in the psp testing classes (not for junit tests).
+ * 03/015/2016
+ */
+
+public class TestRowObject implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4935113146958069224L;
 	private String project;
 	private Date date;
 	private int defNumber;

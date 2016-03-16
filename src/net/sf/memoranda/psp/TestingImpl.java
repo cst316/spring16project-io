@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Date;
 
 import net.sf.memoranda.date.CurrentDate;
@@ -12,7 +15,8 @@ import net.sf.memoranda.ui.ExceptionDialog;
 
 public class TestingImpl implements Testing {
 	
-	
+	private ArrayList<TestRowObject> testObj = new ArrayList<TestRowObject>();
+	private String path = ""; //temp values until reat of class is implemented
 	
 	public TestingImpl(){
 		
@@ -180,16 +184,16 @@ public class TestingImpl implements Testing {
 		return false;
 	}
 
+	//retrieve serialized file and stores to arraylist
 	@Override
 	public boolean loadTestData(File file) {
 		boolean status = true;
-		
 		try{
 			
 			FileInputStream fileStream = new FileInputStream(file);
 			ObjectInputStream obj = new ObjectInputStream(fileStream);
-			
-			
+			while(testObj.add((TestRowObject)obj.readObject())){}//read and cast object until null...?
+			obj.close();
 			
 		}catch (IOException e) {
             new ExceptionDialog(e, "File not found!" , "");
@@ -201,9 +205,24 @@ public class TestingImpl implements Testing {
 		return status;
 	}
 
+	//outputs serialized object to file
 	@Override
 	public boolean saveTestData() {
-		// TODO Auto-generated method stub
+		
+		try{
+			FileOutputStream fos = new FileOutputStream(path);
+			ObjectOutputStream oos =
+	                new ObjectOutputStream(fos);
+			for(int i = 0; i < testObj.size(); ++i){
+				oos.writeObject(testObj.get(i));
+			}
+			oos.close();
+			
+		}catch(IOException e){
+        	e.getMessage();
+        }catch(Exception e) {
+            e.getMessage();
+        }
 		return false;
 	}
 
