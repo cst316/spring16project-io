@@ -333,8 +333,10 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 		} while (size < 0 && ans != JOptionPane.CANCEL_OPTION);
 			
 		if (ans == JOptionPane.OK_OPTION && !(t1.isEmpty())) {
-			addModule (txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()));
-			Util.debug("Added: " + txtNewEst.getText() + "\t" + txtNewSize.getText());
+			if (plan.setAdditionalMod(txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()))) {
+				addModule (txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()));
+				Util.debug("Added: " + txtNewEst.getText() + "\t" + txtNewSize.getText());
+			}			
 		}	
 	}	
 
@@ -446,8 +448,9 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 				
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			file = fc.getSelectedFile();			
-			plan.setFilename (file.getAbsolutePath());
-			addFile (plan.getFilename(plan.getFilenames().size() - 1));
+			if (plan.setFilename (file.getAbsolutePath())) {
+				addFile (plan.getFilename(plan.getFilenames().size() - 1));
+			}
 		}
 	}
 }

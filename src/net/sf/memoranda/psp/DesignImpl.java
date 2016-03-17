@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.util.Util;
 
 public class DesignImpl implements Design {
 	
@@ -116,16 +118,6 @@ public class DesignImpl implements Design {
 		projectDescription = pspValues.getDescription();
 		projectDescription = description;
 	}
-
-	@Override
-	public void save(FileOutputStream stream) {
-		pspValues.save(stream);
-	}
-
-	@Override
-	public void open(FileInputStream streamOfFile) {
-		pspValues.open(streamOfFile);
-	}
 	
 	//Models Joe Michaels' code for PSP_DesignPanel.java for btnImport_Clicked() method
 	@Override
@@ -167,5 +159,26 @@ public class DesignImpl implements Design {
 		}
 		
 		return testVar;
+	}
+	
+	/**
+	 * Implement custom object reader
+	 * @param stream
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+		stream.defaultReadObject();
+		Util.debug("Design retrieved");
+	}
+	
+	/**
+	 * Implement custom object writer
+	 * @param stream
+	 * @throws IOException
+	 */
+	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+		stream.defaultWriteObject();
+		Util.debug("Design wrtten");
 	}
 }

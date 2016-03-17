@@ -10,9 +10,11 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.Planning;
 import net.sf.memoranda.psp.PlanningImpl;
 import net.sf.memoranda.psp.PspImpl;
+import net.sf.memoranda.psp.Testing;
 import net.sf.memoranda.util.Util;
 
 //import net.sf.memoranda.util.Configuration;
@@ -23,6 +25,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.awt.SystemColor;
 
 /**
@@ -42,7 +46,15 @@ public class PSP_Panel extends JPanel{
 	public JToolBar toolBar;
 	
 	static PSP_PlanningWizardFrame pwf;
+	
+	static Planning plan;
+	static Design design;
+	static Testing test;
+	
 	static PspImpl pspI;
+
+	static boolean isDirty;
+ 	
 	
 	/**
 	 * General constructor for creating Panel
@@ -115,6 +127,20 @@ public class PSP_Panel extends JPanel{
 		pnlWizard.setLayout(new BorderLayout(0, 0));
 	}
 	
+	public void addJPanel (String panelType) {
+		switch (panelType) {
+			case "Planning":
+				addJPanel (new PSP_Planning (plan));
+				break;
+			case "Testing":
+				addJPanel (new PSPTestingFrame ());
+				break;
+			case "Design":
+				break;
+			default:
+		}
+	}
+	
 	public void addJPanel (JPanel toAdd) {
 		pnlWizard.removeAll();
 		pnlWizard.add(toAdd, BorderLayout.CENTER);
@@ -139,26 +165,9 @@ public class PSP_Panel extends JPanel{
 			//Implementation required
 			System.out.println("Yeah Open Project");
 		} else if (event.equals("PLANNING")) {
-			try {
-				Util.debug("PID: " + pspI);
-				File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" 
-						+ File.separator + ".proj" + File.separator + pspI.getpId() + "_planning");
-				
-				Planning plan = new PlanningImpl ();
-				plan.open (new FileInputStream (fs));				
-				
-				PSP_Planning pp = new PSP_Planning (plan);
-				addJPanel (pp);				
-				
-			} catch (FileNotFoundException e) {
-				new ExceptionDialog(e, "File not found!" , "");
-			}	
-		} else if (event.equals("DESIGN")) {
-			addJPanel(new PSP_DesignPanel(this));
-			System.out.println("Yeah Design");
-		} else if (event.equals("TESTING")) {
-			addJPanel(new PSPTestingFrame());			
-		} 
+			PSP_Planning pp = new PSP_Planning (plan);
+			addJPanel (pp);			 
+		}
 	}
 	
 	public static void setPspValues (PspImpl pspI) {

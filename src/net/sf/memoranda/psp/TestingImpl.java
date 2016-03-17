@@ -12,6 +12,7 @@ import java.util.Date;
 
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.ExceptionDialog;
+import net.sf.memoranda.util.Util;
 
 public class TestingImpl implements Testing {
 	
@@ -74,19 +75,6 @@ public class TestingImpl implements Testing {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void save(FileOutputStream stream) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void open(FileInputStream streamOfFile) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	@Override
 	public int getPID() {
@@ -224,6 +212,27 @@ public class TestingImpl implements Testing {
             e.getMessage();
         }
 		return false;
+	}
+	
+	/**
+	 * Implement custom object reader
+	 * @param stream
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+		stream.defaultReadObject();
+		Util.debug("Planning retrieved");
+	}
+	
+	/**
+	 * Implement custom object writer
+	 * @param stream
+	 * @throws IOException
+	 */
+	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+		stream.defaultWriteObject();
+		Util.debug("Planning wrtten");
 	}
 
 }

@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.ExceptionDialog;
+import net.sf.memoranda.util.Util;
 
 public class PlanningImpl implements Planning {
 	
@@ -24,9 +25,10 @@ public class PlanningImpl implements Planning {
 	private int descriptionSize;
 	private String filename;
 	private int pId;
+	private ArrayList <String> files = new ArrayList<String>();
+	private HashMap <String, Integer> moduleDescription;
 	
-	ArrayList <String> files = new ArrayList<String>();
-	HashMap <String, Integer> moduleDescription;
+	static boolean isDirty;
 	
 	//PlanningImpl class constructor with empty values and no parameters
 	public PlanningImpl() {
@@ -40,6 +42,7 @@ public class PlanningImpl implements Planning {
 		this.filename = "";
 		this.moduleDescription = new HashMap <String, Integer> ();
 		pspValues = new PspImpl ();
+		isDirty = false;	
 	}
 	
 	//PlanningImpl class constructor initialized to variables specified in the method parameter header  
@@ -56,6 +59,7 @@ public class PlanningImpl implements Planning {
 		this.pId = pId;
 
 		pspValues = new PspImpl ();
+		isDirty = false;		
 	}
 	
 	//Accessor method that gets the estimated time (estTime)
@@ -66,6 +70,7 @@ public class PlanningImpl implements Planning {
 	//Mutator method that sets the estimated time (estTime) 
 	public void setEstTime(float estTime) {
 		this.estTime = estTime;
+		isDirty = true;
 	}
 
 	//Accessor method that gets the lines of code per hour (locHr) 
@@ -76,6 +81,7 @@ public class PlanningImpl implements Planning {
 	//Mutator method that sets the lines of code per hour (locHr)
 	public void setLocHr(int locHr) {
 		this.locHr = locHr;
+		isDirty = true;
 	}
 	
 	//Accessor method that gets the estimated size (estSize)
@@ -86,6 +92,7 @@ public class PlanningImpl implements Planning {
 	//Mutator method that sets the estimated size (estSize)
 	public void setEstSize(int estSize) {
 		this.estSize = estSize;
+		isDirty = true;
 	}
 
 	//Accessor method that gets the estimated number of defects (estDefect)
@@ -96,6 +103,7 @@ public class PlanningImpl implements Planning {
 	//Mutator method that set the estimated number of defects (estDefect)
 	public void setEstDefect(int estDefect) {
 		this.estDefect = estDefect;
+		isDirty = true;
 	}
 	
 	//Returns the size associated with the description
@@ -106,6 +114,7 @@ public class PlanningImpl implements Planning {
 	//Sets the size associated with the description
 	public void setDescriptionSize(int descriptionSize) {
 		this.descriptionSize = descriptionSize;
+		isDirty = true;
 	}
 
 	//Accessor abstract method that returns the name of the file to be used in the project (fileName)
@@ -130,13 +139,24 @@ public class PlanningImpl implements Planning {
 	//Accessor method that sets the name of the file to be used in the project (fileName)
 	public void setFilenames (ArrayList<String> filenames) {
 		this.files = filenames;
+		isDirty = true;
 	}
 	
 	//Mutator method that sets the fileName given a file as a parameter
-	public void setFilename(String filename) {
-		this.files.add(filename);
-
-		System.out.println(files.get(files.size() - 1) + " set " + files.size());
+	public boolean setFilename(String filename) {
+		boolean isAdded = true;
+		
+		for (int i = 0; i < files.size(); i++) {
+			if (this.files.get(i).equals(filename)) {
+				isAdded = false;
+			}
+		}
+		
+		if (isAdded) {
+			this.files.add(filename);
+			isDirty = true;
+		}
+		return isAdded;
 	}
 
 	//Accessor method that gets the start date (stDate)
@@ -150,6 +170,7 @@ public class PlanningImpl implements Planning {
 	public void setStDate(CurrentDate stDate) {
 		CurrentDate startDate = pspValues.getStDate();
 		startDate = stDate; 		
+		isDirty = true;
 	}
 	
 	//Accessor method that gets the name by returning the pspValues object reference variable's getName() method
@@ -163,6 +184,7 @@ public class PlanningImpl implements Planning {
 	public void setName(String name) {
 		String projectName = pspValues.getName();
 		projectName = name; 
+		isDirty = true;
 	}
 
 	//Accessor method that gets the description by using the pspValues object reference variable's
@@ -177,57 +199,9 @@ public class PlanningImpl implements Planning {
 	public void setDescription(String description) {
 		String projDesc = pspValues.getDescription();
 		projDesc = description;
+		isDirty = true;
 	}
-	
-	//Models the saveDocument() method in FileStorage.java (.util package)
-	//Takes the FileOutputStream as a parameter and saves the attributes of the PlanningImpl class to the file 
-	public void save(FileOutputStream streamOfFile)
-	{
-		try {
-            ObjectOutputStream fw =
-                new ObjectOutputStream(streamOfFile);
-            fw.writeInt(pId);
-            //fw.writeObject (pspValues);
-            fw.writeFloat(this.getEstTime());
-            fw.writeInt(this.getLocHr());
-            fw.writeInt(this.getEstSize());
-            fw.writeInt(this.getEstDefect());
-            fw.writeObject(this.getFilenames());;
-            fw.writeObject(this.getAdditionalMod());
-            
-            fw.flush();
-            fw.close();
-        }
-        catch (IOException ioException) {
-            new ExceptionDialog(
-                ioException,
-                "Saving the estimated time, estimated lines of code per hour, "
-                + " estimated size, and estimated number of defects, the file name and"
-                + " the description and the size of the description for use in XML file has failed" , "");
-        }
-	}
-	
-	//Takes the FileInputStream as a parameter and reads the attributes of the PlanningImpl class to the file 
-	public void open (FileInputStream streamOfFile)
-	{
-		try {
-        	ObjectInputStream ois = new ObjectInputStream(streamOfFile);        
-        	this.pId = ois.readInt();
-        	//this.pspValues = (Psp) ois.readObject();
-            this.estTime = ois.readFloat();
-            this.locHr = ois.readInt();
-            this.estSize = ois.readInt();
-            this.estDefect = ois.readInt();
-            this.files = (ArrayList<String>) ois.readObject();
-            this.moduleDescription = (HashMap<String, Integer>) ois.readObject(); 
-            ois.close();
-        } catch (IOException ioException) {
-            new ExceptionDialog(ioException, "File not found!" , "");
-        } catch (ClassNotFoundException e) {
-        	new ExceptionDialog(e, "Error encountered during read" , "");
-        } 
-	}
-	
+		
 	public void save (PlanningImpl p) {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream ("proj/" + pspValues.getpId ()+"_planning"));
@@ -255,12 +229,13 @@ public class PlanningImpl implements Planning {
 	public void setPspValues(Psp values) {
 		// TODO Auto-generated method stub
 		this.pspValues = values;
+		//isDirty = true;
 	}
 
 	@Override
 	public void setpId(int id) {
 		// TODO Auto-generated method stub
-		
+		//isDirty = true;
 	}
 
 	@Override
@@ -276,7 +251,47 @@ public class PlanningImpl implements Planning {
 	}
 
 	@Override
-	public void setAdditionalMod(HashMap<String, Integer> modDescription) {
-		this.moduleDescription = modDescription;
+	public boolean setAdditionalMod(HashMap<String, Integer> modDescription) {
+		boolean isAdded = false;
+		
+		if (!this.moduleDescription.equals(modDescription)) { 
+			this.moduleDescription = modDescription;
+			isDirty = true;
+		}
+				
+		return isAdded;
+	}	
+	
+	public boolean setAdditionalMod(String newMod, int newSize) {
+		boolean isAdded = false;
+		
+		if (!this.moduleDescription.containsKey(newMod)) {
+			this.moduleDescription.put(newMod, newSize);
+			isAdded = true;
+			isDirty = true;
+		}		
+		return isAdded;
+	}	
+
+	/**
+	 * Implement custom object reader
+	 * @param stream
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+		stream.defaultReadObject();
+		Util.debug("Planning retrieved");
+	}
+	
+	/**
+	 * Implement custom object writer
+	 * @param stream
+	 * @throws IOException
+	 */
+	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+		stream.defaultWriteObject();
+		Util.debug("Planning wrtten");
+		isDirty = false;
 	}
 }
