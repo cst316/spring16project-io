@@ -6,6 +6,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -38,6 +39,7 @@ public class PSP_Panel extends JPanel{
 	private static final long serialVersionUID = -1815200458278347624L;
 	private JLabel lblNewProject;
 	private JLabel lblOpenProject;
+	private JLabel lblSaveProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
 	
@@ -94,7 +96,7 @@ public class PSP_Panel extends JPanel{
 		toolBar.add(lblNewProject);
 		
 		lblOpenProject = new JLabel("Open Project");
-		lblOpenProject.setEnabled(false);
+		//lblOpenProject.setEnabled(false);
 		lblOpenProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpenProject.addMouseListener(new MouseAdapter() {
 			@Override
@@ -108,6 +110,22 @@ public class PSP_Panel extends JPanel{
 		lblOpenProject.setPreferredSize(new Dimension(100, 50));
 		lblOpenProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblOpenProject);
+		
+		lblSaveProject = new JLabel("Save Project");
+		lblSaveProject.setEnabled(false);
+		lblSaveProject.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSaveProject.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				project_MouseEvent("SAVE PROJECT");
+			}
+		});
+		lblSaveProject.setLocation(new Point (100, 50));
+		lblSaveProject.setMinimumSize(new Dimension(100, 50));
+		lblSaveProject.setMaximumSize(new Dimension(100, 50));
+		lblSaveProject.setPreferredSize(new Dimension(100, 50));
+		lblSaveProject.setFont(new Font("Dialog", Font.BOLD, 12));
+		toolBar.add(lblSaveProject);		
 		
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
@@ -167,5 +185,21 @@ public class PSP_Panel extends JPanel{
 	
 	public static void setNewPlanningWizard (PSP_PlanningWizardFrame pwf) {
 		PSP_Panel.pwf = pwf;
+	}
+	
+	/**
+	 * Implementing open file dialog to open saved project files .pspx
+	 */
+	private void openFileDialog () {
+		//Using user.home instead of user.dir
+		JFileChooser fc =  new JFileChooser(new File(System.getProperty
+				("user.home") + File.separator + ".memoranda" + File.separator + ".proj"));
+		int returnVal = fc.showOpenDialog(this);
+		File file;
+				
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			file = fc.getSelectedFile();			
+			
+		}
 	}
 }
