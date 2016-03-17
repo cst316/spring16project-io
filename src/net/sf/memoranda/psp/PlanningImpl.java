@@ -1,19 +1,23 @@
 package net.sf.memoranda.psp;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.ExceptionDialog;
 import net.sf.memoranda.util.Util;
 
-public class PlanningImpl implements Planning {
+public class PlanningImpl implements Planning, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2767071770527400292L;
+
 	//Psp interface reference variable used to get access to the Psp pID constant
 	private Psp pspValues;
 
@@ -279,7 +283,7 @@ public class PlanningImpl implements Planning {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+	private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		stream.defaultReadObject();
 		Util.debug("Planning retrieved");
 	}
@@ -289,7 +293,7 @@ public class PlanningImpl implements Planning {
 	 * @param stream
 	 * @throws IOException
 	 */
-	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+	private void writeObject(ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
 		Util.debug("Planning wrtten");
 		isDirty = false;

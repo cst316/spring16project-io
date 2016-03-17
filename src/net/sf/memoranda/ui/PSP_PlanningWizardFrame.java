@@ -618,7 +618,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		}
 	}
 	
-	private void callFinish () {
+	private void callFinish() {
 		ObjectOutputStream oos = null;
 		try {			
 			App.getFrame().setEnabled(true);
@@ -626,12 +626,13 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), PSP_NPWizardFrame
 					.getProjDescription(), Integer.parseInt(lblProjId.getText().trim()));
 			
+			createProjectFiles(PspImpl.getLastID());			
 			oos = new ObjectOutputStream (new FileOutputStream (new File (
 					System.getProperty("user.home") +  File.separator + ".memoranda" + 
-							File.separator + ".proj" + File.separator +	".pspxFiles" + 
+							File.separator + ".proj" + File.separator + ".pspxFiles" + 
 							File.separator + "." + getPID() + ".pspx")));
 			oos.writeObject(psp);
-			createProjectFiles(PspImpl.getLastID());			
+			
 			PSP_Panel.setNewPlanningWizard(this);
 			PSP_Panel.setPspValues(psp);
 			
@@ -647,8 +648,8 @@ public class PSP_PlanningWizardFrame extends JFrame {
 						getFilenames(), getProjDescription(), getPID());
 				oos = new ObjectOutputStream (new FileOutputStream (
 						System.getProperty("user.home") +  File.separator +	".memoranda" + 
-								File.separator + ".proj" + File.separator + "." + getPID () + 
-								File.separator + getPID () + "_planning"));
+						File.separator + ".proj" + File.separator + '.' + getPID () + 
+						File.separator + '.' + getPID() + "_planning"));
 				oos.writeObject(plan);
 				oos.flush();
 				oos.close();
@@ -732,8 +733,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		JLabel lblPlanningProject = new JLabel("Planning");		
 		PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
 		
-
-		if (p.toolBar.getComponentCount() <= 2 ) {
+		if (PspImpl.getLastID() > 100000001) {
 			lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
 			lblPlanningProject.addMouseListener(new MouseAdapter() {
 				@Override
@@ -784,31 +784,32 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private void createProjectFiles(int lastID) {
 		File dir = new File (System.getProperty("user.home") + 
 				File.separator + ".memoranda" + File.separator + ".proj");
-		File inf = null;
+		File sub = null;
 		try {			
 			if (!dir.exists()) {
 				dir.mkdir();				
 			} 
 			
-			File des = new File (dir.getPath() + File.separator + '.' + Integer.toString(lastID) + 
+			sub = new File (dir.getPath() + File.separator + ".pspxFiles");
+			if (!sub.exists()){
+				sub.mkdir();
+			}			
+						
+			sub = new File (dir.getPath() + File.separator + '.' + getPID() + 
 					File.separator + ".images" + File.separator + ".design");
-			if (!des.exists()){
-				des.mkdirs();
+			if (!sub.exists()){
+				sub.mkdirs();
 			}
-			File pl = new File (dir.getPath() + File.separator + '.' + Integer.toString(lastID) + 
+			
+			sub = new File (dir.getPath() + File.separator + '.' + getPID() + 
 					File.separator + ".images" + File.separator + ".plan");
-			if(!pl.exists()){
-				pl.mkdirs();
-			}
-			File pspx = new File (dir.getPath() + File.separator + ".pspxFiles");
-			if (!pspx.exists()){
-				pspx.mkdir();
-			}
-			Util.debug("FILE IN");
-			inf = new File (dir + File.separator + "." + Integer.toString(lastID) +
-					File.separator + "." + Integer.toString(lastID) + "_planning");
-			Util.debug("FILE OUT");
-			inf.createNewFile();			
+			if(!sub.exists()){
+				sub.mkdirs();
+			}			
+			
+			sub = new File (dir + File.separator + '.' + getPID() +
+					File.separator + '.' + getPID() + "_planning");
+			sub.createNewFile();			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

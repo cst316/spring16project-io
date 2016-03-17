@@ -8,7 +8,6 @@
  */
 package net.sf.memoranda.date;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,14 +19,9 @@ import net.sf.memoranda.util.Util;
  *
  */
 /*$Id: CalendarDate.java,v 1.3 2004/01/30 12:17:41 alexeya Exp $*/
-public class CalendarDate implements Serializable {
+public class CalendarDate {
 
-    /**
-	 * Writing and reading objects from PSP requires serializable objects
-	 * Cephas Armstrong-Mensah - 03/18/2016
-	 */
-	private static final long serialVersionUID = -4734874774265547756L;
-	private int _year;
+    private int _year;
     private int _month;
     private int _day;
 

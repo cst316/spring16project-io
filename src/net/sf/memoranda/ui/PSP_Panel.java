@@ -42,6 +42,7 @@ public class PSP_Panel extends JPanel{
 	private static final long serialVersionUID = -1815200458278347624L;
 	private JLabel lblNewProject;
 	private JLabel lblOpenProject;
+	private JLabel lblSaveProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
 	
@@ -106,7 +107,11 @@ public class PSP_Panel extends JPanel{
 		toolBar.add(lblNewProject);
 		
 		lblOpenProject = new JLabel("Open Project");
-		lblOpenProject.setEnabled(false);
+		if (getIsNeeded()) {
+			lblOpenProject.setEnabled(true);
+		} else {
+			lblOpenProject.setEnabled(false);
+		}
 		lblOpenProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpenProject.addMouseListener(new MouseAdapter() {
 			@Override
@@ -120,6 +125,22 @@ public class PSP_Panel extends JPanel{
 		lblOpenProject.setPreferredSize(new Dimension(100, 50));
 		lblOpenProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblOpenProject);
+		
+		lblSaveProject = new JLabel("Save Project");
+		lblSaveProject.setEnabled(false);
+		lblSaveProject.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSaveProject.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				project_MouseEvent("SAVE PROJECT");
+			}
+		});
+		lblSaveProject.setLocation(new Point (100, 50));
+		lblSaveProject.setMinimumSize(new Dimension(100, 50));
+		lblSaveProject.setMaximumSize(new Dimension(100, 50));
+		lblSaveProject.setPreferredSize(new Dimension(100, 50));
+		lblSaveProject.setFont(new Font("Dialog", Font.BOLD, 12));
+		toolBar.add(lblSaveProject);
 		
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
@@ -164,10 +185,36 @@ public class PSP_Panel extends JPanel{
 		} else if (event.equals("OPEN PROJECT")) {
 			//Implementation required
 			System.out.println("Yeah Open Project");
+		} else if (event.equals("SAVE PROJECT")) {
+			//Implementation required
+			System.out.println("Yeah Save Project");
 		} else if (event.equals("PLANNING")) {
+			Util.debug("PID: " + pspI);
 			PSP_Planning pp = new PSP_Planning (plan);
-			addJPanel (pp);			 
-		}
+			addJPanel (pp);				
+		} else if (event.equals("DESIGN")) {
+			addJPanel(new PSP_DesignPanel(this));
+			System.out.println("Yeah Design");
+		} else if (event.equals("TESTING")) {
+			addJPanel(new PSPTestingFrame());			
+		} 
+	}
+	
+	private boolean getIsNeeded () {
+		boolean isNeeded;
+		try {			
+			ObjectInputStream ois = new ObjectInputStream (new FileInputStream (
+					System.getProperty("user.home") + File.separator + ".memoranda" + 
+							File.separator + ".proj" + File.separator + "psp_id"));
+			isNeeded = true;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			isNeeded = false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			isNeeded = false;
+		} 		
+		return isNeeded;
 	}
 	
 	public static void setPspValues (PspImpl pspI) {

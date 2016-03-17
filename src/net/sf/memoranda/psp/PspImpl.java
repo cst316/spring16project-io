@@ -1,22 +1,21 @@
 package net.sf.memoranda.psp;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-
+import java.io.Serializable;
 import net.sf.memoranda.date.CurrentDate;
-import net.sf.memoranda.ui.ExceptionDialog;
 import net.sf.memoranda.util.Util;
 
-public class PspImpl implements Psp {
+public class PspImpl implements Psp, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4409606508885247769L;
 	private int pID;
 	private String name;
-	private String description;	
-	
+	private String description;		
 	private CurrentDate stDate;
 		
 	public static int lastID = Psp.pID;
@@ -104,7 +103,7 @@ public class PspImpl implements Psp {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+	private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		stream.defaultReadObject();
 		Util.debug("Psp retrieved");
 	}
@@ -114,7 +113,7 @@ public class PspImpl implements Psp {
 	 * @param stream
 	 * @throws IOException
 	 */
-	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+	private void writeObject(ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
 		Util.debug("Psp wrtten");
 	}	

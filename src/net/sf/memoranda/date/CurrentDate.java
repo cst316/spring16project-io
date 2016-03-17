@@ -7,6 +7,7 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package net.sf.memoranda.date;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -14,9 +15,14 @@ import java.util.Vector;
  *
  */
 /*$Id: CurrentDate.java,v 1.4 2004/10/06 16:00:12 ivanrise Exp $*/
-public class CurrentDate {
+public class CurrentDate implements Serializable {
 
-    private static CalendarDate _date = new CalendarDate();
+	/**
+	 * Writing and reading objects from PSP requires serializable objects
+	 * Cephas Armstrong-Mensah - 03/18/2016
+	 */
+	private static final long serialVersionUID = -520137500796897267L;
+	private static CalendarDate _date = new CalendarDate();
     private static Vector dateListeners = new Vector();
 
     public static CalendarDate get() {
