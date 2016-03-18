@@ -3,9 +3,11 @@ package net.sf.memoranda.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FileDialog;
 
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -13,6 +15,7 @@ import javax.swing.SwingConstants;
 import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.Planning;
 import net.sf.memoranda.psp.PlanningImpl;
+import net.sf.memoranda.psp.Psp;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.psp.Testing;
 import net.sf.memoranda.util.Util;
@@ -25,8 +28,10 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.awt.SystemColor;
 
 /**
@@ -127,7 +132,7 @@ public class PSP_Panel extends JPanel{
 		toolBar.add(lblOpenProject);
 		
 		lblSaveProject = new JLabel("Save Project");
-		lblSaveProject.setEnabled(false);
+		//lblSaveProject.setEnabled(false);
 		lblSaveProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSaveProject.addMouseListener(new MouseAdapter() {
 			@Override
@@ -183,10 +188,9 @@ public class PSP_Panel extends JPanel{
 			toolBar.setVisible (false);
 			(new PSP_NPWizardFrame(this)).setVisible(true);			
 		} else if (event.equals("OPEN PROJECT")) {
-			//Implementation required
+			openFileDialog();
 			System.out.println("Yeah Open Project");
 		} else if (event.equals("SAVE PROJECT")) {
-			//Implementation required
 			System.out.println("Yeah Save Project");
 		} else if (event.equals("PLANNING")) {
 			Util.debug("PID: " + pspI);
@@ -223,5 +227,58 @@ public class PSP_Panel extends JPanel{
 	
 	public static void setNewPlanningWizard (PSP_PlanningWizardFrame pwf) {
 		PSP_Panel.pwf = pwf;
+	}
+	
+	/**
+	 * Implementing open file dialog to help user select project to open
+	 */
+	private boolean openFileDialog () {
+		//Using user.home instead of user.dir
+		boolean projOpened = false;
+		JFileChooser fc =  new JFileChooser(new File(System.getProperty
+				("user.home") + File.separator + ".memoranda" + 
+				File.separator + ".proj" + File.separator + ".pspxFiles"));
+		int returnVal = fc.showOpenDialog(this);
+		ObjectInputStream ois = null;
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			try {
+				ois = new ObjectInputStream (new FileInputStream (fc.getSelectedFile()));				
+				setPspValues ((PspImpl) ois.readObject());
+				ois.close();
+				projOpened = true;
+			} catch (ClassNotFoundException e) {
+				Util.debug("CHECK THE OBJECT");
+				projOpened = false;
+			} catch (IOException e) {
+				Util.debug("FILE NOT FOUND!");
+				projOpened = false;
+			}
+		}
+		
+		return projOpened;
+	}
+	
+	private static boolean saveDialog () {
+		boolean isSaved;
+		JFileChooser fc = new JFileChooser(new File(
+				System.getProperty("user.home") + File.separator + ".memoranda" + 
+						File.separator + ".proj" + File.separator + ".pspxFiles"));
+		int saveVal = 0;//fc.showSaveDialog(this);
+		if (saveVal == JFileChooser.APPROVE_OPTION) {
+			isSaved = true;
+			isDirty = false;
+		}else {
+			isSaved = false;
+		}
+		return isSaved;
+	}
+	
+	/*private void saveAsDialog () {
+		//Using user.home instead of user.dir
+		FileDialog fc =  new FileDialog ();	
+	}*/
+	
+	private static boolean checkIsDirty () {
+		return isDirty;
 	}
 }

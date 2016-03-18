@@ -630,7 +630,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			oos = new ObjectOutputStream (new FileOutputStream (new File (
 					System.getProperty("user.home") +  File.separator + ".memoranda" + 
 							File.separator + ".proj" + File.separator + ".pspxFiles" + 
-							File.separator + "." + getPID() + ".pspx")));
+							File.separator + getPID() + ".pspx")));
 			oos.writeObject(psp);
 			
 			PSP_Panel.setNewPlanningWizard(this);
