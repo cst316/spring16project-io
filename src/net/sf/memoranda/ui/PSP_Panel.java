@@ -24,6 +24,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.awt.SystemColor;
 
 /**
@@ -39,12 +41,12 @@ public class PSP_Panel extends JPanel{
 	private static final long serialVersionUID = -1815200458278347624L;
 	private JLabel lblNewProject;
 	private JLabel lblOpenProject;
-	private JLabel lblSaveProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
 	
 	static PSP_PlanningWizardFrame pwf;
 	static PspImpl pspI;
+	static JPanel currentView;
 	
 	/**
 	 * General constructor for creating Panel
@@ -70,7 +72,8 @@ public class PSP_Panel extends JPanel{
 	 * Used to create GUI Layout and interface
 	 * @throws Exception
 	 */
-	void jbInit() throws Exception {
+	private void jbInit() throws Exception {
+		pspI = new PspImpl();
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
 		
@@ -96,7 +99,7 @@ public class PSP_Panel extends JPanel{
 		toolBar.add(lblNewProject);
 		
 		lblOpenProject = new JLabel("Open Project");
-		//lblOpenProject.setEnabled(false);
+		setEnabledFlag (lblOpenProject, getIsNeeded());
 		lblOpenProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpenProject.addMouseListener(new MouseAdapter() {
 			@Override
@@ -111,28 +114,17 @@ public class PSP_Panel extends JPanel{
 		lblOpenProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblOpenProject);
 		
-		lblSaveProject = new JLabel("Save Project");
-		lblSaveProject.setEnabled(false);
-		lblSaveProject.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSaveProject.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				project_MouseEvent("SAVE PROJECT");
-			}
-		});
-		lblSaveProject.setLocation(new Point (100, 50));
-		lblSaveProject.setMinimumSize(new Dimension(100, 50));
-		lblSaveProject.setMaximumSize(new Dimension(100, 50));
-		lblSaveProject.setPreferredSize(new Dimension(100, 50));
-		lblSaveProject.setFont(new Font("Dialog", Font.BOLD, 12));
-		toolBar.add(lblSaveProject);		
-		
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
 		add(pnlWizard, BorderLayout.CENTER);
 		pnlWizard.setLayout(new BorderLayout(0, 0));
 	}
 	
+	private void setEnabledFlag(JLabel lblEnableThis, boolean flag) {
+		// TODO Auto-generated method stub
+		lblEnableThis.setEnabled(flag);
+	}
+
 	public void addJPanel (JPanel toAdd) {
 		pnlWizard.removeAll();
 		pnlWizard.add(toAdd, BorderLayout.CENTER);
@@ -140,6 +132,18 @@ public class PSP_Panel extends JPanel{
 		toolBar.setVisible(false);
 		this.setEnabled(true);
 		pnlWizard.setVisible(true);
+		
+		if (toAdd instanceof PSP_Planning) {
+			toAdd.setName("PLANNING");
+		} else if (toAdd instanceof PSP_DesignPanel) {
+			toAdd.setName("DESIGN");
+		} else if (toAdd instanceof PSPTestingFrame) {
+			toAdd.setName("DEFECT");
+		} //else if (toAdd instanceof PSP_Planning) {
+			//toAdd.setName("PLANNING");
+		//}
+		currentView = toAdd;
+		
 		this.revalidate();
 	}
 	
@@ -148,17 +152,19 @@ public class PSP_Panel extends JPanel{
 	 * Mouse events for New Project on the auto hide tool bar
 	 * @param event - Used to know which action to perform
 	 */
-	public void project_MouseEvent (String event) {
+	private void project_MouseEvent (String event) {
 		if (event.equals("NEW PROJECT")) {
 			App.getFrame().setEnabled(false);
 			toolBar.setVisible (false);
+			setEnabledFlag (lblOpenProject, getIsNeeded());
 			(new PSP_NPWizardFrame(this)).setVisible(true);			
 		} else if (event.equals("OPEN PROJECT")) {
-			//Implementation required
-			System.out.println("Yeah Open Project");
+			if (currentView != null) {
+				Util.debug("CURRENT VIEW: " + currentView.getName());
+			}
+			openFileDialog();			
 		} else if (event.equals("PLANNING")) {
 			try {
-				Util.debug("PID: " + pspI);
 				File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" 
 						+ File.separator + ".proj" + File.separator + pspI.getpId() + "_planning");
 				
@@ -174,7 +180,7 @@ public class PSP_Panel extends JPanel{
 		} else if (event.equals("DESIGN")) {
 			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
-		} else if (event.equals("TESTING")) {
+		} else if (event.equals("DEFECT")) {
 			addJPanel(new PSPTestingFrame());			
 		} 
 	}
@@ -187,19 +193,117 @@ public class PSP_Panel extends JPanel{
 		PSP_Panel.pwf = pwf;
 	}
 	
+	private boolean getIsNeeded () {
+		boolean isNeeded = false;
+		try {			
+			ObjectInputStream ois = new ObjectInputStream (new FileInputStream (
+					System.getProperty("user.home") + File.separator + ".memoranda" + 
+							File.separator + ".proj" + File.separator + "psp_id"));
+			if (ois.readInt() > 100000001) {
+				isNeeded = true;
+				Util.debug("Is this really enabled");
+			}
+			ois.close();
+		} catch (IOException e) {
+			isNeeded = false;
+		} 		
+		return isNeeded;
+	}
+	
 	/**
-	 * Implementing open file dialog to open saved project files .pspx
+	 * Implementing open file dialog to help user select project to open
 	 */
-	private void openFileDialog () {
+	private boolean openFileDialog () {
 		//Using user.home instead of user.dir
+		boolean projOpened = false;
 		JFileChooser fc =  new JFileChooser(new File(System.getProperty
-				("user.home") + File.separator + ".memoranda" + File.separator + ".proj"));
+				("user.home") + File.separator + ".memoranda" + 
+				File.separator + ".proj"));				// + File.separator + ".pspxFiles"));
 		int returnVal = fc.showOpenDialog(this);
-		File file;
-				
+		
+		//ObjectInputStream ois = null;
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			file = fc.getSelectedFile();			
-			
+			try {
+				File openThis = fc.getSelectedFile();
+				//ois = new ObjectInputStream (new FileInputStream (openThis.getAbsolutePath()));	
+				//pspI = (PspImpl) ois.readObject();
+				//ois.close();
+				Util.debug("INDEXER: " + pspI.getpId());
+				pspI.open(new FileInputStream (openThis));				
+				if (currentView instanceof PSP_DesignPanel) {
+					project_MouseEvent ("DESIGN");
+				}  else if (currentView instanceof PSPTestingFrame) {
+					project_MouseEvent ("DEFECT");
+				} else if (currentView instanceof PSP_Planning) {
+					project_MouseEvent ("PLANNING");
+				} else {
+					project_MouseEvent ("PLANNING");				
+				}
+				Util.debug("INDEXER: " + pspI.getpId());
+				
+				projOpened = true;
+			//} catch (ClassNotFoundException e) {
+				//Util.debug("CHECK THE OBJECT");
+				//projOpened = false;
+			} catch (IOException e) {
+				Util.debug("FILE NOT FOUND!");
+				projOpened = false;
+			}
 		}
+		
+		if (toolBar.getComponentCount() < 3)
+			setExtraTools ();
+		
+		return projOpened;
+	}
+	
+	public void setExtraTools () {
+		// TODO Auto-generated method stub
+		JLabel lblPlanningProject = new JLabel("Planning");		
+		
+		lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPlanningProject.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				project_MouseEvent("PLANNING");
+			}
+		});
+		lblPlanningProject.setLocation(new Point(150, 50));
+		lblPlanningProject.setMinimumSize(new Dimension(100, 50));
+		lblPlanningProject.setMaximumSize(new Dimension(100, 50));
+		lblPlanningProject.setPreferredSize(new Dimension(100, 50));
+		lblPlanningProject.setFont(new Font("Dialog", Font.BOLD, 12));
+		
+		JLabel lblDesigningProject = new JLabel("Designing");
+		lblDesigningProject.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDesigningProject.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				project_MouseEvent("DESIGN");
+			}
+		});
+		lblDesigningProject.setLocation(new Point (200, 50));
+		lblDesigningProject.setMinimumSize(new Dimension(100, 50));
+		lblDesigningProject.setMaximumSize(new Dimension(100, 50));
+		lblDesigningProject.setPreferredSize(new Dimension(100, 50));
+		lblDesigningProject.setFont(new Font("Dialog", Font.BOLD, 12));
+		
+		JLabel lblDefectInProject = new JLabel("Defect");
+		lblDefectInProject.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDefectInProject.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				project_MouseEvent("DEFECT");
+			}
+		});
+		lblDefectInProject.setLocation(new Point (250, 50));
+		lblDefectInProject.setMinimumSize(new Dimension(100, 50));
+		lblDefectInProject.setMaximumSize(new Dimension(100, 50));
+		lblDefectInProject.setPreferredSize(new Dimension(100, 50));
+		lblDefectInProject.setFont(new Font("Dialog", Font.BOLD, 12));		
+	
+		toolBar.add(lblPlanningProject);
+		toolBar.add(lblDesigningProject);
+		toolBar.add(lblDefectInProject);
 	}
 }
