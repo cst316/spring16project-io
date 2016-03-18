@@ -57,11 +57,7 @@ public class PSP_Panel extends JPanel{
 	static Design design;
 	static Testing test;
 	
-	static PspImpl pspI;
-
-	static boolean isDirty;
- 	
-	
+	static PspImpl pspI;	
 	/**
 	 * General constructor for creating Panel
 	 */
@@ -188,7 +184,6 @@ public class PSP_Panel extends JPanel{
 			toolBar.setVisible (false);
 			(new PSP_NPWizardFrame(this)).setVisible(true);			
 		} else if (event.equals("OPEN PROJECT")) {
-			openFileDialog();
 			System.out.println("Yeah Open Project");
 		} else if (event.equals("SAVE PROJECT")) {
 			System.out.println("Yeah Save Project");
@@ -227,58 +222,5 @@ public class PSP_Panel extends JPanel{
 	
 	public static void setNewPlanningWizard (PSP_PlanningWizardFrame pwf) {
 		PSP_Panel.pwf = pwf;
-	}
-	
-	/**
-	 * Implementing open file dialog to help user select project to open
-	 */
-	private boolean openFileDialog () {
-		//Using user.home instead of user.dir
-		boolean projOpened = false;
-		JFileChooser fc =  new JFileChooser(new File(System.getProperty
-				("user.home") + File.separator + ".memoranda" + 
-				File.separator + ".proj" + File.separator + ".pspxFiles"));
-		int returnVal = fc.showOpenDialog(this);
-		ObjectInputStream ois = null;
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			try {
-				ois = new ObjectInputStream (new FileInputStream (fc.getSelectedFile()));				
-				setPspValues ((PspImpl) ois.readObject());
-				ois.close();
-				projOpened = true;
-			} catch (ClassNotFoundException e) {
-				Util.debug("CHECK THE OBJECT");
-				projOpened = false;
-			} catch (IOException e) {
-				Util.debug("FILE NOT FOUND!");
-				projOpened = false;
-			}
-		}
-		
-		return projOpened;
-	}
-	
-	private static boolean saveDialog () {
-		boolean isSaved;
-		JFileChooser fc = new JFileChooser(new File(
-				System.getProperty("user.home") + File.separator + ".memoranda" + 
-						File.separator + ".proj" + File.separator + ".pspxFiles"));
-		int saveVal = 0;//fc.showSaveDialog(this);
-		if (saveVal == JFileChooser.APPROVE_OPTION) {
-			isSaved = true;
-			isDirty = false;
-		}else {
-			isSaved = false;
-		}
-		return isSaved;
-	}
-	
-	/*private void saveAsDialog () {
-		//Using user.home instead of user.dir
-		FileDialog fc =  new FileDialog ();	
-	}*/
-	
-	private static boolean checkIsDirty () {
-		return isDirty;
-	}
+	}	
 }
