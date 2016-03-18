@@ -3,19 +3,15 @@ package net.sf.memoranda.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FileDialog;
 
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.Planning;
-import net.sf.memoranda.psp.PlanningImpl;
-import net.sf.memoranda.psp.Psp;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.psp.Testing;
 import net.sf.memoranda.util.Util;
@@ -25,13 +21,6 @@ import net.sf.memoranda.util.Util;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.awt.SystemColor;
 
 /**
@@ -47,7 +36,6 @@ public class PSP_Panel extends JPanel{
 	private static final long serialVersionUID = -1815200458278347624L;
 	private JLabel lblNewProject;
 	private JLabel lblOpenProject;
-	private JLabel lblSaveProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
 	
@@ -108,11 +96,7 @@ public class PSP_Panel extends JPanel{
 		toolBar.add(lblNewProject);
 		
 		lblOpenProject = new JLabel("Open Project");
-		if (getIsNeeded()) {
-			lblOpenProject.setEnabled(true);
-		} else {
-			lblOpenProject.setEnabled(false);
-		}
+		lblOpenProject.setEnabled(false);
 		lblOpenProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpenProject.addMouseListener(new MouseAdapter() {
 			@Override
@@ -126,41 +110,11 @@ public class PSP_Panel extends JPanel{
 		lblOpenProject.setPreferredSize(new Dimension(100, 50));
 		lblOpenProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblOpenProject);
-		
-		lblSaveProject = new JLabel("Save Project");
-		//lblSaveProject.setEnabled(false);
-		lblSaveProject.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSaveProject.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				project_MouseEvent("SAVE PROJECT");
-			}
-		});
-		lblSaveProject.setLocation(new Point (100, 50));
-		lblSaveProject.setMinimumSize(new Dimension(100, 50));
-		lblSaveProject.setMaximumSize(new Dimension(100, 50));
-		lblSaveProject.setPreferredSize(new Dimension(100, 50));
-		lblSaveProject.setFont(new Font("Dialog", Font.BOLD, 12));
-		toolBar.add(lblSaveProject);
-		
+				
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
 		add(pnlWizard, BorderLayout.CENTER);
 		pnlWizard.setLayout(new BorderLayout(0, 0));
-	}
-	
-	public void addJPanel (String panelType) {
-		switch (panelType) {
-			case "Planning":
-				addJPanel (new PSP_Planning (plan));
-				break;
-			case "Testing":
-				addJPanel (new PSPTestingFrame ());
-				break;
-			case "Design":
-				break;
-			default:
-		}
 	}
 	
 	public void addJPanel (JPanel toAdd) {
@@ -197,23 +151,6 @@ public class PSP_Panel extends JPanel{
 		} else if (event.equals("TESTING")) {
 			addJPanel(new PSPTestingFrame());			
 		} 
-	}
-	
-	private boolean getIsNeeded () {
-		boolean isNeeded;
-		try {			
-			ObjectInputStream ois = new ObjectInputStream (new FileInputStream (
-					System.getProperty("user.home") + File.separator + ".memoranda" + 
-							File.separator + ".proj" + File.separator + "psp_id"));
-			isNeeded = true;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			isNeeded = false;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			isNeeded = false;
-		} 		
-		return isNeeded;
 	}
 	
 	public static void setPspValues (PspImpl pspI) {
