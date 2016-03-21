@@ -5,9 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.ExceptionDialog;
@@ -98,27 +95,6 @@ public class PspImpl implements Psp {
 		PspImpl.lastID = lastID;
 	}
 	
-	//Models the saveDocument() method in FileStorage.java (.util package)
-	//Takes the file path as a parameter and adds the pID, name and description values to the file 
-	public void save(String thePathOfTheFile)
-	{
-        try {
-            OutputStreamWriter fw =
-                new OutputStreamWriter(new FileOutputStream(thePathOfTheFile), "UTF-8");
-            fw.write(Psp.pID);
-            fw.write(this.getName());
-            fw.write(this.getDescription());
-            fw.flush();
-            fw.close();    
-        }
-        catch (IOException ioException) {
-            new ExceptionDialog(
-                ioException,
-                "Saving the Project ID, Project Name, and Project Description for use in XML file has failed" 
-                + thePathOfTheFile, "");
-        }
-	}
-	
 	//Takes the FileInputStream as a parameter and reads the attributes of the PlanningImpl class to the file 
 	public void open (FileInputStream streamOfFile)
 	{
@@ -137,12 +113,11 @@ public class PspImpl implements Psp {
 	//Takes the file stream as a parameter and object, and writes it to a file stream
 	public void save(FileOutputStream streamOfFile)
 	{
-        try {
-            ObjectOutputStream fw =
-                new ObjectOutputStream(streamOfFile);
-            fw.write(Psp.pID);
-            fw.writeObject(this.getName());
-            fw.writeObject(this.getDescription());
+		try {
+            ObjectOutputStream fw = new ObjectOutputStream(streamOfFile);
+            fw.writeInt(this.pID);
+            fw.writeUTF (this.getName());
+            fw.writeUTF (this.getDescription());
             fw.flush();
             fw.close();    
         }
