@@ -16,6 +16,10 @@ import java.awt.SystemColor;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.event.ActionEvent;
 
 public class PSP_NewTaskDialog extends JFrame {
 
@@ -26,6 +30,9 @@ public class PSP_NewTaskDialog extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	PSP_NewTaskData d = new PSP_NewTaskData();
+	
+	List<String> n = new ArrayList<String>();
 
 	/**
 	 * Launch the application.
@@ -87,6 +94,33 @@ public class PSP_NewTaskDialog extends JFrame {
 		textField_5.setColumns(10);
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+	            String s;
+	            int count=0;
+	            
+	            // places whatever text is in the Jtextfield into a string variable
+	            
+	            s=textField.getText();
+	            
+	            // saves the value of the string variable and calls method to build array, places
+	            // var on the the index of the current count
+	            
+	            d.saveTaskData(s, count);
+	            
+	            // arbitrarily setting next value of textfield and increasing counter for testing
+	            
+	            textField.setText("whatever");
+	            count++;
+	            
+	            // print array contents to console for testing
+	            
+	            PSP_NewTaskData.showTaskData(1);
+				
+				
+			}
+		});
 		
 		JButton btnCancel = new JButton("Cancel");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
