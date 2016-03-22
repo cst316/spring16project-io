@@ -35,14 +35,6 @@ public class DesignImpl implements Design {
 		filePath = nameOfFile;
 		files = theFiles;
 	}
-	
-	public DesignImpl(ArrayList<String> theFiles, String nameOfFile, Psp thePspValues,
-			File theFile)
-	{
-		filePath = nameOfFile;
-		files = theFiles;
-		pspValues = thePspValues;
-	}
 
 	public String getFileName() {
 		return filePath;
