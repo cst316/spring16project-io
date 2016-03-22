@@ -33,6 +33,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Component;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class PSP_DesignPanel extends JPanel {
 	
@@ -144,23 +145,22 @@ public class PSP_DesignPanel extends JPanel {
 		GroupLayout gl_listPanel = new GroupLayout(listPanel);
 		gl_listPanel.setHorizontalGroup(
 			gl_listPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_listPanel.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(lstImages, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 				.addGroup(gl_listPanel.createSequentialGroup()
-					.addGroup(gl_listPanel.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_listPanel.createSequentialGroup()
-							.addGap(100)
-							.addComponent(btnImportDesign, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_listPanel.createSequentialGroup()
-							.addGap(10)
-							.addComponent(lstImages, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE)))
-					.addGap(10))
+					.addGap(100)
+					.addComponent(btnImportDesign, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(100, Short.MAX_VALUE))
 		);
 		gl_listPanel.setVerticalGroup(
 			gl_listPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_listPanel.createSequentialGroup()
-					.addGap(10)
+				.addGroup(Alignment.TRAILING, gl_listPanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lstImages, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+					.addGap(27)
 					.addComponent(btnImportDesign, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
-					.addComponent(lstImages, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		listPanel.setLayout(gl_listPanel);
