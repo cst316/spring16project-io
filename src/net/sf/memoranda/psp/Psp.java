@@ -30,10 +30,4 @@ public interface Psp {
 	
 	//Abstract method to set the project description
 	public void setDescription(String description);
-	
-	//Abstract method to save all the values entered into the Psp wizard
-	//public void save(FileOutputStream stream);
-	
-	//Takes the FileInputStream as a parameter and reads the attributes of the PlanningImpl class to the file 
-	//public void open (FileInputStream streamOfFile);
 }
