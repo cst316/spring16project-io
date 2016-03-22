@@ -659,7 +659,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				writepID(PspImpl.getLastID());
 				PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
 				PSP_Panel.plan = plan;
-				p.addJPanel(new PSP_Planning (plan));
+				p.addJPanel(new PSP_PlanningPanel (plan));
 				addToolItems();
 				PSP_NPWizardFrame.npw = null;			
 				pwf = null;
@@ -671,23 +671,6 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		}			
 	}
 	
-/*	private void openSavedPSP() {
-		FileInputStream fc;
-		try {
-			fc = new FileInputStream (System.getProperty
-					("user.home") + File.separator + ".memoranda" + 
-					File.separator + ".proj" + File.separator + getPID() + ".pspx");			
-			PspImpl test = new PspImpl();
-			
-			
-			Util.debug("We tried to open now what?");
-	
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-*/
 	private int getPID() {
 		int n = -1;
 		try {
@@ -749,7 +732,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private void addToolItems() {
 		PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
 		
-		if (p.toolBar.getComponentCount() <= 2) {
+		if (p.toolBar.getComponentCount() <= 3) {
 			p.setExtraTools();
 		}
 	}

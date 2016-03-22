@@ -137,14 +137,14 @@ public class PSP_Panel extends JPanel{
 		this.setEnabled(true);
 		pnlWizard.setVisible(true);
 		
-		if (toAdd instanceof PSP_Planning) {
+		if (toAdd instanceof PSP_PlanningPanel) {
 			toAdd.setName("PLANNING");
 		} else if (toAdd instanceof PSP_DesignPanel) {
 			toAdd.setName("DESIGN");
-		} else if (toAdd instanceof PSPTestingFrame) {
+		} else if (toAdd instanceof PSP_TestingPanel) {
 			toAdd.setName("DEFECT");
-		} //else if (toAdd instanceof PSP_Planning) {
-			//toAdd.setName("PLANNING");
+		} //else if (toAdd instanceof PSP_TimeLogPanel) {
+			//toAdd.setName("TIMELOG");
 		//}
 		currentView = toAdd;
 		
@@ -168,13 +168,13 @@ public class PSP_Panel extends JPanel{
 			}
 			openFileDialog();			
 		} else if (event.equals("PLANNING")) {
-			PSP_Planning pp = new PSP_Planning (plan);
+			PSP_PlanningPanel pp = new PSP_PlanningPanel (plan);
 			addJPanel (pp);				
 		} else if (event.equals("DESIGN")) {
 			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
 		} else if (event.equals("DEFECT")) {
-			addJPanel(new PSPTestingFrame());			
+			addJPanel(new PSP_TestingPanel());			
 		} else if (event.equals("TIMELOG")) {
 			//addJPanel(new PSPTestingFrame());			
 		} 
@@ -226,9 +226,9 @@ public class PSP_Panel extends JPanel{
 				Util.debug("INDEXER: " + pspI.getpId());
 				if (currentView instanceof PSP_DesignPanel) {
 					project_MouseEvent ("DESIGN");
-				}  else if (currentView instanceof PSPTestingFrame) {
+				}  else if (currentView instanceof PSP_TestingPanel) {
 					project_MouseEvent ("DEFECT");
-				} else if (currentView instanceof PSP_Planning) {
+				} else if (currentView instanceof PSP_PlanningPanel) {
 					project_MouseEvent ("PLANNING");
 				} else {
 					project_MouseEvent ("PLANNING");				
@@ -245,7 +245,7 @@ public class PSP_Panel extends JPanel{
 			}
 		}
 		
-		if (toolBar.getComponentCount() < 3)
+		if (toolBar.getComponentCount() <= 3)
 			setExtraTools ();
 		
 		return projOpened;
@@ -253,8 +253,7 @@ public class PSP_Panel extends JPanel{
 	
 	public void setExtraTools () {
 		// TODO Auto-generated method stub
-		JLabel lblPlanningProject = new JLabel("Planning");		
-		
+		JLabel lblPlanningProject = new JLabel("Planning");			
 		lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlanningProject.addMouseListener(new MouseAdapter() {
 			@Override
@@ -297,7 +296,6 @@ public class PSP_Panel extends JPanel{
 		lblDefectInProject.setFont(new Font("Dialog", Font.BOLD, 12));	
 		
 		JLabel lblTimeLogProject = new JLabel("Time Log");		
-		
 		lblTimeLogProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTimeLogProject.addMouseListener(new MouseAdapter() {
 			@Override

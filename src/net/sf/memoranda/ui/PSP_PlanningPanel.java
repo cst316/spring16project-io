@@ -34,7 +34,7 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
 
-public class PSP_Planning extends JPanel implements ListSelectionListener {
+public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 	/**
 	 * 
 	 */
@@ -65,11 +65,11 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 	/**
 	 * Create the panel.
 	 */
-	public PSP_Planning() {
+	public PSP_PlanningPanel() {
 		jInit();
 	}
 	
-	public PSP_Planning (Planning planning) {
+	public PSP_PlanningPanel (Planning planning) {
 		this.plan = planning;
 		jInit();
 	}	
