@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
+import net.sf.memoranda.psp.Testing;
 import net.sf.memoranda.util.Local;
 
 import java.awt.Color;
@@ -91,6 +92,10 @@ public class PSP_DefectPanel extends JPanel {
 		}
 	}
 	
+	public PSP_DefectPanel(Testing test) {
+		// TODO Auto-generated constructor stub
+	}
+
 	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
 	public static void setPspPanel (PSP_Panel p) {
 		psp = p;

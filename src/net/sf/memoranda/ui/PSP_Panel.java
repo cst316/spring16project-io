@@ -185,7 +185,12 @@ public class PSP_Panel extends JPanel{
 			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
 		} else if (event.equals("DEFECT")) {
-			addJPanel(new PSP_DefectPanel());			
+			File defect_filePath = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
+					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
+					File.separator + '.' + pspI.getpId() + "_defect");
+
+				PSP_DefectPanel defectPanel = new PSP_DefectPanel(test);
+				addJPanel (defectPanel);							
 		} else if (event.equals("TIMELOG")) {
 			//addJPanel(new PSPTestingFrame());			
 		} 
