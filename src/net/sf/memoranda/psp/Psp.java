@@ -1,8 +1,5 @@
 package net.sf.memoranda.psp;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-
 import net.sf.memoranda.date.CurrentDate;
 
 public interface Psp {

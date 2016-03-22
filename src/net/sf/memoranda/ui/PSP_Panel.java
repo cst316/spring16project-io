@@ -24,7 +24,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.awt.SystemColor;
@@ -168,8 +167,20 @@ public class PSP_Panel extends JPanel{
 			}
 			openFileDialog();			
 		} else if (event.equals("PLANNING")) {
-			PSP_PlanningPanel pp = new PSP_PlanningPanel (plan);
-			addJPanel (pp);				
+			File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
+					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
+					File.separator + '.' + pspI.getpId() + "_planning");
+			ObjectInputStream ois;
+			try {			
+				ois = new ObjectInputStream (new FileInputStream (fs));
+				plan = (Planning) ois.readObject();
+								
+				PSP_PlanningPanel pp = new PSP_PlanningPanel (plan);
+				addJPanel (pp);		
+			} catch (IOException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
 		} else if (event.equals("DESIGN")) {
 			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
@@ -210,8 +221,8 @@ public class PSP_Panel extends JPanel{
 	private boolean openFileDialog () {
 		//Using user.home instead of user.dir
 		boolean projOpened = false;
-		JFileChooser fc =  new JFileChooser(new File(System.getProperty
-				("user.home") + File.separator + ".memoranda" + 
+		JFileChooser fc =  new JFileChooser(new File(
+				System.getProperty ("user.home") + File.separator + ".memoranda" + 
 				File.separator + ".proj" + File.separator + ".pspxFiles"));
 		int returnVal = fc.showOpenDialog(this);
 		
@@ -252,7 +263,7 @@ public class PSP_Panel extends JPanel{
 	
 	public void setExtraTools () {
 		// TODO Auto-generated method stub
-		JLabel lblPlanningProject = new JLabel("Planning");			
+		JLabel lblPlanningProject = new JLabel("Planning");
 		lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlanningProject.addMouseListener(new MouseAdapter() {
 			@Override
@@ -260,7 +271,7 @@ public class PSP_Panel extends JPanel{
 				project_MouseEvent("PLANNING");
 			}
 		});
-		lblPlanningProject.setLocation(new Point(150, 50));
+		lblPlanningProject.setLocation(new Point (200, 50));
 		lblPlanningProject.setMinimumSize(new Dimension(100, 50));
 		lblPlanningProject.setMaximumSize(new Dimension(100, 50));
 		lblPlanningProject.setPreferredSize(new Dimension(100, 50));
@@ -285,6 +296,7 @@ public class PSP_Panel extends JPanel{
 		lblDefectInProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Util.debug("DEFECT CLICKED");
 				project_MouseEvent("DEFECT");
 			}
 		});
@@ -307,12 +319,11 @@ public class PSP_Panel extends JPanel{
 		lblTimeLogProject.setMaximumSize(new Dimension(100, 50));
 		lblTimeLogProject.setPreferredSize(new Dimension(100, 50));
 		lblTimeLogProject.setFont(new Font("Dialog", Font.BOLD, 12));
-	
+				
 		toolBar.add(lblPlanningProject);
 		toolBar.add(lblDesigningProject);
 		toolBar.add(lblDefectInProject);
-		toolBar.add(lblTimeLogProject);
-		
+		toolBar.add(lblTimeLogProject);				
 		toolBar.revalidate();
 	}
 }

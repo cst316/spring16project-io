@@ -274,7 +274,7 @@ public class PSP_DefectPanel extends JPanel {
 		editButton.setBounds(1116, 42, 25, 16);
 		editButton.setContentAreaFilled(false);
 		editButton.setBorderPainted(false);
-		editButton.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editProject.png")));
+		editButton.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editproject.png")));
 		eachLogPanel_1.add(editButton);
 		
 		JPanel eachLogPanel_2 = new JPanel();
@@ -376,7 +376,7 @@ public class PSP_DefectPanel extends JPanel {
 		editButton_2.setContentAreaFilled(false);
 		editButton_2.setBorderPainted(false);
 		editButton_2.setBounds(1116, 41, 25, 16);
-		editButton_2.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editProject.png")));
+		editButton_2.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editproject.png")));
 		eachLogPanel_2.add(editButton_2);
 		
 		JPanel eachLogPanel_3 = new JPanel();
@@ -477,7 +477,7 @@ public class PSP_DefectPanel extends JPanel {
 		editButton_3.setContentAreaFilled(false);
 		editButton_3.setBorderPainted(false);
 		editButton_3.setBounds(1116, 41, 25, 16);
-		editButton_3.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editProject.png")));
+		editButton_3.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editproject.png")));
 		eachLogPanel_3.add(editButton_3);
 		
 		JPanel eachLogPanel_4 = new JPanel();
@@ -574,7 +574,7 @@ public class PSP_DefectPanel extends JPanel {
 		editButton_4.setContentAreaFilled(false);
 		editButton_4.setBorderPainted(false);
 		editButton_4.setBounds(1116, 41, 25, 16);
-		editButton_4.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editProject.png")));
+		editButton_4.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editproject.png")));
 		eachLogPanel_4.add(editButton_4);
 		
 		JButton update = new JButton("Update");

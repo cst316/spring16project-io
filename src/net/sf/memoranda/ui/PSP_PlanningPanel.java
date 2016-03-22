@@ -58,7 +58,7 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 	private int modWidth;
 	private int modHeight = 25;	
 	
-	private static BackGround bg;
+	private static PSP_BackGround bg;
 	private JPanel panel_2;
 	private JPanel pnlModules;
 		
@@ -356,7 +356,7 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 	private void setImages (String img) {
 		try {
 			panel_2.removeAll();
-			bg = new BackGround (img, panel_2);
+			bg = new PSP_BackGround (img, panel_2);
 			bg.setPreferredSize(new Dimension(300, 500));
 			bg.setMinimumSize(new Dimension(200, 600));
 			bg.setMaximumSize(new Dimension(32767, 32767));

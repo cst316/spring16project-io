@@ -352,11 +352,11 @@ public class PSP_DesignPanel extends JPanel {
 	
 	//***	
 	public void setImage (String img) {
-		BackGround bg;
+		PSP_BackGround bg;
 		try {
 			viewPane.removeAll();
 			Util.debug("Image: " + img);
-			bg = new BackGround (img, 300, 500);
+			bg = new PSP_BackGround (img, 300, 500);
 			bg.setPreferredSize(new Dimension(300, 500));
 			bg.setMinimumSize(new Dimension(200, 600));
 			bg.setMaximumSize(new Dimension(32767, 32767));

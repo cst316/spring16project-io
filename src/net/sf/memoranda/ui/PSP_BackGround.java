@@ -10,7 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-class BackGround extends JPanel
+class PSP_BackGround extends JPanel
 {
 	/**
 	 * 
@@ -18,7 +18,7 @@ class BackGround extends JPanel
 	private static final long serialVersionUID = -2755213468898545438L;
 private BufferedImage img;
 	
-	public BackGround (String img, JPanel parent) throws IOException 
+	public PSP_BackGround (String img, JPanel parent) throws IOException 
 	{
 		this.img = ImageIO.read(new File(img));
 		
@@ -28,7 +28,7 @@ private BufferedImage img;
 		setLayout(null);				
 	}	
 	
-	public BackGround (String img, int width, int height) throws IOException 
+	public PSP_BackGround (String img, int width, int height) throws IOException 
 	{
 		this.img = ImageIO.read(new File(img));
 		
