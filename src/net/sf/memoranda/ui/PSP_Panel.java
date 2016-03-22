@@ -175,6 +175,8 @@ public class PSP_Panel extends JPanel{
 			System.out.println("Yeah Design");
 		} else if (event.equals("DEFECT")) {
 			addJPanel(new PSPTestingFrame());			
+		} else if (event.equals("TIMELOG")) {
+			//addJPanel(new PSPTestingFrame());			
 		} 
 	}
 	
@@ -292,10 +294,26 @@ public class PSP_Panel extends JPanel{
 		lblDefectInProject.setMinimumSize(new Dimension(100, 50));
 		lblDefectInProject.setMaximumSize(new Dimension(100, 50));
 		lblDefectInProject.setPreferredSize(new Dimension(100, 50));
-		lblDefectInProject.setFont(new Font("Dialog", Font.BOLD, 12));		
+		lblDefectInProject.setFont(new Font("Dialog", Font.BOLD, 12));	
+		
+		JLabel lblTimeLogProject = new JLabel("Time Log");		
+		
+		lblTimeLogProject.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTimeLogProject.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				project_MouseEvent("TIMELOG");
+			}
+		});
+		lblTimeLogProject.setLocation(new Point(150, 50));
+		lblTimeLogProject.setMinimumSize(new Dimension(100, 50));
+		lblTimeLogProject.setMaximumSize(new Dimension(100, 50));
+		lblTimeLogProject.setPreferredSize(new Dimension(100, 50));
+		lblTimeLogProject.setFont(new Font("Dialog", Font.BOLD, 12));
 	
 		toolBar.add(lblPlanningProject);
 		toolBar.add(lblDesigningProject);
 		toolBar.add(lblDefectInProject);
+		toolBar.add(lblTimeLogProject);
 	}
 }
