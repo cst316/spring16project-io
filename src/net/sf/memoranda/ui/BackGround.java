@@ -2,6 +2,7 @@ package net.sf.memoranda.ui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +16,17 @@ class BackGround extends JPanel
 	 * 
 	 */
 	private static final long serialVersionUID = -2755213468898545438L;
-	private BufferedImage img;
-	private int deg;
+private BufferedImage img;
+	
+	public BackGround (String img, JPanel parent) throws IOException 
+	{
+		this.img = ImageIO.read(new File(img));
+		
+		setBounds (0, 0, (int) (parent.getWidth() * 0.95), (int) (parent.getHeight() * 0.95));
+		setBorder(null);
+		setOpaque (false);
+		setLayout(null);				
+	}	
 	
 	public BackGround (String img, int width, int height) throws IOException 
 	{
@@ -28,13 +38,23 @@ class BackGround extends JPanel
 		setLayout(null);				
 	}	
  
-	//Handles the drawing
+	//Handles the drawing and scaling
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		double xScale = 1.0;
+		double yScale = 1.0;
+		
+		if (img.getWidth() > this.getWidth()) {
+			xScale = xScale * this.getWidth() / img.getWidth();
+		}
+		
+		if (img.getHeight() > this.getHeight()) {
+			yScale = yScale * this.getHeight() / img.getHeight();
+		}	
 		
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.drawImage(img, 0, 0, getWidth(), getHeight(), null);				
-		g2d.dispose();
+		AffineTransform at = AffineTransform.getScaleInstance(xScale, yScale);
+		g2d.drawRenderedImage(img,  at);
 	} 
 }

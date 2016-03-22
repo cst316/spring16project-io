@@ -333,8 +333,10 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 		} while (size < 0 && ans != JOptionPane.CANCEL_OPTION);
 			
 		if (ans == JOptionPane.OK_OPTION && !(t1.isEmpty())) {
-			addModule (txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()));
-			Util.debug("Added: " + txtNewEst.getText() + "\t" + txtNewSize.getText());
+			if (plan.setAdditionalMod(txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()))) {
+				addModule (txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()));
+				Util.debug("Added: " + txtNewEst.getText() + "\t" + txtNewSize.getText());
+			}			
 		}	
 	}	
 
@@ -354,7 +356,7 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 	private void setImages (String img) {
 		try {
 			panel_2.removeAll();
-			bg = new BackGround (img, 475, 350);
+			bg = new BackGround (img, panel_2);
 			bg.setPreferredSize(new Dimension(300, 500));
 			bg.setMinimumSize(new Dimension(200, 600));
 			bg.setMaximumSize(new Dimension(32767, 32767));
@@ -446,8 +448,9 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 				
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			file = fc.getSelectedFile();			
-			plan.setFilename (file.getAbsolutePath());
-			addFile (plan.getFilename(plan.getFilenames().size() - 1));
+			if (plan.setFilename (file.getAbsolutePath())) {
+				addFile (plan.getFilename(plan.getFilenames().size() - 1));
+			}
 		}
 	}
 }

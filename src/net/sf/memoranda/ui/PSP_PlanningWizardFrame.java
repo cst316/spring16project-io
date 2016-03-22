@@ -23,6 +23,7 @@ import javax.swing.border.EtchedBorder;
 import net.sf.memoranda.psp.PlanningImpl;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.util.Util;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -616,18 +617,21 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			//Do nothing
 		}
 	}
-
+	
 	private void callFinish() {
+		ObjectOutputStream oos = null;
 		try {			
 			App.getFrame().setEnabled(true);
 			PSP_NPWizardFrame.npw.dispose();
 			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), PSP_NPWizardFrame
 					.getProjDescription(), Integer.parseInt(lblProjId.getText().trim()));
-			File fs = new File (System.getProperty("user.home") +  File.separator + 
-					".memoranda" + File.separator + ".proj");
-			psp.save(fs + File.separator + PspImpl.getLastID() + ".pspx");
-						
-			createProjectFiles(PspImpl.getLastID());
+			
+			createProjectFiles(PspImpl.getLastID());			
+			oos = new ObjectOutputStream (new FileOutputStream (new File (
+					System.getProperty("user.home") +  File.separator + ".memoranda" + 
+							File.separator + ".proj" + File.separator + ".pspxFiles" + 
+							File.separator + getPID() + ".pspx")));
+			oos.writeObject(psp);
 			
 			PSP_Panel.setNewPlanningWizard(this);
 			PSP_Panel.setPspValues(psp);
@@ -636,18 +640,25 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			int loc = getEstLocHr();
 			int size = getEstSize();
 			int defect = getEstDefect ();
+			oos.flush();
+			oos.close();
 			
 			if (time != -1.0 && loc != -1 && size != -1 && defect != -1) {			
 				PlanningImpl plan = new PlanningImpl (time, loc, size, defect,
 						getFilenames(), getProjDescription(), getPID());
-				plan.setPspValues(psp);
-				plan.save(new FileOutputStream (fs + File.separator + getPID ()+"_planning"));
+				oos = new ObjectOutputStream (new FileOutputStream (
+						System.getProperty("user.home") +  File.separator +	".memoranda" + 
+						File.separator + ".proj" + File.separator + '.' + getPID () + 
+						File.separator + '.' + getPID() + "_planning"));
+				oos.writeObject(plan);
+				oos.flush();
+				oos.close();
 				
 				PspImpl.setLastID(PspImpl.getLastID() + 1);
 				writepID(PspImpl.getLastID());
 				PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
-				PSP_Planning pp = new PSP_Planning (plan);
-				p.addJPanel(pp);
+				PSP_Panel.plan = plan;
+				p.addJPanel(new PSP_Planning (plan));
 				addToolItems();
 				PSP_NPWizardFrame.npw = null;			
 				pwf = null;
@@ -722,8 +733,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		JLabel lblPlanningProject = new JLabel("Planning");		
 		PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
 		
-
-		if (p.toolBar.getComponentCount() <= 2 ) {
+		if (PspImpl.getLastID() > 100000001) {
 			lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
 			lblPlanningProject.addMouseListener(new MouseAdapter() {
 				@Override
@@ -774,28 +784,39 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private void createProjectFiles(int lastID) {
 		File dir = new File (System.getProperty("user.home") + 
 				File.separator + ".memoranda" + File.separator + ".proj");
-		File inf = null;
+		File sub = null;
 		try {			
 			if (!dir.exists()) {
 				dir.mkdir();				
 			} 
 			
-			File des = new File (dir.getPath() + File.separator + '.' + lastID + 
+			sub = new File (dir.getPath() + File.separator + ".pspxFiles");
+			if (!sub.exists()){
+				sub.mkdir();
+			}			
+						
+			sub = new File (dir.getPath() + File.separator + '.' + getPID() + 
 					File.separator + ".images" + File.separator + ".design");
-			des.mkdirs();
-			File pl = new File (dir.getPath() + File.separator + '.' + lastID + 
-					File.separator + ".images" + File.separator + ".plan");
-			pl.mkdirs();
+			if (!sub.exists()){
+				sub.mkdirs();
+			}
 			
-			inf = new File (dir + File.separator + lastID + "_planning");			
-			inf.createNewFile();			
+			sub = new File (dir.getPath() + File.separator + '.' + getPID() + 
+					File.separator + ".images" + File.separator + ".plan");
+			if(!sub.exists()){
+				sub.mkdirs();
+			}			
+			
+			sub = new File (dir + File.separator + '.' + getPID() +
+					File.separator + '.' + getPID() + "_planning");
+			sub.createNewFile();			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 				
+		} 		
 	}
 
 	private void writepID(int lastID) {
@@ -804,12 +825,12 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		ObjectOutputStream dos = null;
 		try {
 			if (!idFile.exists()) {			
-				idFile.createNewFile();				
+				idFile.createNewFile();
 			} 
 			
 			dos = new ObjectOutputStream (new FileOutputStream(idFile));
 			dos.writeInt(lastID);
-			dos.close();			
+			dos.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
