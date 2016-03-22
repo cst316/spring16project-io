@@ -437,7 +437,6 @@ public class PSP_Planning extends JPanel implements ListSelectionListener {
 	
 	/**
 	 * Implementing open file dialog to help user select file location or name
-	 * @param i - the index of the text field to place the result in
 	 */
 	private void openFileDialog () {
 		//Using user.home instead of user.dir

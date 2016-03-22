@@ -32,9 +32,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -625,13 +627,12 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			PSP_NPWizardFrame.npw.dispose();
 			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), PSP_NPWizardFrame
 					.getProjDescription(), Integer.parseInt(lblProjId.getText().trim()));
-			
-			createProjectFiles(PspImpl.getLastID());			
-			oos = new ObjectOutputStream (new FileOutputStream (new File (
-					System.getProperty("user.home") +  File.separator + ".memoranda" + 
-							File.separator + ".proj" + File.separator + ".pspxFiles" + 
-							File.separator + getPID() + ".pspx")));
-			oos.writeObject(psp);
+			File fs = new File (System.getProperty("user.home") +  File.separator + 
+					".memoranda" + File.separator + ".proj");
+			psp.save(new FileOutputStream (fs + File.separator + PspImpl.getLastID() + ".pspx"));
+				
+				openSavedPSP ();
+			createProjectFiles(PspImpl.getLastID());
 			
 			PSP_Panel.setNewPlanningWizard(this);
 			PSP_Panel.setPspValues(psp);
@@ -670,6 +671,24 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		}			
 	}
 	
+	private void openSavedPSP() {
+		FileInputStream fc;
+		try {
+			fc = new FileInputStream (System.getProperty
+					("user.home") + File.separator + ".memoranda" + 
+					File.separator + ".proj" + File.separator + getPID() + ".pspx");			
+			PspImpl test = new PspImpl();
+			
+			test.open(fc);
+			
+			Util.debug("We tried to open now what?");
+	
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private int getPID() {
 		int n = -1;
 		try {
@@ -729,55 +748,10 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	}
 	
 	private void addToolItems() {
-		// TODO Auto-generated method stub
-		JLabel lblPlanningProject = new JLabel("Planning");		
 		PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
 		
 		if (PspImpl.getLastID() > 100000001) {
-			lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
-			lblPlanningProject.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					p.project_MouseEvent("PLANNING");
-				}
-			});
-			lblPlanningProject.setLocation(new Point(150, 50));
-			lblPlanningProject.setMinimumSize(new Dimension(100, 50));
-			lblPlanningProject.setMaximumSize(new Dimension(100, 50));
-			lblPlanningProject.setPreferredSize(new Dimension(100, 50));
-			lblPlanningProject.setFont(new Font("Dialog", Font.BOLD, 12));
-			
-			JLabel lblDesigningProject = new JLabel("Designing");
-			lblDesigningProject.setHorizontalAlignment(SwingConstants.CENTER);
-			lblDesigningProject.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					p.project_MouseEvent("DESIGN");
-				}
-			});
-			lblDesigningProject.setLocation(new Point (200, 50));
-			lblDesigningProject.setMinimumSize(new Dimension(100, 50));
-			lblDesigningProject.setMaximumSize(new Dimension(100, 50));
-			lblDesigningProject.setPreferredSize(new Dimension(100, 50));
-			lblDesigningProject.setFont(new Font("Dialog", Font.BOLD, 12));
-			
-			JLabel lblTestingProject = new JLabel("Testing");
-			lblTestingProject.setHorizontalAlignment(SwingConstants.CENTER);
-			lblTestingProject.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					p.project_MouseEvent("TESTING");
-				}
-			});
-			lblTestingProject.setLocation(new Point (250, 50));
-			lblTestingProject.setMinimumSize(new Dimension(100, 50));
-			lblTestingProject.setMaximumSize(new Dimension(100, 50));
-			lblTestingProject.setPreferredSize(new Dimension(100, 50));
-			lblTestingProject.setFont(new Font("Dialog", Font.BOLD, 12));		
-		
-			p.toolBar.add(lblPlanningProject);
-			p.toolBar.add(lblDesigningProject);
-			p.toolBar.add(lblTestingProject);	
+			p.setExtraTools();
 		}
 	}
 

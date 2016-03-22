@@ -30,7 +30,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
 
-public class PSPTestingFrame extends JPanel {
+public class PSP_TestingPanel extends JPanel {
 	
 	private JTextField studentTextField;
 	private JTextField dateTextField;
@@ -71,7 +71,7 @@ public class PSPTestingFrame extends JPanel {
 	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
 	private static PSP_Panel psp;
 
-	public PSPTestingFrame() {		
+	public PSP_TestingPanel() {		
 		try {
 			jbInit();
 		} catch (Exception ex) {
@@ -81,7 +81,7 @@ public class PSPTestingFrame extends JPanel {
 	}
 	
 	//Modeled after PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
-	public PSPTestingFrame(PSP_Panel psp) {		
+	public PSP_TestingPanel(PSP_Panel psp) {		
 		try {
 			setPspPanel(psp);
 			jbInit();
@@ -178,6 +178,7 @@ public class PSPTestingFrame extends JPanel {
 		containsLogsPanel.add(eachLogPanel_1);
 		eachLogPanel_1.setLayout(null);
 		eachLogPanel_1.setBackground(Color.WHITE);
+
 		
 		JLabel projectLabel_1 = new JLabel("Project");
 		projectLabel_1.setBounds(66, 13, 49, 22);
@@ -257,25 +258,11 @@ public class PSPTestingFrame extends JPanel {
 			}
 		});
 		
-		addButton.setBounds(1068, 31, 49, 33);
+		addButton.setBounds(1068, 30, 49, 33);
 		addButton.setContentAreaFilled(false);
 		addButton.setBorderPainted(false);
 		addButton.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_1.add(addButton);
-		
-		JButton editButton = new JButton();
-		editButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eachLogPanel_1.setEnabled(true);
-				eachLogPanel_1.setBackground(Color.WHITE);
-			}
-		});
-		
-		editButton.setBounds(1116, 42, 25, 16);
-		editButton.setContentAreaFilled(false);
-		editButton.setBorderPainted(false);
-		editButton.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editProject.png")));
-		eachLogPanel_1.add(editButton);
 		
 		JPanel eachLogPanel_2 = new JPanel();
 		eachLogPanel_2.setLayout(null);
@@ -365,20 +352,6 @@ public class PSPTestingFrame extends JPanel {
 		addButton_2.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_2.add(addButton_2);
 		
-		JButton editButton_2 = new JButton();
-		editButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eachLogPanel_2.setEnabled(true);
-				eachLogPanel_2.setBackground(Color.WHITE);
-			}
-		});
-		
-		editButton_2.setContentAreaFilled(false);
-		editButton_2.setBorderPainted(false);
-		editButton_2.setBounds(1116, 41, 25, 16);
-		editButton_2.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editProject.png")));
-		eachLogPanel_2.add(editButton_2);
-		
 		JPanel eachLogPanel_3 = new JPanel();
 		eachLogPanel_3.setLayout(null);
 		eachLogPanel_3.setBounds(12, 229, 1153, 77);
@@ -467,19 +440,6 @@ public class PSPTestingFrame extends JPanel {
 		addButton_3.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_3.add(addButton_3);
 		
-		JButton editButton_3 = new JButton();
-		editButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eachLogPanel_3.setEnabled(true);
-				eachLogPanel_3.setBackground(Color.WHITE);
-			}
-		});
-		editButton_3.setContentAreaFilled(false);
-		editButton_3.setBorderPainted(false);
-		editButton_3.setBounds(1116, 41, 25, 16);
-		editButton_3.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editProject.png")));
-		eachLogPanel_3.add(editButton_3);
-		
 		JPanel eachLogPanel_4 = new JPanel();
 		eachLogPanel_4.setLayout(null);
 		eachLogPanel_4.setBounds(12, 352, 1153, 77);
@@ -564,30 +524,9 @@ public class PSPTestingFrame extends JPanel {
 		addButton_4.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
 		eachLogPanel_4.add(addButton_4);
 		
-		JButton editButton_4 = new JButton();
-		editButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eachLogPanel_4.setEnabled(true);
-				eachLogPanel_4.setBackground(Color.WHITE);
-			}
-		});
-		editButton_4.setContentAreaFilled(false);
-		editButton_4.setBorderPainted(false);
-		editButton_4.setBounds(1116, 41, 25, 16);
-		editButton_4.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editProject.png")));
-		eachLogPanel_4.add(editButton_4);
-		
 		JButton update = new JButton("Update");
 		update.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eachLogPanel_1.setEnabled(false);
-				eachLogPanel_2.setEnabled(false);
-				eachLogPanel_3.setEnabled(false);
-				eachLogPanel_4.setEnabled(false);
-				eachLogPanel_1.setBackground(Color.gray);
-				eachLogPanel_2.setBackground(Color.gray);
-				eachLogPanel_3.setBackground(Color.gray);
-				eachLogPanel_4.setBackground(Color.gray);
 			}
 		});
 		update.setBounds(1019, 455, 97, 25);
