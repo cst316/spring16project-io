@@ -30,7 +30,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
 
-public class PSP_TestingPanel extends JPanel {
+public class PSP_DefectPanel extends JPanel {
 	
 	private JTextField studentTextField;
 	private JTextField dateTextField;
@@ -71,7 +71,7 @@ public class PSP_TestingPanel extends JPanel {
 	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
 	private static PSP_Panel psp;
 
-	public PSP_TestingPanel() {		
+	public PSP_DefectPanel() {		
 		try {
 			jbInit();
 		} catch (Exception ex) {
@@ -81,7 +81,7 @@ public class PSP_TestingPanel extends JPanel {
 	}
 	
 	//Modeled after PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
-	public PSP_TestingPanel(PSP_Panel psp) {		
+	public PSP_DefectPanel(PSP_Panel psp) {		
 		try {
 			setPspPanel(psp);
 			jbInit();

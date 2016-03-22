@@ -69,8 +69,8 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 		jInit();
 	}
 	
-	public PSP_PlanningPanel (Planning planning) {
-		this.plan = planning;
+	public PSP_PlanningPanel (Planning plan) {
+		this.plan = plan;
 		jInit();
 	}	
 	

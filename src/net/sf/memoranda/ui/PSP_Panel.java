@@ -141,7 +141,7 @@ public class PSP_Panel extends JPanel{
 			toAdd.setName("PLANNING");
 		} else if (toAdd instanceof PSP_DesignPanel) {
 			toAdd.setName("DESIGN");
-		} else if (toAdd instanceof PSP_TestingPanel) {
+		} else if (toAdd instanceof PSP_DefectPanel) {
 			toAdd.setName("DEFECT");
 		} //else if (toAdd instanceof PSP_TimeLogPanel) {
 			//toAdd.setName("TIMELOG");
@@ -174,7 +174,7 @@ public class PSP_Panel extends JPanel{
 			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
 		} else if (event.equals("DEFECT")) {
-			addJPanel(new PSP_TestingPanel());			
+			addJPanel(new PSP_DefectPanel());			
 		} else if (event.equals("TIMELOG")) {
 			//addJPanel(new PSPTestingFrame());			
 		} 
@@ -196,7 +196,6 @@ public class PSP_Panel extends JPanel{
 							File.separator + ".proj" + File.separator + "psp_id"));
 			if (ois.readInt() > 100000001) {
 				isNeeded = true;
-				Util.debug("Is this really enabled");
 			}
 			ois.close();
 		} catch (IOException e) {
@@ -213,7 +212,7 @@ public class PSP_Panel extends JPanel{
 		boolean projOpened = false;
 		JFileChooser fc =  new JFileChooser(new File(System.getProperty
 				("user.home") + File.separator + ".memoranda" + 
-				File.separator + ".proj"));				// + File.separator + ".pspxFiles"));
+				File.separator + ".proj" + File.separator + ".pspxFiles"));
 		int returnVal = fc.showOpenDialog(this);
 		
 		ObjectInputStream ois = null;
@@ -223,19 +222,22 @@ public class PSP_Panel extends JPanel{
 				ois = new ObjectInputStream (new FileInputStream (openThis.getAbsolutePath()));	
 				pspI = (PspImpl) ois.readObject();
 				ois.close();
-				Util.debug("INDEXER: " + pspI.getpId());
+
 				if (currentView instanceof PSP_DesignPanel) {
 					project_MouseEvent ("DESIGN");
-				}  else if (currentView instanceof PSP_TestingPanel) {
+				}  else if (currentView instanceof PSP_DefectPanel) {
 					project_MouseEvent ("DEFECT");
 				} else if (currentView instanceof PSP_PlanningPanel) {
 					project_MouseEvent ("PLANNING");
-				} else {
+				} /*else if (currentView instanceof PSP_TimeLogPanel) {
 					project_MouseEvent ("PLANNING");				
-				}
-				Util.debug("INDEXER: " + pspI.getpId());
+				}*/
 				
 				projOpened = true;
+
+				
+				if (toolBar.getComponentCount() <= 3)
+					setExtraTools ();
 			} catch (ClassNotFoundException e) {
 				Util.debug("CHECK THE OBJECT");
 				projOpened = false;
@@ -244,9 +246,6 @@ public class PSP_Panel extends JPanel{
 				projOpened = false;
 			}
 		}
-		
-		if (toolBar.getComponentCount() <= 3)
-			setExtraTools ();
 		
 		return projOpened;
 	}
@@ -313,5 +312,7 @@ public class PSP_Panel extends JPanel{
 		toolBar.add(lblDesigningProject);
 		toolBar.add(lblDefectInProject);
 		toolBar.add(lblTimeLogProject);
+		
+		toolBar.revalidate();
 	}
 }
