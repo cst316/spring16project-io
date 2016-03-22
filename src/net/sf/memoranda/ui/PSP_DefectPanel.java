@@ -7,7 +7,7 @@ import java.awt.BorderLayout;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
-import net.sf.memoranda.psp.Testing;
+import net.sf.memoranda.psp.Defect;
 import net.sf.memoranda.util.Local;
 
 import java.awt.Color;
@@ -69,7 +69,8 @@ public class PSP_DefectPanel extends JPanel {
 	private JPanel containsLogsPanel;
 	private JPanel eachLogPanel_1;
 	
-	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	//Taken from PSP_NPWizardFrame by Cephas M. to make 
+	//frame compatible to the main panel
 	private static PSP_Panel psp;
 
 	public PSP_DefectPanel() {		
@@ -81,7 +82,8 @@ public class PSP_DefectPanel extends JPanel {
 		}
 	}
 	
-	//Modeled after PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	//Modeled after PSP_NPWizardFrame by Cephas M. to make 
+	//frame compatible to the main panel
 	public PSP_DefectPanel(PSP_Panel psp) {		
 		try {
 			setPspPanel(psp);
@@ -92,16 +94,18 @@ public class PSP_DefectPanel extends JPanel {
 		}
 	}
 	
-	public PSP_DefectPanel(Testing test) {
+	public PSP_DefectPanel(Defect test) {
 		// TODO Auto-generated constructor stub
 	}
 
-	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	//Taken from PSP_NPWizardFrame by Cephas M. to make 
+	//frame compatible to the main panel
 	public static void setPspPanel (PSP_Panel p) {
 		psp = p;
 	}
 	
-	//Taken from PSP_NPWizardFrame by Cephas M. to make frame compatible to the main panel
+	//Taken from PSP_NPWizardFrame by Cephas M. to make 
+	//frame compatible to the main panel
 	public static PSP_Panel getPspPanel () {
 		return psp;
 	}
@@ -113,9 +117,12 @@ public class PSP_DefectPanel extends JPanel {
 		this.setBounds(0, 0, 1290, 700);
 		
 		JTextArea defectContentKey = new JTextArea();
-		defectContentKey.setText("Defect Types" + "\n10 Documentation\t60 Checking" +
-		"\n20 Syntax\t\t70 Data" + "\n30 Build, Package\t80 Function" + 
-		"\n40 Assignment\t\t90 System" + "\n50 Interface\t\t100 Environment");
+		defectContentKey.setText("Defect Types" +
+		"\n10 Documentation\t60 Checking" +
+		"\n20 Syntax\t\t70 Data" + 
+		"\n30 Build, Package\t80 Function" + 
+		"\n40 Assignment\t\t90 System" +
+		"\n50 Interface\t\t100 Environment");
 		
 		defectContentKey.setBounds(897, 13, 343, 121);
 		defectContentKey.setEditable(false);
@@ -161,7 +168,8 @@ public class PSP_DefectPanel extends JPanel {
 		programNumberTextField.setBounds(344, 98, 166, 22);
 		add(programNumberTextField);
 		
-		JLabel testingFrameTitleLbl = new JLabel("Testing and Defects Page");
+		JLabel testingFrameTitleLbl = new JLabel
+				("Testing and Defects Page");
 		testingFrameTitleLbl.setBounds(590, 16, 159, 16);
 		add(testingFrameTitleLbl);
 		
@@ -265,7 +273,9 @@ public class PSP_DefectPanel extends JPanel {
 		addButton.setBounds(1068, 31, 49, 33);
 		addButton.setContentAreaFilled(false);
 		addButton.setBorderPainted(false);
-		addButton.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
+		addButton.setIcon( new ImageIcon
+				(net.sf.memoranda.ui.AppFrame.class.getResource
+						("resources/icons/plus.png")));
 		eachLogPanel_1.add(addButton);
 		
 		JButton editButton = new JButton();
@@ -279,7 +289,9 @@ public class PSP_DefectPanel extends JPanel {
 		editButton.setBounds(1116, 42, 25, 16);
 		editButton.setContentAreaFilled(false);
 		editButton.setBorderPainted(false);
-		editButton.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editproject.png")));
+		editButton.setIcon( new ImageIcon
+				(net.sf.memoranda.ui.AppFrame.class.getResource
+						("resources/icons/editproject.png")));
 		eachLogPanel_1.add(editButton);
 		
 		JPanel eachLogPanel_2 = new JPanel();
@@ -367,7 +379,10 @@ public class PSP_DefectPanel extends JPanel {
 		addButton_2.setBounds(1068, 30, 49, 33);
 		addButton_2.setContentAreaFilled(false);
 		addButton_2.setBorderPainted(false);
-		addButton_2.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
+		addButton_2.setIcon( 
+				new ImageIcon(
+						net.sf.memoranda.ui.AppFrame.class.getResource
+						("resources/icons/plus.png")));
 		eachLogPanel_2.add(addButton_2);
 		
 		JButton editButton_2 = new JButton();
@@ -381,7 +396,10 @@ public class PSP_DefectPanel extends JPanel {
 		editButton_2.setContentAreaFilled(false);
 		editButton_2.setBorderPainted(false);
 		editButton_2.setBounds(1116, 41, 25, 16);
-		editButton_2.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editproject.png")));
+		editButton_2.setIcon( 
+				new ImageIcon(
+						net.sf.memoranda.ui.AppFrame.class.getResource
+						("resources/icons/editproject.png")));
 		eachLogPanel_2.add(editButton_2);
 		
 		JPanel eachLogPanel_3 = new JPanel();
@@ -469,7 +487,9 @@ public class PSP_DefectPanel extends JPanel {
 		addButton_3.setBounds(1068, 35, 49, 28);
 		addButton_3.setContentAreaFilled(false);
 		addButton_3.setBorderPainted(false);
-		addButton_3.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
+		addButton_3.setIcon( new ImageIcon
+				(net.sf.memoranda.ui.AppFrame.class.getResource
+						("resources/icons/plus.png")));
 		eachLogPanel_3.add(addButton_3);
 		
 		JButton editButton_3 = new JButton();
@@ -482,7 +502,9 @@ public class PSP_DefectPanel extends JPanel {
 		editButton_3.setContentAreaFilled(false);
 		editButton_3.setBorderPainted(false);
 		editButton_3.setBounds(1116, 41, 25, 16);
-		editButton_3.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editproject.png")));
+		editButton_3.setIcon( new ImageIcon(
+				net.sf.memoranda.ui.AppFrame.class.getResource
+				("resources/icons/editproject.png")));
 		eachLogPanel_3.add(editButton_3);
 		
 		JPanel eachLogPanel_4 = new JPanel();
@@ -566,7 +588,9 @@ public class PSP_DefectPanel extends JPanel {
 		addButton_4.setBounds(1068, 30, 49, 33);
 		addButton_4.setBorderPainted(false);
 		addButton_4.setContentAreaFilled(false);
-		addButton_4.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/plus.png")));
+		addButton_4.setIcon( new ImageIcon(
+				net.sf.memoranda.ui.AppFrame.class.getResource
+				("resources/icons/plus.png")));
 		eachLogPanel_4.add(addButton_4);
 		
 		JButton editButton_4 = new JButton();
@@ -579,7 +603,9 @@ public class PSP_DefectPanel extends JPanel {
 		editButton_4.setContentAreaFilled(false);
 		editButton_4.setBorderPainted(false);
 		editButton_4.setBounds(1116, 41, 25, 16);
-		editButton_4.setIcon( new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/editproject.png")));
+		editButton_4.setIcon( new ImageIcon
+				(net.sf.memoranda.ui.AppFrame.class.getResource
+						("resources/icons/editproject.png")));
 		eachLogPanel_4.add(editButton_4);
 		
 		JButton update = new JButton("Update");
@@ -601,9 +627,12 @@ public class PSP_DefectPanel extends JPanel {
 		
 		JTextArea defectsKey = new JTextArea();
 		defectsKey.setBounds(879, 13, 342, 116);
-		defectsKey.setText("Defect Types" + "\n10 Documentation\t60 Checking" + 
-				"\n20 Syntax\t\t70 Data" + "\n30 Build, Package\t80 Function" +  
-				"\n40 Assignment\t\t90 System" + "\n50 Interface\t\t100 Environment");
+		defectsKey.setText("Defect Types" + 
+		"\n10 Documentation\t60 Checking" + 
+				"\n20 Syntax\t\t70 Data" + 
+		"\n30 Build, Package\t80 Function" +  
+				"\n40 Assignment\t\t90 System" + 
+		"\n50 Interface\t\t100 Environment");
 		defectsKey.setEditable(false);
 		add(defectsKey);
 		

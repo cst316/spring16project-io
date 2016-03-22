@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.Planning;
 import net.sf.memoranda.psp.PspImpl;
-import net.sf.memoranda.psp.Testing;
+import net.sf.memoranda.psp.Defect;
 import net.sf.memoranda.util.Util;
 
 //import net.sf.memoranda.util.Configuration;
@@ -49,7 +49,7 @@ public class PSP_Panel extends JPanel{
 	static JPanel currentView;
 	static Planning plan;
 	static Design design;
-	static Testing test;
+	static Defect test;
 	
 	/**
 	 * General constructor for creating Panel
