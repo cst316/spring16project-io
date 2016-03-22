@@ -627,12 +627,12 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			PSP_NPWizardFrame.npw.dispose();
 			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), PSP_NPWizardFrame
 					.getProjDescription(), Integer.parseInt(lblProjId.getText().trim()));
-			File fs = new File (System.getProperty("user.home") +  File.separator + 
-					".memoranda" + File.separator + ".proj");
-			psp.save(new FileOutputStream (fs + File.separator + PspImpl.getLastID() + ".pspx"));
-				
-				openSavedPSP ();
 			createProjectFiles(PspImpl.getLastID());
+			oos = new ObjectOutputStream(new FileOutputStream(new File(
+					System.getProperty("user.home") +  File.separator + 
+					".memoranda" + File.separator + ".proj" + File.separator +
+					".pspxFiles" + File.separator + getPID() + ".pspx")));
+			oos.writeObject(psp);
 			
 			PSP_Panel.setNewPlanningWizard(this);
 			PSP_Panel.setPspValues(psp);
@@ -671,7 +671,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		}			
 	}
 	
-	private void openSavedPSP() {
+/*	private void openSavedPSP() {
 		FileInputStream fc;
 		try {
 			fc = new FileInputStream (System.getProperty
@@ -679,7 +679,6 @@ public class PSP_PlanningWizardFrame extends JFrame {
 					File.separator + ".proj" + File.separator + getPID() + ".pspx");			
 			PspImpl test = new PspImpl();
 			
-			test.open(fc);
 			
 			Util.debug("We tried to open now what?");
 	
@@ -688,7 +687,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
-
+*/
 	private int getPID() {
 		int n = -1;
 		try {
@@ -750,7 +749,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private void addToolItems() {
 		PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
 		
-		if (PspImpl.getLastID() > 100000001) {
+		if (p.toolBar.getComponentCount() <= 2) {
 			p.setExtraTools();
 		}
 	}

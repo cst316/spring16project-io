@@ -52,7 +52,6 @@ public class PSP_Panel extends JPanel{
 	static Design design;
 	static Testing test;
 	
-	static PspImpl pspI;	
 	/**
 	 * General constructor for creating Panel
 	 */
@@ -169,19 +168,8 @@ public class PSP_Panel extends JPanel{
 			}
 			openFileDialog();			
 		} else if (event.equals("PLANNING")) {
-			try {
-				File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" 
-						+ File.separator + ".proj" + File.separator + pspI.getpId() + "_planning");
-				
-				Planning plan = new PlanningImpl ();
-				plan.open (new FileInputStream (fs));				
-				
-				PSP_Planning pp = new PSP_Planning (plan);
-				addJPanel (pp);				
-				
-			} catch (FileNotFoundException e) {
-				new ExceptionDialog(e, "File not found!" , "");
-			}	
+			PSP_Planning pp = new PSP_Planning (plan);
+			addJPanel (pp);				
 		} else if (event.equals("DESIGN")) {
 			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
@@ -226,15 +214,14 @@ public class PSP_Panel extends JPanel{
 				File.separator + ".proj"));				// + File.separator + ".pspxFiles"));
 		int returnVal = fc.showOpenDialog(this);
 		
-		//ObjectInputStream ois = null;
+		ObjectInputStream ois = null;
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			try {
 				File openThis = fc.getSelectedFile();
-				//ois = new ObjectInputStream (new FileInputStream (openThis.getAbsolutePath()));	
-				//pspI = (PspImpl) ois.readObject();
-				//ois.close();
+				ois = new ObjectInputStream (new FileInputStream (openThis.getAbsolutePath()));	
+				pspI = (PspImpl) ois.readObject();
+				ois.close();
 				Util.debug("INDEXER: " + pspI.getpId());
-				pspI.open(new FileInputStream (openThis));				
 				if (currentView instanceof PSP_DesignPanel) {
 					project_MouseEvent ("DESIGN");
 				}  else if (currentView instanceof PSPTestingFrame) {
@@ -247,9 +234,9 @@ public class PSP_Panel extends JPanel{
 				Util.debug("INDEXER: " + pspI.getpId());
 				
 				projOpened = true;
-			//} catch (ClassNotFoundException e) {
-				//Util.debug("CHECK THE OBJECT");
-				//projOpened = false;
+			} catch (ClassNotFoundException e) {
+				Util.debug("CHECK THE OBJECT");
+				projOpened = false;
 			} catch (IOException e) {
 				Util.debug("FILE NOT FOUND!");
 				projOpened = false;
