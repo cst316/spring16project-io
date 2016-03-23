@@ -17,4 +17,6 @@ public interface Design extends Psp {
 	
 	public boolean importImageFiles(File theFile, String theFilePath);
 	
+	public void fileAdd(String filePath);
+	
 }
