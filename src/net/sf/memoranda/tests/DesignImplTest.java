@@ -8,17 +8,19 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.DesignImpl;
 
 public class DesignImplTest {
 	private String filePath;
 	private ArrayList<String> files;
+	Design des;
 	
 	@Before
 	public void setUp() throws Exception {
 		filePath = "C:/image001";
 		files = new ArrayList<String>();
-
+		des = new DesignImpl(files,"Test File");
 	}
 
 	@Test
