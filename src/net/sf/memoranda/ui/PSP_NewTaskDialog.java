@@ -30,7 +30,7 @@ public class PSP_NewTaskDialog extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
-	PSP_NewTaskData d = new PSP_NewTaskData();
+	PSP_NewTaskData tdata = new PSP_NewTaskData();
 	
 	List<String> n = new ArrayList<String>();
 
@@ -97,21 +97,44 @@ public class PSP_NewTaskDialog extends JFrame {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-	            String s;
+	            String tdarray;
 	            int count=0;
 	            
 	            // places whatever text is in the Jtextfield into a string variable
 	            
-	            s=textField.getText();
+	            tdarray=textField.getText();
 	            
 	            // saves the value of the string variable and calls method to build array, places
 	            // var on the the index of the current count
 	            
-	            d.saveTaskData(s, count);
+	            tdata.saveTaskData(tdarray, count);
 	            
 	            // arbitrarily setting next value of textfield and increasing counter for testing
 	            
-	            textField.setText("whatever");
+	            //textField.setText("whatever");
+	            
+	            //increase count to move down array index
+	            
+	            count++;
+	            
+	            tdarray=textField_1.getText();
+	            tdata.saveTaskData(tdarray, count);
+	            count++;
+	            
+	            tdarray=textField_2.getText();
+	            tdata.saveTaskData(tdarray, count);
+	            count++;
+	            
+	            tdarray=textField_3.getText();
+	            tdata.saveTaskData(tdarray, count);
+	            count++;
+	            
+	            tdarray=textField_4.getText();
+	            tdata.saveTaskData(tdarray, count);
+	            count++;
+	            
+	            tdarray=textField_5.getText();
+	            tdata.saveTaskData(tdarray, count);
 	            count++;
 	            
 	            // print array contents to console for testing

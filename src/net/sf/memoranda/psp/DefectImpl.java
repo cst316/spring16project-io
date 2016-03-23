@@ -17,10 +17,11 @@ import net.sf.memoranda.util.Util;
 public class DefectImpl implements Defect {
 	
 	private ArrayList<TestRowObject> testObj = new ArrayList<TestRowObject>();
-	private String path = ""; //temp values until reat of class is implemented
+	//private String path = ""; //temp values until rest of class is implemented
 	
 	public DefectImpl(){
-		
+		this.testObj = null;
+		//path = null;
 	}
 	
 	public DefectImpl(File file){
@@ -74,12 +75,6 @@ public class DefectImpl implements Defect {
 	public void setDescription(String description) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public int getPID() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -195,7 +190,7 @@ public class DefectImpl implements Defect {
 
 	//outputs serialized object to file
 	@Override
-	public boolean saveTestData() {
+	public boolean saveTestData(String path) {
 		
 		try{
 			FileOutputStream fos = new FileOutputStream(path);

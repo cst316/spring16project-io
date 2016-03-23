@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 
+import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.util.Util;
 
 import javax.imageio.ImageIO;
@@ -62,28 +63,43 @@ public class PSP_DesignPanel extends JPanel {
 	private int pID; // no setter made for pID yet. want to minimize ways to change this value.
 	private static PSP_Panel pspForm;
 	
+	private Design des;
+	
 	//***	
 	private JList<String> lstImages;
 	private DefaultListModel<String> fileModel;
-	private List<String> files = new ArrayList<String> ();
+	//private ArrayList<String> files = new ArrayList<String> ();
 	
-	public PSP_DesignPanel(PSP_Panel psp){
-		
-		PSP_DesignPanel.pspForm = psp;
-		this.pID = pspForm.pspI.getpId();
-		setPath((Integer.toString(pID)));
+//	public PSP_DesignPanel(PSP_Panel psp){
+//		
+//		PSP_DesignPanel.pspForm = psp;
+//		this.pID = pspForm.pspI.getpId();
+//		setPath((Integer.toString(pID)));
+//		
+//		try {
+//            jbInit();
+//        }
+//        catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//	}
+	
+	public PSP_DesignPanel(Design des) {
+		setBackground(Color.WHITE);
+		this.des = des;
 		
 		try {
+			this.pID = des.getpId();
             jbInit();
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
-	}
+		
+    }
 	
 	public PSP_DesignPanel() {
 		setBackground(Color.WHITE);
-		
 		
 		try {
             jbInit();
@@ -96,6 +112,7 @@ public class PSP_DesignPanel extends JPanel {
 	
 	private void jbInit() throws Exception 
 	{
+		setPath((Integer.toString(pID)));
 		try{
 			fileList = new JList<String>(getFileList());
 		}catch (Exception e){
@@ -118,7 +135,7 @@ public class PSP_DesignPanel extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				int index = lstImages.getSelectedIndex();
 				Util.debug("The Value: " + lstImages.getSelectedValue());
-				setImage (files.get(index));	
+				setImage (des.getFiles().get(index));	
 			}
 		});
 		lstImages.setFixedCellHeight(25);
@@ -202,6 +219,7 @@ public class PSP_DesignPanel extends JPanel {
 	private void btnImport_Clicked () {
 		Util.debug("Entered");
 		BufferedImage image = null;
+		File file = null;
 		try {
 			JFileChooser fileChooser = new JFileChooser(new File(System.getProperty
 					("user.home") + File.separator + "Pictures"));
@@ -216,9 +234,11 @@ public class PSP_DesignPanel extends JPanel {
 				//pathways need to be updated to be relative.
 				if(!Files.exists(Paths.get(getPath())))
 				{
-					File file = new File(getPath());
+					file = new File(getPath());
 					file.mkdirs();
 				}
+				
+//				des.importImageFiles(file, getPath());
 				
 				Util.debug("Up until now");
 			
@@ -241,7 +261,7 @@ public class PSP_DesignPanel extends JPanel {
 			
 			//if(fileList.getModel().getSize() != 0){				
 				fileModel.addElement(selectedFile.getName().toString());
-				files.add(getPath() + File.separator + selectedFile.getName());
+				des.fileAdd(getPath() + File.separator + selectedFile.getName());
 				Util.debug("Made it here just fine");
 			//}
 			

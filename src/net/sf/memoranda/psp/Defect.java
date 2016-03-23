@@ -7,11 +7,9 @@ public interface Defect extends Psp {
 
 	
 	public boolean loadTestData(File file); //used in constructor elsewhere if needed
-	public boolean saveTestData(); //creates and saves file using current data
+	public boolean saveTestData(String path); //creates and saves file using current data
 	
 	// setters and getters
-	public int getPID();
-	
 	public String getFileName();
 	
 	public String getUserName();
