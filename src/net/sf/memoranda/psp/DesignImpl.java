@@ -53,6 +53,11 @@ public class DesignImpl implements Design {
 		this.files = theFiles;
 		return true;
 	}
+	
+	public void fileAdd(String the_filePath)
+	{
+		files.add(the_filePath);
+	}
 
 	@Override
 	public CurrentDate getStDate() {
