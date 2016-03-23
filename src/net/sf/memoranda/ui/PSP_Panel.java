@@ -6,6 +6,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.GroupLayout;
@@ -33,6 +34,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.awt.SystemColor;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.BoxLayout;
+import java.awt.Component;
 
 /**
  * 
@@ -49,20 +56,15 @@ public class PSP_Panel extends JPanel{
 	private JLabel lblOpenProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
-	private JLabel lblProjectName;
-	private JLabel lblStartDate;
-	private JLabel lblProjectID;
-	private JButton btnNewButton;
-	private JButton btnSave;
-	private JButton btnEndProject;
-	private JTextArea textArea;
-	
+		
 	static PSP_PlanningWizardFrame pwf;
 	static PspImpl pspI;
 	static JPanel currentView;
 	static Planning plan;
 	static Design design;
 	static Defect test;	
+	private JLabel label;
+	private JLabel lable1;
 	
 	/**
 	 * General constructor for creating Panel
@@ -133,84 +135,6 @@ public class PSP_Panel extends JPanel{
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
 		add(pnlWizard, BorderLayout.CENTER);
-		
-		btnEndProject = new JButton("End Project");
-		
-		lblProjectID = new JLabel("1000000001");
-		lblProjectID.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		lblStartDate = new JLabel("03/18/2016");
-		lblStartDate.setHorizontalAlignment(SwingConstants.LEFT);
-		
-		JLabel Label1 = new JLabel("Project Name:");
-		
-		lblProjectName = new JLabel("");
-		lblProjectName.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		
-		JLabel lblProjectDescription = new JLabel("Project Description:");
-		
-		textArea = new JTextArea();
-		textArea.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		textArea.setEditable(false);
-		textArea.setEnabled(false);
-		
-		btnNewButton = new JButton("Edit Details");
-		
-		btnSave = new JButton("Save");
-		GroupLayout gl_pnlWizard = new GroupLayout(pnlWizard);
-		gl_pnlWizard.setHorizontalGroup(
-			gl_pnlWizard.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlWizard.createSequentialGroup()
-					.addGap(10)
-					.addGroup(gl_pnlWizard.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_pnlWizard.createSequentialGroup()
-							.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
-							.addContainerGap())
-						.addGroup(Alignment.TRAILING, gl_pnlWizard.createSequentialGroup()
-							.addComponent(btnNewButton)
-							.addPreferredGap(ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-							.addComponent(btnSave)
-							.addGap(44)
-							.addComponent(btnEndProject)
-							.addContainerGap())
-						.addGroup(gl_pnlWizard.createSequentialGroup()
-							.addGroup(gl_pnlWizard.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(gl_pnlWizard.createSequentialGroup()
-									.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-									.addGap(150)
-									.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
-								.addGroup(Alignment.TRAILING, gl_pnlWizard.createSequentialGroup()
-									.addComponent(Label1, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(lblProjectName, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)))
-							.addGap(0, 0, Short.MAX_VALUE))
-						.addGroup(gl_pnlWizard.createSequentialGroup()
-							.addComponent(lblProjectDescription, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-							.addGap(10))))
-		);
-		gl_pnlWizard.setVerticalGroup(
-			gl_pnlWizard.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_pnlWizard.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(gl_pnlWizard.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addGap(35)
-					.addGroup(gl_pnlWizard.createParallelGroup(Alignment.BASELINE)
-						.addComponent(Label1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblProjectName, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addGap(15)
-					.addComponent(lblProjectDescription, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
-					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-					.addGap(11)
-					.addGroup(gl_pnlWizard.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnEndProject)
-						.addComponent(btnNewButton)
-						.addComponent(btnSave))
-					.addContainerGap())
-		);
-		pnlWizard.setLayout(gl_pnlWizard);
 	}
 	
 	private void setEnabledFlag(JLabel lblEnableThis, boolean flag) {
@@ -337,11 +261,17 @@ public class PSP_Panel extends JPanel{
 					project_MouseEvent ("PLANNING");
 				} /*else if (currentView instanceof PSP_TimeLogPanel) {
 					project_MouseEvent ("PLANNING");				
-				}*/
+				} */else {
+					PSP_SnapIn snap = new PSP_SnapIn();
+					snap.lblStartDate.setText(pspI.getStDate().get().toString());
+					snap.lblProjectID.setText(pspI.getpId()+"");
+					snap.txtProjectName.setText(pspI.getName().toString());
+					snap.txtDescription.setText(pspI.getDescription());
+					
+					addJPanel (snap);
+				}
 				
 				projOpened = true;
-
-				
 				if (toolBar.getComponentCount() <= 3)
 					setExtraTools ();
 			} catch (ClassNotFoundException e) {
@@ -420,5 +350,142 @@ public class PSP_Panel extends JPanel{
 		toolBar.add(lblDefectInProject);
 		toolBar.add(lblTimeLogProject);				
 		toolBar.revalidate();
+	}
+	
+	private class PSP_SnapIn extends JPanel {
+		
+		JTextField txtProjectName;
+		JLabel lblStartDate;
+		JLabel lblProjectID;
+		JButton btnEdit;
+		JButton btnSave;
+		JButton btnEndProject;
+		JTextArea txtDescription;
+		
+		public PSP_SnapIn () {
+			jInit();
+		}
+		
+		public void jInit () {
+			setSize(new Dimension ((int) (pnlWizard.getWidth() * 0.8), (int) (pnlWizard.getHeight() * 0.8)));
+			setLayout (new BorderLayout (0,0));
+			JPanel panel_1 = new JPanel();
+			add(panel_1, BorderLayout.NORTH);
+			
+			lblStartDate = new JLabel("");
+			lblStartDate.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblStartDate.setHorizontalAlignment(SwingConstants.CENTER);
+			
+			JLabel label_1 = new JLabel("Start Date:");
+			
+			JLabel label1 = new JLabel("Project ID:");
+			label1.setHorizontalAlignment(SwingConstants.RIGHT);
+			
+			lblProjectID = new JLabel("");
+			lblProjectID.setHorizontalAlignment(SwingConstants.CENTER);
+			lblProjectID.setFont(new Font("Tahoma", Font.BOLD, 11));
+			GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+			gl_panel_1.setHorizontalGroup(
+				gl_panel_1.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel_1.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(label_1)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+						.addComponent(label1, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap())
+			);
+			gl_panel_1.setVerticalGroup(
+				gl_panel_1.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel_1.createSequentialGroup()
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+							.addGroup(Alignment.TRAILING, gl_panel_1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+							.addGroup(Alignment.TRAILING, gl_panel_1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))))
+			);
+			panel_1.setLayout(gl_panel_1);
+			
+			JPanel panel_2 = new JPanel();
+			add(panel_2, BorderLayout.CENTER);
+			
+			JLabel label_3 = new JLabel("Project Name:");
+			
+			txtProjectName = new JTextField();
+			txtProjectName.setEditable(false);
+			txtProjectName.setColumns(10);
+			
+			JLabel lblDescription = new JLabel("Project Description:");
+			
+			txtDescription = new JTextArea();
+			txtDescription.setEditable(false);
+			
+			JPanel panel = new JPanel();
+			GroupLayout gl_panel_2 = new GroupLayout(panel_2);
+			gl_panel_2.setHorizontalGroup(
+				gl_panel_2.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel_2.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel_2.createSequentialGroup()
+								.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(txtDescription, GroupLayout.PREFERRED_SIZE, 341, GroupLayout.PREFERRED_SIZE)
+									.addGroup(gl_panel_2.createSequentialGroup()
+										.addComponent(label_3)
+										.addGap(11)
+										.addComponent(txtProjectName, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE)))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGap(11))
+							.addGroup(gl_panel_2.createSequentialGroup()
+								.addComponent(lblDescription, GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+								.addGap(246))))
+					.addGroup(gl_panel_2.createSequentialGroup()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 351, Short.MAX_VALUE)
+						.addContainerGap())
+			);
+			gl_panel_2.setVerticalGroup(
+				gl_panel_2.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel_2.createSequentialGroup()
+						.addGap(10)
+						.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+							.addComponent(label_3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txtProjectName, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+						.addGap(34)
+						.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(txtDescription, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+			);
+			panel.setLayout(new BorderLayout(0, 0));
+			
+			btnEdit = new JButton("Edit Details");
+			btnEdit.setPreferredSize(new Dimension(100, 25));
+			btnEdit.setMinimumSize(new Dimension(100, 25));
+			btnEdit.setMaximumSize(new Dimension(100, 25));
+			panel.add(btnEdit, BorderLayout.WEST);
+			
+			btnSave = new JButton("Save");
+			btnSave.setAlignmentX(Component.CENTER_ALIGNMENT);
+			btnSave.setMinimumSize(new Dimension(100, 25));
+			btnSave.setMaximumSize(new Dimension(100, 25));
+			btnSave.setPreferredSize(new Dimension(100, 25));
+			panel.add(btnSave, BorderLayout.CENTER);
+			
+			btnEndProject = new JButton("End Project");
+			btnEndProject.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			btnEndProject.setMinimumSize(new Dimension(100, 25));
+			btnEndProject.setMaximumSize(new Dimension(100, 25));
+			btnEndProject.setPreferredSize(new Dimension(100, 25));
+			panel.add(btnEndProject, BorderLayout.EAST);
+			panel_2.setLayout(gl_panel_2);			
+		}
+		
 	}
 }
