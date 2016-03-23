@@ -5,11 +5,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JToolBar;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.border.MatteBorder;
 
 import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.Planning;
@@ -43,13 +49,20 @@ public class PSP_Panel extends JPanel{
 	private JLabel lblOpenProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
+	private JLabel lblProjectName;
+	private JLabel lblStartDate;
+	private JLabel lblProjectID;
+	private JButton btnNewButton;
+	private JButton btnSave;
+	private JButton btnEndProject;
+	private JTextArea textArea;
 	
 	static PSP_PlanningWizardFrame pwf;
 	static PspImpl pspI;
 	static JPanel currentView;
 	static Planning plan;
 	static Design design;
-	static Defect test;
+	static Defect test;	
 	
 	/**
 	 * General constructor for creating Panel
@@ -116,11 +129,88 @@ public class PSP_Panel extends JPanel{
 		lblOpenProject.setPreferredSize(new Dimension(100, 50));
 		lblOpenProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblOpenProject);
-				
+		
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
 		add(pnlWizard, BorderLayout.CENTER);
-		pnlWizard.setLayout(new BorderLayout(0, 0));
+		
+		btnEndProject = new JButton("End Project");
+		
+		lblProjectID = new JLabel("1000000001");
+		lblProjectID.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lblStartDate = new JLabel("03/18/2016");
+		lblStartDate.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		JLabel Label1 = new JLabel("Project Name:");
+		
+		lblProjectName = new JLabel("");
+		lblProjectName.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		
+		JLabel lblProjectDescription = new JLabel("Project Description:");
+		
+		textArea = new JTextArea();
+		textArea.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		textArea.setEditable(false);
+		textArea.setEnabled(false);
+		
+		btnNewButton = new JButton("Edit Details");
+		
+		btnSave = new JButton("Save");
+		GroupLayout gl_pnlWizard = new GroupLayout(pnlWizard);
+		gl_pnlWizard.setHorizontalGroup(
+			gl_pnlWizard.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlWizard.createSequentialGroup()
+					.addGap(10)
+					.addGroup(gl_pnlWizard.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlWizard.createSequentialGroup()
+							.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+							.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_pnlWizard.createSequentialGroup()
+							.addComponent(btnNewButton)
+							.addPreferredGap(ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+							.addComponent(btnSave)
+							.addGap(44)
+							.addComponent(btnEndProject)
+							.addContainerGap())
+						.addGroup(gl_pnlWizard.createSequentialGroup()
+							.addGroup(gl_pnlWizard.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(gl_pnlWizard.createSequentialGroup()
+									.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
+									.addGap(150)
+									.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
+								.addGroup(Alignment.TRAILING, gl_pnlWizard.createSequentialGroup()
+									.addComponent(Label1, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(lblProjectName, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)))
+							.addGap(0, 0, Short.MAX_VALUE))
+						.addGroup(gl_pnlWizard.createSequentialGroup()
+							.addComponent(lblProjectDescription, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+							.addGap(10))))
+		);
+		gl_pnlWizard.setVerticalGroup(
+			gl_pnlWizard.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnlWizard.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_pnlWizard.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+					.addGap(35)
+					.addGroup(gl_pnlWizard.createParallelGroup(Alignment.BASELINE)
+						.addComponent(Label1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblProjectName, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+					.addGap(15)
+					.addComponent(lblProjectDescription, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+					.addGap(11)
+					.addGroup(gl_pnlWizard.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnEndProject)
+						.addComponent(btnNewButton)
+						.addComponent(btnSave))
+					.addContainerGap())
+		);
+		pnlWizard.setLayout(gl_pnlWizard);
 	}
 	
 	private void setEnabledFlag(JLabel lblEnableThis, boolean flag) {
