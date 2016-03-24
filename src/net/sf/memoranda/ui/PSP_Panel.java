@@ -371,49 +371,12 @@ public class PSP_Panel extends JPanel{
 		public void jInit () {
 			setSize(new Dimension ((int) (pnlWizard.getWidth() * 0.8), (int) (pnlWizard.getHeight() * 0.8)));
 			contentPane = new JPanel();
-			contentPane.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+			contentPane.setLayout(new BorderLayout(0, 0));
 			
-			JPanel panel1 = new JPanel();
-			
-			lblStartDate = new JLabel("");
-			lblStartDate.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lblStartDate.setHorizontalAlignment(SwingConstants.CENTER);
-			
-			JLabel label = new JLabel("Start Date:");
-			
-			JLabel label1 = new JLabel("Project ID:");
-			label1.setHorizontalAlignment(SwingConstants.RIGHT);
-			
-			lblProjectID = new JLabel("");
-			lblProjectID.setHorizontalAlignment(SwingConstants.CENTER);
-			lblProjectID.setFont(new Font("Tahoma", Font.BOLD, 11));
-			GroupLayout gl_panel1 = new GroupLayout(panel1);
-			gl_panel1.setHorizontalGroup(
-				gl_panel1.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel1.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(label)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
-						.addComponent(label1, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap())
-			);
-			gl_panel1.setVerticalGroup(
-				gl_panel1.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel1.createSequentialGroup()
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(gl_panel1.createParallelGroup(Alignment.LEADING)
-							.addGroup(Alignment.TRAILING, gl_panel1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(label, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-							.addGroup(Alignment.TRAILING, gl_panel1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))))
-			);
-			panel1.setLayout(gl_panel1);
+			JPanel panel_1 = new JPanel();
+			panel_1.setPreferredSize(new Dimension(500, 500));
+			panel_1.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+			contentPane.add(panel_1, BorderLayout.CENTER);
 			JPanel panel = new JPanel();
 			
 			btnSave = new JButton("Save");
@@ -461,16 +424,17 @@ public class PSP_Panel extends JPanel{
 			txtDescription.setEditable(false);
 			GroupLayout gl_panel2 = new GroupLayout(panel2);
 			gl_panel2.setHorizontalGroup(
-				gl_panel2.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_panel2.createSequentialGroup()
+				gl_panel2.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_panel2.createSequentialGroup()
 						.addContainerGap()
-						.addGroup(gl_panel2.createParallelGroup(Alignment.TRAILING)
-							.addComponent(txtDescription, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
-							.addGroup(Alignment.LEADING, gl_panel2.createSequentialGroup()
+						.addGroup(gl_panel2.createParallelGroup(Alignment.LEADING)
+							.addComponent(txtDescription, GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+							.addGroup(gl_panel2.createSequentialGroup()
 								.addComponent(label2)
 								.addGap(11)
-								.addComponent(txtProjectName, GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE))
-							.addComponent(label3, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+								.addComponent(txtProjectName, GroupLayout.PREFERRED_SIZE, 401, GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, Short.MAX_VALUE))
+							.addComponent(label3, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
 						.addContainerGap())
 			);
 			gl_panel2.setVerticalGroup(
@@ -487,27 +451,74 @@ public class PSP_Panel extends JPanel{
 						.addContainerGap())
 			);
 			panel2.setLayout(gl_panel2);
-			GroupLayout gl_contentPane = new GroupLayout(contentPane);
-			gl_contentPane.setHorizontalGroup(
-				gl_contentPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_contentPane.createSequentialGroup()
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(panel2, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+			
+			JPanel panel1 = new JPanel();
+			
+			lblStartDate = new JLabel("");
+			lblStartDate.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblStartDate.setHorizontalAlignment(SwingConstants.CENTER);
+			
+			JLabel label = new JLabel("Start Date:");
+			
+			JLabel label1 = new JLabel("Project ID:");
+			label1.setHorizontalAlignment(SwingConstants.RIGHT);
+			
+			lblProjectID = new JLabel("");
+			lblProjectID.setHorizontalAlignment(SwingConstants.CENTER);
+			lblProjectID.setFont(new Font("Tahoma", Font.BOLD, 11));
+			GroupLayout gl_panel1 = new GroupLayout(panel1);
+			gl_panel1.setHorizontalGroup(
+				gl_panel1.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel1.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(label)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+						.addComponent(label1, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap())
+			);
+			gl_panel1.setVerticalGroup(
+				gl_panel1.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel1.createSequentialGroup()
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(gl_panel1.createParallelGroup(Alignment.LEADING)
+							.addGroup(Alignment.TRAILING, gl_panel1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(label, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+							.addGroup(Alignment.TRAILING, gl_panel1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))))
+			);
+			panel1.setLayout(gl_panel1);
+			GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+			int vgap = (int) ((pnlWizard.getHeight() - 450) / 2);
+			int hgap = (int) ((pnlWizard.getWidth() - 500) / 2);
+			System.out.println("GAP: " + hgap);
+			gl_panel_1.setHorizontalGroup(
+				gl_panel_1.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel_1.createSequentialGroup()
+						.addGap(hgap)
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 							.addComponent(panel1, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGap(hgap))
 			);
-			gl_contentPane.setVerticalGroup(
-				gl_contentPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_contentPane.createSequentialGroup()
+			gl_panel_1.setVerticalGroup(
+				gl_panel_1.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel_1.createSequentialGroup()
+						.addGap(vgap)
 						.addComponent(panel1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addGap(16)
+						.addGap(10)
 						.addComponent(panel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGap(25)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(50, Short.MAX_VALUE))
+						.addGap(10)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(282, Short.MAX_VALUE))
 			);
-			contentPane.setLayout(gl_contentPane);
+			panel_1.setLayout(gl_panel_1);
 		}
 		
 	}
