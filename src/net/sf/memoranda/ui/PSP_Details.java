@@ -87,9 +87,9 @@ public class PSP_Details extends JPanel {
 		});
 		btnEdit.setPreferredSize(new Dimension(115, 25));
 		
-		hgap = //(int)   ((500 - (btnEdit.getPreferredSize().getWidth() + btnEndProject.getPreferredSize().
-				//getWidth() + btnUpdate.getPreferredSize().getWidth())) / 2);			
-				(int)   (145 / 2);
+		hgap = (int)   ((500 - (btnEdit.getPreferredSize().getWidth() + btnEndProject.getPreferredSize().
+				getWidth() + btnUpdate.getPreferredSize().getWidth())) / 2);			
+				//(int)   (145 / 2);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -216,9 +216,9 @@ public class PSP_Details extends JPanel {
 		);
 		panel1.setLayout(gl_panel1);
 		
-		hgap = //(int) ((java.awt.Toolkit.getDefaultToolkit().
-				//getScreenSize().getWidth() * 0.8 - 450) / 2);		
-		(int) (400 / 2);
+		hgap = (int) ((java.awt.Toolkit.getDefaultToolkit().
+				getScreenSize().getWidth() * 0.8 - 450) / 2);		
+		//(int) (400 / 2);
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
