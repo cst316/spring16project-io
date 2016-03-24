@@ -13,12 +13,11 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 
 import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.Planning;
@@ -36,11 +35,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.awt.SystemColor;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.BoxLayout;
 import java.awt.Component;
 
 /**
@@ -65,8 +59,6 @@ public class PSP_Panel extends JPanel{
 	static Planning plan;
 	static Design design;
 	static Defect test;	
-	private JLabel label;
-	private JLabel lable1;
 	
 	/**
 	 * General constructor for creating Panel
@@ -137,6 +129,7 @@ public class PSP_Panel extends JPanel{
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
 		add(pnlWizard, BorderLayout.CENTER);
+		pnlWizard.setLayout(new BorderLayout(0, 0));	
 	}
 	
 	private void setEnabledFlag(JLabel lblEnableThis, boolean flag) {
@@ -158,9 +151,11 @@ public class PSP_Panel extends JPanel{
 			toAdd.setName("DESIGN");
 		} else if (toAdd instanceof PSP_DefectPanel) {
 			toAdd.setName("DEFECT");
-		} //else if (toAdd instanceof PSP_TimeLogPanel) {
+		} else if (toAdd instanceof PSP_Details) {
+			toAdd.setName("PSP");
+		}//else if (toAdd instanceof PSP_TimeLogPanel) {
 			//toAdd.setName("TIMELOG");
-		//}
+		//} 
 		currentView = toAdd;
 		
 		this.revalidate();
@@ -209,7 +204,17 @@ public class PSP_Panel extends JPanel{
 				addJPanel (defectPanel);							
 		} else if (event.equals("TIMELOG")) {
 			//addJPanel(new PSPTestingFrame());			
-		} 
+		} else if (event.equals("PSP")){
+			PSP_Details details = new PSP_Details(pspI);					
+			details.lblStartDate.setText(pspI.getStDate().get().getMonth() + "/" + 
+			pspI.getStDate().get().getDay() + "/" + pspI.getStDate().get().getYear());
+			
+			details.lblProjectID.setText(pspI.getpId()+"");
+			details.txtProjectName.setText(pspI.getName().toString());
+			details.txtDescription.setText(pspI.getDescription());
+			
+			addJPanel (details);
+		}
 	}
 	
 	public static void setPspValues (PspImpl pspI) {
@@ -263,14 +268,8 @@ public class PSP_Panel extends JPanel{
 					project_MouseEvent ("PLANNING");
 				} /*else if (currentView instanceof PSP_TimeLogPanel) {
 					project_MouseEvent ("PLANNING");				
-				} */else {
-					PSP_SnapIn snap = new PSP_SnapIn();
-					snap.lblStartDate.setText(pspI.getStDate().get().toString());
-					snap.lblProjectID.setText(pspI.getpId()+"");
-					snap.txtProjectName.setText(pspI.getName().toString());
-					snap.txtDescription.setText(pspI.getDescription());
-					
-					addJPanel (snap);
+				} */ else {
+					project_MouseEvent ("PSP");
 				}
 				
 				projOpened = true;
@@ -290,6 +289,20 @@ public class PSP_Panel extends JPanel{
 	
 	public void setExtraTools () {
 		// TODO Auto-generated method stub
+		JLabel lblPSP = new JLabel("Details");
+		lblPSP.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPSP.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				project_MouseEvent("PSP");
+			}
+		});
+		lblPSP.setLocation(new Point (200, 50));
+		lblPSP.setMinimumSize(new Dimension(100, 50));
+		lblPSP.setMaximumSize(new Dimension(100, 50));
+		lblPSP.setPreferredSize(new Dimension(100, 50));
+		lblPSP.setFont(new Font("Dialog", Font.BOLD, 12));
+		
 		JLabel lblPlanningProject = new JLabel("Planning");
 		lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlanningProject.addMouseListener(new MouseAdapter() {
@@ -347,179 +360,11 @@ public class PSP_Panel extends JPanel{
 		lblTimeLogProject.setPreferredSize(new Dimension(100, 50));
 		lblTimeLogProject.setFont(new Font("Dialog", Font.BOLD, 12));
 				
+		toolBar.add(lblPSP);
 		toolBar.add(lblPlanningProject);
 		toolBar.add(lblDesigningProject);
 		toolBar.add(lblDefectInProject);
 		toolBar.add(lblTimeLogProject);				
 		toolBar.revalidate();
-	}
-	
-	private class PSP_SnapIn extends JPanel {
-		JPanel contentPane;
-		JTextField txtProjectName;
-		JLabel lblStartDate;
-		JLabel lblProjectID;
-		JButton btnEdit;
-		JButton btnSave;
-		JButton btnEndProject;
-		JTextArea txtDescription;
-		
-		public PSP_SnapIn () {
-			jInit();
-		}
-		
-		public void jInit () {
-			setSize(new Dimension ((int) (pnlWizard.getWidth() * 0.8), (int) (pnlWizard.getHeight() * 0.8)));
-			contentPane = new JPanel();
-			contentPane.setLayout(new BorderLayout(0, 0));
-			
-			JPanel panel_1 = new JPanel();
-			panel_1.setPreferredSize(new Dimension(500, 500));
-			panel_1.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-			contentPane.add(panel_1, BorderLayout.CENTER);
-			JPanel panel = new JPanel();
-			
-			btnSave = new JButton("Save");
-			btnSave.setAlignmentX(Component.CENTER_ALIGNMENT);
-			btnSave.setPreferredSize(new Dimension(100, 25));
-			
-			btnEndProject = new JButton("End Project");
-			btnEndProject.setAlignmentX(Component.RIGHT_ALIGNMENT);
-			btnEndProject.setPreferredSize(new Dimension(100, 25));
-			
-			btnEdit = new JButton("Edit Details");
-			btnEdit.setPreferredSize(new Dimension(100, 25));
-			
-			GroupLayout gl_panel = new GroupLayout(panel);
-			gl_panel.setHorizontalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGap(90)
-						.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-						.addGap(90)
-						.addComponent(btnEndProject, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap())
-			);
-			gl_panel.setVerticalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnEndProject, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-			);
-			panel.setLayout(gl_panel);
-			JPanel panel2 = new JPanel();
-			
-			JLabel label2 = new JLabel("Project Name:");
-			
-			txtProjectName = new JTextField();
-			txtProjectName.setEditable(false);
-			txtProjectName.setColumns(10);
-			
-			JLabel label3 = new JLabel("Project Description:");
-			
-			txtDescription = new JTextArea();
-			txtDescription.setEditable(false);
-			GroupLayout gl_panel2 = new GroupLayout(panel2);
-			gl_panel2.setHorizontalGroup(
-				gl_panel2.createParallelGroup(Alignment.TRAILING)
-					.addGroup(gl_panel2.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(gl_panel2.createParallelGroup(Alignment.LEADING)
-							.addComponent(txtDescription, GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
-							.addGroup(gl_panel2.createSequentialGroup()
-								.addComponent(label2)
-								.addGap(11)
-								.addComponent(txtProjectName, GroupLayout.PREFERRED_SIZE, 401, GroupLayout.PREFERRED_SIZE)
-								.addGap(0, 0, Short.MAX_VALUE))
-							.addComponent(label3, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap())
-			);
-			gl_panel2.setVerticalGroup(
-				gl_panel2.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel2.createSequentialGroup()
-						.addGap(10)
-						.addGroup(gl_panel2.createParallelGroup(Alignment.BASELINE)
-							.addComponent(label2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(txtProjectName, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-						.addGap(34)
-						.addComponent(label3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(txtDescription, GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
-						.addContainerGap())
-			);
-			panel2.setLayout(gl_panel2);
-			
-			JPanel panel1 = new JPanel();
-			
-			lblStartDate = new JLabel("");
-			lblStartDate.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lblStartDate.setHorizontalAlignment(SwingConstants.CENTER);
-			
-			JLabel label = new JLabel("Start Date:");
-			
-			JLabel label1 = new JLabel("Project ID:");
-			label1.setHorizontalAlignment(SwingConstants.RIGHT);
-			
-			lblProjectID = new JLabel("");
-			lblProjectID.setHorizontalAlignment(SwingConstants.CENTER);
-			lblProjectID.setFont(new Font("Tahoma", Font.BOLD, 11));
-			GroupLayout gl_panel1 = new GroupLayout(panel1);
-			gl_panel1.setHorizontalGroup(
-				gl_panel1.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel1.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(label)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
-						.addComponent(label1, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap())
-			);
-			gl_panel1.setVerticalGroup(
-				gl_panel1.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel1.createSequentialGroup()
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(gl_panel1.createParallelGroup(Alignment.LEADING)
-							.addGroup(Alignment.TRAILING, gl_panel1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(label, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-							.addGroup(Alignment.TRAILING, gl_panel1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblProjectID, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))))
-			);
-			panel1.setLayout(gl_panel1);
-			GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-			int vgap = (int) ((pnlWizard.getHeight() - 450) / 2);
-			int hgap = (int) ((pnlWizard.getWidth() - 500) / 2);
-			System.out.println("GAP: " + hgap);
-			gl_panel_1.setHorizontalGroup(
-				gl_panel_1.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel_1.createSequentialGroup()
-						.addGap(hgap)
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-							.addComponent(panel1, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(panel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGap(hgap))
-			);
-			gl_panel_1.setVerticalGroup(
-				gl_panel_1.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel_1.createSequentialGroup()
-						.addGap(vgap)
-						.addComponent(panel1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addGap(10)
-						.addComponent(panel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGap(10)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(282, Short.MAX_VALUE))
-			);
-			panel_1.setLayout(gl_panel_1);
-		}
-		
 	}
 }
