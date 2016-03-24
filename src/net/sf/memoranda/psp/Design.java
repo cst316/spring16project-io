@@ -1,5 +1,6 @@
 package net.sf.memoranda.psp;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public interface Design extends Psp {
 
 	public boolean setFiles(ArrayList<String> theFiles);
 	
-	public boolean importImageFiles(File theFile, String theFilePath);
+	public boolean importImageFiles(File theFile, String theFilePath,  BufferedImage imageToUse);
 	
 	public void fileAdd(String filePath);
 	

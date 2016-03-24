@@ -111,8 +111,9 @@ public class DesignImpl implements Design {
 	
 	//Models Joe Michaels' code for PSP_DesignPanel.java for btnImport_Clicked() method
 	@Override
-	public boolean importImageFiles(File theFileToUse, String thePathOfFile) {
+	public boolean importImageFiles(File theFileToUse, String thePathOfFile, BufferedImage imageToUse) {
 		boolean testVar = true;
+		this.myImage = imageToUse;
 		try{
 				theFileToUse = new File(thePathOfFile);
 			
