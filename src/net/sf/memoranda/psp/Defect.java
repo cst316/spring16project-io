@@ -6,8 +6,8 @@ import java.util.Date;
 public interface Defect extends Psp {
 
 	
-	public boolean loadTestData(File file); //used in constructor elsewhere if needed
-	public boolean saveTestData(String path); //creates and saves file using current data
+	public boolean loadTestData(String path, String name); //used in constructor elsewhere if needed
+	public boolean saveTestData(String path, String name); //creates and saves file using current data
 	
 	// setters and getters
 	public String getFileName();

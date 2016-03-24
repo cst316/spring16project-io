@@ -3,9 +3,12 @@ package net.sf.memoranda.tests;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,19 +32,21 @@ public class DefectImplTest {
 		def = new DefectImpl();
 		path =  System.getProperty("user.home") + File.separator + 
 				".memoranda" + File.separator + ".proj" + File.separator + 
-				 "." + "test" +  File.separator + ".defectTest";;
+				 "." + "test";
+		
 		file = new File(path);
+		file.mkdirs();
 		
 	}
 	
 	@Test
 	public void testSaveTestData() {
-		assertTrue(def.saveTestData(path));
+		assertTrue(def.saveTestData(path, "defectTest"));
 	}
 	
 	@Test
 	public void testLoadTestData() {
-		assertTrue(def.loadTestData(file));
+		assertTrue(def.loadTestData(path, "defectTest"));
 	}
 
 	@Test
@@ -58,6 +63,11 @@ public class DefectImplTest {
 		assertEquals(def.getRemovalPhase(), "remPhase");
 		assertEquals(def.getType(), "type");
 		
+	}
+	
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		//delete .test folder
 	}
 
 	

@@ -1,5 +1,6 @@
 package net.sf.memoranda.psp;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,7 +27,7 @@ public class DefectImpl implements Defect {
 	
 	public DefectImpl(File file){
 		super();
-		loadTestData(file);
+		loadTestData(file.getAbsolutePath(), file.getName());
 	}
 
 	@Override
@@ -169,15 +170,19 @@ public class DefectImpl implements Defect {
 
 	//retrieve serialized file and stores to arraylist
 	@Override
-	public boolean loadTestData(File file) {
+	public boolean loadTestData(String path, String fileName) {
 		boolean status = true;
 		try{
 			
-			FileInputStream fileStream = new FileInputStream(file);
+			FileInputStream fileStream = new FileInputStream(path + File.separator + fileName);
 			ObjectInputStream obj = new ObjectInputStream(fileStream);
-			while(testObj.add((TestRowObject)obj.readObject())){}//read and cast object until null...?
+			while((TestRowObject)obj.readObject() != null){
+				testObj.add((TestRowObject)obj.readObject());
+			}
 			obj.close();
 			
+		}catch(EOFException e){
+        	e.getMessage();
 		}catch (IOException e) {
             new ExceptionDialog(e, "File not found!" , "");
             status = false;
@@ -190,10 +195,10 @@ public class DefectImpl implements Defect {
 
 	//outputs serialized object to file
 	@Override
-	public boolean saveTestData(String path) {
+	public boolean saveTestData(String path, String name) {
 		
 		try{
-			FileOutputStream fos = new FileOutputStream(path);
+			FileOutputStream fos = new FileOutputStream(path + File.separator + name);
 			ObjectOutputStream oos =
 	                new ObjectOutputStream(fos);
 			for(int i = 0; i < testObj.size(); ++i){
@@ -201,6 +206,8 @@ public class DefectImpl implements Defect {
 			}
 			oos.close();
 			
+		}catch(EOFException e){
+        	e.getMessage();
 		}catch(IOException e){
         	e.getMessage();
         }catch(Exception e) {
