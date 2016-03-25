@@ -1,5 +1,7 @@
 package net.sf.memoranda.ui;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,11 +26,15 @@ public class PSP_TimeLog extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PSP_TimeLog() {
+	public PSP_TimeLog() {		
+		jInit();
+	}
+	
+	public void jInit () {
+		setLayout(new BorderLayout(0, 0));
 		contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.setLayout(null);
-        
+		contentPane.setLayout(null);
+	       
         JLabel lblTimeLogEntries = new JLabel("Time Log Entries");
         lblTimeLogEntries.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 18));
         lblTimeLogEntries.setHorizontalAlignment(SwingConstants.CENTER);
@@ -89,7 +95,7 @@ public class PSP_TimeLog extends JPanel {
         bttnMoreEntries.setText("More Entries");
         bttnMoreEntries.setBounds(73,193,112,20);
         contentPane.add(bttnMoreEntries);
-
+        
+        add(contentPane);
 	}
-
 }
