@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 
-import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.util.Util;
 
 import javax.imageio.ImageIO;
@@ -54,8 +53,7 @@ public class PSP_DesignPanel extends JPanel {
 	JPanel backPanel = new JPanel();
 	JPanel designView = new JPanel();
 	JPanel listPanel = new JPanel();
-	JScrollPane viewPane = new JScrollPane();
-	
+	JPanel viewPanel;
 	JButton btnImportDesign = new JButton("Import Design");
 	JList<String> fileList;
 	
@@ -63,43 +61,28 @@ public class PSP_DesignPanel extends JPanel {
 	private int pID; // no setter made for pID yet. want to minimize ways to change this value.
 	private static PSP_Panel pspForm;
 	
-	private Design des;
-	
 	//***	
 	private JList<String> lstImages;
 	private DefaultListModel<String> fileModel;
-	//private ArrayList<String> files = new ArrayList<String> ();
+	private List<String> files = new ArrayList<String> ();
 	
-//	public PSP_DesignPanel(PSP_Panel psp){
-//		
-//		PSP_DesignPanel.pspForm = psp;
-//		this.pID = pspForm.pspI.getpId();
-//		setPath((Integer.toString(pID)));
-//		
-//		try {
-//            jbInit();
-//        }
-//        catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//	}
-	
-	public PSP_DesignPanel(Design des) {
-		setBackground(Color.WHITE);
-		this.des = des;
+	public PSP_DesignPanel(PSP_Panel psp){
+		
+		PSP_DesignPanel.pspForm = psp;
+		this.pID = pspForm.pspI.getpId();
+		setPath((Integer.toString(pID)));
 		
 		try {
-			this.pID = des.getpId();
             jbInit();
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
-		
-    }
+	}
 	
 	public PSP_DesignPanel() {
 		setBackground(Color.WHITE);
+		
 		
 		try {
             jbInit();
@@ -112,7 +95,6 @@ public class PSP_DesignPanel extends JPanel {
 	
 	private void jbInit() throws Exception 
 	{
-		setPath((Integer.toString(pID)));
 		try{
 			fileList = new JList<String>(getFileList());
 		}catch (Exception e){
@@ -135,18 +117,14 @@ public class PSP_DesignPanel extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				int index = lstImages.getSelectedIndex();
 				Util.debug("The Value: " + lstImages.getSelectedValue());
-				setImage (des.getFiles().get(index));	
+				setImage (files.get(index));	
 			}
 		});
 		lstImages.setFixedCellHeight(25);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBackground(Color.WHITE);
-		viewPane.setBorder(null);
-		
-		viewPane.setBackground(Color.WHITE);
-		viewPane.setLayout(null);
+		viewPanel = new JPanel();
+		viewPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		viewPanel.setBackground(Color.WHITE);
 		btnImportDesign.setMinimumSize(new Dimension(150, 25));
 		btnImportDesign.setMaximumSize(new Dimension(150, 25));
 		btnImportDesign.setPreferredSize(new Dimension(150, 25));
@@ -181,24 +159,20 @@ public class PSP_DesignPanel extends JPanel {
 					.addContainerGap())
 		);
 		listPanel.setLayout(gl_listPanel);
-		GroupLayout gl_panel = new GroupLayout(panel);
+		GroupLayout gl_panel = new GroupLayout(viewPanel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(viewPane, GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE))
+				.addGap(0, 96, Short.MAX_VALUE)
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(10)
-					.addComponent(viewPane, GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE))
+				.addGap(0, 296, Short.MAX_VALUE)
 		);
-		panel.setLayout(gl_panel);
+		viewPanel.setLayout(gl_panel);
 		add(backPanel, BorderLayout.CENTER);
 		backPanel.setLayout(new BorderLayout(0, 0));
 		backPanel.add(listPanel, BorderLayout.WEST);
-		backPanel.add(panel);
+		backPanel.add(viewPanel);
 		
 		/*//gets file list and displays selected file
 		if (fileList != null){
@@ -219,7 +193,6 @@ public class PSP_DesignPanel extends JPanel {
 	private void btnImport_Clicked () {
 		Util.debug("Entered");
 		BufferedImage image = null;
-		File file = null;
 		try {
 			JFileChooser fileChooser = new JFileChooser(new File(System.getProperty
 					("user.home") + File.separator + "Pictures"));
@@ -234,11 +207,9 @@ public class PSP_DesignPanel extends JPanel {
 				//pathways need to be updated to be relative.
 				if(!Files.exists(Paths.get(getPath())))
 				{
-					file = new File(getPath());
+					File file = new File(getPath());
 					file.mkdirs();
 				}
-				
-//				des.importImageFiles(file, getPath());
 				
 				Util.debug("Up until now");
 			
@@ -261,7 +232,7 @@ public class PSP_DesignPanel extends JPanel {
 			
 			//if(fileList.getModel().getSize() != 0){				
 				fileModel.addElement(selectedFile.getName().toString());
-				des.fileAdd(getPath() + File.separator + selectedFile.getName());
+				files.add(getPath() + File.separator + selectedFile.getName());
 				Util.debug("Made it here just fine");
 			//}
 			
@@ -374,9 +345,9 @@ public class PSP_DesignPanel extends JPanel {
 	public void setImage (String img) {
 		PSP_BackGround bg;
 		try {
-			viewPane.removeAll();
+			viewPanel.removeAll();
 			Util.debug("Image: " + img);
-			bg = new PSP_BackGround (img, 300, 500);
+			bg = new PSP_BackGround (img, viewPanel);
 			bg.setPreferredSize(new Dimension(300, 500));
 			bg.setMinimumSize(new Dimension(200, 600));
 			bg.setMaximumSize(new Dimension(32767, 32767));
@@ -384,12 +355,12 @@ public class PSP_DesignPanel extends JPanel {
 			bg.setBackground(Color.white);
 			bg.setVisible(true);
 			
-			bg.setLocation((viewPane.getWidth() - bg.getWidth())/2, ((viewPane.getHeight() - bg.getHeight())/2));
-			viewPane.add(bg);
+			bg.setLocation((viewPanel.getWidth() - bg.getWidth())/2, ((viewPanel.getHeight() - bg.getHeight())/2));
+			viewPanel.add(bg);
 			Util.debug("Viewing");
 			
-			viewPane.revalidate();
-			viewPane.repaint();
+			viewPanel.revalidate();
+			viewPanel.repaint();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -406,17 +377,17 @@ public class PSP_DesignPanel extends JPanel {
 			JLabel imgLabel = new JLabel("", icon, JLabel.CENTER);
 			imgLabel.setIcon(icon);
 			imgLabel.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
-			viewPane.scrollRectToVisible(getBounds());
-			viewPane.add(imgLabel);
+			viewPanel.scrollRectToVisible(getBounds());
+			viewPanel.add(imgLabel);
 		}catch(RuntimeException ex){
 			Util.debug(ex.getMessage());
 		}catch(Exception ex){
 			Util.debug(ex.getMessage());
 		}
 		Util.debug("background added to panel... revalidating");
-		viewPane.invalidate();
-		viewPane.validate();
-		viewPane.repaint();
+		viewPanel.invalidate();
+		viewPanel.validate();
+		viewPanel.repaint();
 		Util.debug("revalidating done");
 		fileList.clearSelection();
 		return true;

@@ -182,7 +182,7 @@ public class PSP_Panel extends JPanel{
 				e.printStackTrace();
 			}		
 		} else if (event.equals("DESIGN")) {
-			addJPanel(new PSP_DesignPanel(design));
+			addJPanel(new PSP_DesignPanel(this));
 			System.out.println("Yeah Design");
 		} else if (event.equals("DEFECT")) {
 			File defect_filePath = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
