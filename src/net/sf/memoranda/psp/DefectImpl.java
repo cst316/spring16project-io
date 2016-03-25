@@ -27,7 +27,7 @@ public class DefectImpl implements Defect {
 	
 	public DefectImpl(File file){
 		super();
-		loadTestData(file.getAbsolutePath(), file.getName());
+		//loadTestData(file.getAbsolutePath(), file.getName());
 	}
 
 	@Override
@@ -167,55 +167,33 @@ public class DefectImpl implements Defect {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	//retrieve serialized file and stores to arraylist
-	@Override
-	public boolean loadTestData(String path, String fileName) {
-		boolean status = true;
-		try{
-			
-			FileInputStream fileStream = new FileInputStream(path + File.separator + fileName);
-			ObjectInputStream obj = new ObjectInputStream(fileStream);
-			while((TestRowObject)obj.readObject() != null){
-				testObj.add((TestRowObject)obj.readObject());
-			}
-			obj.close();
-			
-		}catch(EOFException e){
-        	e.getMessage();
-		}catch (IOException e) {
-            new ExceptionDialog(e, "File not found!" , "");
-            status = false;
-        }catch(Exception e){
-			e.getMessage();
-			status = false;
-		}
-		return status;
-	}
-
-	//outputs serialized object to file
-	@Override
-	public boolean saveTestData(String path, String name) {
-		
-		try{
-			FileOutputStream fos = new FileOutputStream(path + File.separator + name);
-			ObjectOutputStream oos =
-	                new ObjectOutputStream(fos);
-			for(int i = 0; i < testObj.size(); ++i){
-				oos.writeObject(testObj.get(i));
-			}
-			oos.close();
-			
-		}catch(EOFException e){
-        	e.getMessage();
-		}catch(IOException e){
-        	e.getMessage();
-        }catch(Exception e) {
-            e.getMessage();
-        }
-		return false;
-	}
 	
+	/**
+	 * Saves row object passed in
+	 * @param obj
+	 * @return true if no errors are thrown
+	 */
+	public boolean saveData(TestRowObject obj){
+		return true;
+	}
+
+	/**
+	 * Takes in raw test row data and saves file from the data 
+	 * @param date
+	 * @param defNum
+	 * @param defType
+	 * @param injPhase
+	 * @param remPhase
+	 * @param fix
+	 * @param fixRef
+	 * @return true if no errors are thrown
+	 */
+	public boolean saveData(Date date, int defNum, String defType, String injPhase,
+			String remPhase, String fix, String fixRef){
+		
+		return true;
+	}
+
 	/**
 	 * Implement custom object reader
 	 * @param stream
