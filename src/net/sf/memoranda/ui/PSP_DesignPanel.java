@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 
+import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.util.Util;
 
 import javax.imageio.ImageIO;
@@ -60,7 +61,7 @@ public class PSP_DesignPanel extends JPanel {
 	private String path;
 	private int pID; // no setter made for pID yet. want to minimize ways to change this value.
 	private static PSP_Panel pspForm;
-	
+	private Design des;
 	//***	
 	private JList<String> lstImages;
 	private DefaultListModel<String> fileModel;
@@ -70,6 +71,19 @@ public class PSP_DesignPanel extends JPanel {
 		
 		PSP_DesignPanel.pspForm = psp;
 		this.pID = pspForm.pspI.getpId();
+		setPath((Integer.toString(pID)));
+		
+		try {
+            jbInit();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+	}
+	
+	public PSP_DesignPanel(Design design){
+		this.des = design;
+		this.pID = des.getpId();
 		setPath((Integer.toString(pID)));
 		
 		try {
@@ -213,17 +227,17 @@ public class PSP_DesignPanel extends JPanel {
 				
 				Util.debug("Up until now");
 			
-				if (selectedFile.getName().contains(".png"))
+				if (selectedFile.getName().toLowerCase().contains(".png"))
 				{
 					ImageIO.write(image, "png", new File(getPath() + File.separator + selectedFile.getName()));
 				}
-				else if (selectedFile.getName().contains(".jpg"))
+				else if (selectedFile.getName().toLowerCase().contains(".jpg"))
 				{
 					ImageIO.write(image, "jpg", new File(getPath() + File.separator + selectedFile.getName()));
-				}else if (selectedFile.getName().contains(".img"))
+				}else if (selectedFile.getName().toLowerCase().contains(".img"))
 				{
 					ImageIO.write(image, "img", new File(getPath() + File.separator + selectedFile.getName()));
-				} else if (selectedFile.getName().contains(".tif"))
+				} else if (selectedFile.getName().toLowerCase().contains(".tif"))
 				{
 					ImageIO.write(image, "tif", new File(getPath() + File.separator + selectedFile.getName()));
 				}
