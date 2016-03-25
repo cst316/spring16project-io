@@ -122,6 +122,7 @@ public class PSP_Details extends JPanel {
 		
 		JLabel label3 = new JLabel("Project Description:");		
 		txtDescription = new JTextArea();
+		txtDescription.setWrapStyleWord(true);
 		txtDescription.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -289,5 +290,14 @@ public class PSP_Details extends JPanel {
 		btnUpdate.setEnabled(isToggled);
 		txtDescription.setEditable(isToggled);
 		btnEdit.setText(isToggled ? "Cancel" : "Edit Details");		
-	}		
+	}	
+	
+	public boolean setIsDirty (boolean isDirty) {
+		this.isDirty = isDirty;
+		return isDirty;
+	}
+	
+	public boolean getIsDirty () {
+		return this.isDirty;
+	}
 }
