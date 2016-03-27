@@ -3,6 +3,7 @@ package net.sf.memoranda.psp;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,6 +18,8 @@ import net.sf.memoranda.util.Util;
 
 public class DefectImpl implements Defect {
 	
+	private static boolean isDirty = false;
+	private Psp pspVal;
 	private ArrayList<TestRowObject> testObj = new ArrayList<TestRowObject>();
 	//private String path = ""; //temp values until rest of class is implemented
 	
@@ -25,9 +28,9 @@ public class DefectImpl implements Defect {
 		//path = null;
 	}
 	
-	public DefectImpl(File file){
+	public DefectImpl(ArrayList<TestRowObject> list){
 		super();
-		//loadTestData(file.getAbsolutePath(), file.getName());
+		this.testObj = list;
 	}
 
 	@Override
@@ -50,8 +53,7 @@ public class DefectImpl implements Defect {
 
 	@Override
 	public int getpId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return pspVal.getpId();
 	}
 
 	@Override
@@ -77,108 +79,73 @@ public class DefectImpl implements Defect {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	public String getFileName() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<TestRowObject> getRow() {
+		return this.testObj;
 	}
 
 	@Override
-	public String getUserName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setUserName(String name) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int getDefectNum() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean setDefectNum(int num) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Date getDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setDate(Date date) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setType(String type) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getInjectionPhase() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setInjectionSite(String injectPhase) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getRemovalPhase() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setRemovalPhase(String removalPhase) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getFixDetails() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setFixDetails(String fix) {
-		// TODO Auto-generated method stub
+	public boolean setRow(ArrayList<TestRowObject> list) {
+		isDirty = true;
+		this.testObj = list;
 		return false;
 	}
 	
+	@Override
+	public boolean addRow(TestRowObject rowObj) {
+		try{
+			isDirty = true;
+			testObj.add(rowObj);
+		}catch(Exception e){
+			e.getMessage();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean removeRow(TestRowObject obj){
+
+		isDirty = true;
+		for( int i = 0; i < testObj.size(); ++i){
+			if(testObj.get(i) == obj){
+				testObj.remove(i);
+				return true;
+			}
+		}
+		throw new NullPointerException();
+	}
+	
 	/**
-	 * Saves row object passed in
+	 * Saves row object passed in resets isDirt value to false if status succeeds
 	 * @param obj
 	 * @return true if no errors are thrown
 	 */
 	public boolean saveData(TestRowObject obj){
-		return true;
+		boolean status = true;
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream (
+					new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
+							File.separator + pspVal.getpId() +"_defect"));
+			oos.writeObject(obj);
+			oos.close();
+		} catch (IOException e) {
+			e.getMessage();
+			status = false;
+		}catch(Exception e){
+			e.getMessage();
+			status = false;
+		}
+
+		if(status == true){
+			isDirty = false;
+		}
+		return status;
 	}
 
 	/**
-	 * Takes in raw test row data and saves file from the data 
+	 * Takes in raw test row data and saves file from the data
+	 * Saves row object and resets isDirt value to false if status succeeds 
 	 * @param date
 	 * @param defNum
 	 * @param defType
@@ -190,8 +157,31 @@ public class DefectImpl implements Defect {
 	 */
 	public boolean saveData(Date date, int defNum, String defType, String injPhase,
 			String remPhase, String fix, String fixRef){
+		boolean status = true;
+		ObjectOutputStream oos;
 		
-		return true;
+		String projectName = pspVal.getName();
+		TestRowObject tro = new TestRowObject(projectName, date, defNum, defType,
+				injPhase, remPhase, fix, fixRef);
+		
+		try {
+			oos = new ObjectOutputStream (
+					new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
+							File.separator + pspVal.getpId() +"_defect"));
+			oos.writeObject(tro);
+			oos.close();
+			
+		} catch (IOException e) {
+			e.getMessage();
+			status = false;
+		}catch(Exception e){
+			e.getMessage();
+			status = false;
+		}		
+		if(status == true){
+			isDirty = false;
+		}
+		return status;
 	}
 
 	/**
@@ -202,7 +192,7 @@ public class DefectImpl implements Defect {
 	 */
 	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		stream.defaultReadObject();
-		Util.debug("Planning retrieved");
+		Util.debug("object retrieved");
 	}
 	
 	/**
@@ -212,7 +202,11 @@ public class DefectImpl implements Defect {
 	 */
 	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
-		Util.debug("Planning wrtten");
+		Util.debug("object wrtten");
+	}
+	
+	public boolean getIsDirty(){
+		return isDirty;
 	}
 
 }

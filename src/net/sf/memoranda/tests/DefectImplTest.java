@@ -16,20 +16,26 @@ import net.sf.memoranda.psp.Defect;
 import net.sf.memoranda.psp.DefectImpl;
 import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.DesignImpl;
+import net.sf.memoranda.psp.TestRowObject;
 
 public class DefectImplTest {
 	String path;
 	File file;
 	Defect def;
+	TestRowObject tro;
 	Date date = new Date(1/1/2001);
-	String desc = "desc", filename = "filename", fxDet = "fxDet", 
-			injPoint = "injPoint",name = "name", 
-			remPhase = "remPhase", type = "type";
+	String desc = "desc", filename = "filename", fix = "fix", 
+			injPoint = "injPoint",name = "name", fixRef = "fixRef",
+			remPhase = "remPhase", type = "type", defectType = "1";
 	int pID = 123, defNum = 1234;
 	
 	@Before
 	public void setUp() throws Exception {
 		def = new DefectImpl();
+		
+		tro = new TestRowObject(name, date, defNum, defectType,
+				injPoint, remPhase, fix, fixRef);
+		
 		path =  System.getProperty("user.home") + File.separator + 
 				".memoranda" + File.separator + ".proj" + File.separator + 
 				 "." + "test";
@@ -41,27 +47,28 @@ public class DefectImplTest {
 	
 	@Test
 	public void testSaveTestData() {
-		//assertTrue(def.saveTestData(path, "defectTest"));
+		//assertTrue(def.saveData(obj));
+		//assertTrue(def.saveData( date, defNum, defType, injPhase, remPhase, fix, fixRef));
 	}
 	
 	@Test
 	public void testLoadTestData() {
 		//assertTrue(def.loadTestData(path, "defectTest"));
 	}
+	
+	@Test
+	public void testSetArr(){
+		assertTrue(def.addRow(tro));
+		assertTrue(def.getIsDirty());
+	}
 
 	@Test
 	public void testGetters() {
+
 		
-		assertEquals(def.getDate(),new Date(1/1/2001));
-		assertEquals(def.getDefectNum(),1234);
-		assertEquals(def.getDescription(), "desc");
-		assertEquals(def.getFileName(), "filename");
-		assertEquals(def.getFixDetails(), "fxDet");
-		assertEquals(def.getInjectionPhase(), "injPoint");
-		assertEquals(def.getName(), "name");
+		//assertEquals(def.getName(), "name");
 		assertEquals(def.getpId(), 123);
-		assertEquals(def.getRemovalPhase(), "remPhase");
-		assertEquals(def.getType(), "type");
+
 		
 	}
 	
