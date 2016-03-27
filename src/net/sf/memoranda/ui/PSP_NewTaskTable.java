@@ -24,7 +24,9 @@ public class PSP_NewTaskTable extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void NewScreen(String[] args) {
+	
+ 	public static void NewScreen(String[] args) {	
+//	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -75,6 +77,18 @@ public class PSP_NewTaskTable extends JFrame {
 		JButton btnEditTask = new JButton("Edit Task");
 		
 		JButton btnDeleteTask = new JButton("Delete Task");
+		
+		JButton btnTest = new JButton("test");
+		btnTest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//figured out how to dynamically populate jtable
+				//next step is to make it populate from tdarray instead of arbitrary strings
+				
+				((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{"Task X","Date X","etc."});
+				
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -89,7 +103,9 @@ public class PSP_NewTaskTable extends JFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnEditTask)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnDeleteTask)))
+							.addComponent(btnDeleteTask)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnTest)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -100,7 +116,8 @@ public class PSP_NewTaskTable extends JFrame {
 						.addComponent(btnNewTask)
 						.addComponent(btnCloseTask)
 						.addComponent(btnEditTask)
-						.addComponent(btnDeleteTask))
+						.addComponent(btnDeleteTask)
+						.addComponent(btnTest))
 					.addPreferredGap(ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
