@@ -139,13 +139,28 @@ public class PSP_NewTaskDialog extends JFrame {
 	            
 	            // print array contents to console for testing
 	            
+	            PSP_NewTaskData.showTaskData(0);
 	            PSP_NewTaskData.showTaskData(1);
+	            PSP_NewTaskData.showTaskData(2);
+	            PSP_NewTaskData.showTaskData(3);
+	            PSP_NewTaskData.showTaskData(4);
+	            PSP_NewTaskData.showTaskData(5);
+	            
 				
 				
 			}
 		});
 		
 		JButton btnCancel = new JButton("Cancel");
+		
+		JButton btnTest = new JButton("test");
+		btnTest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				System.out.println("hello world");
+				
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -169,15 +184,14 @@ public class PSP_NewTaskDialog extends JFrame {
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 										.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
 										.addGroup(gl_contentPane.createSequentialGroup()
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+											.addGap(15)
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+												.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+													.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+													.addGroup(gl_contentPane.createSequentialGroup()
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addComponent(textField_4, 0, 0, Short.MAX_VALUE)))
 												.addGroup(gl_contentPane.createSequentialGroup()
-													.addGap(15)
-													.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-														.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-														.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-															.addPreferredGap(ComponentPlacement.RELATED)
-															.addComponent(textField_4, 0, 0, Short.MAX_VALUE))))
-												.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 													.addComponent(btnOk)
 													.addPreferredGap(ComponentPlacement.RELATED)))
 											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -196,6 +210,10 @@ public class PSP_NewTaskDialog extends JFrame {
 								.addComponent(lblEstimatedTime))
 							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGap(140))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(54)
+					.addComponent(btnTest)
+					.addContainerGap(410, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -223,7 +241,9 @@ public class PSP_NewTaskDialog extends JFrame {
 						.addComponent(lblPriority)
 						.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+					.addGap(47)
+					.addComponent(btnTest)
+					.addPreferredGap(ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancel)
 						.addComponent(btnOk))
