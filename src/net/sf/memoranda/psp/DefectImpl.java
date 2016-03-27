@@ -183,6 +183,31 @@ public class DefectImpl implements Defect {
 		}
 		return status;
 	}
+	
+	/**
+	 * save serialized object
+	 * @return success of output, false if error occurs
+	 */
+	public boolean saveData(){
+		boolean status = true;
+		try{
+		ObjectOutputStream oos = new ObjectOutputStream (
+				new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
+						File.separator + pspVal.getpId() +"_defect"));
+		oos.writeObject(this.testObj);
+		oos.close();
+		}catch (IOException e) {
+			e.getMessage();
+			status = false;
+		}catch(Exception e){
+			e.getMessage();
+			status = false;
+		}		
+		if(status == true){
+			isDirty = false;
+		}
+		return status;
+	}
 
 	/**
 	 * Implement custom object reader
