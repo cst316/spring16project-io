@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 public class PSP_NewTaskTable extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
+	private static JTable table;
 
 	/**
 	 * Launch the application.
@@ -42,6 +42,15 @@ public class PSP_NewTaskTable extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	//method to insert row to table
+	
+	public static void insertRow() {
+		
+		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{"Task X","Date X","etc."});
+		
+	}
+	
 	public PSP_NewTaskTable() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 619, 517);
@@ -85,7 +94,9 @@ public class PSP_NewTaskTable extends JFrame {
 				//figured out how to dynamically populate jtable
 				//next step is to make it populate from tdarray instead of arbitrary strings
 				
-				((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{"Task X","Date X","etc."});
+				insertRow();
+				
+				//((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{"Task X","Date X","etc."});
 				
 			}
 		});

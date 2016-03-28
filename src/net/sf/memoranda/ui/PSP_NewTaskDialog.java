@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
@@ -23,6 +24,7 @@ import java.awt.event.ActionEvent;
 
 public class PSP_NewTaskDialog extends JFrame {
 
+	//public static Object[] tdarray;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -157,7 +159,9 @@ public class PSP_NewTaskDialog extends JFrame {
 		btnTest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				System.out.println("hello world");
+				PSP_NewTaskTable.insertRow();
+				
+				
 				
 			}
 		});
