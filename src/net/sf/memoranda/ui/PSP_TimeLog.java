@@ -10,6 +10,18 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.itextpdf.text.Font;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class PSP_TimeLog extends JPanel {
 	
@@ -33,69 +45,105 @@ public class PSP_TimeLog extends JPanel {
 	public void jInit () {
 		setLayout(new BorderLayout(0, 0));
 		contentPane = new JPanel();
-		contentPane.setLayout(null);
-	       
+        
         JLabel lblTimeLogEntries = new JLabel("Time Log Entries");
         lblTimeLogEntries.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 18));
         lblTimeLogEntries.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTimeLogEntries.setBounds(94, 11, 229, 26);
-        contentPane.add(lblTimeLogEntries);
         
         JLabel lblDate = new JLabel("Date");
-        lblDate.setBounds(17, 61, 46, 14);
-        contentPane.add(lblDate);
         
         JLabel lblStartTime = new JLabel("Start Time");
-        lblStartTime.setBounds(73, 61, 67, 14);
-        contentPane.add(lblStartTime);
         
         JLabel lblInterruptTime = new JLabel("Interrupt Time");
-        lblInterruptTime.setBounds(150, 61, 86, 14);
-        contentPane.add(lblInterruptTime);
         
         JLabel lblEndTime = new JLabel("End Time");
-        lblEndTime.setBounds(265, 61, 46, 14);
-        contentPane.add(lblEndTime);
         
         JLabel lblPhase = new JLabel("Phase");
-        lblPhase.setBounds(358, 61, 46, 14);
-        contentPane.add(lblPhase);
         
         dateTextField = new JTextField();
-        dateTextField.setBounds(10, 86, 67, 20);
-        contentPane.add(dateTextField);
         dateTextField.setColumns(10);
         
         startTimeTextField = new JTextField();
-        startTimeTextField.setBounds(83, 86, 67, 20);
-        contentPane.add(startTimeTextField);
         startTimeTextField.setColumns(10);
         
         interruptTimeTextField = new JTextField();
-        interruptTimeTextField.setBounds(160, 86, 86, 20);
-        contentPane.add(interruptTimeTextField);
         interruptTimeTextField.setColumns(10);
         
         endTimeTextField = new JTextField();
-        endTimeTextField.setBounds(254, 86, 86, 20);
-        contentPane.add(endTimeTextField);
         endTimeTextField.setColumns(10);
         
         phaseTextField = new JTextField();
-        phaseTextField.setBounds(354, 86, 86, 20);
-        contentPane.add(phaseTextField);
         phaseTextField.setColumns(10);
-        
-        bttnDone = new JButton();
-        bttnDone.setText("Done");
-        bttnDone.setBounds(237,193,86,20);
-        contentPane.add(bttnDone);
         
         bttnMoreEntries = new JButton();
         bttnMoreEntries.setText("More Entries");
-        bttnMoreEntries.setBounds(73,193,112,20);
-        contentPane.add(bttnMoreEntries);
+        
+        bttnDone = new JButton();
+        bttnDone.setText("Done");
         
         add(contentPane);
+        GroupLayout gl_contentPane = new GroupLayout(contentPane);
+        gl_contentPane.setHorizontalGroup(
+        	gl_contentPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_contentPane.createSequentialGroup()
+        					.addGap(83)
+        					.addComponent(bttnMoreEntries, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
+        					.addGap(141)
+        					.addComponent(bttnDone, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(gl_contentPane.createSequentialGroup()
+        					.addGap(34)
+        					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+        						.addComponent(lblTimeLogEntries)
+        						.addGroup(gl_contentPane.createSequentialGroup()
+        							.addComponent(lblDate)
+        							.addGap(53)
+        							.addComponent(lblStartTime)
+        							.addGap(31)
+        							.addComponent(lblInterruptTime)
+        							.addGap(33)))
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(lblEndTime, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+        					.addGap(15)
+        					.addComponent(lblPhase, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(gl_contentPane.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(dateTextField, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(startTimeTextField, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(interruptTimeTextField, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(endTimeTextField, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(phaseTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        			.addGap(24))
+        );
+        gl_contentPane.setVerticalGroup(
+        	gl_contentPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_contentPane.createSequentialGroup()
+        			.addComponent(lblTimeLogEntries, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        			.addGap(5)
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+        				.addComponent(lblDate, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+        					.addComponent(lblStartTime, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(lblInterruptTime, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(lblPhase, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(lblEndTime, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+        			.addGap(5)
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(dateTextField, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(startTimeTextField, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(interruptTimeTextField, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(endTimeTextField, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(phaseTextField, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+        			.addGap(60)
+        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+        				.addComponent(bttnMoreEntries, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(bttnDone, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)))
+        );
+        contentPane.setLayout(gl_contentPane);
 	}
 }
