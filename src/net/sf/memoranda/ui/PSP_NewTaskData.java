@@ -1,6 +1,8 @@
 package net.sf.memoranda.ui;
 
-public class PSP_NewTaskData {
+import java.io.Serializable;
+
+public class PSP_NewTaskData implements Serializable {
 
 	//arbitrary size (5) for testing, will change to list later 
 	// but this works for the amount of columns the NewTask fields will populate

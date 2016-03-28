@@ -14,9 +14,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.awt.event.ActionEvent;
 
-public class PSP_NewTaskTable extends JFrame {
+public class PSP_NewTaskTable extends JFrame implements Serializable {
 
 	private JPanel contentPane;
 	private static JTable table;

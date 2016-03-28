@@ -18,11 +18,12 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
-public class PSP_NewTaskDialog extends JFrame {
+public class PSP_NewTaskDialog extends JFrame implements Serializable {
 
 	//public static Object[] tdarray;
 	private JPanel contentPane;
