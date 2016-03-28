@@ -26,6 +26,10 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 public class PSP_Details extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2296973788343711385L;
 	JTextField txtProjectName;
 	JLabel lblStartDate;
 	JLabel lblProjectID;
@@ -46,9 +50,6 @@ public class PSP_Details extends JPanel {
 	}
 	
 	public void jInit () {
-		//setSize(new Dimension ((int) (pnlWizard.getWidth() * 0.8), (int) (pnlWizard.getHeight() * 0.8)));
-		//int vgap = (int) ((java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.8 - 500) / 2);
-		
 		int hgap;
 		
 		JPanel panel_1 = new JPanel();
@@ -114,14 +115,14 @@ public class PSP_Details extends JPanel {
 		JPanel panel2 = new JPanel();		
 		panel2.setBackground(Color.WHITE);
 		JLabel label2 = new JLabel("Project Name:");		
-		txtProjectName = new JTextField();
+		txtProjectName = new JTextField(pspI.getName());
 		txtProjectName.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		txtProjectName.setBackground(Color.WHITE);
 		txtProjectName.setEditable(false);
 		txtProjectName.setColumns(10);
 		
 		JLabel label3 = new JLabel("Project Description:");		
-		txtDescription = new JTextArea();
+		txtDescription = new JTextArea(pspI.getDescription());
 		txtDescription.setWrapStyleWord(true);
 		txtDescription.addFocusListener(new FocusAdapter() {
 			@Override
@@ -172,7 +173,7 @@ public class PSP_Details extends JPanel {
 		
 		JPanel panel1 = new JPanel();		
 		panel1.setBackground(Color.WHITE);
-		lblStartDate = new JLabel("");
+		lblStartDate = new JLabel(pspI.getStDate().get().getShortDateString());
 		lblStartDate.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		lblStartDate.setBackground(Color.WHITE);
 		lblStartDate.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -183,7 +184,7 @@ public class PSP_Details extends JPanel {
 		JLabel label1 = new JLabel("Project ID:");
 		label1.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		lblProjectID = new JLabel("");
+		lblProjectID = new JLabel(pspI.getpId() + "");
 		lblProjectID.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		lblProjectID.setBackground(Color.WHITE);
 		lblProjectID.setHorizontalAlignment(SwingConstants.CENTER);

@@ -5,20 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.JToolBar;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
-
 import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.Planning;
 import net.sf.memoranda.psp.PspImpl;
@@ -35,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.awt.SystemColor;
-import java.awt.Component;
 
 /**
  * 
@@ -206,13 +196,6 @@ public class PSP_Panel extends JPanel{
 			//addJPanel(new PSPTestingFrame());			
 		} else if (event.equals("PSP")){
 			PSP_Details details = new PSP_Details(pspI);					
-			details.lblStartDate.setText(pspI.getStDate().get().getMonth() + "/" + 
-			pspI.getStDate().get().getDay() + "/" + pspI.getStDate().get().getYear());
-			
-			details.lblProjectID.setText(pspI.getpId()+"");
-			details.txtProjectName.setText(pspI.getName().toString());
-			details.txtDescription.setText(pspI.getDescription());
-			
 			addJPanel (details);
 		}
 	}
