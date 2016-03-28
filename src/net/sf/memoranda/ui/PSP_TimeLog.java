@@ -7,24 +7,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 
-import com.itextpdf.text.Font;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class PSP_TimeLog extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField dateTextField;
 	private JTextField startTimeTextField;
@@ -89,8 +82,8 @@ public class PSP_TimeLog extends JPanel {
         			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
         				.addGroup(gl_contentPane.createSequentialGroup()
         					.addGap(83)
-        					.addComponent(bttnMoreEntries, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
-        					.addGap(141)
+        					.addComponent(bttnMoreEntries, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+        					.addGap(120)
         					.addComponent(bttnDone, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
         				.addGroup(gl_contentPane.createSequentialGroup()
         					.addGap(34)
