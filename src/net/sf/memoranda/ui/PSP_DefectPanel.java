@@ -269,6 +269,7 @@ public class PSP_DefectPanel extends JPanel {
 		eachLogPanel.add(fixRefLabel_1);
 		
 		JTextArea defectsKey = new JTextArea();
+		defectsKey.setToolTipText("Defect Key (use to enter in type)");
 		defectsKey.setBounds(879, 13, 342, 116);
 		defectsKey.setText("Defect Types" + 
 		"\n10 Documentation\t60 Checking" + 
