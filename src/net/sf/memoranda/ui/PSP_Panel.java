@@ -189,7 +189,7 @@ public class PSP_Panel extends JPanel{
 					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
 					File.separator + '.' + pspI.getpId() + "_defect");
 
-				PSP_DefectPanel defectPanel = new PSP_DefectPanel(test);
+				PSP_DefectPanel defectPanel = new PSP_DefectPanel();
 				addJPanel (defectPanel);							
 		} else if (event.equals("TIMELOG")) {
 			//addJPanel(new PSPTestingFrame());			
