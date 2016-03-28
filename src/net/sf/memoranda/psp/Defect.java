@@ -2,7 +2,7 @@ package net.sf.memoranda.psp;
 
 import java.util.ArrayList;
 
-public interface Defect extends Psp {
+public interface Defect{
 
 	
 	//public boolean loadTestData(String path, String name); //used in constructor elsewhere if needed
@@ -14,6 +14,8 @@ public interface Defect extends Psp {
 	public boolean setRow(ArrayList<TestRowObject> list);
 
 	public boolean addRow(TestRowObject rowObj);
+	
+	public boolean removeRow(int i);
 	
 	public boolean getIsDirty();
 }

@@ -67,7 +67,7 @@ public class DefectImplTest {
 
 		
 		//assertEquals(def.getName(), "name");
-		assertEquals(def.getpId(), 123);
+		//assertEquals(def.getpId(), 123);
 
 		
 	}

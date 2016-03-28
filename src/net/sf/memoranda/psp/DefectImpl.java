@@ -1,23 +1,16 @@
 package net.sf.memoranda.psp;
 
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
-
-import net.sf.memoranda.date.CurrentDate;
-import net.sf.memoranda.ui.ExceptionDialog;
 import net.sf.memoranda.util.Util;
 
-public class DefectImpl implements Defect {
+public class DefectImpl implements Defect, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8961650030847897462L;
 	private static boolean isDirty = false;
 	private Psp pspVal;
 	private ArrayList<TestRowObject> testObj = new ArrayList<TestRowObject>();
@@ -31,53 +24,6 @@ public class DefectImpl implements Defect {
 	public DefectImpl(ArrayList<TestRowObject> list){
 		super();
 		this.testObj = list;
-	}
-
-	@Override
-	public CurrentDate getStDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setStDate(CurrentDate stDate) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setpId(int id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getpId() {
-		return pspVal.getpId();
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setName(String name) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setDescription(String description) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
@@ -104,15 +50,11 @@ public class DefectImpl implements Defect {
 		return true;
 	}
 	
-	public boolean removeRow(TestRowObject obj){
+	public boolean removeRow(int index){
 
 		isDirty = true;
-		for( int i = 0; i < testObj.size(); ++i){
-			if(testObj.get(i) == obj){
-				testObj.remove(i);
-				return true;
-			}
-		}
+		testObj.remove(index);
+		
 		throw new NullPointerException();
 	}
 	
