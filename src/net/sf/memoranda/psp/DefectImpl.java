@@ -116,98 +116,98 @@ public class DefectImpl implements Defect {
 		throw new NullPointerException();
 	}
 	
-	/**
-	 * Saves row object passed in resets isDirt value to false if status succeeds
-	 * @param obj
-	 * @return true if no errors are thrown
-	 */
-	public boolean saveData(TestRowObject obj){
-		boolean status = true;
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream (
-					new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
-							File.separator + pspVal.getpId() +"_defect"));
-			oos.writeObject(obj);
-			oos.close();
-		} catch (IOException e) {
-			e.getMessage();
-			status = false;
-		}catch(Exception e){
-			e.getMessage();
-			status = false;
-		}
-
-		if(status == true){
-			isDirty = false;
-		}
-		return status;
-	}
-
-	/**
-	 * Takes in raw test row data and saves file from the data
-	 * Saves row object and resets isDirt value to false if status succeeds 
-	 * @param date
-	 * @param defNum
-	 * @param defType
-	 * @param injPhase
-	 * @param remPhase
-	 * @param fix
-	 * @param fixRef
-	 * @return true if no errors are thrown
-	 */
-	public boolean saveData(Date date, int defNum, String defType, String injPhase,
-			String remPhase, String fix, String fixRef){
-		boolean status = true;
-		ObjectOutputStream oos;
-		
-		String projectName = pspVal.getName();
-		TestRowObject tro = new TestRowObject(projectName, date, defNum, defType,
-				injPhase, remPhase, fix, fixRef);
-		
-		try {
-			oos = new ObjectOutputStream (
-					new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
-							File.separator + pspVal.getpId() +"_defect"));
-			oos.writeObject(tro);
-			oos.close();
-			
-		} catch (IOException e) {
-			e.getMessage();
-			status = false;
-		}catch(Exception e){
-			e.getMessage();
-			status = false;
-		}		
-		if(status == true){
-			isDirty = false;
-		}
-		return status;
-	}
-	
-	/**
-	 * save serialized object
-	 * @return success of output, false if error occurs
-	 */
-	public boolean saveData(){
-		boolean status = true;
-		try{
-		ObjectOutputStream oos = new ObjectOutputStream (
-				new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
-						File.separator + pspVal.getpId() +"_defect"));
-		oos.writeObject(this.testObj);
-		oos.close();
-		}catch (IOException e) {
-			e.getMessage();
-			status = false;
-		}catch(Exception e){
-			e.getMessage();
-			status = false;
-		}		
-		if(status == true){
-			isDirty = false;
-		}
-		return status;
-	}
+//	/**
+//	 * Saves row object passed in resets isDirt value to false if status succeeds
+//	 * @param obj
+//	 * @return true if no errors are thrown
+//	 */
+//	public boolean saveData(TestRowObject obj){
+//		boolean status = true;
+//		try {
+//			ObjectOutputStream oos = new ObjectOutputStream (
+//					new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
+//							File.separator + pspVal.getpId() +"_defect"));
+//			oos.writeObject(obj);
+//			oos.close();
+//		} catch (IOException e) {
+//			e.getMessage();
+//			status = false;
+//		}catch(Exception e){
+//			e.getMessage();
+//			status = false;
+//		}
+//
+//		if(status == true){
+//			isDirty = false;
+//		}
+//		return status;
+//	}
+//
+//	/**
+//	 * Takes in raw test row data and saves file from the data
+//	 * Saves row object and resets isDirt value to false if status succeeds 
+//	 * @param date
+//	 * @param defNum
+//	 * @param defType
+//	 * @param injPhase
+//	 * @param remPhase
+//	 * @param fix
+//	 * @param fixRef
+//	 * @return true if no errors are thrown
+//	 */
+//	public boolean saveData(Date date, int defNum, String defType, String injPhase,
+//			String remPhase, String fix, String fixRef){
+//		boolean status = true;
+//		ObjectOutputStream oos;
+//		
+//		String projectName = pspVal.getName();
+//		TestRowObject tro = new TestRowObject(projectName, date, defNum, defType,
+//				injPhase, remPhase, fix, fixRef);
+//		
+//		try {
+//			oos = new ObjectOutputStream (
+//					new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
+//							File.separator + pspVal.getpId() +"_defect"));
+//			oos.writeObject(tro);
+//			oos.close();
+//			
+//		} catch (IOException e) {
+//			e.getMessage();
+//			status = false;
+//		}catch(Exception e){
+//			e.getMessage();
+//			status = false;
+//		}		
+//		if(status == true){
+//			isDirty = false;
+//		}
+//		return status;
+//	}
+//	
+//	/**
+//	 * save serialized object
+//	 * @return success of output, false if error occurs
+//	 */
+//	public boolean saveData(){
+//		boolean status = true;
+//		try{
+//		ObjectOutputStream oos = new ObjectOutputStream (
+//				new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
+//						File.separator + pspVal.getpId() +"_defect"));
+//		oos.writeObject(this.testObj);
+//		oos.close();
+//		}catch (IOException e) {
+//			e.getMessage();
+//			status = false;
+//		}catch(Exception e){
+//			e.getMessage();
+//			status = false;
+//		}		
+//		if(status == true){
+//			isDirty = false;
+//		}
+//		return status;
+//	}
 
 	/**
 	 * Implement custom object reader
