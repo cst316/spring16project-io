@@ -5,18 +5,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JToolBar;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import net.sf.memoranda.psp.Defect;
 import net.sf.memoranda.psp.Design;
+import net.sf.memoranda.psp.Development;
 import net.sf.memoranda.psp.Planning;
 import net.sf.memoranda.psp.PspImpl;
-import net.sf.memoranda.psp.Defect;
+import net.sf.memoranda.psp.TimeLog;
 import net.sf.memoranda.util.Util;
 
 //import net.sf.memoranda.util.Configuration;
@@ -47,10 +47,15 @@ public class PSP_Panel extends JPanel{
 	public JToolBar toolBar;
 		
 	static PSP_PlanningWizardFrame pwf;
-	static PspImpl pspI;
+	static TimeLog timelog;
 	static JPanel currentView;
+	
+		
+	static PspImpl pspI;
 	static Planning plan;
+	static Defect defect;
 	static Design design;
+	static Development dev;
 
 	/**
 	 * General constructor for creating Panel
@@ -161,47 +166,67 @@ public class PSP_Panel extends JPanel{
 	 * @param event - Used to know which action to perform
 	 */
 	private void project_MouseEvent (String event) {
-		if (event.equals("NEW PROJECT")) {
-			App.getFrame().setEnabled(false);
-			toolBar.setVisible (false);
-			setEnabledFlag (lblOpenProject, getIsNeeded());
-			(new PSP_NPWizardFrame(this)).setVisible(true);			
-		} else if (event.equals("OPEN PROJECT")) {
-			if (currentView != null) {
-				Util.debug("CURRENT VIEW: " + currentView.getName());
-			}
-			openFileDialog();			
-		} else if (event.equals("PLANNING")) {
-			File fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
+		ObjectInputStream ois;
+		File fs;
+		
+		try {
+			if (event.equals("NEW PROJECT")) {
+				App.getFrame().setEnabled(false);
+				toolBar.setVisible (false);
+				setEnabledFlag (lblOpenProject, getIsNeeded());
+				(new PSP_NPWizardFrame(this)).setVisible(true);			
+			} else if (event.equals("OPEN PROJECT")) {
+				if (currentView != null) {
+					Util.debug("CURRENT VIEW: " + currentView.getName());
+				}
+				openFileDialog();			
+			} else if (event.equals("PLANNING")) {
+				fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
 					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
 					File.separator + '.' + pspI.getpId() + "_planning");
-			ObjectInputStream ois;
-			try {			
 				ois = new ObjectInputStream (new FileInputStream (fs));
-				plan = (Planning) ois.readObject();
-								
-				PSP_PlanningPanel pp = new PSP_PlanningPanel (plan);
-				addJPanel (pp);		
-			} catch (IOException | ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
-		} else if (event.equals("DESIGN")) {
-			addJPanel(new PSP_DesignPanel(this));
-			System.out.println("Yeah Design");
-		} else if (event.equals("DEFECT")) {
-			File defect_filePath = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
+				plan = (Planning) ois.readObject();									
+				addJPanel (new PSP_PlanningPanel (plan));		
+				ois.close();
+				 		
+			} else if (event.equals("DESIGN")) {
+				addJPanel(new PSP_DesignPanel(this));
+				System.out.println("Yeah Design");
+			} else if (event.equals("DEFECT")) {
+				fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
 					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
 					File.separator + '.' + pspI.getpId() + "_defect");
-
-				PSP_DefectPanel defectPanel = new PSP_DefectPanel();
-				addJPanel (defectPanel);							
-		} else if (event.equals("TIMELOG")) {
-			addJPanel(new PSP_TimeLog ());			
-			//addJPanel(new PSPTestingFrame());			
-		} else if (event.equals("PSP")){
-			PSP_Details details = new PSP_Details(pspI);					
-			addJPanel (details);
+				ois = new ObjectInputStream (new FileInputStream (fs));
+				defect = (Defect) ois.readObject();
+				addJPanel (new PSP_DefectPanel (defect));		
+				ois.close();
+			} else if (event.equals("TIMELOG")) {
+				/*fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
+					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
+					File.separator + '.' + pspI.getpId() + "_timelog");
+				ois = new ObjectInputStream (new FileInputStream (fs));
+				timelog = (TimeLog) ois.readObject();
+				addJPanel (new PSP_TimeLog (timelog));		
+				ois.close();*/
+				
+				addJPanel(new PSP_TimeLog ());							
+			} else if (event.equals("DEVELOPMENT")) {
+				/*fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
+						File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
+						File.separator + '.' + pspI.getpId() + "_development");
+					ois = new ObjectInputStream (new FileInputStream (fs));
+					dev = (Development) ois.readObject();
+					addJPanel (new PSP_NewTaskTable (dev));		
+					ois.close();*/
+				
+					addJPanel (new PSP_NewTaskTable ());
+			}	else if (event.equals("PSP")){
+				PSP_Details details = new PSP_Details(pspI);					
+				addJPanel (details);
+			}
+		}	catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -254,9 +279,11 @@ public class PSP_Panel extends JPanel{
 					project_MouseEvent ("DEFECT");
 				} else if (currentView instanceof PSP_PlanningPanel) {
 					project_MouseEvent ("PLANNING");
+				} else if (currentView instanceof PSP_NewTaskTable) {
+					project_MouseEvent ("DEVELOPMENT");				
 				} /*else if (currentView instanceof PSP_TimeLogPanel) {
 					project_MouseEvent ("PLANNING");				
-				} */ else {
+				} */else {
 					project_MouseEvent ("PSP");
 				}
 				
@@ -319,12 +346,25 @@ public class PSP_Panel extends JPanel{
 		lblDesigningProject.setPreferredSize(new Dimension(100, 50));
 		lblDesigningProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		
+		JLabel lblDevelopmentProject = new JLabel("Development");
+		lblDevelopmentProject.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDevelopmentProject.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				project_MouseEvent("DEVELOPMENT");
+			}
+		});
+		lblDevelopmentProject.setLocation(new Point (200, 50));
+		lblDevelopmentProject.setMinimumSize(new Dimension(100, 50));
+		lblDevelopmentProject.setMaximumSize(new Dimension(100, 50));
+		lblDevelopmentProject.setPreferredSize(new Dimension(100, 50));
+		lblDevelopmentProject.setFont(new Font("Dialog", Font.BOLD, 12));
+				
 		JLabel lblDefectInProject = new JLabel("Defect");
 		lblDefectInProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDefectInProject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Util.debug("DEFECT CLICKED");
 				project_MouseEvent("DEFECT");
 			}
 		});
@@ -351,6 +391,7 @@ public class PSP_Panel extends JPanel{
 		toolBar.add(lblPSP);
 		toolBar.add(lblPlanningProject);
 		toolBar.add(lblDesigningProject);
+		toolBar.add(lblDevelopmentProject);
 		toolBar.add(lblDefectInProject);
 		toolBar.add(lblTimeLogProject);				
 		toolBar.revalidate();

@@ -11,55 +11,39 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import net.sf.memoranda.psp.Development;
+
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.awt.event.ActionEvent;
 
-public class PSP_NewTaskTable extends JFrame implements Serializable {
+public class PSP_NewTaskTable extends JPanel implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1223267046325848388L;
 	private JPanel contentPane;
 	private static JTable table;
+	
+	Development devel;
 
-	/**
-	 * Launch the application.
-	 */
-	
- 	public static void NewScreen(String[] args) {	
-//	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PSP_NewTaskTable frame = new PSP_NewTaskTable();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	
-
-	
-	//method to insert row to table
-	
-	public static void insertRow() {
-		
-		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{PSP_NewTaskData.tdarray[0],PSP_NewTaskData.tdarray[2],PSP_NewTaskData.tdarray[3],PSP_NewTaskData.tdarray[5],null,PSP_NewTaskData.tdarray[4]});
-		
+	public PSP_NewTaskTable () {
+		jbInit();
 	}
 	
-	public PSP_NewTaskTable() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public PSP_NewTaskTable (Development devel) {
+		this.devel = devel;
+		jbInit();
+	}
+
+	public void jbInit() {
 		setBounds(100, 100, 619, 517);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
@@ -157,5 +141,15 @@ public class PSP_NewTaskTable extends JFrame implements Serializable {
 		));
 		scrollPane.setViewportView(table);
 		contentPane.setLayout(gl_contentPane);
+		add(contentPane);
+	}
+	
+
+	//method to insert row to table
+	
+	public static void insertRow() {
+		
+		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{PSP_NewTaskData.tdarray[0],PSP_NewTaskData.tdarray[2],PSP_NewTaskData.tdarray[3],PSP_NewTaskData.tdarray[5],null,PSP_NewTaskData.tdarray[4]});
+		
 	}
 }
