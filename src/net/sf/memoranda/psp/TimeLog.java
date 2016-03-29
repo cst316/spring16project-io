@@ -2,8 +2,7 @@ package net.sf.memoranda.psp;
 
 import java.util.Date;
 
-/**
- * 
+/** 
  * @author Cephas Armstrong-Mensah
  * @author Team-IO
  * CST316 - Spring 2016, ASU Poly
