@@ -44,11 +44,13 @@ public class PSP_NewTaskTable extends JFrame implements Serializable {
 	 * Create the frame.
 	 */
 	
+
+	
 	//method to insert row to table
 	
 	public static void insertRow() {
 		
-		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{"Task X","Date X","etc."});
+		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{PSP_NewTaskData.tdarray[0],PSP_NewTaskData.tdarray[2],PSP_NewTaskData.tdarray[3],PSP_NewTaskData.tdarray[5],null,PSP_NewTaskData.tdarray[4]});
 		
 	}
 	
