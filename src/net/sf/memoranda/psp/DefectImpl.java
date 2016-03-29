@@ -40,22 +40,27 @@ public class DefectImpl implements Defect, Serializable {
 	
 	@Override
 	public boolean addRow(TestRowObject rowObj) {
+		boolean temp = true;
 		try{
 			isDirty = true;
 			testObj.add(rowObj);
 		}catch(Exception e){
 			e.getMessage();
-			return false;
+			temp = false;
 		}
-		return true;
+		return temp;
 	}
 	
 	public boolean removeRow(int index){
-
+		boolean temp = true;
 		isDirty = true;
-		testObj.remove(index);
-		
-		throw new NullPointerException();
+		try{
+			testObj.remove(index);
+		}catch(NullPointerException e){
+			e.getMessage();
+			temp = false;
+		}
+		return temp;
 	}
 	
 //	/**

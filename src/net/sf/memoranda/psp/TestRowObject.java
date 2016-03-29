@@ -10,7 +10,7 @@ import java.util.Date;
  * CST316 - Spring 2016
  * This class is designed to easily hold and manipulate data
  * from a row in the psp testing classes (not for junit tests).
- * 03/015/2016
+ * 03/15/2016
  */
 
 public class TestRowObject implements Serializable{
