@@ -1,73 +1,102 @@
 package net.sf.memoranda.ui;
 
-import javax.swing.JFrame;
-import javax.swing.JTable;
 import java.awt.BorderLayout;
-
-import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EtchedBorder;
 
 import net.sf.memoranda.psp.Defect;
 import net.sf.memoranda.util.Local;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
-import javax.swing.JSpinner;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
-import javax.swing.JEditorPane;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JFormattedTextField;
 
 public class PSP_DefectPanel extends JPanel {
 	
-	private JTextField studentTextField;
+	private static final long serialVersionUID = 4093818888674281261L;
+	
+	/**
+	 * Main panels used in the defect panel
+	 */
+	private JPanel containsLogsPanel;
+	private JPanel eachLogPanel;
+	
+	/**
+	 * Text field variables for student, date, program
+	, program number, type, defects injected, defects removed,
+	defects fixed and the fix reference number
+	**/
+	private JTextField userTextField;
 	private JTextField dateTextField;
 	private JTextField programTextField;
 	private JTextField programNumberTextField;
-	private JTextField projectTextField_1;
-	private JTextField dateTextField_1;
-	private JTextField numberTextField_1;
-	private JTextField typeTextField_1;
-	private JTextField injectTextField_1;
-	private JTextField removeTextField_1;
-	private JTextField fixRefTextField_1;
-	private JTextField projectTextField_2;
-	private JTextField dateTextField_2;
-	private JTextField numberTextField_2;
-	private JTextField typeTextField_2;
-	private JTextField injectTextField_2;
-	private JTextField removeTextField_2;
-	private JTextField fixRefTextField_2;
-	private JTextField projectTextField_3;
-	private JTextField dateTextField_3;
-	private JTextField numberTextField_3;
-	private JTextField typeTextField_3;
-	private JTextField injectTextField_3;
-	private JTextField removeTextField_3;
-	private JTextField fixRefTextField_3;
-	private JTextField projectTextField_4;
-	private JTextField dateTextField_4;
-	private JTextField numberTextField_4;
-	private JTextField typeTextField_4;
-	private JTextField injectTextField_4;
-	private JTextField removeTextField_4;
-	private JTextField fixRefTextField_4;
+	private JTextField typeTextField;
+	private JTextField injectTextField;
+	private JTextField removeTextField;
+	private JTextField fixTextField;
+	private JTextField fixRefTextField;
 	
-	private JPanel containsLogsPanel;
-	private JPanel eachLogPanel_1;
+	/**
+	 * Label variables for project name, date and defect number
+	 */
+	private JLabel projectLabel;
+	private JLabel dateLabel;
+	private JLabel numberLabel;
+	
+	/**
+	 * Button variables for adding and editing defect logs
+	 */
+	private JButton addButton;
+	private JButton editButton;
+
+	/**
+	 * List variables that stores a list of each of the attributes above
+	 */
+	private List <JLabel> projectLabelList = new ArrayList <JLabel>();
+	private List <JLabel> dateLabelList = new ArrayList <JLabel>();
+	private List <JLabel> numberLabelList = new ArrayList <JLabel>();
+	private List <JTextField> typeTextFieldList = new ArrayList <JTextField>();
+	private List <JTextField> injectTextFieldList = new ArrayList <JTextField>();
+	private List <JTextField> removeTextFieldList = new ArrayList <JTextField>();
+	private List <JTextField> fixTextFieldList = new ArrayList <JTextField>();
+	private List <JTextField> fixRefTextFieldList = new ArrayList <JTextField>();
+	private List <JPanel> addDefectPanelsList = new ArrayList <JPanel> ();
+	private List <JButton> addButtonList = new ArrayList <JButton> ();
+	private List <JButton> editButtonList = new ArrayList <JButton> ();
+	
+	/**
+	 * Panels used to store each defect and to allow users to scroll  
+	 */
+	private JPanel eachDefect_panel;
+	private JPanel mainDefectPanel;
+	private JScrollPane scrollPaneDefectLog;
+	
+	/**
+	 * Update button saves all current defect logs
+	 */
+	private JButton update;
+	
+	/**
+	 * isDirty is used to keep track of changes, count keeps
+	 * track of each defect log and d is used for labels and
+	 * text fields that require a date
+	 */
+	static boolean isDirty;
+	int count = 1;
+	Date d = new Date();
 	
 	//Taken from PSP_NPWizardFrame by Cephas M. to make 
 	//frame compatible to the main panel
@@ -95,7 +124,7 @@ public class PSP_DefectPanel extends JPanel {
 	}
 	
 	public PSP_DefectPanel(Defect test) {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	//Taken from PSP_NPWizardFrame by Cephas M. to make 
@@ -110,7 +139,9 @@ public class PSP_DefectPanel extends JPanel {
 		return psp;
 	}
 	
-	
+	/**
+	 * Initialization of GUI components
+	 */
 	public void jbInit() {
 		setLayout(null);
 		this.setBackground(Color.WHITE);
@@ -125,51 +156,62 @@ public class PSP_DefectPanel extends JPanel {
 		"\n50 Interface\t\t100 Environment");
 		
 		defectContentKey.setBounds(897, 13, 343, 121);
+		defectContentKey.setToolTipText("Defect Key");
 		defectContentKey.setEditable(false);
 
 		
-		JLabel studentLabel = new JLabel("Student:");
-		studentLabel.setBounds(37, 49, 56, 16);
-		add(studentLabel);
+		JLabel userLabel = new JLabel("User:");
+		userLabel.setBounds(37, 49, 56, 16);
+		userLabel.setToolTipText("Your Name");
+		add(userLabel);
 		
 		JLabel dateLabel = new JLabel("Date:");
+		dateLabel.setToolTipText("Date");
 		dateLabel.setBounds(37, 101, 56, 16);
 		add(dateLabel);
 		
 		JLabel programLabel = new JLabel("Program:");
+		programLabel.setToolTipText("Program name");
 		programLabel.setBounds(270, 49, 56, 16);
 		add(programLabel);
 		
 		JLabel programNoLabel = new JLabel("Program #:");
+		programNoLabel.setToolTipText("Program Number");
 		programNoLabel.setBounds(268, 101, 87, 16);
 		add(programNoLabel);
 		
-		studentTextField = new JTextField();
-		studentTextField.setText("");
-		studentTextField.setColumns(10);
-		studentTextField.setBounds(92, 46, 166, 22);
-		add(studentTextField);
+		userTextField = new JTextField();
+		userTextField.setToolTipText("Enter your name\r\n");
+		userTextField.setText("");
+		userTextField.setColumns(10);
+		userTextField.setBounds(92, 46, 166, 22);
+		add(userTextField);
 		
 		dateTextField = new JTextField();
+		dateTextField.setToolTipText("Current date\r\n");
 		dateTextField.setText("");
 		dateTextField.setColumns(10);
 		dateTextField.setBounds(92, 98, 166, 22);
+		dateTextField.setText(d.toString().trim());
 		add(dateTextField);
 		
 		programTextField = new JTextField();
+		programTextField.setToolTipText("Name of what you're working on\r\n\r\n");
 		programTextField.setText("");
 		programTextField.setColumns(10);
 		programTextField.setBounds(344, 48, 166, 22);
 		add(programTextField);
 		
 		programNumberTextField = new JTextField();
-		programNumberTextField.setText("");
+		programNumberTextField.setToolTipText("Program number (auto-generated)\r\n");
+		programNumberTextField.setText("" + serialVersionUID);
 		programNumberTextField.setColumns(10);
 		programNumberTextField.setBounds(344, 98, 166, 22);
 		add(programNumberTextField);
 		
 		JLabel testingFrameTitleLbl = new JLabel
-				("Testing and Defects Page");
+				("Defects Log");
+		testingFrameTitleLbl.setToolTipText("Defects Log");
 		testingFrameTitleLbl.setBounds(590, 16, 159, 16);
 		add(testingFrameTitleLbl);
 		
@@ -179,453 +221,55 @@ public class PSP_DefectPanel extends JPanel {
 		containsLogsPanel.setLayout(null);
 		containsLogsPanel.setBackground(Color.WHITE);
 		
-	
 		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(1203, 192, 21, 48);
-		containsLogsPanel.add(scrollBar);
-		
-		
-		eachLogPanel_1 = new JPanel();
-		eachLogPanel_1.setBounds(12, 13, 1153, 77);
-		containsLogsPanel.add(eachLogPanel_1);
-		eachLogPanel_1.setLayout(null);
-		eachLogPanel_1.setBackground(Color.WHITE);
+		eachLogPanel = new JPanel();
+		eachLogPanel.setBounds(12, 13, 1153, 42);
+		containsLogsPanel.add(eachLogPanel);
+		eachLogPanel.setLayout(null);
+		eachLogPanel.setBackground(Color.WHITE);
 		
 		JLabel projectLabel_1 = new JLabel("Project");
-		projectLabel_1.setBounds(66, 13, 49, 22);
-		eachLogPanel_1.add(projectLabel_1);
-		
-		projectTextField_1 = new JTextField();
-		projectTextField_1.setColumns(10);
-		projectTextField_1.setBounds(12, 42, 147, 22);
-		eachLogPanel_1.add(projectTextField_1);
+		projectLabel_1.setToolTipText("Project name");
+		projectLabel_1.setBounds(25, 13, 49, 22);
+		eachLogPanel.add(projectLabel_1);
 		
 		JLabel dateLabel_1 = new JLabel("Date");
-		dateLabel_1.setBounds(220, 13, 56, 16);
-		eachLogPanel_1.add(dateLabel_1);
-		
-		dateTextField_1 = new JTextField();
-		dateTextField_1.setColumns(10);
-		dateTextField_1.setBounds(188, 42, 87, 22);
-		eachLogPanel_1.add(dateTextField_1);
+		dateLabel_1.setToolTipText("Date");
+		dateLabel_1.setBounds(216, 16, 56, 16);
+		eachLogPanel.add(dateLabel_1);
 		
 		JLabel numberLabel_1 = new JLabel("Number");
-		numberLabel_1.setBounds(321, 13, 56, 16);
-		eachLogPanel_1.add(numberLabel_1);
-		
-		numberTextField_1 = new JTextField();
-		numberTextField_1.setColumns(10);
-		numberTextField_1.setBounds(298, 42, 87, 22);
-		eachLogPanel_1.add(numberTextField_1);
+		numberLabel_1.setToolTipText("Number");
+		numberLabel_1.setBounds(348, 16, 56, 16);
+		eachLogPanel.add(numberLabel_1);
 		
 		JLabel typeLabel_1 = new JLabel("Type");
-		typeLabel_1.setBounds(433, 13, 56, 16);
-		eachLogPanel_1.add(typeLabel_1);
-		
-		typeTextField_1 = new JTextField();
-		typeTextField_1.setColumns(10);
-		typeTextField_1.setBounds(410, 42, 87, 22);
-		eachLogPanel_1.add(typeTextField_1);
+		typeLabel_1.setToolTipText("Defect Type");
+		typeLabel_1.setBounds(443, 16, 56, 16);
+		eachLogPanel.add(typeLabel_1);
 		
 		JLabel injectLabel_1 = new JLabel("Inject");
-		injectLabel_1.setBounds(540, 13, 56, 16);
-		eachLogPanel_1.add(injectLabel_1);
-		
-		injectTextField_1 = new JTextField();
-		injectTextField_1.setColumns(10);
-		injectTextField_1.setBounds(521, 42, 87, 22);
-		eachLogPanel_1.add(injectTextField_1);
+		injectLabel_1.setToolTipText("Number of Defects Injected\r\n");
+		injectLabel_1.setBounds(551, 16, 56, 16);
+		eachLogPanel.add(injectLabel_1);
 		
 		JLabel removeLabel_1 = new JLabel("Remove");
-		removeLabel_1.setBounds(652, 13, 56, 16);
-		eachLogPanel_1.add(removeLabel_1);
-		
-		removeTextField_1 = new JTextField();
-		removeTextField_1.setColumns(10);
-		removeTextField_1.setBounds(635, 42, 87, 22);
-		eachLogPanel_1.add(removeTextField_1);
+		removeLabel_1.setToolTipText("Number of Defects Removed");
+		removeLabel_1.setBounds(664, 16, 56, 16);
+		eachLogPanel.add(removeLabel_1);
 		
 		JLabel fixLabel_1 = new JLabel("Fix");
-		fixLabel_1.setBounds(827, 13, 56, 16);
-		eachLogPanel_1.add(fixLabel_1);
-		
-		JTextField fixEditorPane_1 = new JTextField();
-		fixEditorPane_1.setBounds(738, 42, 216, 22);
-		eachLogPanel_1.add(fixEditorPane_1);
+		fixLabel_1.setToolTipText("Number of Defects Fixed");
+		fixLabel_1.setBounds(799, 16, 56, 16);
+		eachLogPanel.add(fixLabel_1);
 		
 		JLabel fixRefLabel_1 = new JLabel("Fix Ref.");
-		fixRefLabel_1.setBounds(973, 13, 56, 16);
-		eachLogPanel_1.add(fixRefLabel_1);
-		
-		fixRefTextField_1 = new JTextField();
-		fixRefTextField_1.setColumns(10);
-		fixRefTextField_1.setBounds(966, 42, 70, 22);
-		eachLogPanel_1.add(fixRefTextField_1);
-		
-		JButton addButton = new JButton();
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
-		addButton.setBounds(1068, 31, 49, 33);
-		addButton.setContentAreaFilled(false);
-		addButton.setBorderPainted(false);
-		addButton.setIcon( new ImageIcon
-				(net.sf.memoranda.ui.AppFrame.class.getResource
-						("resources/icons/plus.png")));
-		eachLogPanel_1.add(addButton);
-		
-		JButton editButton = new JButton();
-		editButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eachLogPanel_1.setEnabled(true);
-				eachLogPanel_1.setBackground(Color.WHITE);
-			}
-		});
-		
-		editButton.setBounds(1116, 42, 25, 16);
-		editButton.setContentAreaFilled(false);
-		editButton.setBorderPainted(false);
-		editButton.setIcon( new ImageIcon
-				(net.sf.memoranda.ui.AppFrame.class.getResource
-						("resources/icons/editproject.png")));
-		eachLogPanel_1.add(editButton);
-		
-		JPanel eachLogPanel_2 = new JPanel();
-		eachLogPanel_2.setLayout(null);
-		eachLogPanel_2.setBounds(12, 122, 1153, 77);
-		eachLogPanel_2.setBackground(Color.WHITE);
-		containsLogsPanel.add(eachLogPanel_2);
-		
-		JLabel projectLabel_2 = new JLabel("Project");
-		projectLabel_2.setBounds(66, 13, 49, 22);
-		eachLogPanel_2.add(projectLabel_2);
-		
-		projectTextField_2 = new JTextField();
-		projectTextField_2.setColumns(10);
-		projectTextField_2.setBounds(12, 42, 147, 22);
-		eachLogPanel_2.add(projectTextField_2);
-		
-		JLabel dateLabel_2 = new JLabel("Date");
-		dateLabel_2.setBounds(220, 13, 56, 16);
-		eachLogPanel_2.add(dateLabel_2);
-		
-		dateTextField_2 = new JTextField();
-		dateTextField_2.setColumns(10);
-		dateTextField_2.setBounds(188, 42, 87, 22);
-		eachLogPanel_2.add(dateTextField_2);
-		
-		JLabel numberLabel_2 = new JLabel("Number");
-		numberLabel_2.setBounds(321, 13, 56, 16);
-		eachLogPanel_2.add(numberLabel_2);
-		
-		numberTextField_2 = new JTextField();
-		numberTextField_2.setColumns(10);
-		numberTextField_2.setBounds(298, 42, 87, 22);
-		eachLogPanel_2.add(numberTextField_2);
-		
-		JLabel typeLabel_2 = new JLabel("Type");
-		typeLabel_2.setBounds(433, 13, 56, 16);
-		eachLogPanel_2.add(typeLabel_2);
-		
-		typeTextField_2 = new JTextField();
-		typeTextField_2.setColumns(10);
-		typeTextField_2.setBounds(410, 42, 87, 22);
-		eachLogPanel_2.add(typeTextField_2);
-		
-		JLabel injectLabel_2 = new JLabel("Inject");
-		injectLabel_2.setBounds(540, 13, 56, 16);
-		eachLogPanel_2.add(injectLabel_2);
-		
-		injectTextField_2 = new JTextField();
-		injectTextField_2.setColumns(10);
-		injectTextField_2.setBounds(521, 42, 87, 22);
-		eachLogPanel_2.add(injectTextField_2);
-		
-		JLabel removeLabel_2 = new JLabel("Remove");
-		removeLabel_2.setBounds(652, 13, 56, 16);
-		eachLogPanel_2.add(removeLabel_2);
-		
-		removeTextField_2 = new JTextField();
-		removeTextField_2.setColumns(10);
-		removeTextField_2.setBounds(635, 42, 87, 22);
-		eachLogPanel_2.add(removeTextField_2);
-		
-		JLabel fixLabel_2 = new JLabel("Fix");
-		fixLabel_2.setBounds(827, 13, 56, 16);
-		eachLogPanel_2.add(fixLabel_2);
-		
-		JTextField fixEditorPane_2 = new JTextField();
-		fixEditorPane_2.setBounds(738, 42, 216, 22);
-		eachLogPanel_2.add(fixEditorPane_2);
-		
-		JLabel fixRefLabel_2 = new JLabel("Fix Ref.");
-		fixRefLabel_2.setBounds(973, 13, 56, 16);
-		eachLogPanel_2.add(fixRefLabel_2);
-		
-		fixRefTextField_2 = new JTextField();
-		fixRefTextField_2.setColumns(10);
-		fixRefTextField_2.setBounds(966, 42, 70, 22);
-		eachLogPanel_2.add(fixRefTextField_2);
-		
-		JButton addButton_2 = new JButton();
-		addButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		addButton_2.setBounds(1068, 30, 49, 33);
-		addButton_2.setContentAreaFilled(false);
-		addButton_2.setBorderPainted(false);
-		addButton_2.setIcon( 
-				new ImageIcon(
-						net.sf.memoranda.ui.AppFrame.class.getResource
-						("resources/icons/plus.png")));
-		eachLogPanel_2.add(addButton_2);
-		
-		JButton editButton_2 = new JButton();
-		editButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eachLogPanel_2.setEnabled(true);
-				eachLogPanel_2.setBackground(Color.WHITE);
-			}
-		});
-		
-		editButton_2.setContentAreaFilled(false);
-		editButton_2.setBorderPainted(false);
-		editButton_2.setBounds(1116, 41, 25, 16);
-		editButton_2.setIcon( 
-				new ImageIcon(
-						net.sf.memoranda.ui.AppFrame.class.getResource
-						("resources/icons/editproject.png")));
-		eachLogPanel_2.add(editButton_2);
-		
-		JPanel eachLogPanel_3 = new JPanel();
-		eachLogPanel_3.setLayout(null);
-		eachLogPanel_3.setBounds(12, 229, 1153, 77);
-		eachLogPanel_3.setBackground(Color.WHITE);
-		containsLogsPanel.add(eachLogPanel_3);
-		
-		JLabel projectLabel_3 = new JLabel("Project");
-		projectLabel_3.setBounds(66, 13, 49, 22);
-		eachLogPanel_3.add(projectLabel_3);
-		
-		projectTextField_3 = new JTextField();
-		projectTextField_3.setColumns(10);
-		projectTextField_3.setBounds(12, 42, 147, 22);
-		eachLogPanel_3.add(projectTextField_3);
-		
-		JLabel dateLabel_3 = new JLabel("Date");
-		dateLabel_3.setBounds(220, 13, 56, 16);
-		eachLogPanel_3.add(dateLabel_3);
-		
-		dateTextField_3 = new JTextField();
-		dateTextField_3.setColumns(10);
-		dateTextField_3.setBounds(188, 42, 87, 22);
-		eachLogPanel_3.add(dateTextField_3);
-		
-		JLabel numberLabel_3 = new JLabel("Number");
-		numberLabel_3.setBounds(321, 13, 56, 16);
-		eachLogPanel_3.add(numberLabel_3);
-		
-		numberTextField_3 = new JTextField();
-		numberTextField_3.setColumns(10);
-		numberTextField_3.setBounds(298, 42, 87, 22);
-		eachLogPanel_3.add(numberTextField_3);
-		
-		JLabel typeLabel_3 = new JLabel("Type");
-		typeLabel_3.setBounds(433, 13, 56, 16);
-		eachLogPanel_3.add(typeLabel_3);
-		
-		typeTextField_3 = new JTextField();
-		typeTextField_3.setColumns(10);
-		typeTextField_3.setBounds(410, 42, 87, 22);
-		eachLogPanel_3.add(typeTextField_3);
-		
-		JLabel injectLabel_3 = new JLabel("Inject");
-		injectLabel_3.setBounds(540, 13, 56, 16);
-		eachLogPanel_3.add(injectLabel_3);
-		
-		injectTextField_3 = new JTextField();
-		injectTextField_3.setColumns(10);
-		injectTextField_3.setBounds(521, 42, 87, 22);
-		eachLogPanel_3.add(injectTextField_3);
-		
-		JLabel removeLabel_3 = new JLabel("Remove");
-		removeLabel_3.setBounds(652, 13, 56, 16);
-		eachLogPanel_3.add(removeLabel_3);
-		
-		removeTextField_3 = new JTextField();
-		removeTextField_3.setColumns(10);
-		removeTextField_3.setBounds(635, 42, 87, 22);
-		eachLogPanel_3.add(removeTextField_3);
-		
-		JLabel fixLabel_3 = new JLabel("Fix");
-		fixLabel_3.setBounds(827, 13, 56, 16);
-		eachLogPanel_3.add(fixLabel_3);
-		
-		JTextField fixEditorPane_3 = new JTextField();
-		fixEditorPane_3.setBounds(738, 42, 216, 22);
-		eachLogPanel_3.add(fixEditorPane_3);
-		
-		JLabel fixRefLabel_3 = new JLabel("Fix Ref.");
-		fixRefLabel_3.setBounds(973, 13, 56, 16);
-		eachLogPanel_3.add(fixRefLabel_3);
-		
-		fixRefTextField_3 = new JTextField();
-		fixRefTextField_3.setColumns(10);
-		fixRefTextField_3.setBounds(966, 42, 70, 22);
-		eachLogPanel_3.add(fixRefTextField_3);
-		
-		JButton addButton_3 = new JButton();
-		addButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		addButton_3.setBounds(1068, 35, 49, 28);
-		addButton_3.setContentAreaFilled(false);
-		addButton_3.setBorderPainted(false);
-		addButton_3.setIcon( new ImageIcon
-				(net.sf.memoranda.ui.AppFrame.class.getResource
-						("resources/icons/plus.png")));
-		eachLogPanel_3.add(addButton_3);
-		
-		JButton editButton_3 = new JButton();
-		editButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eachLogPanel_3.setEnabled(true);
-				eachLogPanel_3.setBackground(Color.WHITE);
-			}
-		});
-		editButton_3.setContentAreaFilled(false);
-		editButton_3.setBorderPainted(false);
-		editButton_3.setBounds(1116, 41, 25, 16);
-		editButton_3.setIcon( new ImageIcon(
-				net.sf.memoranda.ui.AppFrame.class.getResource
-				("resources/icons/editproject.png")));
-		eachLogPanel_3.add(editButton_3);
-		
-		JPanel eachLogPanel_4 = new JPanel();
-		eachLogPanel_4.setLayout(null);
-		eachLogPanel_4.setBounds(12, 352, 1153, 77);
-		eachLogPanel_4.setBackground(Color.WHITE);
-		containsLogsPanel.add(eachLogPanel_4);
-		
-		JLabel projectLabel_4 = new JLabel("Project");
-		projectLabel_4.setBounds(66, 13, 49, 22);
-		eachLogPanel_4.add(projectLabel_4);
-		
-		projectTextField_4 = new JTextField();
-		projectTextField_4.setColumns(10);
-		projectTextField_4.setBounds(12, 42, 147, 22);
-		eachLogPanel_4.add(projectTextField_4);
-		
-		JLabel dateLabel_4 = new JLabel("Date");
-		dateLabel_4.setBounds(220, 13, 56, 16);
-		eachLogPanel_4.add(dateLabel_4);
-		
-		dateTextField_4 = new JTextField();
-		dateTextField_4.setColumns(10);
-		dateTextField_4.setBounds(188, 42, 87, 22);
-		eachLogPanel_4.add(dateTextField_4);
-		
-		JLabel numberLabel_4 = new JLabel("Number");
-		numberLabel_4.setBounds(321, 13, 56, 16);
-		eachLogPanel_4.add(numberLabel_4);
-		
-		numberTextField_4 = new JTextField();
-		numberTextField_4.setColumns(10);
-		numberTextField_4.setBounds(298, 42, 87, 22);
-		eachLogPanel_4.add(numberTextField_4);
-		
-		JLabel typeLabel_4 = new JLabel("Type");
-		typeLabel_4.setBounds(433, 13, 56, 16);
-		eachLogPanel_4.add(typeLabel_4);
-		
-		typeTextField_4 = new JTextField();
-		typeTextField_4.setColumns(10);
-		typeTextField_4.setBounds(410, 42, 87, 22);
-		eachLogPanel_4.add(typeTextField_4);
-		
-		JLabel injectLabel_4 = new JLabel("Inject");
-		injectLabel_4.setBounds(540, 13, 56, 16);
-		eachLogPanel_4.add(injectLabel_4);
-		
-		injectTextField_4 = new JTextField();
-		injectTextField_4.setColumns(10);
-		injectTextField_4.setBounds(521, 42, 87, 22);
-		eachLogPanel_4.add(injectTextField_4);
-		
-		JLabel removeLabel_4 = new JLabel("Remove");
-		removeLabel_4.setBounds(652, 13, 56, 16);
-		eachLogPanel_4.add(removeLabel_4);
-		
-		removeTextField_4 = new JTextField();
-		removeTextField_4.setColumns(10);
-		removeTextField_4.setBounds(635, 42, 87, 22);
-		eachLogPanel_4.add(removeTextField_4);
-		
-		JLabel fixLabel_4 = new JLabel("Fix");
-		fixLabel_4.setBounds(827, 13, 56, 16);
-		eachLogPanel_4.add(fixLabel_4);
-		
-		JTextField fixEditorPane_4 = new JTextField();
-		fixEditorPane_4.setBounds(738, 42, 216, 22);
-		eachLogPanel_4.add(fixEditorPane_4);
-		
-		JLabel fixRefLabel_4 = new JLabel("Fix Ref.");
-		fixRefLabel_4.setBounds(973, 13, 56, 16);
-		eachLogPanel_4.add(fixRefLabel_4);
-		
-		fixRefTextField_4 = new JTextField();
-		fixRefTextField_4.setColumns(10);
-		fixRefTextField_4.setBounds(966, 42, 70, 22);
-		eachLogPanel_4.add(fixRefTextField_4);
-		
-		JButton addButton_4 = new JButton();
-		addButton_4.setBounds(1068, 30, 49, 33);
-		addButton_4.setBorderPainted(false);
-		addButton_4.setContentAreaFilled(false);
-		addButton_4.setIcon( new ImageIcon(
-				net.sf.memoranda.ui.AppFrame.class.getResource
-				("resources/icons/plus.png")));
-		eachLogPanel_4.add(addButton_4);
-		
-		JButton editButton_4 = new JButton();
-		editButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eachLogPanel_4.setEnabled(true);
-				eachLogPanel_4.setBackground(Color.WHITE);
-			}
-		});
-		editButton_4.setContentAreaFilled(false);
-		editButton_4.setBorderPainted(false);
-		editButton_4.setBounds(1116, 41, 25, 16);
-		editButton_4.setIcon( new ImageIcon
-				(net.sf.memoranda.ui.AppFrame.class.getResource
-						("resources/icons/editproject.png")));
-		eachLogPanel_4.add(editButton_4);
-		
-		JButton update = new JButton("Update");
-		update.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eachLogPanel_1.setEnabled(false);
-				eachLogPanel_2.setEnabled(false);
-				eachLogPanel_3.setEnabled(false);
-				eachLogPanel_4.setEnabled(false);
-				eachLogPanel_1.setBackground(Color.gray);
-				eachLogPanel_2.setBackground(Color.gray);
-				eachLogPanel_3.setBackground(Color.gray);
-				eachLogPanel_4.setBackground(Color.gray);
-			}
-		});
-		update.setBounds(1019, 455, 97, 25);
-		update.setToolTipText("Update values");
-		containsLogsPanel.add(update);
+		fixRefLabel_1.setToolTipText("Fix reference number (auto-generated)");
+		fixRefLabel_1.setBounds(918, 16, 56, 16);
+		eachLogPanel.add(fixRefLabel_1);
 		
 		JTextArea defectsKey = new JTextArea();
+		defectsKey.setToolTipText("Defect Key (use to enter in type)");
 		defectsKey.setBounds(879, 13, 342, 116);
 		defectsKey.setText("Defect Types" + 
 		"\n10 Documentation\t60 Checking" + 
@@ -636,5 +280,289 @@ public class PSP_DefectPanel extends JPanel {
 		defectsKey.setEditable(false);
 		add(defectsKey);
 		
+		update = new JButton("Update");
+		update.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(App.getFrame(),
+						Local.getString("Updated and Saved!"));
+				for (int i = 0; i < addButtonList.size(); i++) {
+					typeTextFieldList.get(i).setEditable(false);
+					injectTextFieldList.get(i).setEditable(false);
+					removeTextFieldList.get(i).setEditable(false);
+					fixTextFieldList.get(i).setEditable(false);
+					fixRefTextFieldList.get(i).setEditable(false);
+				}
+			}
+		});
+		update.setBounds(1047, 394, 97, 25);
+		update.setToolTipText("Update Defect Characteristics");
+		containsLogsPanel.add(update);
+		
+		mainDefectPanel = new JPanel();
+		mainDefectPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		mainDefectPanel.setBounds(12, 57, 1212, 324);
+		containsLogsPanel.add(mainDefectPanel);
+		mainDefectPanel.setBackground(Color.WHITE);
+		mainDefectPanel.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(12, 13, 1120, 300);
+		mainDefectPanel.add(panel_1);
+		panel_1.setLayout(new BorderLayout());
+		
+		scrollPaneDefectLog = new JScrollPane();
+		scrollPaneDefectLog.setBorder(null);
+		panel_1.add(scrollPaneDefectLog);
+		scrollPaneDefectLog.setHorizontalScrollBarPolicy
+				(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);		
+		
+		eachDefect_panel = new JPanel();
+		scrollPaneDefectLog.setViewportView(eachDefect_panel);
+		eachDefect_panel.setLayout(null);
+		eachDefect_panel.setBackground(Color.WHITE);
+		
+		createDefectLogPanel();
+		
+		isDirty  = true; 
+		
+	}
+	
+	/**
+	 * Adds a defect log
+	 */
+	//Similar to Cephas's implementation in PSP_PlanningWizardFrame.java
+	private void createDefectLogPanel () {	
+		JPanel holdItems = new JPanel();
+		
+		int width = 1153;
+		int height = 35;
+		int x = 0;
+		int y = (addDefectPanelsList.size() == 0 ? 0 : 
+			addDefectPanelsList.get(addDefectPanelsList.size() - 1).getY() + height + 5);
+
+		addButton = new JButton("");
+		addButton.setToolTipText("Add a Defect");
+		addButton.setBorder(null);
+		addButton.setBounds(962, 0, 97, 25);
+		addButton.setBackground(Color.WHITE);
+		addButtonList.add(addButton);
+		
+		editButton = new JButton("");
+		editButton.setBorder(null);
+		editButton.setBounds(1025, 0, 97, 25);
+		editButton.setBackground(Color.WHITE);
+		editButton.setToolTipText("Edit Defects");
+		//From http://findicons.com/icon/180634/pencil_medium?id=377514
+		editButton.setIcon(
+	            new ImageIcon(
+	                net.sf.memoranda.ui.AppFrame.class.getResource
+	                ("resources/icons/pencilsmall.png")));
+		editButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for(int i = 0; i <= addButtonList.size()-1; i++)
+				{
+					typeTextFieldList.get(i).setEditable(true);
+					typeTextFieldList.get(i).setEditable(true);
+					injectTextFieldList.get(i).setEditable(true);
+					removeTextFieldList.get(i).setEditable(true);
+					fixTextFieldList.get(i).setEditable(true);
+					fixRefTextFieldList.get(i).setEditable(true);
+				}
+						JOptionPane.showMessageDialog(App.getFrame(), 
+								Local.getString("You can now edit this and all"
+										+ " other defects!"));
+						isDirty  = true; 
+			}
+		});
+		editButtonList.add(editButton);
+		
+	
+		projectLabel = new JLabel();
+		projectLabel.setBounds(0, 0, 147, 22);
+		projectLabel.setText("Current Project");
+		projectLabel.setToolTipText("Project's name");
+		projectLabelList.add(projectLabel);
+		isDirty  = true; 
+		
+		dateLabel = new JLabel();
+		dateLabel.setBounds(120, 0, 180, 25);
+		dateLabel.setText(d.toString());
+		dateLabel.setToolTipText("Date");
+		dateLabelList.add(dateLabel);
+		isDirty  = true; 
+		
+		numberLabel = new JLabel();
+		numberLabel.setBounds(298, 0, 87, 22);
+		numberLabel.setText("                 "
+				+ count);
+		numberLabel.setToolTipText("Defect Number");
+		numberLabelList.add(numberLabel);
+		isDirty  = true; 
+		
+		typeTextField = new JTextField();
+		typeTextField.setBounds(410, 0, 87, 22);
+		typeTextField.setColumns(10);
+		typeTextField.setToolTipText("Defect Type");
+		typeTextFieldList.add(typeTextField);
+		isDirty  = true; 
+		
+		injectTextField = new JTextField();
+		injectTextField.setBounds(521, 0, 87, 22);
+		injectTextField.setColumns(10);
+		injectTextField.setToolTipText("Number of Defects Inject");
+		injectTextFieldList.add(injectTextField);
+		isDirty  = true; 
+		
+		removeTextField = new JTextField();
+		removeTextField.setBounds(635, 0, 87, 22);
+		removeTextField.setColumns(10);
+		removeTextField.setToolTipText("Defects Removed");
+		removeTextFieldList.add(removeTextField);
+		isDirty  = true; 
+		
+		fixTextField = new JTextField();
+		fixTextField.setBounds(738, 0, 130, 22);
+		fixTextField.setColumns(10);
+		fixTextField.setToolTipText("Defects fixed");
+		fixTextFieldList.add(fixTextField);
+		isDirty  = true; 
+		
+		fixRefTextField = new JTextField();
+		fixRefTextField.setBounds(890, 0, 70, 22);
+		fixRefTextField.setToolTipText("Fix Reference Number");
+		fixRefTextField.setColumns(10);
+		for(int countFixRef = 1; countFixRef <= addButtonList.size(); countFixRef++)
+		{
+			fixRefTextField.setText("00" + countFixRef + "00");
+			isDirty  = true; 
+		}
+		fixRefTextFieldList.add(fixRefTextField);
+		
+		holdItems.setBackground(Color.WHITE);
+		holdItems.setLayout(null);
+		holdItems.add(projectLabel);
+		holdItems.add(dateLabel);
+		holdItems.add(numberLabel);
+		holdItems.add(typeTextField);
+		holdItems.add(injectTextField);
+		holdItems.add(removeTextField);
+		holdItems.add(fixTextField);
+		holdItems.add(fixRefTextField);
+		holdItems.add(addButton);
+		holdItems.add(editButton);
+		holdItems.setBounds(x, y, width, height);
+		addDefectPanelsList.add(holdItems);
+		
+		
+		removeDefectActionListener(addButtonList);
+		repaintPanel (addDefectPanelsList, addButtonList, eachDefect_panel);
+		addDefectLogActionListner(addButtonList);
+		eachDefect_panel.setPreferredSize(new Dimension (width, y + height));
+		scrollPaneDefectLog.setVerticalScrollBarPolicy
+			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+	}
+	
+	/**
+	 * Removes a defect log
+	 * @param e
+	 */
+	//Similar to Cephas's implementation in PSP_PlanningWizardFrame.java
+	private void destroyDefectLogPanel (ActionEvent e) {	
+		int width = 1153;
+		int height = 35;
+		int x = 0;
+		int y = 0;
+		
+		removeDefectActionListener (addButtonList);
+		for (int i = 0; i < addButtonList.size(); i++) {
+			if (e.getSource() == addButtonList.get(i)) {
+				addButtonList.remove(i);
+				addDefectPanelsList.remove(i);
+				projectLabelList.remove(i);
+				dateLabelList.remove(i);
+				editButtonList.remove(i);
+				numberLabelList.remove(i);
+				typeTextFieldList.remove(i);
+				injectTextFieldList.remove(i);
+				removeTextFieldList.remove(i);
+			    fixTextFieldList.remove(i);
+				fixRefTextFieldList.remove(i);
+				isDirty  = true; 
+				break;
+			}
+		}
+		
+		for (int i = 0; i < addButtonList.size(); i++) {
+			addDefectPanelsList.get(i).setBounds(x, y, width, height);
+			y += height + 5;
+			isDirty  = true; 
+		}		
+		
+		repaintPanel (addDefectPanelsList, addButtonList, eachDefect_panel);
+		addDefectLogActionListner(addButtonList);
+		eachDefect_panel.setPreferredSize(new Dimension (width, y));
+		scrollPaneDefectLog.setVerticalScrollBarPolicy
+			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+	}
+	
+	//Same as Cephas's implementation in PSP_PlanningWizardFrame.java
+	private void repaintPanel (List<JPanel> repaintPnl, List<JButton> iconBtn, JPanel whichPnl) {
+		String icon = "/net/sf/memoranda/ui/resources/icons/minus.png";			
+		
+		whichPnl.removeAll();
+		for (int i = 0; i < repaintPnl.size(); i++) {
+			whichPnl.add(repaintPnl.get(i));
+			if (i == repaintPnl.size() - 1) { 
+				icon = "/net/sf/memoranda/ui/resources/icons/plus.png";
+				repaintPnl.get(i).getComponent(0).requestFocus();
+			}
+			iconBtn.get(i).setIcon(new ImageIcon(
+					PSP_DefectPanel.class.getResource(icon)));	
+		}
+		whichPnl.revalidate();
+		whichPnl.repaint();
+	}
+	
+	//Same as Cephas's implementation in PSP_PlanningWizardFrame.java
+	private void addDefectLogActionListner (List<JButton> addDefectButton) {
+		for (int i = 0; i < addDefectButton.size(); i++) {
+			if (i == addDefectButton.size() - 1) {
+				addDefectButton.get(i).addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						buttonAction_Clicked ("ADD_DEFECT");
+						count++;
+						String num = "           " + count;
+						numberLabel.setText("      " + num);
+						String date = "" + d.toString() ;
+						dateLabel.setText(date);
+						isDirty  = true; 
+					}
+				});
+			} else {
+				addDefectButton.get(i).addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						destroyDefectLogPanel (e);
+					}
+				});
+			}
+		}		
+	}
+	
+	//Same as Cephas's implementation in PSP_PlanningWizardFrame.java
+	private void removeDefectActionListener (List<JButton> removeDefectButton) {
+		for (int i = 0; i < removeDefectButton.size(); i++) {
+			for (ActionListener al : removeDefectButton.get(i).getActionListeners()) 
+				removeDefectButton.get(i).removeActionListener(al);			
+		}		
+	}
+	
+	//Same as Cephas's implementation in PSP_PlanningWizardFrame.java
+	private void buttonAction_Clicked (String defectPanel) {
+
+		if (defectPanel.equals("ADD_DEFECT")) {	
+			createDefectLogPanel ();	
+		} else {
+			
+		}
 	}
 }
