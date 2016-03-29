@@ -95,7 +95,7 @@ public class PSP_DefectPanel extends JPanel {
 	 * track of each defect log and d is used for labels and
 	 * text fields that require a date
 	 */
-	static boolean isDirty;
+	static boolean isDirty = false;
 	int count = 1;
 	Date dater = new Date();
 	
@@ -349,7 +349,6 @@ public class PSP_DefectPanel extends JPanel {
 						JOptionPane.showMessageDialog(App.getFrame(), 
 								Local.getString("You can now edit this and all"
 										+ " other defects!"));
-						isDirty  = true; 
 			}
 		});
 		editButtonList.add(editButton);
@@ -360,14 +359,12 @@ public class PSP_DefectPanel extends JPanel {
 		projectLabel.setText("Current Project");
 		projectLabel.setToolTipText("Project's name");
 		projectLabelList.add(projectLabel);
-		isDirty  = true; 
 		
 		dateLabel = new JLabel();
-		dateLabel.setBounds(120, 0, 180, 25);
+		dateLabel.setBounds(198, 0, 56, 16);
 		dateLabel.setText(getDate());
 		dateLabel.setToolTipText("Date");
 		dateLabelList.add(dateLabel);
-		isDirty  = true; 
 		
 		numberLabel = new JLabel();
 		numberLabel.setBounds(298, 0, 87, 22);
@@ -375,35 +372,30 @@ public class PSP_DefectPanel extends JPanel {
 				+ count);
 		numberLabel.setToolTipText("Defect Number");
 		numberLabelList.add(numberLabel);
-		isDirty  = true; 
 		
 		typeTextField = new JTextField();
 		typeTextField.setBounds(410, 0, 87, 22);
 		typeTextField.setColumns(10);
 		typeTextField.setToolTipText("Defect Type");
 		typeTextFieldList.add(typeTextField);
-		isDirty  = true; 
 		
 		injectTextField = new JTextField();
 		injectTextField.setBounds(521, 0, 87, 22);
 		injectTextField.setColumns(10);
 		injectTextField.setToolTipText("Number of Defects Inject");
 		injectTextFieldList.add(injectTextField);
-		isDirty  = true; 
-		
+
 		removeTextField = new JTextField();
 		removeTextField.setBounds(635, 0, 87, 22);
 		removeTextField.setColumns(10);
 		removeTextField.setToolTipText("Defects Removed");
 		removeTextFieldList.add(removeTextField);
-		isDirty  = true; 
 		
 		fixTextField = new JTextField();
 		fixTextField.setBounds(738, 0, 130, 22);
 		fixTextField.setColumns(10);
 		fixTextField.setToolTipText("Defects fixed");
 		fixTextFieldList.add(fixTextField);
-		isDirty  = true; 
 		
 		fixRefTextField = new JTextField();
 		fixRefTextField.setBounds(890, 0, 70, 22);
@@ -412,7 +404,6 @@ public class PSP_DefectPanel extends JPanel {
 		for(int countFixRef = 1; countFixRef <= addButtonList.size(); countFixRef++)
 		{
 			fixRefTextField.setText("00" + countFixRef + "00");
-			isDirty  = true; 
 		}
 		fixRefTextFieldList.add(fixRefTextField);
 		
@@ -438,6 +429,8 @@ public class PSP_DefectPanel extends JPanel {
 		eachDefect_panel.setPreferredSize(new Dimension (width, y + height));
 		scrollPaneDefectLog.setVerticalScrollBarPolicy
 			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+		isDirty = true;
 	}
 	
 	/**
@@ -465,7 +458,6 @@ public class PSP_DefectPanel extends JPanel {
 				removeTextFieldList.remove(i);
 			    fixTextFieldList.remove(i);
 				fixRefTextFieldList.remove(i);
-				isDirty  = true; 
 				break;
 			}
 		}
@@ -473,7 +465,6 @@ public class PSP_DefectPanel extends JPanel {
 		for (int i = 0; i < addButtonList.size(); i++) {
 			addDefectPanelsList.get(i).setBounds(x, y, width, height);
 			y += height + 5;
-			isDirty  = true; 
 		}		
 		
 		repaintPanel (addDefectPanelsList, addButtonList, eachDefect_panel);
@@ -481,6 +472,7 @@ public class PSP_DefectPanel extends JPanel {
 		eachDefect_panel.setPreferredSize(new Dimension (width, y));
 		scrollPaneDefectLog.setVerticalScrollBarPolicy
 			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		isDirty = true;
 	}
 	
 	//Same as Cephas's implementation in PSP_PlanningWizardFrame.java
