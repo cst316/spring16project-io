@@ -15,11 +15,15 @@ public interface TimeLog {
 	
 	public Psp getPspValues ();
 	
-	public void setTimeRowObject (TimeRowObject timerow);
+	public boolean addTimeRowObject (TimeRowObject timerow);
 	
 	public TimeRowObject getTimeRowObject(int index);
 	
-	public void setTimeRowObject (List<TimeRowObject> timerow);
+	public boolean addTimeRowObject (List<TimeRowObject> timerow);
 	
 	public List<TimeRowObject> getTimeRowLists();	
+	
+	public boolean removeAllObjects ();
+	
+	public boolean removeTimeRowObject (TimeRowObject timerow, int index);
 }

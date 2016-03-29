@@ -49,9 +49,11 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	}
 	
 	@Override
-	public void setTimeRowObject(TimeRowObject timerow) {
+	public boolean addTimeRowObject(TimeRowObject timerow) {
 		// TODO Auto-generated method stub
+		boolean isAdded = true;
 		this.timerow.add(timerow);
+		return isAdded;
 	}
 
 	@Override
@@ -61,9 +63,11 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	}
 
 	@Override
-	public void setTimeRowObject(List<TimeRowObject> timerow) {
+	public boolean addTimeRowObject(List<TimeRowObject> timerow) {
 		// TODO Auto-generated method stub
+		boolean isAdded = true;
 		this.timerow = timerow;
+		return isAdded;
 	}
 
 	@Override
@@ -71,6 +75,23 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		// TODO Auto-generated method stub
 		return this.timerow;
 	}
+	
+	@Override
+	public boolean removeAllObjects() {
+		// TODO Auto-generated method stub
+		this.timerow.clear();
+		TimeRowObject.setIsDirty(true);
+		return false;
+	}
+
+	@Override
+	public boolean removeTimeRowObject(TimeRowObject timerow, int index) {
+		// TODO Auto-generated method stub
+		boolean isRemoved = true;
+		this.timerow.remove(index);
+		TimeRowObject.setIsDirty(true);
+		return isRemoved;
+	}	
 	
 	/**
 	 * Implement custom object reader
@@ -96,5 +117,5 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	
 	public static boolean getIsDirty () {
 		return TimeRowObject.getIsDirty();
-	}	
+	}
 }
