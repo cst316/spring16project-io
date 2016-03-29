@@ -77,7 +77,7 @@ public class DevelopmentImpl implements Development, Serializable{
 	 */
 	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		stream.defaultReadObject();
-		Util.debug("object retrieved");
+		Util.debug("Development retrieved");
 	}
 	
 	/**
@@ -87,12 +87,10 @@ public class DevelopmentImpl implements Development, Serializable{
 	 */
 	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
-		Util.debug("object wrtten");
+		Util.debug("Development wrtten");
 	}
 	
 	public boolean getIsDirty(){
 		return isDirty;
 	}
-
-
 }

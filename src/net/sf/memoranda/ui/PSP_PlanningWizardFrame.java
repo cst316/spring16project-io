@@ -757,18 +757,6 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			sub = new File (dir + File.separator + '.' + getPID() +
 					File.separator + '.' + getPID() + "_planning");
 			sub.createNewFile();
-			
-			sub = new File (dir + File.separator + '.' + getPID() +
-					File.separator + '.' + getPID() + "_defect");
-			sub.createNewFile();
-			
-			sub = new File (dir + File.separator + '.' + getPID() +
-					File.separator + '.' + getPID() + "_timelog");
-			sub.createNewFile();
-			
-			sub = new File (dir + File.separator + '.' + getPID() +
-					File.separator + '.' + getPID() + "_development");
-			sub.createNewFile();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

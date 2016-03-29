@@ -111,7 +111,7 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	 */
 	private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		stream.defaultReadObject();
-		Util.debug("Psp retrieved");
+		Util.debug("Time Log retrieved");
 	}
 	
 	/**
@@ -121,6 +121,6 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	 */
 	private void writeObject(ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
-		Util.debug("Psp wrtten");
+		Util.debug("Time Log wrtten");
 	}
 }
