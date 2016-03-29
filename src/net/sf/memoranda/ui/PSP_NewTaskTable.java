@@ -14,17 +14,20 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.awt.event.ActionEvent;
 
-public class PSP_NewTaskTable extends JFrame {
+public class PSP_NewTaskTable extends JFrame implements Serializable {
 
 	private JPanel contentPane;
-	private JTable table;
+	private static JTable table;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void NewScreen(String[] args) {
+	
+ 	public static void NewScreen(String[] args) {	
+//	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -40,6 +43,17 @@ public class PSP_NewTaskTable extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+
+	
+	//method to insert row to table
+	
+	public static void insertRow() {
+		
+		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{PSP_NewTaskData.tdarray[0],PSP_NewTaskData.tdarray[2],PSP_NewTaskData.tdarray[3],PSP_NewTaskData.tdarray[5],null,PSP_NewTaskData.tdarray[4]});
+		
+	}
+	
 	public PSP_NewTaskTable() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 619, 517);
@@ -75,6 +89,20 @@ public class PSP_NewTaskTable extends JFrame {
 		JButton btnEditTask = new JButton("Edit Task");
 		
 		JButton btnDeleteTask = new JButton("Delete Task");
+		
+		JButton btnTest = new JButton("test");
+		btnTest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//figured out how to dynamically populate jtable
+				//next step is to make it populate from tdarray instead of arbitrary strings
+				
+				insertRow();
+				
+				//((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{"Task X","Date X","etc."});
+				
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -89,7 +117,9 @@ public class PSP_NewTaskTable extends JFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnEditTask)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnDeleteTask)))
+							.addComponent(btnDeleteTask)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnTest)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -100,7 +130,8 @@ public class PSP_NewTaskTable extends JFrame {
 						.addComponent(btnNewTask)
 						.addComponent(btnCloseTask)
 						.addComponent(btnEditTask)
-						.addComponent(btnDeleteTask))
+						.addComponent(btnDeleteTask)
+						.addComponent(btnTest))
 					.addPreferredGap(ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())

@@ -1,7 +1,11 @@
 package net.sf.memoranda.psp;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+
 import net.sf.memoranda.date.CurrentDate;
 
 public class DesignImpl implements Design {
@@ -14,6 +18,8 @@ public class DesignImpl implements Design {
 	private int pID;
 	private String projectName;
 	private String projectDescription;
+	
+	private BufferedImage myImage; 
 	
 	public String getFilePath() {
 		return filePath;
@@ -35,14 +41,6 @@ public class DesignImpl implements Design {
 		filePath = nameOfFile;
 		files = theFiles;
 	}
-	
-	public DesignImpl(ArrayList<String> theFiles, String nameOfFile, Psp thePspValues,
-			File theFile)
-	{
-		filePath = nameOfFile;
-		files = theFiles;
-		pspValues = thePspValues;
-	}
 
 	public String getFileName() {
 		return filePath;
@@ -60,6 +58,11 @@ public class DesignImpl implements Design {
 	public boolean setFiles(ArrayList<String> theFiles) {
 		this.files = theFiles;
 		return true;
+	}
+	
+	public void fileAdd(String the_filePath)
+	{
+		files.add(the_filePath);
 	}
 
 	@Override
@@ -108,25 +111,26 @@ public class DesignImpl implements Design {
 	
 	//Models Joe Michaels' code for PSP_DesignPanel.java for btnImport_Clicked() method
 	@Override
-	public boolean importImageFiles(File theFileToUse, String thePathOfFile) {
+	public boolean importImageFiles(File theFileToUse, String thePathOfFile, BufferedImage imageToUse) {
 		boolean testVar = true;
+		this.myImage = imageToUse;
 		try{
 				theFileToUse = new File(thePathOfFile);
 			
 			
 			if (theFileToUse.getName().contains(".png"))
 			{
-				files.add(thePathOfFile);
+				ImageIO.write(myImage, "png", new File(thePathOfFile + File.separator + theFileToUse.getName()));
 			}
 			else if (theFileToUse.getName().contains(".jpg"))
 			{
-				files.add(thePathOfFile);
+				ImageIO.write(myImage, "jpg", new File(thePathOfFile + File.separator + theFileToUse.getName())); 
 			}else if (theFileToUse.getName().contains(".img"))
 			{
-				files.add(thePathOfFile);
+				ImageIO.write(myImage, "img", new File(thePathOfFile + File.separator + theFileToUse.getName()));
 			} else if (theFileToUse.getName().contains(".tif"))
 			{
-				files.add(thePathOfFile);
+				ImageIO.write(myImage, "tif", new File(thePathOfFile + File.separator + theFileToUse.getName())); 
 			} else
 			{
 				System.out.println("Invalid file format!");

@@ -1,219 +1,156 @@
 package net.sf.memoranda.psp;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
-
-import net.sf.memoranda.date.CurrentDate;
-import net.sf.memoranda.ui.ExceptionDialog;
 import net.sf.memoranda.util.Util;
 
-public class DefectImpl implements Defect {
+public class DefectImpl implements Defect, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8961650030847897462L;
+	private static boolean isDirty = false;
+	private Psp pspVal;
 	private ArrayList<TestRowObject> testObj = new ArrayList<TestRowObject>();
-	private String path = ""; //temp values until reat of class is implemented
+	//private String path = ""; //temp values until rest of class is implemented
 	
 	public DefectImpl(){
-		
+		this.testObj = null;
+		//path = null;
 	}
 	
-	public DefectImpl(File file){
+	public DefectImpl(ArrayList<TestRowObject> list){
 		super();
-		loadTestData(file);
+		this.testObj = list;
+	}
+	
+	@Override
+	public ArrayList<TestRowObject> getRow() {
+		return this.testObj;
 	}
 
 	@Override
-	public CurrentDate getStDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setStDate(CurrentDate stDate) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setpId(int id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getpId() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setName(String name) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setDescription(String description) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getPID() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getFileName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getUserName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setUserName(String name) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int getDefectNum() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean setDefectNum(int num) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Date getDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setDate(Date date) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setType(String type) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getInjectionPhase() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setInjectionSite(String injectPhase) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getRemovalPhase() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setRemovalPhase(String removalPhase) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getFixDetails() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setFixDetails(String fix) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	//retrieve serialized file and stores to arraylist
-	@Override
-	public boolean loadTestData(File file) {
-		boolean status = true;
-		try{
-			
-			FileInputStream fileStream = new FileInputStream(file);
-			ObjectInputStream obj = new ObjectInputStream(fileStream);
-			while(testObj.add((TestRowObject)obj.readObject())){}//read and cast object until null...?
-			obj.close();
-			
-		}catch (IOException e) {
-            new ExceptionDialog(e, "File not found!" , "");
-            status = false;
-        }catch(Exception e){
-			e.getMessage();
-			status = false;
-		}
-		return status;
-	}
-
-	//outputs serialized object to file
-	@Override
-	public boolean saveTestData() {
-		
-		try{
-			FileOutputStream fos = new FileOutputStream(path);
-			ObjectOutputStream oos =
-	                new ObjectOutputStream(fos);
-			for(int i = 0; i < testObj.size(); ++i){
-				oos.writeObject(testObj.get(i));
-			}
-			oos.close();
-			
-		}catch(IOException e){
-        	e.getMessage();
-        }catch(Exception e) {
-            e.getMessage();
-        }
+	public boolean setRow(ArrayList<TestRowObject> list) {
+		isDirty = true;
+		this.testObj = list;
 		return false;
 	}
 	
+	@Override
+	public boolean addRow(TestRowObject rowObj) {
+		try{
+			isDirty = true;
+			testObj.add(rowObj);
+		}catch(Exception e){
+			e.getMessage();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean removeRow(int index){
+
+		isDirty = true;
+		testObj.remove(index);
+		
+		throw new NullPointerException();
+	}
+	
+//	/**
+//	 * Saves row object passed in resets isDirt value to false if status succeeds
+//	 * @param obj
+//	 * @return true if no errors are thrown
+//	 */
+//	public boolean saveData(TestRowObject obj){
+//		boolean status = true;
+//		try {
+//			ObjectOutputStream oos = new ObjectOutputStream (
+//					new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
+//							File.separator + pspVal.getpId() +"_defect"));
+//			oos.writeObject(obj);
+//			oos.close();
+//		} catch (IOException e) {
+//			e.getMessage();
+//			status = false;
+//		}catch(Exception e){
+//			e.getMessage();
+//			status = false;
+//		}
+//
+//		if(status == true){
+//			isDirty = false;
+//		}
+//		return status;
+//	}
+//
+//	/**
+//	 * Takes in raw test row data and saves file from the data
+//	 * Saves row object and resets isDirt value to false if status succeeds 
+//	 * @param date
+//	 * @param defNum
+//	 * @param defType
+//	 * @param injPhase
+//	 * @param remPhase
+//	 * @param fix
+//	 * @param fixRef
+//	 * @return true if no errors are thrown
+//	 */
+//	public boolean saveData(Date date, int defNum, String defType, String injPhase,
+//			String remPhase, String fix, String fixRef){
+//		boolean status = true;
+//		ObjectOutputStream oos;
+//		
+//		String projectName = pspVal.getName();
+//		TestRowObject tro = new TestRowObject(projectName, date, defNum, defType,
+//				injPhase, remPhase, fix, fixRef);
+//		
+//		try {
+//			oos = new ObjectOutputStream (
+//					new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
+//							File.separator + pspVal.getpId() +"_defect"));
+//			oos.writeObject(tro);
+//			oos.close();
+//			
+//		} catch (IOException e) {
+//			e.getMessage();
+//			status = false;
+//		}catch(Exception e){
+//			e.getMessage();
+//			status = false;
+//		}		
+//		if(status == true){
+//			isDirty = false;
+//		}
+//		return status;
+//	}
+//	
+//	/**
+//	 * save serialized object
+//	 * @return success of output, false if error occurs
+//	 */
+//	public boolean saveData(){
+//		boolean status = true;
+//		try{
+//		ObjectOutputStream oos = new ObjectOutputStream (
+//				new FileOutputStream (".proj" + File.separator + pspVal.getpId() +
+//						File.separator + pspVal.getpId() +"_defect"));
+//		oos.writeObject(this.testObj);
+//		oos.close();
+//		}catch (IOException e) {
+//			e.getMessage();
+//			status = false;
+//		}catch(Exception e){
+//			e.getMessage();
+//			status = false;
+//		}		
+//		if(status == true){
+//			isDirty = false;
+//		}
+//		return status;
+//	}
+
 	/**
 	 * Implement custom object reader
 	 * @param stream
@@ -222,7 +159,7 @@ public class DefectImpl implements Defect {
 	 */
 	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		stream.defaultReadObject();
-		Util.debug("Planning retrieved");
+		Util.debug("object retrieved");
 	}
 	
 	/**
@@ -232,7 +169,11 @@ public class DefectImpl implements Defect {
 	 */
 	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
-		Util.debug("Planning wrtten");
+		Util.debug("object wrtten");
+	}
+	
+	public boolean getIsDirty(){
+		return isDirty;
 	}
 
 }

@@ -1,23 +1,38 @@
 package net.sf.memoranda.ui;
 
-public class PSP_NewTaskData {
+import java.io.Serializable;
 
-	//arbitrary size (5) for testing, will change to list later
+public class PSP_NewTaskData implements Serializable {
+
+	//arbitrary size (5) for testing, will change to list later 
+	// but this works for the amount of columns the NewTask fields will populate
 	
-	static String[] s = new String[5];
+	static String[] tdarray = new String[6];
 	
 	//method to build array
 
-	public void saveTaskData(String na, int count){
-	    s[count]=na;
+	public void saveTaskData(String fieldvalue, int count)
+	
+	{
+	    tdarray[count]= fieldvalue;
 	}
 
 	//prints out array for testing
 	
-	public static void showTaskData(int count){
-	    for (int i = 0; i < count; i++) {
-	        System.out.println(s[count]);
-	    }
+	public static void showTaskData(int count)
+	
+	{
+		
+		//System.out.println(tdarray[1]);
+		
+	    //for (int i = 0; i < count; i++) 
+	    
+	    //{
+	        System.out.println(tdarray[count]);
+	    //}
 	}
+	
+	
+	
 
 	}

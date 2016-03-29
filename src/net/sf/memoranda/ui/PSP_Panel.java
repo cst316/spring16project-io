@@ -5,11 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.Planning;
@@ -50,7 +53,7 @@ public class PSP_Panel extends JPanel{
 	static Planning plan;
 	static Design design;
 	static Defect test;
-	
+		
 	/**
 	 * General constructor for creating Panel
 	 */
@@ -120,7 +123,7 @@ public class PSP_Panel extends JPanel{
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
 		add(pnlWizard, BorderLayout.CENTER);
-		pnlWizard.setLayout(new BorderLayout(0, 0));
+		pnlWizard.setLayout(new BorderLayout(0, 0));		
 	}
 	
 	private void setEnabledFlag(JLabel lblEnableThis, boolean flag) {
@@ -142,9 +145,9 @@ public class PSP_Panel extends JPanel{
 			toAdd.setName("DESIGN");
 		} else if (toAdd instanceof PSP_DefectPanel) {
 			toAdd.setName("DEFECT");
-		} //else if (toAdd instanceof PSP_TimeLogPanel) {
-			//toAdd.setName("TIMELOG");
-		//}
+		} else if (toAdd instanceof PSP_TimeLog) {
+			toAdd.setName("TIMELOG");
+		}
 		currentView = toAdd;
 		
 		this.revalidate();
@@ -192,7 +195,7 @@ public class PSP_Panel extends JPanel{
 				PSP_DefectPanel defectPanel = new PSP_DefectPanel(test);
 				addJPanel (defectPanel);							
 		} else if (event.equals("TIMELOG")) {
-			//addJPanel(new PSPTestingFrame());			
+			addJPanel(new PSP_TimeLog ());			
 		} 
 	}
 	
