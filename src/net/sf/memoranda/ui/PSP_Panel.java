@@ -12,7 +12,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 
 import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.Planning;
@@ -46,14 +45,13 @@ public class PSP_Panel extends JPanel{
 	private JLabel lblOpenProject;
 	private JPanel pnlWizard;
 	public JToolBar toolBar;
-	
+		
 	static PSP_PlanningWizardFrame pwf;
 	static PspImpl pspI;
 	static JPanel currentView;
 	static Planning plan;
 	static Design design;
-	static Defect test;
-		
+
 	/**
 	 * General constructor for creating Panel
 	 */
@@ -119,11 +117,11 @@ public class PSP_Panel extends JPanel{
 		lblOpenProject.setPreferredSize(new Dimension(100, 50));
 		lblOpenProject.setFont(new Font("Dialog", Font.BOLD, 12));
 		toolBar.add(lblOpenProject);
-				
+		
 		pnlWizard = new JPanel();
 		pnlWizard.setVisible(false);
 		add(pnlWizard, BorderLayout.CENTER);
-		pnlWizard.setLayout(new BorderLayout(0, 0));		
+		pnlWizard.setLayout(new BorderLayout(0, 0));	
 	}
 	
 	private void setEnabledFlag(JLabel lblEnableThis, boolean flag) {
@@ -147,7 +145,11 @@ public class PSP_Panel extends JPanel{
 			toAdd.setName("DEFECT");
 		} else if (toAdd instanceof PSP_TimeLog) {
 			toAdd.setName("TIMELOG");
-		}
+		} else if (toAdd instanceof PSP_Details) {
+			toAdd.setName("PSP");
+		}//else if (toAdd instanceof PSP_TimeLogPanel) {
+			//toAdd.setName("TIMELOG");
+		//} 
 		currentView = toAdd;
 		
 		this.revalidate();
@@ -192,11 +194,15 @@ public class PSP_Panel extends JPanel{
 					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
 					File.separator + '.' + pspI.getpId() + "_defect");
 
-				PSP_DefectPanel defectPanel = new PSP_DefectPanel(test);
+				PSP_DefectPanel defectPanel = new PSP_DefectPanel();
 				addJPanel (defectPanel);							
 		} else if (event.equals("TIMELOG")) {
 			addJPanel(new PSP_TimeLog ());			
-		} 
+			//addJPanel(new PSPTestingFrame());			
+		} else if (event.equals("PSP")){
+			PSP_Details details = new PSP_Details(pspI);					
+			addJPanel (details);
+		}
 	}
 	
 	public static void setPspValues (PspImpl pspI) {
@@ -250,11 +256,11 @@ public class PSP_Panel extends JPanel{
 					project_MouseEvent ("PLANNING");
 				} /*else if (currentView instanceof PSP_TimeLogPanel) {
 					project_MouseEvent ("PLANNING");				
-				}*/
+				} */ else {
+					project_MouseEvent ("PSP");
+				}
 				
 				projOpened = true;
-
-				
 				if (toolBar.getComponentCount() <= 3)
 					setExtraTools ();
 			} catch (ClassNotFoundException e) {
@@ -271,6 +277,20 @@ public class PSP_Panel extends JPanel{
 	
 	public void setExtraTools () {
 		// TODO Auto-generated method stub
+		JLabel lblPSP = new JLabel("Details");
+		lblPSP.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPSP.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				project_MouseEvent("PSP");
+			}
+		});
+		lblPSP.setLocation(new Point (200, 50));
+		lblPSP.setMinimumSize(new Dimension(100, 50));
+		lblPSP.setMaximumSize(new Dimension(100, 50));
+		lblPSP.setPreferredSize(new Dimension(100, 50));
+		lblPSP.setFont(new Font("Dialog", Font.BOLD, 12));
+		
 		JLabel lblPlanningProject = new JLabel("Planning");
 		lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlanningProject.addMouseListener(new MouseAdapter() {
@@ -328,6 +348,7 @@ public class PSP_Panel extends JPanel{
 		lblTimeLogProject.setPreferredSize(new Dimension(100, 50));
 		lblTimeLogProject.setFont(new Font("Dialog", Font.BOLD, 12));
 				
+		toolBar.add(lblPSP);
 		toolBar.add(lblPlanningProject);
 		toolBar.add(lblDesigningProject);
 		toolBar.add(lblDefectInProject);

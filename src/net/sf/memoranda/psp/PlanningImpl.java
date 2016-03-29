@@ -1,6 +1,5 @@
 package net.sf.memoranda.psp;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.sf.memoranda.date.CurrentDate;
-import net.sf.memoranda.ui.ExceptionDialog;
 import net.sf.memoranda.util.Util;
 
 public class PlanningImpl implements Planning, Serializable {
@@ -46,7 +44,6 @@ public class PlanningImpl implements Planning, Serializable {
 		this.filename = "";
 		this.moduleDescription = new HashMap <String, Integer> ();
 		pspValues = new PspImpl ();
-		isDirty = false;	
 	}
 	
 	//PlanningImpl class constructor initialized to variables specified in the method parameter header  
@@ -63,7 +60,6 @@ public class PlanningImpl implements Planning, Serializable {
 		this.pId = pId;
 
 		pspValues = new PspImpl ();
-		isDirty = false;		
 	}
 	
 	//Accessor method that gets the estimated time (estTime)
@@ -204,21 +200,6 @@ public class PlanningImpl implements Planning, Serializable {
 		String projDesc = pspValues.getDescription();
 		projDesc = description;
 		isDirty = true;
-	}
-		
-	public void save (PlanningImpl p) {
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream ("proj/" + pspValues.getpId ()+"_planning"));
-			oos.writeObject(p);
-			oos.close();
-		} catch (IOException ioException) {
-			new ExceptionDialog(
-	                ioException,
-	                "Saving the estimated time, estimated lines of code per hour, "
-	                + " estimated size, and estimated number of defects, the file name and"
-	                + " the description and the size of the description for use in XML file has failed" 
-	                + "thePathOfTheFile", "");
-		}
 	}
 
 	//toString method returns a String of all the instance variables
