@@ -1,6 +1,6 @@
 package net.sf.memoranda.psp;
 
-import net.sf.memoranda.date.CurrentDate;
+import java.util.Date;
 
 public interface Psp {
 	
@@ -8,10 +8,10 @@ public interface Psp {
 	final static int pID = 100000001;
 	
 	//Abstract method to get the start date
-	public CurrentDate getStDate();
+	public Date getStDate();
 	
 	//Abstract method to set the start date
-	public void setStDate(CurrentDate stDate);
+	public void setStDate(Date stDate);
 	
 	//Abstract method to set the id for the project
 	public void setpId (int id);

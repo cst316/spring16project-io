@@ -2,22 +2,23 @@ package net.sf.memoranda.psp;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import net.sf.memoranda.date.CurrentDate;
 
-public class DesignImpl implements Design {
+public class DesignImpl implements Design, Serializable {
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -121825052540382970L;
 	private String filePath;
 	protected ArrayList<String> files;
 	private Psp pspValues;
-	private CurrentDate pspStartDate;
-	private int pID;
-	private String projectName;
-	private String projectDescription;
 	
 	private BufferedImage myImage; 
 	
@@ -64,50 +65,6 @@ public class DesignImpl implements Design {
 	{
 		files.add(the_filePath);
 	}
-
-	@Override
-	public CurrentDate getStDate() {
-		return pspValues.getStDate();
-	}
-
-	@Override
-	public void setStDate(CurrentDate stDate) {
-		pspStartDate = pspValues.getStDate();
-		pspStartDate = stDate;
-	}
-
-	@Override
-	public void setpId(int id) {
-		pID = pspValues.getpId();
-		pID = id;
-	}
-
-	@Override
-	public int getpId() {
-		return pspValues.getpId();
-	}
-
-	@Override
-	public String getName() {
-		return pspValues.getName();
-	}
-
-	@Override
-	public void setName(String name) {
-		projectName = pspValues.getName();
-		projectName = name;
-	}
-
-	@Override
-	public String getDescription() {
-		return pspValues.getDescription();
-	}
-
-	@Override
-	public void setDescription(String description) {
-		projectDescription = pspValues.getDescription();
-		projectDescription = description;
-	}
 	
 	//Models Joe Michaels' code for PSP_DesignPanel.java for btnImport_Clicked() method
 	@Override
@@ -152,6 +109,18 @@ public class DesignImpl implements Design {
 	{
 		files.remove(files.size()-1);
 		return true;
+	}
+
+	@Override
+	public void setPspValues(Psp pspValues) {
+		// TODO Auto-generated method stub
+		this.pspValues = pspValues;
+	}
+
+	@Override
+	public Psp getPspValues() {
+		// TODO Auto-generated method stub
+		return this.pspValues;
 	}
 
 }

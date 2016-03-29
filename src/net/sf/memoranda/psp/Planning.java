@@ -3,9 +3,7 @@ package net.sf.memoranda.psp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.sf.memoranda.date.CurrentDate;
-
-public interface Planning extends Psp {
+public interface Planning {
 	//Accessor abstract method that gets the estimated time (estTime)
 	public float getEstTime();
 	
@@ -51,31 +49,6 @@ public interface Planning extends Psp {
 	//Mutator abstract method that sets the project description
 	public boolean setAdditionalMod(HashMap<String, Integer> modDescription);
 	
+	//Mutator abstract method that sets the project description
 	public boolean setAdditionalMod(String newMod, int newSize);
-
-	//Accessor abstract method that gets the start date (stDate)
-	@Override
-	public CurrentDate getStDate();
-
-	//Mutator abstract method that sets the start date (stDate)
-	@Override
-	public void setStDate(CurrentDate stDate);
-	//Accessor abstract method that gets the name by returning the pspValues object reference variable's getName() method
-	@Override
-	public String getName();
-
-	//Mutator abstract method that sets the name by using the pspValues object reference variable
-	@Override
-	public void setName(String name);
-
-	//Accessor abstract method that gets the description by using the pspValues object reference variable's
-	//getDescription() method
-	@Override
-	public String getDescription();
-
-	//Mutator abstract method sets the description given a String parameter
-	@Override
-	public void setDescription(String description);
-	
-	public void setPspValues (Psp values);
 }

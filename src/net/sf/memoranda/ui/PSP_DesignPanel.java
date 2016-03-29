@@ -83,7 +83,7 @@ public class PSP_DesignPanel extends JPanel {
 	
 	public PSP_DesignPanel(Design design){
 		this.des = design;
-		this.pID = des.getpId();
+		this.pID = des.getPspValues().getpId();
 		setPath((Integer.toString(pID)));
 		
 		try {

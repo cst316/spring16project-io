@@ -152,9 +152,9 @@ public class PSP_Panel extends JPanel{
 			toAdd.setName("TIMELOG");
 		} else if (toAdd instanceof PSP_Details) {
 			toAdd.setName("PSP");
-		}//else if (toAdd instanceof PSP_TimeLogPanel) {
-			//toAdd.setName("TIMELOG");
-		//} 
+		} else if (toAdd instanceof PSP_NewTaskTable) {
+			toAdd.setName("DEVELOPMENT");
+		} 
 		currentView = toAdd;
 		
 		this.revalidate();
@@ -193,13 +193,15 @@ public class PSP_Panel extends JPanel{
 				addJPanel(new PSP_DesignPanel(this));
 				System.out.println("Yeah Design");
 			} else if (event.equals("DEFECT")) {
-				fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
+				/*fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
 					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
 					File.separator + '.' + pspI.getpId() + "_defect");
 				ois = new ObjectInputStream (new FileInputStream (fs));
 				defect = (Defect) ois.readObject();
 				addJPanel (new PSP_DefectPanel (defect));		
-				ois.close();
+				ois.close();*/
+				
+				addJPanel (new PSP_DefectPanel ());
 			} else if (event.equals("TIMELOG")) {
 				/*fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
 					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 

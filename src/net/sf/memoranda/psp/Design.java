@@ -4,10 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
-public interface Design extends Psp {
+public interface Design {
 	
-	static final long serialVersionUID = 1L;
-
 	public String getFileName();
 
 	public boolean setFileName(String theFileName);
@@ -20,4 +18,7 @@ public interface Design extends Psp {
 	
 	public void fileAdd(String filePath);
 	
+	public void setPspValues (Psp pspValues);
+	
+	public Psp getPspValues ();
 }

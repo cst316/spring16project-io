@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import net.sf.memoranda.date.CurrentDate;
+import java.util.Date;
 import net.sf.memoranda.util.Util;
 
 public class PspImpl implements Psp, Serializable {
@@ -16,7 +16,7 @@ public class PspImpl implements Psp, Serializable {
 	private int pID;
 	private String name;
 	private String description;		
-	private CurrentDate stDate;
+	private Date stDate;
 		
 	public static int lastID = Psp.pID;
 	
@@ -29,7 +29,7 @@ public class PspImpl implements Psp, Serializable {
 	}
 	
 	//PspImpl that accepts parameters for all attributes except pID since pID can be accessed through Psp
-	public PspImpl(CurrentDate stDate, String name, String description) {
+	public PspImpl(Date stDate, String name, String description) {
 		super();
 		pID = lastID;
 		this.stDate = stDate;
@@ -43,7 +43,7 @@ public class PspImpl implements Psp, Serializable {
 		this.pID = id;
 		this.name = name;
 		this.description = description;
-		this.stDate = new CurrentDate ();
+		this.stDate = new Date ();
 	}
 		
 	//Accessor method that returns the project ID using the Psp interface
@@ -58,12 +58,12 @@ public class PspImpl implements Psp, Serializable {
 	}
 	
 	//Accessor method that returns the start date (stDate)
-	public CurrentDate getStDate() {
+	public Date getStDate() {
 		return stDate;
 	}
 	
 	//Mutator method that sets the start date (stDate) given a parameter
-	public void setStDate(CurrentDate startDate) {
+	public void setStDate(Date startDate) {
 		stDate = startDate;
 	}
 	

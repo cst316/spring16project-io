@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -96,11 +97,11 @@ public class PSP_DefectPanel extends JPanel {
 	 */
 	static boolean isDirty;
 	int count = 1;
-	Date d = new Date();
+	Date dater = new Date();
 	
 	//Taken from PSP_NPWizardFrame by Cephas M. to make 
 	//frame compatible to the main panel
-	private static PSP_Panel psp;
+	private Defect defect;
 
 	public PSP_DefectPanel() {		
 		try {
@@ -111,34 +112,11 @@ public class PSP_DefectPanel extends JPanel {
 		}
 	}
 	
-	//Modeled after PSP_NPWizardFrame by Cephas M. to make 
-	//frame compatible to the main panel
-	public PSP_DefectPanel(PSP_Panel psp) {		
-		try {
-			setPspPanel(psp);
-			jbInit();
-		} catch (Exception ex) {
-			new ExceptionDialog(ex);
-			ex.printStackTrace();
-		}
-	}
-	
-	public PSP_DefectPanel(Defect test) {
-
+	public PSP_DefectPanel(Defect defect) {
+		this.defect = defect;
+		jbInit();
 	}
 
-	//Taken from PSP_NPWizardFrame by Cephas M. to make 
-	//frame compatible to the main panel
-	public static void setPspPanel (PSP_Panel p) {
-		psp = p;
-	}
-	
-	//Taken from PSP_NPWizardFrame by Cephas M. to make 
-	//frame compatible to the main panel
-	public static PSP_Panel getPspPanel () {
-		return psp;
-	}
-	
 	/**
 	 * Initialization of GUI components
 	 */
@@ -192,7 +170,7 @@ public class PSP_DefectPanel extends JPanel {
 		dateTextField.setText("");
 		dateTextField.setColumns(10);
 		dateTextField.setBounds(92, 98, 166, 22);
-		dateTextField.setText(d.toString().trim());
+		dateTextField.setText(getDate());
 		add(dateTextField);
 		
 		programTextField = new JTextField();
@@ -386,7 +364,7 @@ public class PSP_DefectPanel extends JPanel {
 		
 		dateLabel = new JLabel();
 		dateLabel.setBounds(120, 0, 180, 25);
-		dateLabel.setText(d.toString());
+		dateLabel.setText(getDate());
 		dateLabel.setToolTipText("Date");
 		dateLabelList.add(dateLabel);
 		isDirty  = true; 
@@ -533,8 +511,7 @@ public class PSP_DefectPanel extends JPanel {
 						count++;
 						String num = "           " + count;
 						numberLabel.setText("      " + num);
-						String date = "" + d.toString() ;
-						dateLabel.setText(date);
+						dateLabel.setText(getDate());
 						isDirty  = true; 
 					}
 				});
@@ -564,5 +541,12 @@ public class PSP_DefectPanel extends JPanel {
 		} else {
 			
 		}
+	}
+		
+	//Return date in a short format
+	private String getDate () {
+		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+		
+		return (df.format(dater));
 	}
 }

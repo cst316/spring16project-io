@@ -2,7 +2,7 @@ package net.sf.memoranda.psp;
 
 import java.util.ArrayList;
 
-public interface Defect{
+public interface Defect {
 
 	
 	//public boolean loadTestData(String path, String name); //used in constructor elsewhere if needed

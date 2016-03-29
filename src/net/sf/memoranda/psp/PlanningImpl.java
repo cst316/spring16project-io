@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.util.Util;
 
 public class PlanningImpl implements Planning, Serializable {
@@ -159,80 +158,11 @@ public class PlanningImpl implements Planning, Serializable {
 		return isAdded;
 	}
 
-	//Accessor method that gets the start date (stDate)
-	@Override
-	public CurrentDate getStDate() {
-		return pspValues.getStDate();
-	}
-
-	//Mutator method that sets the start date (stDate)
-	@Override
-	public void setStDate(CurrentDate stDate) {
-		CurrentDate startDate = pspValues.getStDate();
-		startDate = stDate; 		
-		isDirty = true;
-	}
-	
-	//Accessor method that gets the name by returning the pspValues object reference variable's getName() method
-	@Override
-	public String getName() {
-		return pspValues.getName();
-	}
-
-	//Mutator method that sets the name by using the pspValues object reference variable
-	@Override
-	public void setName(String name) {
-		String projectName = pspValues.getName();
-		projectName = name; 
-		isDirty = true;
-	}
-
-	//Accessor method that gets the description by using the pspValues object reference variable's
-	//getDescription() method
-	@Override
-	public String getDescription() {
-		return pspValues.getDescription();
-	}
-
-	//Mutator method sets the description given a String parameter
-	@Override
-	public void setDescription(String description) {
-		String projDesc = pspValues.getDescription();
-		projDesc = description;
-		isDirty = true;
-	}
-
 	//toString method returns a String of all the instance variables
-	@Override
 	public String toString() {
 		return "Planning:\n" + "Estimated Time = " + this.getEstTime() + ", Lines of Code = " + this.getLocHr() + 
 				", Estimated Size = " + this.getEstSize() + ", Estimated Defects = " + this.getEstDefect() + 
 				", Filename=" + this.getFilename() + ", additional modulue(s)=" + this.getAdditionalMod();
-	}
-
-	@Override
-	public void setPspValues(Psp values) {
-		// TODO Auto-generated method stub
-		this.pspValues = values;
-		//isDirty = true;
-	}
-
-	@Override
-	public void setpId(int id) {
-		// TODO Auto-generated method stub
-		//isDirty = true;
-	}
-
-	@Override
-	public int getpId() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public HashMap<String, Integer> getAdditionalMod() {
-		// TODO Auto-generated method stub
-		return this.moduleDescription;
 	}
 
 	@Override
@@ -242,11 +172,13 @@ public class PlanningImpl implements Planning, Serializable {
 		if (!this.moduleDescription.equals(modDescription)) { 
 			this.moduleDescription = modDescription;
 			isDirty = true;
+			isAdded = true;
 		}
 				
 		return isAdded;
 	}	
-	
+
+	@Override
 	public boolean setAdditionalMod(String newMod, int newSize) {
 		boolean isAdded = false;
 		
@@ -256,7 +188,13 @@ public class PlanningImpl implements Planning, Serializable {
 			isDirty = true;
 		}		
 		return isAdded;
-	}	
+	}
+
+	@Override
+	public HashMap<String, Integer> getAdditionalMod() {
+		// TODO Auto-generated method stub
+		return this.moduleDescription;
+	}
 
 	/**
 	 * Implement custom object reader

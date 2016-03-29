@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.text.DateFormat;
 
 public class PSP_Details extends JPanel {
 	/**
@@ -171,9 +172,10 @@ public class PSP_Details extends JPanel {
 		);
 		panel2.setLayout(gl_panel2);
 		
+		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
 		JPanel panel1 = new JPanel();		
 		panel1.setBackground(Color.WHITE);
-		lblStartDate = new JLabel(pspI.getStDate().get().getShortDateString());
+		lblStartDate = new JLabel(df.format(pspI.getStDate()) + "");
 		lblStartDate.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		lblStartDate.setBackground(Color.WHITE);
 		lblStartDate.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -293,12 +295,12 @@ public class PSP_Details extends JPanel {
 		btnEdit.setText(isToggled ? "Cancel" : "Edit Details");		
 	}	
 	
-	public boolean setIsDirty (boolean isDirty) {
-		this.isDirty = isDirty;
-		return isDirty;
+	public static boolean setIsDirty (boolean isDirty) {
+		PSP_Details.isDirty = isDirty;
+		return true;
 	}
 	
-	public boolean getIsDirty () {
-		return this.isDirty;
+	public static boolean getIsDirty () {
+		return isDirty;
 	}
 }
