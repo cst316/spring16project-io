@@ -1,6 +1,6 @@
 package net.sf.memoranda.psp;
 
-import java.util.Date;
+import java.util.List;
 
 /** 
  * @author Cephas Armstrong-Mensah
@@ -11,23 +11,15 @@ import java.util.Date;
  */
 public interface TimeLog {	
 	
-	public void setDate (Date date);
+	public void setPspValues (Psp pspValues);
 	
-	public Date getDate ();
+	public Psp getPspValues ();
 	
-	public void setStartTime (float time);
+	public void setTimeRowObject (TimeRowObject timerow);
 	
-	public float getStartTime ();
+	public TimeRowObject getTimeRowObject(int index);
 	
-	public void setInterruptTime (float time);
+	public void setTimeRowObject (List<TimeRowObject> timerow);
 	
-	public float getInterruptTime ();
-	
-	public void setEndTime (float time);
-	
-	public float getEndTime ();
-	
-	public void setPhase (String phase);
-	
-	public String getPhase ();
+	public List<TimeRowObject> getTimeRowLists();	
 }

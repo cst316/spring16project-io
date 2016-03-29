@@ -193,35 +193,41 @@ public class PSP_Panel extends JPanel{
 				addJPanel(new PSP_DesignPanel(this));
 				System.out.println("Yeah Design");
 			} else if (event.equals("DEFECT")) {
-				/*fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
+				fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
 					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
 					File.separator + '.' + pspI.getpId() + "_defect");
-				ois = new ObjectInputStream (new FileInputStream (fs));
-				defect = (Defect) ois.readObject();
-				addJPanel (new PSP_DefectPanel (defect));		
-				ois.close();*/
-				
-				addJPanel (new PSP_DefectPanel ());
+				if (fs.exists()) {
+					ois = new ObjectInputStream (new FileInputStream (fs));
+					defect = (Defect) ois.readObject();
+					addJPanel (new PSP_DefectPanel (defect));		
+					ois.close();
+				} else {
+					addJPanel (new PSP_DefectPanel ());
+				}
 			} else if (event.equals("TIMELOG")) {
-				/*fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
+				fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
 					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
 					File.separator + '.' + pspI.getpId() + "_timelog");
-				ois = new ObjectInputStream (new FileInputStream (fs));
-				timelog = (TimeLog) ois.readObject();
-				addJPanel (new PSP_TimeLog (timelog));		
-				ois.close();*/
-				
-				addJPanel(new PSP_TimeLog ());							
+				if (fs.exists()) {
+					ois = new ObjectInputStream (new FileInputStream (fs));
+					timelog = (TimeLog) ois.readObject();
+					addJPanel (new PSP_TimeLog (timelog));	
+					ois.close();
+				} else {
+					addJPanel(new PSP_TimeLog ());							
+				}
 			} else if (event.equals("DEVELOPMENT")) {
-				/*fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
+				fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
 						File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
 						File.separator + '.' + pspI.getpId() + "_development");
+				if (fs.exists()) {
 					ois = new ObjectInputStream (new FileInputStream (fs));
 					dev = (Development) ois.readObject();
 					addJPanel (new PSP_NewTaskTable (dev));		
-					ois.close();*/
-				
+					ois.close();
+				} else {
 					addJPanel (new PSP_NewTaskTable ());
+				}
 			}	else if (event.equals("PSP")){
 				PSP_Details details = new PSP_Details(pspI);					
 				addJPanel (details);

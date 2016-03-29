@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import net.sf.memoranda.psp.TimeLog;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -27,11 +29,21 @@ public class PSP_TimeLog extends JPanel {
 	private JButton bttnDone;
 	private JButton bttnMoreEntries;
 	
+	private TimeLog timelog;
+	
 
 	/**
 	 * Create the panel.
 	 */
 	public PSP_TimeLog() {		
+		jInit();
+	}
+	
+	/**
+	 * Create the panel.
+	 */
+	public PSP_TimeLog(TimeLog timelog) {	
+		this.timelog = timelog;
 		jInit();
 	}
 	

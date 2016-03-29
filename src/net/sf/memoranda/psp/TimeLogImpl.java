@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import net.sf.memoranda.util.Util;
 
@@ -24,85 +26,52 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	private static final long serialVersionUID = 3790546736695557381L;
 	
 	private Psp pspValues;
-	private Date date;
-	private float startTime;
-	private float endTime;
-	private float interruptTime;
-	private String phase;
-
+	
+	private List<TimeRowObject> timerow = new ArrayList<TimeRowObject>();
+	
 	public TimeLogImpl () {
-		
+		this.pspValues = new PspImpl();
 	}
 	
 	public TimeLogImpl (Psp pspValues) {
 		this.pspValues = pspValues;
-		this.date = new Date();
-		this.startTime = 0.0f;
-		this.endTime = 0.0f;
-		this.interruptTime = 0.0f;
-		this.phase = "";		
+		this.timerow = new ArrayList<TimeRowObject>(); 
+	}
+	
+	@Override
+	public void setPspValues (Psp pspValues) {
+		this.pspValues = pspValues;
+	}
+	
+	@Override
+	public Psp getPspValues () {
+		return this.pspValues;
+	}
+	
+	@Override
+	public void setTimeRowObject(TimeRowObject timerow) {
+		// TODO Auto-generated method stub
+		this.timerow.add(timerow);
 	}
 
 	@Override
-	public void setDate(Date date) {
+	public TimeRowObject getTimeRowObject(int index) {
 		// TODO Auto-generated method stub
-		this.date = date;
+		return this.timerow.get(index);
 	}
 
 	@Override
-	public Date getDate() {
+	public void setTimeRowObject(List<TimeRowObject> timerow) {
 		// TODO Auto-generated method stub
-		return date;
+		this.timerow = timerow;
 	}
 
 	@Override
-	public void setStartTime(float time) {
+	public List<TimeRowObject> getTimeRowLists() {
 		// TODO Auto-generated method stub
-		this.startTime = time;
+		return this.timerow;
 	}
-
-	@Override
-	public float getStartTime() {
-		// TODO Auto-generated method stub
-		return this.startTime;
-	}
-
-	@Override
-	public void setInterruptTime(float time) {
-		// TODO Auto-generated method stub
-		this.interruptTime = time;
-	}
-
-	@Override
-	public float getInterruptTime() {
-		// TODO Auto-generated method stub
-		return this.interruptTime;
-	}
-
-	@Override
-	public void setEndTime(float time) {
-		// TODO Auto-generated method stub
-		this.endTime = time;
-	}
-
-	@Override
-	public float getEndTime() {
-		// TODO Auto-generated method stub
-		return this.endTime;
-	}
-
-	@Override
-	public void setPhase(String phase) {
-		// TODO Auto-generated method stub
-		this.phase = phase;
-	}
-
-	@Override
-	public String getPhase() {
-		// TODO Auto-generated method stub
-		return this.phase;
-	}
-		
+	
 	/**
 	 * Implement custom object reader
 	 * @param stream
@@ -121,6 +90,11 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	 */
 	private void writeObject(ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
+		TimeRowObject.setIsDirty(false);
 		Util.debug("Time Log wrtten");
 	}
+	
+	public static boolean getIsDirty () {
+		return TimeRowObject.getIsDirty();
+	}	
 }
