@@ -25,14 +25,18 @@ import java.awt.event.ActionEvent;
 
 public class PSP_NewTaskDialog extends JFrame implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4064987826608820142L;
 	//public static Object[] tdarray;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField taskTextField;
+	private JTextField descriptionTextField;
+	private JTextField startDateTextField;
+	private JTextField estDateTextField;
+	private JTextField estTimeTextField;
+	private JTextField priorityTextField;
 	PSP_NewTaskData tdata = new PSP_NewTaskData();
 	
 	List<String> n = new ArrayList<String>();
@@ -76,25 +80,25 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 		
 		JLabel lblPriority = new JLabel("Priority:");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		taskTextField = new JTextField();
+		taskTextField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		descriptionTextField = new JTextField();
+		descriptionTextField.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
+		startDateTextField = new JTextField();
+		startDateTextField.setColumns(10);
 		
-		JLabel lblEndDate_1 = new JLabel("End date:");
+		JLabel lblEndDate_1 = new JLabel("Est End date:");
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
+		estDateTextField = new JTextField();
+		estDateTextField.setColumns(10);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
+		estTimeTextField = new JTextField();
+		estTimeTextField.setColumns(10);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
+		priorityTextField = new JTextField();
+		priorityTextField.setColumns(10);
 		
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
@@ -105,7 +109,7 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 	            
 	            // places whatever text is in the Jtextfield into a string variable
 	            
-	            tdarray=textField.getText();
+	            tdarray=taskTextField.getText();
 	            
 	            // saves the value of the string variable and calls method to build array, places
 	            // var on the the index of the current count
@@ -116,38 +120,49 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 	            
 	            //textField.setText("whatever");
 	            
-	            //increase count to move down array index
+	            //increase count to move down array index and populate other fields
 	            
 	            count++;
 	            
-	            tdarray=textField_1.getText();
+/*	            tdarray=descriptionTextField.getText();
+	            tdata.saveTaskData(tdarray, count);
+	            count++;*/
+	            
+	            tdarray=startDateTextField.getText();
 	            tdata.saveTaskData(tdarray, count);
 	            count++;
 	            
-	            tdarray=textField_2.getText();
+	            tdarray=estDateTextField.getText();
 	            tdata.saveTaskData(tdarray, count);
 	            count++;
 	            
-	            tdarray=textField_3.getText();
+                tdarray=priorityTextField.getText();
 	            tdata.saveTaskData(tdarray, count);
 	            count++;
 	            
-	            tdarray=textField_4.getText();
-	            tdata.saveTaskData(tdarray, count);
-	            count++;
-	            
-	            tdarray=textField_5.getText();
+	            tdarray=estTimeTextField.getText();
 	            tdata.saveTaskData(tdarray, count);
 	            count++;
 	            
 	            // print array contents to console for testing
 	            
+	            /*
 	            PSP_NewTaskData.showTaskData(0);
 	            PSP_NewTaskData.showTaskData(1);
 	            PSP_NewTaskData.showTaskData(2);
 	            PSP_NewTaskData.showTaskData(3);
 	            PSP_NewTaskData.showTaskData(4);
 	            PSP_NewTaskData.showTaskData(5);
+	            */	            
+	            
+	            for(int i=0; i<6; i++)
+	            {
+	            	PSP_NewTaskData.showTaskData(i);
+	            }
+	            
+	            //insert array contents to row
+	            
+	            PSP_NewTaskTable.insertRow();
 	            
 				
 				
@@ -155,17 +170,6 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 		});
 		
 		JButton btnCancel = new JButton("Cancel");
-		
-		JButton btnTest = new JButton("test");
-		btnTest.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				PSP_NewTaskTable.insertRow();
-				
-				
-				
-			}
-		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -180,45 +184,45 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(lblTaskName)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(textField, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
+									.addComponent(taskTextField, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblTaskDescription)
 										.addComponent(lblStartDate))
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+										.addComponent(descriptionTextField, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
 										.addGroup(gl_contentPane.createSequentialGroup()
 											.addGap(15)
 											.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 												.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-													.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+													.addComponent(startDateTextField, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
 													.addGroup(gl_contentPane.createSequentialGroup()
 														.addPreferredGap(ComponentPlacement.RELATED)
-														.addComponent(textField_4, 0, 0, Short.MAX_VALUE)))
+														.addComponent(estTimeTextField, 0, 0, Short.MAX_VALUE)))
 												.addGroup(gl_contentPane.createSequentialGroup()
 													.addComponent(btnOk)
 													.addPreferredGap(ComponentPlacement.RELATED)))
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addGap(12)
-													.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-														.addComponent(lblEndDate_1, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblPriority, Alignment.TRAILING))
-													.addPreferredGap(ComponentPlacement.RELATED)
-													.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-														.addComponent(textField_5, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-														.addComponent(textField_3, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)))
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 												.addGroup(gl_contentPane.createSequentialGroup()
 													.addGap(63)
-													.addComponent(btnCancel))))))
-								.addComponent(lblEstimatedTime))
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGap(140))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(54)
-					.addComponent(btnTest)
-					.addContainerGap(410, Short.MAX_VALUE))
+													.addComponent(btnCancel))
+												.addGroup(gl_contentPane.createSequentialGroup()
+													.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+														.addGroup(gl_contentPane.createSequentialGroup()
+															.addGap(12)
+															.addComponent(lblEndDate_1))
+														.addGroup(gl_contentPane.createSequentialGroup()
+															.addGap(24)
+															.addComponent(lblPriority)))
+													.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+													.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+														.addGroup(gl_contentPane.createSequentialGroup()
+															.addComponent(estDateTextField, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+															.addPreferredGap(ComponentPlacement.RELATED))
+														.addComponent(priorityTextField, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)))))))
+								.addComponent(lblEstimatedTime))))
+					.addGap(153))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -228,7 +232,7 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 					.addGap(27)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblTaskName)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(taskTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -236,19 +240,17 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 							.addGap(91)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblStartDate)
-								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblEndDate_1)
-								.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+								.addComponent(startDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(estDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblEndDate_1)))
+						.addComponent(descriptionTextField, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
 					.addGap(34)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblEstimatedTime)
 						.addComponent(lblPriority)
-						.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(47)
-					.addComponent(btnTest)
-					.addPreferredGap(ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+						.addComponent(estTimeTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(priorityTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancel)
 						.addComponent(btnOk))

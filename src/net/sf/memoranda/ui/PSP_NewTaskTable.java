@@ -41,7 +41,7 @@ public class PSP_NewTaskTable extends JPanel implements Serializable {
 	}
 
 	public void jbInit() {
-		setBounds(100, 100, 619, 517);
+		setBounds(100, 100, 1197, 517);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
@@ -73,49 +73,33 @@ public class PSP_NewTaskTable extends JPanel implements Serializable {
 		JButton btnEditTask = new JButton("Edit Task");
 		
 		JButton btnDeleteTask = new JButton("Delete Task");
-		
-		JButton btnTest = new JButton("test");
-		btnTest.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				//figured out how to dynamically populate jtable
-				//next step is to make it populate from tdarray instead of arbitrary strings
-				
-				insertRow();
-				
-				//((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{"Task X","Date X","etc."});
-				
-			}
-		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnNewTask)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnCloseTask)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnEditTask)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnDeleteTask)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnTest)))
+					.addComponent(btnNewTask)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnCloseTask)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnEditTask)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnDeleteTask)
+					.addContainerGap(432, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 831, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNewTask)
 						.addComponent(btnCloseTask)
 						.addComponent(btnEditTask)
-						.addComponent(btnDeleteTask)
-						.addComponent(btnTest))
+						.addComponent(btnDeleteTask))
 					.addPreferredGap(ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -124,32 +108,24 @@ public class PSP_NewTaskTable extends JPanel implements Serializable {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, "", null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
+				{null, null, null, "", null, null, null, null, null},
 			},
 			new String[] {
-				"Task", "Start Date", "End Date", "Priority", "Status", "Estimate", "% Done", "Actual"
+				"Task", "Start Date", "Est. End Date", "Actual End Date", "Priority", "Status", "Estimate (Hrs)", "Actual (Hrs)", "% Done"
 			}
 		));
+		table.getColumnModel().getColumn(2).setPreferredWidth(99);
+		table.getColumnModel().getColumn(3).setPreferredWidth(104);
+		table.getColumnModel().getColumn(6).setPreferredWidth(102);
+		table.getColumnModel().getColumn(7).setPreferredWidth(86);
 		scrollPane.setViewportView(table);
 		contentPane.setLayout(gl_contentPane);
 		add(contentPane);
 	}
 	
-
-	//method to insert row to table
-	
 	public static void insertRow() {
 		
-		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{PSP_NewTaskData.tdarray[0],PSP_NewTaskData.tdarray[2],PSP_NewTaskData.tdarray[3],PSP_NewTaskData.tdarray[5],null,PSP_NewTaskData.tdarray[4]});
+		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{PSP_NewTaskData.tdarray[0],PSP_NewTaskData.tdarray[1],PSP_NewTaskData.tdarray[2],null,PSP_NewTaskData.tdarray[3],null,PSP_NewTaskData.tdarray[4]});
 		
 	}
 }
