@@ -54,6 +54,7 @@ public class PSP_TimeLog extends JPanel {
 		try{
 			jInit();
 		} catch (Exception ex) {
+			System.out.println("Exception while trying to intilize PSP_TimeLog GUI");
 			new ExceptionDialog(ex);
 			ex.printStackTrace();
 		}
