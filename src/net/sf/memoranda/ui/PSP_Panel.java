@@ -181,6 +181,7 @@ public class PSP_Panel extends JPanel{
 				}
 				openFileDialog();			
 			} else if (event.equals("PLANNING")) {
+				// check code here to handle between switching between items or opening file
 				fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
 					File.separator + ".proj" + File.separator + '.' + pspI.getpId() + 
 					File.separator + '.' + pspI.getpId() + "_planning");

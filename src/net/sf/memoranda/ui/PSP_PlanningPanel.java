@@ -334,8 +334,7 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 			
 		if (ans == JOptionPane.OK_OPTION && !(t1.isEmpty())) {
 			if (plan.setAdditionalMod(txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()))) {
-				addModule (txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()));
-				Util.debug("Added: " + txtNewEst.getText() + "\t" + txtNewSize.getText());
+				addModule (txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()));				
 			}			
 		}	
 	}	
@@ -351,6 +350,7 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 	private void addFile (String file) {
 		File f = new File (file);	
 		listModel.addElement(f.getName());	
+		this.plan.setFilename(file);
 	}
 	
 	private void setImages (String img) {
@@ -415,6 +415,8 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 		pnlCurrMod.add(addThis.get(1));
 		pnlCurrMod.revalidate();
 		pnlCurrMod.repaint();
+		
+		this.plan.setAdditionalMod(des, size);
 	}
 	
 	public void getFileNames () {
