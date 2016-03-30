@@ -123,7 +123,8 @@ public class PSP_TimeLog extends JPanel {
         			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
         				.addGroup(gl_contentPane.createSequentialGroup()
         					.addGap(83)
-        					.addComponent(bttnMoreEntries, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(bttnMoreEntries, GroupLayout.PREFERRED_SIZE, 125, 
+        							GroupLayout.PREFERRED_SIZE)
         					.addGap(120)
         					.addComponent(bttnDone, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
         				.addGroup(gl_contentPane.createSequentialGroup()
@@ -151,7 +152,8 @@ public class PSP_TimeLog extends JPanel {
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(endTimeTextField, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(phaseTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        					.addComponent(phaseTextField, GroupLayout.PREFERRED_SIZE, 
+        							GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
         			.addGap(24))
         );
         gl_contentPane.setVerticalGroup(
