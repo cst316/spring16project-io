@@ -8,7 +8,7 @@ public class PSP_NewTaskData implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 3052458131219353040L;
-	static String[] tdarray = new String[6];
+	public static String[] tdarray = new String[6];
 	
 	//method to build array
 
