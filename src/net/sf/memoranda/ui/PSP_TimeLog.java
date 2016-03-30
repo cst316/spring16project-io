@@ -9,10 +9,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import net.sf.memoranda.psp.TimeLog;
+import net.sf.memoranda.psp.TimeRowObject;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PSP_TimeLog extends JPanel {
 	
@@ -20,16 +23,20 @@ public class PSP_TimeLog extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
+	
 	private JTextField dateTextField;
 	private JTextField startTimeTextField;
 	private JTextField interruptTimeTextField;
 	private JTextField endTimeTextField;
 	private JTextField phaseTextField;
+	
 	private JButton bttnDone;
 	private JButton bttnMoreEntries;
 	
 	private TimeLog timelog;
+	private TimeRowObject timeEntries;
 	
 
 	/**
@@ -44,7 +51,12 @@ public class PSP_TimeLog extends JPanel {
 	 */
 	public PSP_TimeLog(TimeLog timelog) {	
 		this.timelog = timelog;
-		jInit();
+		try{
+			jInit();
+		} catch (Exception ex) {
+			new ExceptionDialog(ex);
+			ex.printStackTrace();
+		}
 	}
 	
 	public void jInit () {
@@ -81,9 +93,26 @@ public class PSP_TimeLog extends JPanel {
         phaseTextField.setColumns(10);
         
         bttnMoreEntries = new JButton();
+        bttnMoreEntries.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		
+        	}
+        });
         bttnMoreEntries.setText("More Entries");
         
         bttnDone = new JButton();
+        bttnDone.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		timeEntries = new TimeRowObject();
+        		timeEntries.setDate(startTimeTextField.getText());
+        		timeEntries.setStartTime(Float.parseFloat(startTimeTextField.getText()));
+        		timeEntries.setInterruptTime(Float.parseFloat(interruptTimeTextField.getText()));
+        		timeEntries.setEndTime(Float.parseFloat(endTimeTextField.getText()));
+        		timeEntries.setPhase(phaseTextField.getText());
+        	}
+        });
         bttnDone.setText("Done");
         
         add(contentPane);
