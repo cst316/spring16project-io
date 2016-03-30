@@ -175,15 +175,31 @@ public class PSP_Panel extends JPanel{
 		} else if (event.equals("OPEN PROJECT")) {
 			openFileDialog();			
 		} else if (event.equals("PLANNING")) {
-			addJPanel (new PSP_PlanningPanel (plan));
+			if (plan == null) {
+				addJPanel (new PSP_PlanningPanel ());
+			} else {
+				addJPanel (new PSP_PlanningPanel (plan));
+			}
 		} else if (event.equals("DESIGN")) {
 			addJPanel(new PSP_DesignPanel(this));
 		} else if (event.equals("DEFECT")) {
-			addJPanel (new PSP_DefectPanel (defect));
+			if (defect == null) {
+				addJPanel (new PSP_DefectPanel ());
+			} else {
+				addJPanel (new PSP_DefectPanel (defect));
+			}
 		} else if (event.equals("TIMELOG")) {
-			addJPanel(new PSP_TimeLog (timelog));
+			if (timelog == null) {
+				addJPanel(new PSP_TimeLog ());
+			} else {
+				addJPanel (new PSP_TimeLog (timelog));
+			}
 		} else if (event.equals("DEVELOPMENT")) {
-			addJPanel (new PSP_NewTaskTable (dev));
+			if (dev == null) {
+				addJPanel (new PSP_NewTaskTable ());
+			} else {
+				addJPanel (new PSP_NewTaskTable (dev));
+			}
 		} else if (event.equals("PSP")){
 			PSP_Details details = new PSP_Details(pspI);					
 			addJPanel (details);
