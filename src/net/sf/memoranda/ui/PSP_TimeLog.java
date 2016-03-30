@@ -198,30 +198,48 @@ public class PSP_TimeLog extends JPanel {
 	 * 
 	 * @param timeEntries TimeRowObject for saving purposes
 	 * @param startTime the start time of the time log entry
+	 * NumberFormatException is caught if startTime cannot be converted to a Float
 	 * Sets the start time of the time log entry
 	 */
 	public static void setTimeLogStartTime(TimeRowObject timeEntries, String startTime){
-		timeEntries.setStartTime(Float.parseFloat(startTime));
+		try{
+			timeEntries.setStartTime(Float.parseFloat(startTime));
+		}catch(NumberFormatException e){
+			System.out.println("Unable to convert startTime to Float");
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * 
 	 * @param timeEntries TimeRowObject for saving purposes
 	 * @param interruptTime the interrupt time of the time log entry
+	 * NumberFormatException is caught if interruptTime cannot be converted to a Float
 	 * Sets the interrupt time of the time log entry
 	 */
 	public static void setTimeLogInterruptTime(TimeRowObject timeEntries, String interruptTime){
-		timeEntries.setInterruptTime(Float.parseFloat(interruptTime));
+		try{
+			timeEntries.setInterruptTime(Float.parseFloat(interruptTime));
+		}catch(NumberFormatException e){
+			System.out.println("Unable to convert interruptTime to Float");
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * 
 	 * @param timeEntries TimeRowObject for saving purposes
 	 * @param endTime the end time of the time log entry
+	 * NumberFormatException is caught if endTime cannot be converted to a Float
 	 * Sets the end time of the time log entry
 	 */
 	public static void setTimeLogEndTime(TimeRowObject timeEntries, String endTime){
-		timeEntries.setEndTime(Float.parseFloat(endTime));
+		try{
+			timeEntries.setEndTime(Float.parseFloat(endTime));
+		}catch (NumberFormatException e){
+			System.out.println("Unable to convert endTime to Float");
+			e.printStackTrace();
+		}
 	}
 	
 	/**
