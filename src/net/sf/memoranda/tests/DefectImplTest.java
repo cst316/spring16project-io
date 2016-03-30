@@ -23,6 +23,7 @@ public class DefectImplTest {
 	File file;
 	Defect def;
 	TestRowObject tro;
+	ArrayList<TestRowObject> array;
 	Date date = new Date(1/1/2001);
 	String desc = "desc", filename = "filename", fix = "fix", 
 			injPoint = "injPoint",name = "name", fixRef = "fixRef",
@@ -31,10 +32,12 @@ public class DefectImplTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		def = new DefectImpl();
 		
+		array = new ArrayList<TestRowObject>();
 		tro = new TestRowObject(name, date, defNum, defectType,
 				injPoint, remPhase, fix, fixRef);
+		array.add(tro);
+		def = new DefectImpl(array);
 		
 		path =  System.getProperty("user.home") + File.separator + 
 				".memoranda" + File.separator + ".proj" + File.separator + 
@@ -42,34 +45,19 @@ public class DefectImplTest {
 		
 		file = new File(path);
 		file.mkdirs();
-		
 	}
 	
-	@Test
-	public void testSaveTestData() {
-		//assertTrue(def.saveData(obj));
-		//assertTrue(def.saveData( date, defNum, defType, injPhase, remPhase, fix, fixRef));
-	}
-	
-	@Test
-	public void testLoadTestData() {
-		//assertTrue(def.loadTestData(path, "defectTest"));
-	}
-	
+
 	@Test
 	public void testSetArr(){
-		//assertTrue(def.addRow(tro));
-		//assertTrue(def.getIsDirty());
-	}
-
-	@Test
-	public void testGetters() {
-
-		
-		//assertEquals(def.getName(), "name");
-		//assertEquals(def.getpId(), 123);
-
-		
+	    assertEquals(def.getIsDirty(), false);
+		assertNotNull(tro);
+		assertNotNull(def);
+		assertEquals(def.setRowObject(array), true);
+		assertEquals(def.getRowObject(), array);
+		assertEquals(def.addRow(tro),true);
+		assertEquals(def.removeRow(0), true);
+		assertEquals(def.getIsDirty(), true);
 	}
 	
 	@AfterClass

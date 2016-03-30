@@ -9,9 +9,9 @@ public interface Defect {
 	//public boolean saveTestData(String path, String name); //creates and saves file using current data
 	
 
-	public ArrayList<TestRowObject> getRow();
+	public ArrayList<TestRowObject> getRowObject();
 	
-	public boolean setRow(ArrayList<TestRowObject> list);
+	public boolean setRowObject(ArrayList<TestRowObject> list);
 
 	public boolean addRow(TestRowObject rowObj);
 	

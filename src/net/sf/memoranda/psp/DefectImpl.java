@@ -26,15 +26,16 @@ public class DefectImpl implements Defect, Serializable {
 	}
 	
 	@Override
-	public ArrayList<TestRowObject> getRow() {
+	public ArrayList<TestRowObject> getRowObject() {
 		return this.testObj;
 	}
 
 	@Override
-	public boolean setRow(ArrayList<TestRowObject> list) {
-		isDirty = true;
+	public boolean setRowObject(ArrayList<TestRowObject> list) {
+		boolean temp = true;
+	    isDirty = true;
 		this.testObj = list;
-		return false;
+		return temp;
 	}
 	
 	@Override
