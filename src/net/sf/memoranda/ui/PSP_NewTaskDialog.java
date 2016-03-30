@@ -115,19 +115,11 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 	            // var on the the index of the current count
 	            
 	            tdata.saveTaskData(tdarray, count);
-	            
-	            // arbitrarily setting next value of textfield and increasing counter for testing
-	            
-	            //textField.setText("whatever");
-	            
+	                     
 	            //increase count to move down array index and populate other fields
 	            
 	            count++;
-	            
-/*	            tdarray=descriptionTextField.getText();
-	            tdata.saveTaskData(tdarray, count);
-	            count++;*/
-	            
+	                    
 	            tdarray=startDateTextField.getText();
 	            tdata.saveTaskData(tdarray, count);
 	            count++;
@@ -146,15 +138,6 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 	            
 	            // print array contents to console for testing
 	            
-	            /*
-	            PSP_NewTaskData.showTaskData(0);
-	            PSP_NewTaskData.showTaskData(1);
-	            PSP_NewTaskData.showTaskData(2);
-	            PSP_NewTaskData.showTaskData(3);
-	            PSP_NewTaskData.showTaskData(4);
-	            PSP_NewTaskData.showTaskData(5);
-	            */	            
-	            
 	            for(int i=0; i<6; i++)
 	            {
 	            	PSP_NewTaskData.showTaskData(i);
@@ -163,9 +146,7 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 	            //insert array contents to row
 	            
 	            PSP_NewTaskTable.insertRow();
-	            
-				
-				
+	            				
 			}
 		});
 		
