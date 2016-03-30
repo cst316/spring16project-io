@@ -5,6 +5,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 
 import net.sf.memoranda.psp.Defect;
+import net.sf.memoranda.psp.DefectImpl;
+import net.sf.memoranda.psp.Psp;
+import net.sf.memoranda.psp.TestRowObject;
 import net.sf.memoranda.util.Local;
 
 import java.awt.Color;
@@ -42,8 +45,8 @@ public class PSP_DefectPanel extends JPanel {
 	**/
 	private JTextField userTextField;
 	private JTextField dateTextField;
-	private JTextField programTextField;
-	private JTextField programNumberTextField;
+	private JTextField prjctTextField;
+	private JTextField prjctNumberTextField;
 	private JTextField typeTextField;
 	private JTextField injectTextField;
 	private JTextField removeTextField;
@@ -97,11 +100,13 @@ public class PSP_DefectPanel extends JPanel {
 	 */
 	static boolean isDirty = false;
 	int count = 1;
+	
 	Date dater = new Date();
 	
 	//Taken from PSP_NPWizardFrame by Cephas M. to make 
 	//frame compatible to the main panel
 	private Defect defect;
+	private Psp my_psp;
 
 	public PSP_DefectPanel() {		
 		try {
@@ -148,12 +153,13 @@ public class PSP_DefectPanel extends JPanel {
 		dateLabel.setBounds(37, 101, 56, 16);
 		add(dateLabel);
 		
-		JLabel programLabel = new JLabel("Program:");
-		programLabel.setToolTipText("Program name");
-		programLabel.setBounds(270, 49, 56, 16);
-		add(programLabel);
+		JLabel prjctLAbel = new JLabel("Project:");
+		prjctLAbel.setToolTipText("Project name");
+		prjctLAbel.setBounds(270, 49, 56, 16);
+		add(prjctLAbel);
 		
-		JLabel programNoLabel = new JLabel("Program #:");
+		JLabel programNoLabel = new JLabel("Project #:");
+		//JLabel programNoLabel = new JLabel("" + my_psp.getpId());
 		programNoLabel.setToolTipText("Program Number");
 		programNoLabel.setBounds(268, 101, 87, 16);
 		add(programNoLabel);
@@ -173,19 +179,20 @@ public class PSP_DefectPanel extends JPanel {
 		dateTextField.setText(getDate());
 		add(dateTextField);
 		
-		programTextField = new JTextField();
-		programTextField.setToolTipText("Name of what you're working on\r\n\r\n");
-		programTextField.setText("");
-		programTextField.setColumns(10);
-		programTextField.setBounds(344, 48, 166, 22);
-		add(programTextField);
+		prjctTextField = new JTextField();
+		prjctTextField.setToolTipText("Name of the project"
+				+ " your working on\r\n\r\n");
+		prjctTextField.setText("");
+		prjctTextField.setColumns(10);
+		prjctTextField.setBounds(344, 48, 166, 22);
+		add(prjctTextField);
 		
-		programNumberTextField = new JTextField();
-		programNumberTextField.setToolTipText("Program number (auto-generated)\r\n");
-		programNumberTextField.setText("" + serialVersionUID);
-		programNumberTextField.setColumns(10);
-		programNumberTextField.setBounds(344, 98, 166, 22);
-		add(programNumberTextField);
+		prjctNumberTextField = new JTextField();
+		prjctNumberTextField.setToolTipText("Project number (auto-generated)\r\n");
+		prjctNumberTextField.setText("" + serialVersionUID);
+		prjctNumberTextField.setColumns(10);
+		prjctNumberTextField.setBounds(344, 98, 166, 22);
+		add(prjctNumberTextField);
 		
 		JLabel testingFrameTitleLbl = new JLabel
 				("Defects Log");
@@ -206,10 +213,10 @@ public class PSP_DefectPanel extends JPanel {
 		eachLogPanel.setLayout(null);
 		eachLogPanel.setBackground(Color.WHITE);
 		
-		JLabel projectLabel_1 = new JLabel("Project");
-		projectLabel_1.setToolTipText("Project name");
-		projectLabel_1.setBounds(25, 13, 49, 22);
-		eachLogPanel.add(projectLabel_1);
+		JLabel prgrmLabel_1 = new JLabel("Program");
+		prgrmLabel_1.setToolTipText("Program name");
+		prgrmLabel_1.setBounds(25, 13, 49, 22);
+		eachLogPanel.add(prgrmLabel_1);
 		
 		JLabel dateLabel_1 = new JLabel("Date");
 		dateLabel_1.setToolTipText("Date");
@@ -299,6 +306,26 @@ public class PSP_DefectPanel extends JPanel {
 		eachDefect_panel.setLayout(null);
 		eachDefect_panel.setBackground(Color.WHITE);
 		
+		JButton btnEditAll = new JButton("Edit All");
+		btnEditAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				for(int i = 0; i <= addButtonList.size()-1; i++)
+				{
+					typeTextFieldList.get(i).setEditable(true);
+					typeTextFieldList.get(i).setEditable(true);
+					injectTextFieldList.get(i).setEditable(true);
+					removeTextFieldList.get(i).setEditable(true);
+					fixTextFieldList.get(i).setEditable(true);
+					fixRefTextFieldList.get(i).setEditable(true);
+				}
+						JOptionPane.showMessageDialog(App.getFrame(), 
+								Local.getString("You can now edit all"
+										+ " defects!"));
+			}
+		});
+		btnEditAll.setBounds(926, 394, 97, 25);
+		containsLogsPanel.add(btnEditAll);
+		
 		createDefectLogPanel();
 		
 		isDirty  = true; 
@@ -357,6 +384,7 @@ public class PSP_DefectPanel extends JPanel {
 		projectLabel = new JLabel();
 		projectLabel.setBounds(0, 0, 147, 22);
 		projectLabel.setText("Current Project");
+		//projectLabel.setText(defect.getName());
 		projectLabel.setToolTipText("Project's name");
 		projectLabelList.add(projectLabel);
 		
@@ -401,10 +429,7 @@ public class PSP_DefectPanel extends JPanel {
 		fixRefTextField.setBounds(890, 0, 70, 22);
 		fixRefTextField.setToolTipText("Fix Reference Number");
 		fixRefTextField.setColumns(10);
-		for(int countFixRef = 1; countFixRef <= addButtonList.size(); countFixRef++)
-		{
-			fixRefTextField.setText("00" + countFixRef + "00");
-		}
+		fixRefTextField.setText("00" + count + "00");
 		fixRefTextFieldList.add(fixRefTextField);
 		
 		holdItems.setBackground(Color.WHITE);
@@ -502,6 +527,7 @@ public class PSP_DefectPanel extends JPanel {
 						buttonAction_Clicked ("ADD_DEFECT");
 						count++;
 						String num = "           " + count;
+						fixRefTextField.setText("00" + count + "00");
 						numberLabel.setText("      " + num);
 						dateLabel.setText(getDate());
 						isDirty  = true; 
@@ -533,6 +559,8 @@ public class PSP_DefectPanel extends JPanel {
 		} else {
 			
 		}
+		//TestRowObject rowObj = new TestRowObject();
+		//defect.addRow(rowObj);
 	}
 		
 	//Return date in a short format
