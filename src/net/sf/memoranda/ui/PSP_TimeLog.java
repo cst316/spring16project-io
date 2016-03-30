@@ -106,11 +106,11 @@ public class PSP_TimeLog extends JPanel {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		timeEntries = new TimeRowObject();
-        		timeEntries.setDate(startTimeTextField.getText());
-        		timeEntries.setStartTime(Float.parseFloat(startTimeTextField.getText()));
-        		timeEntries.setInterruptTime(Float.parseFloat(interruptTimeTextField.getText()));
-        		timeEntries.setEndTime(Float.parseFloat(endTimeTextField.getText()));
-        		timeEntries.setPhase(phaseTextField.getText());
+        		setTimeLogDate(timeEntries, dateTextField.getText());
+        		setTimeLogStartTime(timeEntries, startTimeTextField.getText());
+        		setTimeLogInterruptTime(timeEntries, interruptTimeTextField.getText());
+        		setTimeLogEndTime(timeEntries, endTimeTextField.getText());
+        		setTimeLogPhase(timeEntries, phaseTextField.getText());
         	}
         });
         bttnDone.setText("Done");
@@ -179,5 +179,55 @@ public class PSP_TimeLog extends JPanel {
         				.addComponent(bttnDone, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)))
         );
         contentPane.setLayout(gl_contentPane);
+	}
+	
+	/**
+	 * 
+	 * @param timeEntries TimeRowObject for saving purposes
+	 * @param date the date of the time log entry
+	 * Sets the date of the time log entry
+	 */
+	public static void setTimeLogDate(TimeRowObject timeEntries, String date){
+		timeEntries.setDate(date);
+	}
+	
+	/**
+	 * 
+	 * @param timeEntries TimeRowObject for saving purposes
+	 * @param startTime the start time of the time log entry
+	 * Sets the start time of the time log entry
+	 */
+	public static void setTimeLogStartTime(TimeRowObject timeEntries, String startTime){
+		timeEntries.setStartTime(Float.parseFloat(startTime));
+	}
+	
+	/**
+	 * 
+	 * @param timeEntries TimeRowObject for saving purposes
+	 * @param interruptTime the interrupt time of the time log entry
+	 * Sets the interrupt time of the time log entry
+	 */
+	public static void setTimeLogInterruptTime(TimeRowObject timeEntries, String interruptTime){
+		timeEntries.setInterruptTime(Float.parseFloat(interruptTime));
+	}
+	
+	/**
+	 * 
+	 * @param timeEntries TimeRowObject for saving purposes
+	 * @param endTime the end time of the time log entry
+	 * Sets the end time of the time log entry
+	 */
+	public static void setTimeLogEndTime(TimeRowObject timeEntries, String endTime){
+		timeEntries.setEndTime(Float.parseFloat(endTime));
+	}
+	
+	/**
+	 * 
+	 * @param timeEntries TimeRowObject for saving purposes
+	 * @param phase the phase of the time log entry
+	 * Sets the phase of the time log entry
+	 */
+	public static void setTimeLogPhase(TimeRowObject timeEntries, String phase){
+		timeEntries.setPhase(phase);
 	}
 }
