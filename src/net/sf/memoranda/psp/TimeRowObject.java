@@ -1,7 +1,12 @@
 package net.sf.memoranda.psp;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import net.sf.memoranda.util.Util;
 
 /**
  * 
@@ -25,10 +30,29 @@ public class TimeRowObject implements Serializable {
 	
 	private static boolean isDirty;	
 	
+	public TimeRowObject () {
+		this.date = new Date();
+		this.startTime = 0.0f;		
+	}
+	
 	public void setDate(Date date) {
 		// TODO Auto-generated method stub
 		this.date = date;
 		isDirty = true;
+	}
+	
+	public void setDate(String date) {
+		// TODO Auto-generated method stub
+		DateFormat formatter ; 
+		formatter = new SimpleDateFormat("MM/dd/yy");
+		try {
+			this.date = formatter.parse(date);
+			isDirty = true;
+			System.out.println("The parsed date is: " + date.toString());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			Util.debug ("Date parsing issue: ".toUpperCase() + e.getMessage());
+		}
 	}
 	
 	public Date getDate() {
