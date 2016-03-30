@@ -257,14 +257,12 @@ public class PSP_Details extends JPanel {
 				break;
 			case ("LOST"):
 				if (!isDirty && !(strDirty.equalsIgnoreCase(txtDescription.getText().trim()))) {
-					isDirty = true;
+					setIsDirty(true);
 				}
 				break;
 			default:
 				Util.debug("We shouldn't be here at all focus_EvenHandle");
 		}
-		
-		Util.debug("Are we dirty? " + isDirty);		
 	}
 
 	protected void button_ActionClicked(String action) {
@@ -295,11 +293,14 @@ public class PSP_Details extends JPanel {
 		btnEdit.setText(isToggled ? "Cancel" : "Edit Details");		
 	}	
 	
-	public static boolean setIsDirty (boolean isDirty) {
-		PSP_Details.isDirty = isDirty;
-		return true;
+	public static void setIsDirty (boolean dirty) {
+		isDirty = dirty;
+		if (isDirty) {
+			PSP_Panel.setIsDirty(true);
+			PSP_Panel.myPanel.setSaveEnabled();
+		}
 	}
-	
+
 	public static boolean getIsDirty () {
 		return isDirty;
 	}

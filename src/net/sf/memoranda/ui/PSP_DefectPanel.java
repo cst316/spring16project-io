@@ -301,7 +301,7 @@ public class PSP_DefectPanel extends JPanel {
 		
 		createDefectLogPanel();
 		
-		isDirty  = true; 
+		setIsDirty(true); 
 		
 	}
 	
@@ -430,7 +430,7 @@ public class PSP_DefectPanel extends JPanel {
 		scrollPaneDefectLog.setVerticalScrollBarPolicy
 			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
-		isDirty = true;
+		setIsDirty(true);
 	}
 	
 	/**
@@ -472,7 +472,7 @@ public class PSP_DefectPanel extends JPanel {
 		eachDefect_panel.setPreferredSize(new Dimension (width, y));
 		scrollPaneDefectLog.setVerticalScrollBarPolicy
 			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		isDirty = true;
+		setIsDirty(true);
 	}
 	
 	//Same as Cephas's implementation in PSP_PlanningWizardFrame.java
@@ -504,7 +504,7 @@ public class PSP_DefectPanel extends JPanel {
 						String num = "           " + count;
 						numberLabel.setText("      " + num);
 						dateLabel.setText(getDate());
-						isDirty  = true; 
+						setIsDirty(true); 
 					}
 				});
 			} else {
@@ -540,5 +540,17 @@ public class PSP_DefectPanel extends JPanel {
 		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
 		
 		return (df.format(dater));
+	}
+	
+	public static void setIsDirty (boolean dirty) {
+		isDirty = dirty;
+		if (isDirty) {
+			PSP_Panel.setIsDirty(true);
+			PSP_Panel.myPanel.setSaveEnabled();
+		}
+	}
+
+	public static boolean getIsDirty () {
+		return isDirty;
 	}
 }
