@@ -147,11 +147,21 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 	            //insert array contents to row
 	            
 	            PSP_NewTaskTable.insertRow();
+	            dispose();
 	            				
 			}
 		});
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			
+			{
+				
+				dispose();
+				
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -185,10 +195,7 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 												.addGroup(gl_contentPane.createSequentialGroup()
 													.addComponent(btnOk)
 													.addPreferredGap(ComponentPlacement.RELATED)))
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addGap(63)
-													.addComponent(btnCancel))
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 												.addGroup(gl_contentPane.createSequentialGroup()
 													.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 														.addGroup(gl_contentPane.createSequentialGroup()
@@ -202,7 +209,10 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 														.addGroup(gl_contentPane.createSequentialGroup()
 															.addComponent(estDateTextField, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
 															.addPreferredGap(ComponentPlacement.RELATED))
-														.addComponent(priorityTextField, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)))))))
+														.addComponent(priorityTextField, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)))
+												.addGroup(gl_contentPane.createSequentialGroup()
+													.addGap(44)
+													.addComponent(btnCancel))))))
 								.addComponent(lblEstimatedTime))))
 					.addGap(153))
 		);
@@ -234,8 +244,8 @@ public class PSP_NewTaskDialog extends JFrame implements Serializable {
 						.addComponent(priorityTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnCancel)
-						.addComponent(btnOk))
+						.addComponent(btnOk)
+						.addComponent(btnCancel))
 					.addGap(26))
 		);
 		contentPane.setLayout(gl_contentPane);
