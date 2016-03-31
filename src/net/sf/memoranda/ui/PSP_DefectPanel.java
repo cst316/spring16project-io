@@ -107,6 +107,8 @@ public class PSP_DefectPanel extends JPanel {
 	//frame compatible to the main panel
 	private Defect defect;
 	private Psp my_psp;
+	
+	private TestRowObject my_testRow = new TestRowObject(); 
 
 	public PSP_DefectPanel() {		
 		try {
@@ -119,6 +121,11 @@ public class PSP_DefectPanel extends JPanel {
 	
 	public PSP_DefectPanel(Defect defect) {
 		this.defect = defect;
+		jbInit();
+	}
+	
+	public PSP_DefectPanel(Psp pspVal) {
+		this.my_psp = pspVal;
 		jbInit();
 	}
 
@@ -276,6 +283,18 @@ public class PSP_DefectPanel extends JPanel {
 					removeTextFieldList.get(i).setEditable(false);
 					fixTextFieldList.get(i).setEditable(false);
 					fixRefTextFieldList.get(i).setEditable(false);
+					
+					/*my_testRow.setProject(projectLabelList.get(i).getText());
+					my_testRow.setDate(dateLabelList.get(i).getText());
+					my_testRow.setDefNumber((
+							Integer.parseInt(numberLabelList.get(i).getText())));
+					my_testRow.setDefType(typeTextFieldList.get(i).getText());
+					my_testRow.setInjPhase(injectTextFieldList.get(i).getText());
+					my_testRow.setRemPhase(removeTextFieldList.get(i).getText());
+					my_testRow.setFix(fixTextFieldList.get(i).getText());
+					my_testRow.setFixRef(fixRefTextFieldList.get(i).getText());*/
+					
+					
 				}
 			}
 		});
@@ -383,8 +402,8 @@ public class PSP_DefectPanel extends JPanel {
 	
 		projectLabel = new JLabel();
 		projectLabel.setBounds(0, 0, 147, 22);
-		projectLabel.setText("Current Project");
-		//projectLabel.setText(defect.getName());
+		//projectLabel.setText("Current Project");
+		projectLabel.setText(my_psp.getName());
 		projectLabel.setToolTipText("Project's name");
 		projectLabelList.add(projectLabel);
 		

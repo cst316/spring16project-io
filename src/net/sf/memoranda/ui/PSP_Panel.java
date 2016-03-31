@@ -202,7 +202,7 @@ public class PSP_Panel extends JPanel{
 					addJPanel (new PSP_DefectPanel (defect));		
 					ois.close();
 				} else {
-					addJPanel (new PSP_DefectPanel ());
+					addJPanel (new PSP_DefectPanel (pspI));
 				}
 			} else if (event.equals("TIMELOG")) {
 				fs = new File (System.getProperty("user.home") +  File.separator + ".memoranda" + 
