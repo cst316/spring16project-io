@@ -66,11 +66,11 @@ public class DefectImpl implements Defect, Serializable {
 		return temp;
 	}
 	
-	public boolean removeRow(int index){
+	public boolean removeRow(TestRowObject rowObj){
 		boolean temp = true;
 		isDirty = true;
 		try{
-			testObj.remove(index);
+			testObj.remove(rowObj);
 		}catch(NullPointerException e){
 			e.getMessage();
 			temp = false;

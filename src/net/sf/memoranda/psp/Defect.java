@@ -17,7 +17,7 @@ public interface Defect {
 
 	public boolean addRow(TestRowObject rowObj);
 	
-	public boolean removeRow(int i);
+	public boolean removeRow(TestRowObject rowObj);
 	
 	public boolean getIsDirty();
 }

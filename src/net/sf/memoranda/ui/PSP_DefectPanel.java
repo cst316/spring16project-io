@@ -409,7 +409,6 @@ public class PSP_DefectPanel extends JPanel {
 	
 		programTextField = new JTextField();
 		programTextField.setBounds(0, 0, 147, 22);
-		//projectLabel.setText("Current Project");
 		//programLabel.setText(defect.getPspValues().getName());
 		programTextField.setToolTipText("Program's name");
 		programTextFieldList.add(programTextField);
@@ -538,6 +537,8 @@ public class PSP_DefectPanel extends JPanel {
 				removeTextFieldList.remove(i);
 			    fixTextFieldList.remove(i);
 				fixRefTextFieldList.remove(i);
+				
+				defect.removeRow(my_testRow);
 				break;
 			}
 		}
