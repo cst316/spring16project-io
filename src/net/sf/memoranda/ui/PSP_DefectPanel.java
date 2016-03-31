@@ -56,7 +56,7 @@ public class PSP_DefectPanel extends JPanel {
 	/**
 	 * Label variables for project name, date and defect number
 	 */
-	private JTextField programLabel;
+	private JTextField programTextField;
 	private JLabel dateLabel;
 	private JLabel numberLabel;
 	
@@ -69,7 +69,7 @@ public class PSP_DefectPanel extends JPanel {
 	/**
 	 * List variables that stores a list of each of the attributes above
 	 */
-	private List <JTextField> programLabelList = new ArrayList <JTextField>();
+	private List <JTextField> programTextFieldList = new ArrayList <JTextField>();
 	private List <JLabel> dateLabelList = new ArrayList <JLabel>();
 	private List <JLabel> numberLabelList = new ArrayList <JLabel>();
 	private List <JTextField> typeTextFieldList = new ArrayList <JTextField>();
@@ -142,7 +142,7 @@ public class PSP_DefectPanel extends JPanel {
 		"\n10 Documentation\t60 Checking" +
 		"\n20 Syntax\t\t70 Data" + 
 		"\n30 Build, Package\t80 Function" + 
-		"\n40 Assignment\t90 System" +
+		"\n40 Assignment\t\t90 System" +
 		"\n50 Interface\t\t100 Environment");
 		
 		defectKey.setBounds(879, 13, 343, 121);
@@ -196,7 +196,7 @@ public class PSP_DefectPanel extends JPanel {
 		
 		prjctNumberTextField = new JTextField();
 		prjctNumberTextField.setToolTipText("Project number (auto-generated)\r\n");
-		prjctNumberTextField.setText("" + serialVersionUID);
+		prjctNumberTextField.setText(defect.getPspValues().getpId() + "");
 		prjctNumberTextField.setColumns(10);
 		prjctNumberTextField.setBounds(344, 98, 166, 22);
 		add(prjctNumberTextField);
@@ -275,28 +275,7 @@ public class PSP_DefectPanel extends JPanel {
 		update = new JButton("Update");
 		update.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(App.getFrame(),
-						Local.getString("Updated and Saved!"));
-				for (int i = 0; i < addButtonList.size(); i++) {					
-					typeTextFieldList.get(i).setEditable(false);
-					injectTextFieldList.get(i).setEditable(false);
-					removeTextFieldList.get(i).setEditable(false);
-					fixTextFieldList.get(i).setEditable(false);
-					fixRefTextFieldList.get(i).setEditable(false);
-					
-					my_testRow.setProject(programLabelList.get(i).getText());
-					my_testRow.setDate(dateLabelList.get(i).getText());
-					my_testRow.setDefNumber((
-							Integer.parseInt(numberLabelList.get(i).getText().trim())));
-					my_testRow.setDefType(typeTextFieldList.get(i).getText());
-					my_testRow.setInjPhase(injectTextFieldList.get(i).getText());
-					my_testRow.setRemPhase(removeTextFieldList.get(i).getText());
-					my_testRow.setFix(fixTextFieldList.get(i).getText());
-					my_testRow.setFixRef(fixRefTextFieldList.get(i).getText());
-					defect.addRow(my_testRow);
-					
-					//call setIsDirty (true);
-				}
+					update();
 			}
 		});
 		update.setBounds(1047, 394, 97, 25);
@@ -330,18 +309,7 @@ public class PSP_DefectPanel extends JPanel {
 		JButton btnEditAll = new JButton("Edit All");
 		btnEditAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				for(int i = 0; i <= addButtonList.size()-1; i++)
-				{
-					typeTextFieldList.get(i).setEditable(true);
-					typeTextFieldList.get(i).setEditable(true);
-					injectTextFieldList.get(i).setEditable(true);
-					removeTextFieldList.get(i).setEditable(true);
-					fixTextFieldList.get(i).setEditable(true);
-					fixRefTextFieldList.get(i).setEditable(true);
-				}
-						JOptionPane.showMessageDialog(App.getFrame(), 
-								Local.getString("You can now edit all"
-										+ " defects!"));
+				editAll();
 			}
 		});
 		btnEditAll.setBounds(926, 394, 97, 25);
@@ -349,6 +317,33 @@ public class PSP_DefectPanel extends JPanel {
 				
 		createDefectLogPanel();
 		updateDefectLogPanels();		
+	}
+	
+	
+	private void update()
+	{
+		JOptionPane.showMessageDialog(App.getFrame(),
+				Local.getString("Updated and Saved!"));
+		for (int i = 0; i < addButtonList.size(); i++) {
+			programTextFieldList.get(i).setEditable(false);
+			typeTextFieldList.get(i).setEditable(false);
+			injectTextFieldList.get(i).setEditable(false);
+			removeTextFieldList.get(i).setEditable(false);
+			fixTextFieldList.get(i).setEditable(false);
+			fixRefTextFieldList.get(i).setEditable(false);
+			
+			my_testRow.setProject(programTextFieldList.get(i).getText());
+			my_testRow.setDate(dateLabelList.get(i).getText());
+			my_testRow.setDefNumber((
+					Integer.parseInt(numberLabelList.get(i).getText().trim())));
+			my_testRow.setDefType(typeTextFieldList.get(i).getText());
+			my_testRow.setInjPhase(injectTextFieldList.get(i).getText());
+			my_testRow.setRemPhase(removeTextFieldList.get(i).getText());
+			my_testRow.setFix(fixTextFieldList.get(i).getText());
+			my_testRow.setFixRef(fixRefTextFieldList.get(i).getText());
+			defect.addRow(my_testRow);
+		}
+			//call setIsDirty (true);
 	}
 	
 	/**
@@ -360,7 +355,7 @@ public class PSP_DefectPanel extends JPanel {
 		// TODO Auto-generated method stub
 		if (defect.getRow() != null) {
 			for (int i = 0; i < defect.getRow().size(); i++) {
-				programLabelList.get(i).setText(defect.getRow().get(i).getProject());
+				programTextFieldList.get(i).setText(defect.getRow().get(i).getProject());
 				dateLabelList.get(i).setText(getDate(defect.getRow().get(i).getDate()));
 				numberLabelList.get(i).setText(defect.getRow().get(i).getDefNumber() + "");
 				typeTextFieldList.get(i).setText(defect.getRow().get(i).getDefType());
@@ -406,29 +401,18 @@ public class PSP_DefectPanel extends JPanel {
 	                ("resources/icons/pencilsmall.png")));
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for(int i = 0; i <= addButtonList.size()-1; i++)
-				{
-					typeTextFieldList.get(i).setEditable(true);
-					typeTextFieldList.get(i).setEditable(true);
-					injectTextFieldList.get(i).setEditable(true);
-					removeTextFieldList.get(i).setEditable(true);
-					fixTextFieldList.get(i).setEditable(true);
-					fixRefTextFieldList.get(i).setEditable(true);
-				}
-						JOptionPane.showMessageDialog(App.getFrame(), 
-								Local.getString("You can now edit this and all"
-										+ " other defects!"));
+				edit();
 			}
 		});
 		editButtonList.add(editButton);
 		
 	
-		programLabel = new JTextField();
-		programLabel.setBounds(0, 0, 147, 22);
+		programTextField = new JTextField();
+		programTextField.setBounds(0, 0, 147, 22);
 		//projectLabel.setText("Current Project");
 		//programLabel.setText(defect.getPspValues().getName());
-		programLabel.setToolTipText("Program's name");
-		programLabelList.add(programLabel);
+		programTextField.setToolTipText("Program's name");
+		programTextFieldList.add(programTextField);
 		
 		dateLabel = new JLabel();
 		dateLabel.setBounds(198, 0, 56, 16);
@@ -476,7 +460,7 @@ public class PSP_DefectPanel extends JPanel {
 		
 		holdItems.setBackground(Color.WHITE);
 		holdItems.setLayout(null);
-		holdItems.add(programLabel);
+		holdItems.add(programTextField);
 		holdItems.add(dateLabel);
 		holdItems.add(numberLabel);
 		holdItems.add(typeTextField);
@@ -498,6 +482,37 @@ public class PSP_DefectPanel extends JPanel {
 			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
 	
+	private void edit()
+	{
+		for(int i = 0; i <= addButtonList.size()-1; i++)
+		{
+			typeTextFieldList.get(i).setEditable(true);
+			typeTextFieldList.get(i).setEditable(true);
+			injectTextFieldList.get(i).setEditable(true);
+			removeTextFieldList.get(i).setEditable(true);
+			fixTextFieldList.get(i).setEditable(true);
+			fixRefTextFieldList.get(i).setEditable(true);
+		}
+				JOptionPane.showMessageDialog(App.getFrame(), 
+						Local.getString("You can now edit this and all"
+								+ " other defects!"));
+	}
+	
+	private void editAll()
+	{
+		for(int i = 0; i <= addButtonList.size()-1; i++)
+		{
+			typeTextFieldList.get(i).setEditable(true);
+			typeTextFieldList.get(i).setEditable(true);
+			injectTextFieldList.get(i).setEditable(true);
+			removeTextFieldList.get(i).setEditable(true);
+			fixTextFieldList.get(i).setEditable(true);
+			fixRefTextFieldList.get(i).setEditable(true);
+		}
+				JOptionPane.showMessageDialog(App.getFrame(), 
+						Local.getString("You can now edit this and all"
+								+ " other defects!"));
+	}
 	/**
 	 * Removes a defect log
 	 * @param e
@@ -514,7 +529,7 @@ public class PSP_DefectPanel extends JPanel {
 			if (e.getSource() == addButtonList.get(i)) {
 				addButtonList.remove(i);
 				addDefectPanelsList.remove(i);
-				programLabelList.remove(i);
+				programTextFieldList.remove(i);
 				dateLabelList.remove(i);
 				editButtonList.remove(i);
 				numberLabelList.remove(i);
