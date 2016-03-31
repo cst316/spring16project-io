@@ -1,6 +1,9 @@
 package net.sf.memoranda.psp;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -62,6 +65,16 @@ public class TestRowObject implements Serializable{
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public void setDate(String strDate) {
+		DateFormat df ; 
+		df = new SimpleDateFormat("MM/dd/yy");
+		try {
+			this.date = df.parse(strDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public int getDefNumber() {
 		return defNumber;
