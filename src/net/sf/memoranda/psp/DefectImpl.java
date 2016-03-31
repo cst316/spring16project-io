@@ -5,11 +5,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import net.sf.memoranda.util.Util;
 
+/**
+ * 
+ * @author Joe Michaels
+ *
+ */
 public class DefectImpl implements Defect, Serializable {
 	
 	private static final long serialVersionUID 
 	                    = 8961650030847897462L;
-	private static boolean isDirty = false;
+	private static boolean isDirty;
 	private Psp pspVal;
 	private ArrayList<TestRowObject> testObj  
 	                                = new ArrayList<TestRowObject>();
@@ -21,9 +26,14 @@ public class DefectImpl implements Defect, Serializable {
 	}
 	
 	public DefectImpl(ArrayList<TestRowObject> list){
-		super();
 		this.testObj = list;
 	}
+	
+	
+    public DefectImpl(ArrayList<TestRowObject> list, Psp pspVal){
+        this.testObj = list;
+        this.pspVal = pspVal;
+    }
 	
 	@Override
 	public ArrayList<TestRowObject> getRowObject() {
@@ -47,6 +57,7 @@ public class DefectImpl implements Defect, Serializable {
 		}catch(Exception e){
 			e.getMessage();
 			temp = false;
+			Util.debug("error adding row to TestRowObject");
 		}
 		return temp;
 	}
@@ -59,7 +70,12 @@ public class DefectImpl implements Defect, Serializable {
 		}catch(NullPointerException e){
 			e.getMessage();
 			temp = false;
-		}
+			Util.debug("Null error removing row to TestRowObject");
+		}catch(Exception e){
+            e.getMessage();
+            temp = false;
+            Util.debug("error removing row to TestRowObject");
+        }
 		return temp;
 	}
 	
@@ -89,6 +105,24 @@ public class DefectImpl implements Defect, Serializable {
 	
 	public boolean getIsDirty(){
 		return isDirty;
+	}
+	
+	public static void setIsDirty(boolean dirty) {
+        isDirty = dirty;
+    }
+	
+	public int getPID(){
+	    int id = 0;
+	    try{
+	        id = pspVal.getpId();
+	    }catch(NullPointerException e){
+	        e.getMessage();
+	        Util.debug("psp Value not initialized");
+	    }catch(Exception e){
+	        e.getMessage();
+	        Util.debug("psp Value is " + pspVal.getpId() );
+	    }
+	    return id;
 	}
 
 }
