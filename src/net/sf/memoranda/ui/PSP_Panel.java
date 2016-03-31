@@ -237,13 +237,16 @@ public class PSP_Panel extends JPanel{
 		ObjectOutputStream oos;
 		
 		try {
-			/*if (PSP_Details.getIsDirty()) {
-				temp = new File (fs, "." + pspI.getpId() + "_pspx");
+			if (PSP_Details.getIsDirty()) {
+				temp = new File (System.getProperty("user.home") +  File.separator + 
+						".memoranda" + File.separator + ".proj" + File.separator + 
+						".pspxFiles" + File.separator  + pspI.getpId() + ".pspx");
+				Util.debug("File path is corrected: " + temp);
 				oos = new ObjectOutputStream (new FileOutputStream (temp));				
-				oos.writeObject(plan);
+				oos.writeObject(pspI);
 				oos.flush();
 				oos.close();
-			}*/			
+			}			
 			if (PSP_PlanningPanel.getIsDirty()) {
 				temp = new File (fs, "." + pspI.getpId() + "_planning");
 				oos = new ObjectOutputStream (new FileOutputStream (temp));				

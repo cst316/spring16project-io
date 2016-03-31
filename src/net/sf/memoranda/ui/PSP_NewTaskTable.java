@@ -28,6 +28,7 @@ public class PSP_NewTaskTable extends JPanel implements Serializable {
 	private static final long serialVersionUID = 1223267046325848388L;
 	private JPanel contentPane;
 	private static JTable table;
+	private static boolean isDirty = false;
 	
 	Development devel;
 
@@ -127,5 +128,17 @@ public class PSP_NewTaskTable extends JPanel implements Serializable {
 		
 		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{PSP_NewTaskData.tdarray[0],PSP_NewTaskData.tdarray[1],PSP_NewTaskData.tdarray[2],null,PSP_NewTaskData.tdarray[3],null,PSP_NewTaskData.tdarray[4]});
 		
+	}
+	
+	public static void setIsDirty (boolean dirty) {
+		isDirty = dirty;
+		if (isDirty) {
+			PSP_Panel.setIsDirty(true);
+			PSP_Panel.myPanel.setSaveEnabled();
+		}
+	}
+
+	public static boolean getIsDirty () {
+		return isDirty;
 	}
 }

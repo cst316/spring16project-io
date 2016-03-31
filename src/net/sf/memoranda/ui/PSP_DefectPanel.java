@@ -113,8 +113,13 @@ public class PSP_DefectPanel extends JPanel {
 	}
 	
 	public PSP_DefectPanel(Defect defect) {
-		this.defect = defect;
-		jbInit();
+		try {
+			this.defect = defect;
+			jbInit();
+		} catch (Exception ex) {
+			new ExceptionDialog(ex);
+			ex.printStackTrace();
+		}
 	}
 
 	/**
