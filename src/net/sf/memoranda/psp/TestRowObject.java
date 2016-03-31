@@ -30,6 +30,7 @@ public class TestRowObject implements Serializable{
 	private String remPhase;
 	private String fix;
 	private String fixRef;
+	private String program;
 	
 	public TestRowObject(){
 		this.project = null;
@@ -40,10 +41,11 @@ public class TestRowObject implements Serializable{
 		this.remPhase = null;
 		this.fix = null;
 		this.fixRef = null;
+		this.program = "";
 	}
 	
 	public TestRowObject(String project, Date date, int defNumber, String defType, String injPhase, String remPhase,
-			String fix, String fixRef) {
+			String fix, String fixRef, String prgrm) {
 		this.project = project;
 		this.date = date;
 		this.defNumber = defNumber;
@@ -52,6 +54,7 @@ public class TestRowObject implements Serializable{
 		this.remPhase = remPhase;
 		this.fix = fix;
 		this.fixRef = fixRef;
+		this.program = prgrm;
 	}
 	
 	public String getProject() {
@@ -59,6 +62,12 @@ public class TestRowObject implements Serializable{
 	}
 	public void setProject(String project) {
 		this.project = project;
+	}
+	public String getProgram() {
+		return program;
+	}
+	public void setProgram(String progrm) {
+		this.program = progrm;
 	}
 	public Date getDate() {
 		return date;

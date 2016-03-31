@@ -56,7 +56,7 @@ public class PSP_DefectPanel extends JPanel {
 	/**
 	 * Label variables for project name, date and defect number
 	 */
-	private JLabel projectLabel;
+	private JTextField programLabel;
 	private JLabel dateLabel;
 	private JLabel numberLabel;
 	
@@ -69,7 +69,7 @@ public class PSP_DefectPanel extends JPanel {
 	/**
 	 * List variables that stores a list of each of the attributes above
 	 */
-	private List <JLabel> projectLabelList = new ArrayList <JLabel>();
+	private List <JTextField> programLabelList = new ArrayList <JTextField>();
 	private List <JLabel> dateLabelList = new ArrayList <JLabel>();
 	private List <JLabel> numberLabelList = new ArrayList <JLabel>();
 	private List <JTextField> typeTextFieldList = new ArrayList <JTextField>();
@@ -189,7 +189,7 @@ public class PSP_DefectPanel extends JPanel {
 		prjctTextField = new JTextField();
 		prjctTextField.setToolTipText("Name of the project"
 				+ " your working on\r\n\r\n");
-		prjctTextField.setText("");
+		prjctTextField.setText(defect.getPspValues().getName());
 		prjctTextField.setColumns(10);
 		prjctTextField.setBounds(344, 48, 166, 22);
 		add(prjctTextField);
@@ -222,7 +222,7 @@ public class PSP_DefectPanel extends JPanel {
 		
 		JLabel prgrmLabel_1 = new JLabel("Program");
 		prgrmLabel_1.setToolTipText("Program name");
-		prgrmLabel_1.setBounds(25, 13, 49, 22);
+		prgrmLabel_1.setBounds(25, 13, 80, 22);
 		eachLogPanel.add(prgrmLabel_1);
 		
 		JLabel dateLabel_1 = new JLabel("Date");
@@ -284,7 +284,7 @@ public class PSP_DefectPanel extends JPanel {
 					fixTextFieldList.get(i).setEditable(false);
 					fixRefTextFieldList.get(i).setEditable(false);
 					
-					my_testRow.setProject(projectLabelList.get(i).getText());
+					my_testRow.setProject(programLabelList.get(i).getText());
 					my_testRow.setDate(dateLabelList.get(i).getText());
 					my_testRow.setDefNumber((
 							Integer.parseInt(numberLabelList.get(i).getText().trim())));
@@ -304,7 +304,7 @@ public class PSP_DefectPanel extends JPanel {
 		containsLogsPanel.add(update);
 		
 		mainDefectPanel = new JPanel();
-		mainDefectPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		mainDefectPanel.setBorder(null);	
 		mainDefectPanel.setBounds(12, 57, 1212, 324);
 		containsLogsPanel.add(mainDefectPanel);
 		mainDefectPanel.setBackground(Color.WHITE);
@@ -322,6 +322,7 @@ public class PSP_DefectPanel extends JPanel {
 				(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);		
 		
 		eachDefect_panel = new JPanel();
+		eachDefect_panel.setBorder(null);
 		scrollPaneDefectLog.setViewportView(eachDefect_panel);
 		eachDefect_panel.setLayout(null);
 		eachDefect_panel.setBackground(Color.WHITE);
@@ -359,7 +360,7 @@ public class PSP_DefectPanel extends JPanel {
 		// TODO Auto-generated method stub
 		if (defect.getRow() != null) {
 			for (int i = 0; i < defect.getRow().size(); i++) {
-				projectLabelList.get(i).setText(defect.getRow().get(i).getProject());
+				programLabelList.get(i).setText(defect.getRow().get(i).getProject());
 				dateLabelList.get(i).setText(getDate(defect.getRow().get(i).getDate()));
 				numberLabelList.get(i).setText(defect.getRow().get(i).getDefNumber() + "");
 				typeTextFieldList.get(i).setText(defect.getRow().get(i).getDefType());
@@ -422,12 +423,12 @@ public class PSP_DefectPanel extends JPanel {
 		editButtonList.add(editButton);
 		
 	
-		projectLabel = new JLabel();
-		projectLabel.setBounds(0, 0, 147, 22);
+		programLabel = new JTextField();
+		programLabel.setBounds(0, 0, 147, 22);
 		//projectLabel.setText("Current Project");
-		projectLabel.setText(defect.getPspValues().getName());
-		projectLabel.setToolTipText("Project's name");
-		projectLabelList.add(projectLabel);
+		//programLabel.setText(defect.getPspValues().getName());
+		programLabel.setToolTipText("Program's name");
+		programLabelList.add(programLabel);
 		
 		dateLabel = new JLabel();
 		dateLabel.setBounds(198, 0, 56, 16);
@@ -475,7 +476,7 @@ public class PSP_DefectPanel extends JPanel {
 		
 		holdItems.setBackground(Color.WHITE);
 		holdItems.setLayout(null);
-		holdItems.add(projectLabel);
+		holdItems.add(programLabel);
 		holdItems.add(dateLabel);
 		holdItems.add(numberLabel);
 		holdItems.add(typeTextField);
@@ -513,7 +514,7 @@ public class PSP_DefectPanel extends JPanel {
 			if (e.getSource() == addButtonList.get(i)) {
 				addButtonList.remove(i);
 				addDefectPanelsList.remove(i);
-				projectLabelList.remove(i);
+				programLabelList.remove(i);
 				dateLabelList.remove(i);
 				editButtonList.remove(i);
 				numberLabelList.remove(i);
