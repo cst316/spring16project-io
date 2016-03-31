@@ -18,7 +18,7 @@ public class DevelopmentImpl implements Development, Serializable{
 
 	private static final long serialVersionUID = 9142054105867396986L;
 	private ArrayList<DevRowObject> rowObj;
-	private static boolean isDirty = false;
+	private static boolean isDirty;
 	private Psp pspVal;
 	
 	public DevelopmentImpl(){
@@ -46,6 +46,7 @@ public class DevelopmentImpl implements Development, Serializable{
 		}catch(Exception e){
 			e.getMessage();
 			temp = false;
+			Util.debug("error adding row to DevRowObject");
 		}
 		return temp;
 	}
@@ -59,7 +60,12 @@ public class DevelopmentImpl implements Development, Serializable{
 		}catch(NullPointerException e){
 			e.getMessage();
 			temp = false;
-		}
+		    Util.debug("Null error removing row to DevRowObject");
+        }catch(Exception e){
+            e.getMessage();
+            temp = false;
+            Util.debug("error removing row to DevRowObject");
+        }
 		return temp;
 	}
 
@@ -93,4 +99,22 @@ public class DevelopmentImpl implements Development, Serializable{
 	public boolean getIsDirty(){
 		return isDirty;
 	}
+	
+	public static void setIsDirty(boolean dirty) {
+        isDirty = dirty;
+    }
+    
+    public int getPID(){
+        int id = 0;
+        try{
+            id = pspVal.getpId();
+        }catch(NullPointerException e){
+            e.getMessage();
+            Util.debug("psp Value not initialized");
+        }catch(Exception e){
+            e.getMessage();
+            Util.debug("psp Value is " + pspVal.getpId() );
+        }
+        return id;
+    }
 }
