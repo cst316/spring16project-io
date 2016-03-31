@@ -110,7 +110,8 @@ public class PSP_DefectPanel extends JPanel {
 	
 	private TestRowObject my_testRow = new TestRowObject(); 
 
-	public PSP_DefectPanel() {		
+	public PSP_DefectPanel() {
+		//this.defect = PSP_Panel.defect;
 		try {
 			jbInit();
 		} catch (Exception ex) {
@@ -133,6 +134,7 @@ public class PSP_DefectPanel extends JPanel {
 	 * Initialization of GUI components
 	 */
 	public void jbInit() {
+		defect = new DefectImpl();
 		setLayout(null);
 		this.setBackground(Color.WHITE);
 		this.setBounds(0, 0, 1290, 700);
@@ -277,25 +279,26 @@ public class PSP_DefectPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(App.getFrame(),
 						Local.getString("Updated and Saved!"));
-				for (int i = 0; i < addButtonList.size(); i++) {
+				for (int i = 0; i < addButtonList.size(); i++) {					
 					typeTextFieldList.get(i).setEditable(false);
 					injectTextFieldList.get(i).setEditable(false);
 					removeTextFieldList.get(i).setEditable(false);
 					fixTextFieldList.get(i).setEditable(false);
 					fixRefTextFieldList.get(i).setEditable(false);
 					
-					/*my_testRow.setProject(projectLabelList.get(i).getText());
+					my_testRow.setProject(projectLabelList.get(i).getText());
 					my_testRow.setDate(dateLabelList.get(i).getText());
 					my_testRow.setDefNumber((
-							Integer.parseInt(numberLabelList.get(i).getText())));
+							Integer.parseInt(numberLabelList.get(i).getText().trim())));
 					my_testRow.setDefType(typeTextFieldList.get(i).getText());
 					my_testRow.setInjPhase(injectTextFieldList.get(i).getText());
 					my_testRow.setRemPhase(removeTextFieldList.get(i).getText());
 					my_testRow.setFix(fixTextFieldList.get(i).getText());
-					my_testRow.setFixRef(fixRefTextFieldList.get(i).getText());*/
-					
+					my_testRow.setFixRef(fixRefTextFieldList.get(i).getText());
+					defect.addRow(my_testRow);
 					
 				}
+				
 			}
 		});
 		update.setBounds(1047, 394, 97, 25);

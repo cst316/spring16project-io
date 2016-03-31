@@ -44,6 +44,7 @@ public class DefectImpl implements Defect, Serializable {
 		try{
 			isDirty = true;
 			testObj.add(rowObj);
+			Util.debug("ADDED!!!!!!!!!");
 		}catch(Exception e){
 			e.getMessage();
 			temp = false;
