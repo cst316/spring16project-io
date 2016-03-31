@@ -263,10 +263,10 @@ public class PSP_Panel extends JPanel{
 				oos.close();
 			}
 			
-			/*if (PSP_TimeLog.getIsDirty()) {
+			if (PSP_TimeLog.getIsDirty()) {
 				temp = new File (fs, "." + pspI.getpId() + "_timelog");
 				oos = new ObjectOutputStream (new FileOutputStream (temp));				
-				oos.writeObject(plan);
+				oos.writeObject(timelog);
 				oos.flush();
 				oos.close();
 			}
@@ -274,10 +274,13 @@ public class PSP_Panel extends JPanel{
 			if (PSP_NewTaskTable.getIsDirty()) {
 				temp = new File (fs, "." + pspI.getpId() + "_development");
 				oos = new ObjectOutputStream (new FileOutputStream (temp));				
-				oos.writeObject(plan);
+				oos.writeObject(dev);
 				oos.flush();
 				oos.close();
-			}*/
+			}	
+			
+			setIsDirty(false);
+			setEnabledFlag (this.lblSaveProject, getIsDirty());	
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
