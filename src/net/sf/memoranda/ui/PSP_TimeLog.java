@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 
 import net.sf.memoranda.psp.TimeLog;
 import net.sf.memoranda.psp.TimeRowObject;
+import net.sf.memoranda.util.Util;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -205,7 +206,7 @@ public class PSP_TimeLog extends JPanel {
 		try{
 			timeEntries.setStartTime(Float.parseFloat(startTime));
 		}catch(NumberFormatException e){
-			System.out.println("Unable to convert startTime to Float");
+			Util.debug("Unable to convert startTime to Float");
 			e.printStackTrace();
 		}
 	}
@@ -221,7 +222,7 @@ public class PSP_TimeLog extends JPanel {
 		try{
 			timeEntries.setInterruptTime(Float.parseFloat(interruptTime));
 		}catch(NumberFormatException e){
-			System.out.println("Unable to convert interruptTime to Float");
+			Util.debug("Unable to convert interruptTime to Float");
 			e.printStackTrace();
 		}
 	}
@@ -237,7 +238,7 @@ public class PSP_TimeLog extends JPanel {
 		try{
 			timeEntries.setEndTime(Float.parseFloat(endTime));
 		}catch (NumberFormatException e){
-			System.out.println("Unable to convert endTime to Float");
+			Util.debug("Unable to convert endTime to Float");
 			e.printStackTrace();
 		}
 	}
