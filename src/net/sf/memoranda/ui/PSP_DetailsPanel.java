@@ -26,7 +26,15 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.text.DateFormat;
 
-public class PSP_Details extends JPanel {
+/**
+ * 
+ * @author Cephas Armstrong-Mensah
+ * @author Team-IO
+ * CST316 - Spring 2016, ASU Poly
+ * This panel displays PSP details for a project
+ * 03/23/2016
+ */
+public class PSP_DetailsPanel extends JPanel {
 	/**
 	 * 
 	 */
@@ -44,7 +52,7 @@ public class PSP_Details extends JPanel {
 	static boolean isToggled = false;
 	static boolean isDirty = false;
 	
-	public PSP_Details (Psp pspI) {
+	public PSP_DetailsPanel (Psp pspI) {
 		this.pspI = pspI;
 		strDirty = "";
 		jInit();

@@ -11,7 +11,6 @@ public class DefectImpl implements Defect, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 8961650030847897462L;
-	private static boolean isDirty = false;
 	private Psp pspVal;
 	private ArrayList<TestRowObject> testObj = new ArrayList<TestRowObject>();
 	//private String path = ""; //temp values until rest of class is implemented
@@ -33,7 +32,6 @@ public class DefectImpl implements Defect, Serializable {
 
 	@Override
 	public boolean setRow(ArrayList<TestRowObject> list) {
-		isDirty = true;
 		this.testObj = list;
 		return false;
 	}
@@ -42,7 +40,6 @@ public class DefectImpl implements Defect, Serializable {
 	public boolean addRow(TestRowObject rowObj) {
 		boolean temp = true;
 		try{
-			isDirty = true;
 			testObj.add(rowObj);
 		}catch(Exception e){
 			e.getMessage();
@@ -53,7 +50,6 @@ public class DefectImpl implements Defect, Serializable {
 	
 	public boolean removeRow(int index){
 		boolean temp = true;
-		isDirty = true;
 		try{
 			testObj.remove(index);
 		}catch(NullPointerException e){
@@ -176,9 +172,4 @@ public class DefectImpl implements Defect, Serializable {
 		stream.defaultWriteObject();
 		Util.debug("object wrtten");
 	}
-	
-	public boolean getIsDirty(){
-		return isDirty;
-	}
-
 }

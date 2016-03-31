@@ -23,12 +23,9 @@ public class TimeRowObject implements Serializable {
 	private float interruptTime;
 	private String phase;	
 	
-	private static boolean isDirty;	
-	
 	public void setDate(Date date) {
 		// TODO Auto-generated method stub
 		this.date = date;
-		isDirty = true;
 	}
 	
 	public Date getDate() {
@@ -39,7 +36,6 @@ public class TimeRowObject implements Serializable {
 	public void setStartTime(float time) {
 		// TODO Auto-generated method stub
 		this.startTime = time;
-		isDirty = true;
 	}
 	
 	public float getStartTime() {
@@ -50,7 +46,6 @@ public class TimeRowObject implements Serializable {
 	public void setInterruptTime(float time) {
 		// TODO Auto-generated method stub
 		this.interruptTime = time;
-		isDirty = true;
 	}
 	
 	public float getInterruptTime() {
@@ -61,7 +56,6 @@ public class TimeRowObject implements Serializable {
 	public void setEndTime(float time) {
 		// TODO Auto-generated method stub
 		this.endTime = time;
-		isDirty = true;
 	}
 
 	public float getEndTime() {
@@ -72,19 +66,10 @@ public class TimeRowObject implements Serializable {
 	public void setPhase(String phase) {
 		// TODO Auto-generated method stub
 		this.phase = phase;
-		isDirty = true;
 	}
 
 	public String getPhase() {
 		// TODO Auto-generated method stub
 		return this.phase;
-	}
-	
-	public static void setIsDirty(boolean dirty) {
-		isDirty = dirty;
-	}
-	
-	public static boolean getIsDirty() {
-		return isDirty;
 	}
 }

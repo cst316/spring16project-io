@@ -3,24 +3,22 @@ package net.sf.memoranda.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 import net.sf.memoranda.psp.Defect;
 import net.sf.memoranda.psp.Design;
 import net.sf.memoranda.psp.Development;
 import net.sf.memoranda.psp.Planning;
-import net.sf.memoranda.psp.PlanningImpl;
 import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.psp.TimeLog;
 import net.sf.memoranda.util.Util;
-
-//import net.sf.memoranda.util.Configuration;
 
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -58,9 +56,8 @@ public class PSP_Panel extends JPanel{
 	static Planning plan;
 	static Defect defect;
 	static Design design;
-	static Development dev;
-	
-	static PSP_Panel myPanel;
+	static Development dev;	
+	public static PSP_Panel myPanel;
 	
 	private static boolean isDirty = false;
 
@@ -70,19 +67,10 @@ public class PSP_Panel extends JPanel{
 	public PSP_Panel() {
 		try {
 			jbInit();
-			myPanel = this;
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);
 			ex.printStackTrace();
 		}
-	}
-	
-	/**
-	 * Constructor to create Panel and receiving PID from back end once it is tied in
-	 * @param pid
-	 */
-	public PSP_Panel (String pid) {
-		
 	}
 	
 	/**
@@ -91,6 +79,7 @@ public class PSP_Panel extends JPanel{
 	 */
 	private void jbInit() throws Exception {
 		pspI = new PspImpl();
+		myPanel = this;
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
 		
@@ -173,7 +162,7 @@ public class PSP_Panel extends JPanel{
 			toAdd.setName("DEFECT");
 		} else if (toAdd instanceof PSP_TimeLog) {
 			toAdd.setName("TIMELOG");
-		} else if (toAdd instanceof PSP_Details) {
+		} else if (toAdd instanceof PSP_DetailsPanel) {
 			toAdd.setName("PSP");
 		} else if (toAdd instanceof PSP_NewTaskTable) {
 			toAdd.setName("DEVELOPMENT");
@@ -189,10 +178,12 @@ public class PSP_Panel extends JPanel{
 	 * @param event - Used to know which action to perform
 	 */
 	private void project_MouseEvent (String event) {
-		
-		myPanel = this;
+		//myPanel = this;
 		
 		if (event.equals("NEW PROJECT")) {
+			if (getIsDirty()) {
+				saveChanges();
+			}
 			App.getFrame().setEnabled(false);
 			toolBar.setVisible (false);
 			setEnabledFlag (lblOpenProject, getIsNeeded());
@@ -224,12 +215,24 @@ public class PSP_Panel extends JPanel{
 				addJPanel (new PSP_NewTaskTable (dev));
 			}
 		} else if (event.equals("PSP")){
-			PSP_Details details = new PSP_Details(pspI);					
+			PSP_DetailsPanel details = new PSP_DetailsPanel(pspI);					
 			addJPanel (details);
 		}
 	}
 	
-	private void saveProjectDialog() {
+	public static void saveChanges() {
+		// TODO Auto-generated method stub
+		UIManager.put("OptionPane.background",Color.white);
+		UIManager.put("Panel.background",Color.white);
+		
+		int confirm = JOptionPane.showConfirmDialog(null, "Changes detected, would you like to save before proceeding?","Confirm", JOptionPane.YES_NO_OPTION);
+		
+		if (confirm == JOptionPane.YES_OPTION) {
+			saveProjectDialog();
+		}
+	}
+
+	private static void saveProjectDialog() {
 		// TODO Auto-generated method stub
 		File fs = new File (System.getProperty("user.home") +  File.separator +	".memoranda" + 
 				File.separator + ".proj" + File.separator + '.' + pspI.getpId());
@@ -237,7 +240,7 @@ public class PSP_Panel extends JPanel{
 		ObjectOutputStream oos;
 		
 		try {
-			if (PSP_Details.getIsDirty()) {
+			if (PSP_DetailsPanel.getIsDirty()) {
 				temp = new File (System.getProperty("user.home") +  File.separator + 
 						".memoranda" + File.separator + ".proj" + File.separator + 
 						".pspxFiles" + File.separator  + pspI.getpId() + ".pspx");
@@ -253,6 +256,8 @@ public class PSP_Panel extends JPanel{
 				oos.writeObject(plan);
 				oos.flush();
 				oos.close();
+				
+				PSP_PlanningPanel.setIsDirty(false);
 			}
 			
 			if (PSP_DefectPanel.getIsDirty()) {
@@ -261,6 +266,8 @@ public class PSP_Panel extends JPanel{
 				oos.writeObject(defect);
 				oos.flush();
 				oos.close();
+				
+				PSP_DefectPanel.setIsDirty(false);
 			}
 			
 			if (PSP_TimeLog.getIsDirty()) {
@@ -269,6 +276,8 @@ public class PSP_Panel extends JPanel{
 				oos.writeObject(timelog);
 				oos.flush();
 				oos.close();
+				
+				PSP_TimeLog.setIsDirty(false);
 			}
 			
 			if (PSP_NewTaskTable.getIsDirty()) {
@@ -277,10 +286,11 @@ public class PSP_Panel extends JPanel{
 				oos.writeObject(dev);
 				oos.flush();
 				oos.close();
+				
+				PSP_NewTaskTable.setIsDirty(false);
 			}	
 			
 			setIsDirty(false);
-			setEnabledFlag (this.lblSaveProject, getIsDirty());	
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -513,6 +523,10 @@ public class PSP_Panel extends JPanel{
 	
 	public static void setIsDirty (boolean dirty) {
 		isDirty = dirty;
+		
+		if (isDirty) {
+			myPanel.setSaveEnabled();
+		}
 	}
 	
 	public void setSaveEnabled () {

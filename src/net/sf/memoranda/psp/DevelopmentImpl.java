@@ -18,7 +18,6 @@ public class DevelopmentImpl implements Development, Serializable{
 
 	private static final long serialVersionUID = 9142054105867396986L;
 	private ArrayList<DevRowObject> rowObj;
-	private static boolean isDirty = false;
 	private Psp pspVal;
 	
 	public DevelopmentImpl(){
@@ -32,7 +31,6 @@ public class DevelopmentImpl implements Development, Serializable{
 	
 	@Override
 	public boolean setRow(ArrayList<DevRowObject> list) {
-		isDirty = true;
 		this.rowObj = list;
 		return false;
 	}
@@ -41,7 +39,6 @@ public class DevelopmentImpl implements Development, Serializable{
 	public boolean addRow(DevRowObject rowObj) {
 		boolean temp = true;
 		try{
-			isDirty = true;
 			this.rowObj.add(rowObj);
 		}catch(Exception e){
 			e.getMessage();
@@ -53,7 +50,6 @@ public class DevelopmentImpl implements Development, Serializable{
 	@Override
 	public boolean removeRow(int i) {
 		boolean temp = true;
-		isDirty = true;
 		try{
 			this.rowObj.remove(i);
 		}catch(NullPointerException e){
@@ -88,9 +84,5 @@ public class DevelopmentImpl implements Development, Serializable{
 	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
 		Util.debug("Development wrtten");
-	}
-	
-	public boolean getIsDirty(){
-		return isDirty;
 	}
 }

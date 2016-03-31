@@ -5,9 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import net.sf.memoranda.util.Util;
 
 /**
@@ -80,7 +78,6 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	public boolean removeAllObjects() {
 		// TODO Auto-generated method stub
 		this.timerow.clear();
-		TimeRowObject.setIsDirty(true);
 		return false;
 	}
 
@@ -89,7 +86,6 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		// TODO Auto-generated method stub
 		boolean isRemoved = true;
 		this.timerow.remove(index);
-		TimeRowObject.setIsDirty(true);
 		return isRemoved;
 	}	
 	
@@ -111,11 +107,6 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	 */
 	private void writeObject(ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
-		TimeRowObject.setIsDirty(false);
 		Util.debug("Time Log wrtten");
-	}
-	
-	public static boolean getIsDirty () {
-		return TimeRowObject.getIsDirty();
 	}
 }

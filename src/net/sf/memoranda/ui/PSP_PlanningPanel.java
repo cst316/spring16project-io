@@ -33,6 +33,14 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
 
+/**
+ * 
+ * @author Cephas Armstrong-Mensah
+ * @author Team-IO
+ * CST316 - Spring 2016, ASU Poly
+ * This class displays the Planning implementation for the project
+ * 02/19/2016
+ */
 public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 	/**
 	 * 
