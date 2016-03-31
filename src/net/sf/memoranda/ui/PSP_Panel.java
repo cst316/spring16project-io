@@ -225,7 +225,9 @@ public class PSP_Panel extends JPanel{
 		UIManager.put("OptionPane.background",Color.white);
 		UIManager.put("Panel.background",Color.white);
 		
-		int confirm = JOptionPane.showConfirmDialog(null, "Changes detected, would you like to save before proceeding?","Confirm", JOptionPane.YES_NO_OPTION);
+		int confirm = JOptionPane.showConfirmDialog(null, 
+				"Changes detected, would you like to save before proceeding?","Confirm", 
+				JOptionPane.YES_NO_OPTION);
 		
 		if (confirm == JOptionPane.YES_OPTION) {
 			saveProjectDialog();
@@ -249,6 +251,8 @@ public class PSP_Panel extends JPanel{
 				oos.writeObject(pspI);
 				oos.flush();
 				oos.close();
+				
+				PSP_DetailsPanel.setIsDirty(false);
 			}			
 			if (PSP_PlanningPanel.getIsDirty()) {
 				temp = new File (fs, "." + pspI.getpId() + "_planning");
@@ -524,12 +528,16 @@ public class PSP_Panel extends JPanel{
 	public static void setIsDirty (boolean dirty) {
 		isDirty = dirty;
 		
-		if (isDirty) {
-			myPanel.setSaveEnabled();
-		}
+		myPanel.setSaveEnabled();
+		
 	}
 	
 	public void setSaveEnabled () {
-		setEnabledFlag (lblSaveProject, isDirty);
+		Util.debug("dirty: " + isDirty);
+		if (!lblSaveProject.isEnabled() && isDirty) { 
+			setEnabledFlag (lblSaveProject, isDirty);
+		} else if (lblSaveProject.isEnabled() && !isDirty) {
+			setEnabledFlag (lblSaveProject, isDirty);
+		}
 	}
 }
