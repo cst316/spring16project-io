@@ -367,6 +367,8 @@ public class PSP_DefectPanel extends JPanel {
 				removeTextFieldList.get(i).setText(defect.getRow().get(i).getRemPhase());
 				fixTextFieldList.get(i).setText(defect.getRow().get(i).getFix());
 				fixRefTextFieldList.get(i).setText(defect.getRow().get(i).getFixRef());
+				
+				buttonAction_Clicked ("ADD_DEFECT");
 			}
 		}		
 	}
