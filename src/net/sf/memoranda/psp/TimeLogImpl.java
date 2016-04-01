@@ -33,7 +33,6 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	
 	public TimeLogImpl (Psp pspValues) {
 		this.pspValues = pspValues;
-		this.timerow = new ArrayList<TimeRowObject>(); 
 	}
 	
 	@Override

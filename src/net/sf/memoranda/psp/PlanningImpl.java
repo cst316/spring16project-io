@@ -59,6 +59,16 @@ public class PlanningImpl implements Planning, Serializable {
 		pspValues = new PspImpl ();
 	}
 	
+	@Override
+	public void setPspValues (Psp pspValues) {
+		this.pspValues = pspValues;
+	}
+	
+	@Override
+	public Psp getPspValues () {
+		return this.pspValues;
+	}
+	
 	//Accessor method that gets the estimated time (estTime)
 	public float getEstTime() {
 		return estTime;

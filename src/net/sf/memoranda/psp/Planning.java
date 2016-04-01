@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface Planning {
+	
+	public void setPspValues (Psp pspValues);
+	
+	public Psp getPspValues ();
+	
 	//Accessor abstract method that gets the estimated time (estTime)
 	public float getEstTime();
 	

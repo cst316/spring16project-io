@@ -10,6 +10,10 @@ import java.util.ArrayList;
  */
 public interface Development {
 	
+	public void setPspValues (Psp pspValues);
+	
+	public Psp getPspValues ();
+	
 	public ArrayList<DevRowObject> getRow();
 	
 	public boolean setRow(ArrayList<DevRowObject> list);
@@ -17,4 +21,6 @@ public interface Development {
 	public boolean addRow(DevRowObject rowObj);
 	
 	public boolean removeRow(int i);
+	
+	public boolean getIsDirty();
 }

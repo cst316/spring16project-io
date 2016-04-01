@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,18 +24,22 @@ public class DefectImplTest {
 	File file;
 	Defect def;
 	TestRowObject tro;
+	ArrayList<TestRowObject> array;
 	Date date = new Date(1/1/2001);
 	String desc = "desc", filename = "filename", fix = "fix", 
 			injPoint = "injPoint",name = "name", fixRef = "fixRef",
-			remPhase = "remPhase", type = "type", defectType = "1";
+			remPhase = "remPhase", type = "type", defectType = "1",
+			program = "program.java";
 	int pID = 123, defNum = 1234;
 	
 	@Before
 	public void setUp() throws Exception {
-		def = new DefectImpl();
 		
+		array = new ArrayList<TestRowObject>();
 		tro = new TestRowObject(name, date, defNum, defectType,
-				injPoint, remPhase, fix, fixRef);
+				injPoint, remPhase, fix, fixRef, program);
+		array.add(tro);
+		def = new DefectImpl(array);
 		
 		path =  System.getProperty("user.home") + File.separator + 
 				".memoranda" + File.separator + ".proj" + File.separator + 
@@ -42,42 +47,28 @@ public class DefectImplTest {
 		
 		file = new File(path);
 		file.mkdirs();
-		
 	}
 	
 	@Test
-	public void testSaveTestData() {
-		//assertTrue(def.saveData(obj));
-		//assertTrue(def.saveData( date, defNum, defType, injPhase, remPhase, fix, fixRef));
+	public void testInit(){
+	    assertEquals(def.getIsDirty(), false);
+        assertNotNull(tro);
+        assertNotNull(def);
 	}
 	
-	@Test
-	public void testLoadTestData() {
-		//assertTrue(def.loadTestData(path, "defectTest"));
-	}
-	
+
 	@Test
 	public void testSetArr(){
-		//assertTrue(def.addRow(tro));
-		//assertTrue(def.getIsDirty());
+		assertEquals(def.setRowObject(array), true);
+		assertEquals(def.getRowObject(), array);
+		assertEquals(def.addRow(tro),true);
+		assertEquals(def.removeRow(0), true);
+		assertEquals(def.getIsDirty(), true);
 	}
-
+	
 	@Test
-	public void testGetters() {
-
-		
-		//assertEquals(def.getName(), "name");
-		//assertEquals(def.getpId(), 123);
-
-		
+	public void testEnd(){
+	    def = new DefectImpl(array);
+	    assertEquals(def.getIsDirty(), false);
 	}
-	
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		//delete .test folder
-	}
-
-	
-	
-
 }

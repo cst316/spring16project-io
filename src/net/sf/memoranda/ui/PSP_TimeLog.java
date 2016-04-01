@@ -9,10 +9,14 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import net.sf.memoranda.psp.TimeLog;
+import net.sf.memoranda.psp.TimeRowObject;
+import net.sf.memoranda.util.Util;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PSP_TimeLog extends JPanel {
 	
@@ -21,16 +25,20 @@ public class PSP_TimeLog extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static boolean isDirty = false;
+
 	private JPanel contentPane;
+	
 	private JTextField dateTextField;
 	private JTextField startTimeTextField;
 	private JTextField interruptTimeTextField;
 	private JTextField endTimeTextField;
 	private JTextField phaseTextField;
+	
 	private JButton bttnDone;
 	private JButton bttnMoreEntries;
 	
 	private TimeLog timelog;
+	private TimeRowObject timeEntries;
 	
 
 	/**
@@ -45,7 +53,13 @@ public class PSP_TimeLog extends JPanel {
 	 */
 	public PSP_TimeLog(TimeLog timelog) {	
 		this.timelog = timelog;
-		jInit();
+		try{
+			jInit();
+		} catch (Exception ex) {
+			System.out.println("Exception while trying to intilize PSP_TimeLog GUI");
+			new ExceptionDialog(ex);
+			ex.printStackTrace();
+		}
 	}
 	
 	public void jInit () {
@@ -82,9 +96,26 @@ public class PSP_TimeLog extends JPanel {
         phaseTextField.setColumns(10);
         
         bttnMoreEntries = new JButton();
+        bttnMoreEntries.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		
+        	}
+        });
         bttnMoreEntries.setText("More Entries");
         
         bttnDone = new JButton();
+        bttnDone.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		timeEntries = new TimeRowObject();
+        		setTimeLogDate(timeEntries, dateTextField.getText());
+        		setTimeLogStartTime(timeEntries, startTimeTextField.getText());
+        		setTimeLogInterruptTime(timeEntries, interruptTimeTextField.getText());
+        		setTimeLogEndTime(timeEntries, endTimeTextField.getText());
+        		setTimeLogPhase(timeEntries, phaseTextField.getText());
+        	}
+        });
         bttnDone.setText("Done");
         
         add(contentPane);
@@ -95,7 +126,8 @@ public class PSP_TimeLog extends JPanel {
         			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
         				.addGroup(gl_contentPane.createSequentialGroup()
         					.addGap(83)
-        					.addComponent(bttnMoreEntries, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(bttnMoreEntries, GroupLayout.PREFERRED_SIZE, 125, 
+        							GroupLayout.PREFERRED_SIZE)
         					.addGap(120)
         					.addComponent(bttnDone, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
         				.addGroup(gl_contentPane.createSequentialGroup()
@@ -123,7 +155,8 @@ public class PSP_TimeLog extends JPanel {
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(endTimeTextField, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(phaseTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        					.addComponent(phaseTextField, GroupLayout.PREFERRED_SIZE, 
+        							GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
         			.addGap(24))
         );
         gl_contentPane.setVerticalGroup(
@@ -152,7 +185,6 @@ public class PSP_TimeLog extends JPanel {
         );
         contentPane.setLayout(gl_contentPane);
 	}
-		
 	public static void setIsDirty (boolean dirty) {
 		isDirty = dirty;
 		if (isDirty) {
@@ -163,5 +195,73 @@ public class PSP_TimeLog extends JPanel {
 
 	public static boolean getIsDirty () {
 		return isDirty;
+	}
+	
+	/**
+	 * 
+	 * @param timeEntries TimeRowObject for saving purposes
+	 * @param date the date of the time log entry
+	 * Sets the date of the time log entry
+	 */
+	public static void setTimeLogDate(TimeRowObject timeEntries, String date){
+		timeEntries.setDate(date);
+	}
+	
+	/**
+	 * 
+	 * @param timeEntries TimeRowObject for saving purposes
+	 * @param startTime the start time of the time log entry
+	 * NumberFormatException is caught if startTime cannot be converted to a Float
+	 * Sets the start time of the time log entry
+	 */
+	public static void setTimeLogStartTime(TimeRowObject timeEntries, String startTime){
+		try{
+			timeEntries.setStartTime(Float.parseFloat(startTime));
+		}catch(NumberFormatException e){
+			Util.debug("Unable to convert startTime to Float");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param timeEntries TimeRowObject for saving purposes
+	 * @param interruptTime the interrupt time of the time log entry
+	 * NumberFormatException is caught if interruptTime cannot be converted to a Float
+	 * Sets the interrupt time of the time log entry
+	 */
+	public static void setTimeLogInterruptTime(TimeRowObject timeEntries, String interruptTime){
+		try{
+			timeEntries.setInterruptTime(Float.parseFloat(interruptTime));
+		}catch(NumberFormatException e){
+			Util.debug("Unable to convert interruptTime to Float");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param timeEntries TimeRowObject for saving purposes
+	 * @param endTime the end time of the time log entry
+	 * NumberFormatException is caught if endTime cannot be converted to a Float
+	 * Sets the end time of the time log entry
+	 */
+	public static void setTimeLogEndTime(TimeRowObject timeEntries, String endTime){
+		try{
+			timeEntries.setEndTime(Float.parseFloat(endTime));
+		}catch (NumberFormatException e){
+			Util.debug("Unable to convert endTime to Float");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param timeEntries TimeRowObject for saving purposes
+	 * @param phase the phase of the time log entry
+	 * Sets the phase of the time log entry
+	 */
+	public static void setTimeLogPhase(TimeRowObject timeEntries, String phase){
+		timeEntries.setPhase(phase);
 	}
 }
