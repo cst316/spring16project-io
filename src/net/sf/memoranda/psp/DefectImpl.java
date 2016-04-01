@@ -21,16 +21,19 @@ public class DefectImpl implements Defect, Serializable {
 	//private String path = ""; //temp values until rest of class is implemented
 	
 	public DefectImpl(){
+	    isDirty = false;
 		this.testObj = null;
 		//path = null;
 	}
 	
 	public DefectImpl(ArrayList<TestRowObject> list){
+	    isDirty = false;
 		this.testObj = list;
 	}
 	
 	
     public DefectImpl(ArrayList<TestRowObject> list, Psp pspVal){
+        isDirty = false;
         this.testObj = list;
         this.pspVal = pspVal;
     }

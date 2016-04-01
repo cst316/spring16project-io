@@ -22,13 +22,20 @@ public class DevelopmentImpl implements Development, Serializable{
 	private Psp pspVal;
 	
 	public DevelopmentImpl(){
+	    isDirty = false;
 		rowObj = null;
 	}
 	
 	public DevelopmentImpl(ArrayList<DevRowObject> rowObj){
-		super();
+	    isDirty = false;
 		this.rowObj = rowObj;
 	}
+	
+	public DevelopmentImpl(ArrayList<DevRowObject> rowObj, Psp pspVal){
+        isDirty = false;
+        this.pspVal = pspVal;
+        this.rowObj = rowObj;
+    }
 	
 	@Override
 	public boolean setRow(ArrayList<DevRowObject> list) {

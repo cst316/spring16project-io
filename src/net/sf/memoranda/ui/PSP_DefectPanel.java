@@ -353,7 +353,6 @@ public class PSP_DefectPanel extends JPanel {
 		});
 		editButtonList.add(editButton);
 		
-	
 		projectLabel = new JLabel();
 		projectLabel.setBounds(0, 0, 147, 22);
 		projectLabel.setText("Current Project");

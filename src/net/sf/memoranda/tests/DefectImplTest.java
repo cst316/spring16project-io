@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,12 +48,16 @@ public class DefectImplTest {
 		file.mkdirs();
 	}
 	
+	@Test
+	public void testInit(){
+	    assertEquals(def.getIsDirty(), false);
+        assertNotNull(tro);
+        assertNotNull(def);
+	}
+	
 
 	@Test
 	public void testSetArr(){
-	    assertEquals(def.getIsDirty(), false);
-		assertNotNull(tro);
-		assertNotNull(def);
 		assertEquals(def.setRowObject(array), true);
 		assertEquals(def.getRowObject(), array);
 		assertEquals(def.addRow(tro),true);
@@ -60,12 +65,9 @@ public class DefectImplTest {
 		assertEquals(def.getIsDirty(), true);
 	}
 	
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		//delete .test folder
+	@Test
+	public void testEnd(){
+	    def = new DefectImpl(array);
+	    assertEquals(def.getIsDirty(), false);
 	}
-
-	
-	
-
 }
