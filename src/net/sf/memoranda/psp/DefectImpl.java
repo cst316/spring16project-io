@@ -12,18 +12,33 @@ public class DefectImpl implements Defect, Serializable {
 	 */
 	private static final long serialVersionUID = 8961650030847897462L;
 	private static boolean isDirty = false;
-	private Psp pspVal;
-	private ArrayList<TestRowObject> testObj = new ArrayList<TestRowObject>();
+	private Psp pspValues;
+	private ArrayList<TestRowObject> testObj;
 	//private String path = ""; //temp values until rest of class is implemented
 	
 	public DefectImpl(){
-		this.testObj = null;
+		this.testObj = new ArrayList<TestRowObject> ();
 		//path = null;
 	}
 	
+	//This should be the main constructor to use
+	public DefectImpl(Psp psp){
+		this();		// Calling empty constructor
+		this.pspValues = psp;
+	}
+	
 	public DefectImpl(ArrayList<TestRowObject> list){
-		super();
 		this.testObj = list;
+	}
+	
+	@Override
+	public void setPspValues (Psp pspValues) {
+		this.pspValues = pspValues;
+	}
+	
+	@Override
+	public Psp getPspValues () {
+		return this.pspValues;
 	}
 	
 	@Override
@@ -45,6 +60,18 @@ public class DefectImpl implements Defect, Serializable {
 			isDirty = true;
 			testObj.add(rowObj);
 		}catch(Exception e){
+			e.getMessage();
+			temp = false;
+		}
+		return temp;
+	}
+	
+	public boolean removeRow(TestRowObject rowObj){
+		boolean temp = true;
+		isDirty = true;
+		try{
+			testObj.remove(rowObj);
+		}catch(NullPointerException e){
 			e.getMessage();
 			temp = false;
 		}
