@@ -545,6 +545,7 @@ public class PSP_DefectPanel extends JPanel {
 			    fixTextFieldList.remove(i);
 				fixRefTextFieldList.remove(i);
 				
+				
 				defect.removeRow(my_testRow);
 				
 				break;
