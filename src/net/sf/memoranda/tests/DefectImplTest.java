@@ -57,11 +57,11 @@ public class DefectImplTest {
 		assertEquals(def.addRow(tro),true);
 		assertEquals(def.removeRow(0), true);
 		assertEquals(def.getIsDirty(), true);
-	}
+	}*/
 	
 	@Test
 	public void testEnd(){
 	    def = new DefectImpl(array);
 	    assertEquals(def.getIsDirty(), false);
-	}*/
+	}
 }
