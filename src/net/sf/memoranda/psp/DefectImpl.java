@@ -42,11 +42,10 @@ public class DefectImpl implements Defect, Serializable {
 		return this.pspValues;
 	}
 	
-	
-    @Override
+	@Override
     public ArrayList<TestRowObject> getRowObject() {
         // TODO Auto-generated method stub
-        return null;
+        return this.testObj;
     }
 
     @Override

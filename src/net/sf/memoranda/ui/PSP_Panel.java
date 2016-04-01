@@ -178,8 +178,6 @@ public class PSP_Panel extends JPanel{
      * @param event - Used to know which action to perform
      */
     private void project_MouseEvent (String event) {
-        //myPanel = this;
-        
         if (event.equals("NEW PROJECT")) {
             if (getIsDirty()) {
                 saveChanges();
@@ -197,23 +195,11 @@ public class PSP_Panel extends JPanel{
         } else if (event.equals("DESIGN")) {
             addJPanel(new PSP_DesignPanel(this));
         } else if (event.equals("DEFECT")) {
-            if (defect == null) {
-                addJPanel (new PSP_DefectPanel ());
-            } else {
-                addJPanel (new PSP_DefectPanel (defect));
-            }
+           addJPanel (new PSP_DefectPanel (defect));
         } else if (event.equals("TIMELOG")) {
-            if (timelog == null) {
-                addJPanel(new PSP_TimeLog ());
-            } else {
-                addJPanel (new PSP_TimeLog (timelog));
-            }
+            addJPanel (new PSP_TimeLog (timelog));
         } else if (event.equals("DEVELOPMENT")) {
-            if (dev == null) {
-                addJPanel (new PSP_NewTaskTable ());
-            } else {
-                addJPanel (new PSP_NewTaskTable (dev));
-            }
+            addJPanel (new PSP_NewTaskTable (dev));
         } else if (event.equals("PSP")){
             PSP_DetailsPanel details = new PSP_DetailsPanel(pspI);                  
             addJPanel (details);
@@ -393,21 +379,21 @@ public class PSP_Panel extends JPanel{
                 ois.close();
             }
             
-            temp = new File (fs, "_development");
+            temp = new File (fs,  "." + pspI.getpId() + "_development");
             if (temp.exists()) {
                 ois = new ObjectInputStream (new FileInputStream (temp));
                 dev = (Development) ois.readObject();   
                 ois.close();
             }
             
-            temp = new File (fs, "_timelog");
+            temp = new File (fs,  "." + pspI.getpId() + "_timelog");
             if (temp.exists()) {
                 ois = new ObjectInputStream (new FileInputStream (temp));
                 timelog = (TimeLog) ois.readObject();
                 ois.close();
             }
             
-            temp = new File (fs, "_defect");
+            temp = new File (fs,  "." + pspI.getpId() + "_defect");
             if (temp.exists()) {
                 ois = new ObjectInputStream (new FileInputStream (temp));
                 defect = (Defect) ois.readObject(); 

@@ -9,6 +9,7 @@ import net.sf.memoranda.psp.DefectImpl;
 import net.sf.memoranda.psp.Psp;
 import net.sf.memoranda.psp.TestRowObject;
 import net.sf.memoranda.util.Local;
+import net.sf.memoranda.util.Util;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -102,7 +103,7 @@ public class PSP_DefectPanel extends JPanel {
 	static boolean isDirty = false;
 	int count = 1;
 	
-	Date dater = new Date();
+	Date date = new Date();
 	
 	//Taken from PSP_NPWizardFrame by Cephas M. to make 
 	//frame compatible to the main panel
@@ -152,7 +153,7 @@ public class PSP_DefectPanel extends JPanel {
 		"\n10 Documentation\t60 Checking" +
 		"\n20 Syntax\t\t70 Data" + 
 		"\n30 Build, Package\t80 Function" + 
-		"\n40 Assignment\t\t90 System" +
+		"\n40 Assignment\t90 System" +
 		"\n50 Interface\t\t100 Environment");
 		
 		defectKey.setBounds(879, 13, 343, 121);
@@ -270,18 +271,6 @@ public class PSP_DefectPanel extends JPanel {
 		fixRefLabel_1.setBounds(918, 16, 56, 16);
 		eachLogPanel.add(fixRefLabel_1);
 		
-		/*JTextArea defectsKey = new JTextArea();
-		defectsKey.setToolTipText("Defect Key (use to enter in type)");
-		defectsKey.setBounds(879, 13, 342, 116);
-		defectsKey.setText("Defect Types" + 
-		"\n10 Documentation\t60 Checking" + 
-				"\n20 Syntax\t\t70 Data" + 
-		"\n30 Build, Package\t80 Function" +  
-				"\n40 Assignment\t90 System" + 
-		"\n50 Interface\t\t100 Environment");
-		defectsKey.setEditable(false);
-		add(defectsKey);*/
-		
 		update = new JButton("Update");
 		update.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -326,16 +315,12 @@ public class PSP_DefectPanel extends JPanel {
 		containsLogsPanel.add(btnEditAll);
 				
 		createDefectLogPanel();
-		setIsDirty(true); 
-
 		updateDefectLogPanels();		
 	}
 	
 	
 	private void update()
 	{
-		JOptionPane.showMessageDialog(App.getFrame(),
-				Local.getString("Updated and Saved!"));
 		for (int i = 0; i < addButtonList.size(); i++) {
 			programTextFieldList.get(i).setEditable(false);
 			typeTextFieldList.get(i).setEditable(false);
@@ -355,8 +340,10 @@ public class PSP_DefectPanel extends JPanel {
 			my_testRow.setFixRef(fixRefTextFieldList.get(i).getText());
 			defect.addRow(my_testRow);
 		}
-			//call setIsDirty (true);
-
+		
+		setIsDirty (true);
+		JOptionPane.showMessageDialog(App.getFrame(),
+				Local.getString("Updated and Saved!"));		
 	}
 	
 	/**
@@ -370,7 +357,8 @@ public class PSP_DefectPanel extends JPanel {
 			for (int i = 0; i < defect.getRowObject().size(); i++) {
 				programTextFieldList.get(i).setText(defect.getRowObject().get(i).getProject());
 				dateLabelList.get(i).setText(getDate(defect.getRowObject().get(i).getDate()));
-				numberLabelList.get(i).setText(defect.getRowObject().get(i).getDefNumber() + "");
+				numberLabelList.get(i).setText("                 "
+						+ defect.getRowObject().get(i).getDefNumber());
 				typeTextFieldList.get(i).setText(defect.getRowObject().get(i).getDefType());
 				injectTextFieldList.get(i).setText(defect.getRowObject().get(i).getInjPhase());
 				removeTextFieldList.get(i).setText(defect.getRowObject().get(i).getRemPhase());
@@ -498,8 +486,6 @@ public class PSP_DefectPanel extends JPanel {
 		eachDefect_panel.setPreferredSize(new Dimension (width, y + height));
 		scrollPaneDefectLog.setVerticalScrollBarPolicy
 			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-		setIsDirty(true);
 	}
 	
 	private void edit()
@@ -606,8 +592,6 @@ public class PSP_DefectPanel extends JPanel {
 						fixRefTextField.setText("00" + count + "00");
 						numberLabel.setText("      " + num);
 						dateLabel.setText(getDate());
-
-						setIsDirty(true); 
 					}
 				});
 			} else {
@@ -643,7 +627,7 @@ public class PSP_DefectPanel extends JPanel {
 	private String getDate () {
 		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
 		
-		return (df.format(dater));
+		return (df.format(date));
 	}
 	
 	public static void setIsDirty (boolean dirty) {
