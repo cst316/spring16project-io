@@ -53,7 +53,7 @@ public class DefectImplTest {
 	@Test
 	public void testSetArr(){
 		//assertEquals(def.setRowObject(array), false);
-		assertEquals(def.getRowObject(), array);
+		//assertEquals(def.getRowObject(), array);
 		assertEquals(def.addRow(tro),true);
 		assertEquals(def.removeRow(0), true);
 		assertEquals(def.getIsDirty(), true);
