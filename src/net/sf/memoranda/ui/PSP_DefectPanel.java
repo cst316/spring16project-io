@@ -537,8 +537,6 @@ public class PSP_DefectPanel extends JPanel {
 				removeTextFieldList.remove(i);
 			    fixTextFieldList.remove(i);
 				fixRefTextFieldList.remove(i);
-				
-				defect.removeRow(my_testRow);
 				break;
 			}
 		}
@@ -603,7 +601,8 @@ public class PSP_DefectPanel extends JPanel {
 	private void removeDefectActionListener (List<JButton> removeDefectButton) {
 		for (int i = 0; i < removeDefectButton.size(); i++) {
 			for (ActionListener al : removeDefectButton.get(i).getActionListeners()) 
-				removeDefectButton.get(i).removeActionListener(al);			
+				removeDefectButton.get(i).removeActionListener(al);	
+			defect.removeRow(my_testRow);
 		}		
 	}
 	
