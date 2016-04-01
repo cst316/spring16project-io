@@ -52,7 +52,7 @@ public class DefectImpl implements Defect, Serializable {
     public boolean setRowObject(ArrayList<TestRowObject> list) {
         isDirty = true;
         this.testObj = list;
-        return false;
+        return true;
     }
 	
 	@Override
