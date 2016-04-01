@@ -153,7 +153,7 @@ public class PSP_DefectPanel extends JPanel {
 		"\n10 Documentation\t60 Checking" +
 		"\n20 Syntax\t\t70 Data" + 
 		"\n30 Build, Package\t80 Function" + 
-		"\n40 Assignment\t90 System" +
+		"\n40 Assignment\t\t90 System" +
 		"\n50 Interface\t\t100 Environment");
 		
 		defectKey.setBounds(879, 13, 343, 121);
