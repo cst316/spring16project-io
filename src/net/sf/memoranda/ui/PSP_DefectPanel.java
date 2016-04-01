@@ -125,8 +125,13 @@ public class PSP_DefectPanel extends JPanel {
 	}
 	
 	public PSP_DefectPanel(Defect defect) {
-		this.defect = defect;
-		jbInit();
+		try {
+			this.defect = defect;
+			jbInit();
+		} catch (Exception ex) {
+			new ExceptionDialog(ex);
+			ex.printStackTrace();
+		}
 	}
 	
 	public PSP_DefectPanel(Psp pspVal) {
@@ -321,6 +326,8 @@ public class PSP_DefectPanel extends JPanel {
 		containsLogsPanel.add(btnEditAll);
 				
 		createDefectLogPanel();
+		setIsDirty(true); 
+
 		updateDefectLogPanels();		
 	}
 	
@@ -349,6 +356,7 @@ public class PSP_DefectPanel extends JPanel {
 			defect.addRow(my_testRow);
 		}
 			//call setIsDirty (true);
+
 	}
 	
 	/**
@@ -490,6 +498,8 @@ public class PSP_DefectPanel extends JPanel {
 		eachDefect_panel.setPreferredSize(new Dimension (width, y + height));
 		scrollPaneDefectLog.setVerticalScrollBarPolicy
 			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+		setIsDirty(true);
 	}
 	
 	private void edit()
@@ -562,7 +572,8 @@ public class PSP_DefectPanel extends JPanel {
 		eachDefect_panel.setPreferredSize(new Dimension (width, y));
 		scrollPaneDefectLog.setVerticalScrollBarPolicy
 			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		isDirty = true;    	//call setIsDirty(true);
+
+		setIsDirty(true);
 	}
 	
 	//Same as Cephas's implementation in PSP_PlanningWizardFrame.java
@@ -595,7 +606,8 @@ public class PSP_DefectPanel extends JPanel {
 						fixRefTextField.setText("00" + count + "00");
 						numberLabel.setText("      " + num);
 						dateLabel.setText(getDate());
-						isDirty  = true;  	//is dirty is not true until it is updated or removed
+
+						setIsDirty(true); 
 					}
 				});
 			} else {
@@ -634,6 +646,18 @@ public class PSP_DefectPanel extends JPanel {
 		return (df.format(dater));
 	}
 	
+	public static void setIsDirty (boolean dirty) {
+		isDirty = dirty;
+		if (isDirty) {
+			PSP_Panel.setIsDirty(true);
+			PSP_Panel.myPanel.setSaveEnabled();
+		}
+	}
+
+	public static boolean getIsDirty () {
+		return isDirty;
+	}
+
 	//Return date in a short format
 	private String getDate (Date d) {
 		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);

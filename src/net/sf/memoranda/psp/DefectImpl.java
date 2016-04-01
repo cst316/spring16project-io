@@ -28,6 +28,7 @@ public class DefectImpl implements Defect, Serializable {
 	}
 	
 	public DefectImpl(ArrayList<TestRowObject> list){
+
 		this.testObj = list;
 	}
 	
@@ -91,7 +92,6 @@ public class DefectImpl implements Defect, Serializable {
 		}
 		return temp;
 	}
-	
 
 	/**
 	 * Implement custom object reader
@@ -113,12 +113,9 @@ public class DefectImpl implements Defect, Serializable {
 		stream.defaultWriteObject();
 		Util.debug("object wrtten");
 	}
-	
+
 	public boolean getIsDirty(){
 		return isDirty;
 	}
-
-
-
 }
 

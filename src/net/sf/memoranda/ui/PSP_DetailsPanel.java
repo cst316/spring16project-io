@@ -26,7 +26,15 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.text.DateFormat;
 
-public class PSP_Details extends JPanel {
+/**
+ * 
+ * @author Cephas Armstrong-Mensah
+ * @author Team-IO
+ * CST316 - Spring 2016, ASU Poly
+ * This panel displays PSP details for a project
+ * 03/23/2016
+ */
+public class PSP_DetailsPanel extends JPanel {
 	/**
 	 * 
 	 */
@@ -44,7 +52,7 @@ public class PSP_Details extends JPanel {
 	static boolean isToggled = false;
 	static boolean isDirty = false;
 	
-	public PSP_Details (Psp pspI) {
+	public PSP_DetailsPanel (Psp pspI) {
 		this.pspI = pspI;
 		strDirty = "";
 		jInit();
@@ -257,14 +265,12 @@ public class PSP_Details extends JPanel {
 				break;
 			case ("LOST"):
 				if (!isDirty && !(strDirty.equalsIgnoreCase(txtDescription.getText().trim()))) {
-					isDirty = true;
+					setIsDirty(true);
 				}
 				break;
 			default:
 				Util.debug("We shouldn't be here at all focus_EvenHandle");
 		}
-		
-		Util.debug("Are we dirty? " + isDirty);		
 	}
 
 	protected void button_ActionClicked(String action) {
@@ -295,11 +301,14 @@ public class PSP_Details extends JPanel {
 		btnEdit.setText(isToggled ? "Cancel" : "Edit Details");		
 	}	
 	
-	public static boolean setIsDirty (boolean isDirty) {
-		PSP_Details.isDirty = isDirty;
-		return true;
+	public static void setIsDirty (boolean dirty) {
+		isDirty = dirty;
+		if (isDirty) {
+			PSP_Panel.setIsDirty(true);
+			PSP_Panel.myPanel.setSaveEnabled();
+		}
 	}
-	
+
 	public static boolean getIsDirty () {
 		return isDirty;
 	}

@@ -24,7 +24,6 @@ import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.sf.memoranda.psp.Planning;
-import net.sf.memoranda.util.Util;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -34,6 +33,14 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
 
+/**
+ * 
+ * @author Cephas Armstrong-Mensah
+ * @author Team-IO
+ * CST316 - Spring 2016, ASU Poly
+ * This class displays the Planning implementation for the project
+ * 02/19/2016
+ */
 public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 	/**
 	 * 
@@ -44,7 +51,6 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 	private DefaultListModel<String> listModel;
 	private JButton btnAddImage;
 	private JButton btnAddMod;
-	
 	private Planning plan;
 	private JLabel lblEstLocHr;
 	private JLabel lblEstDefect;
@@ -59,6 +65,7 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 	private int modHeight = 25;	
 	
 	private static PSP_BackGround bg;
+	private static boolean isDirty = false;
 	private JPanel panel_2;
 	private JPanel pnlModules;
 		
@@ -334,8 +341,7 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 			
 		if (ans == JOptionPane.OK_OPTION && !(t1.isEmpty())) {
 			if (plan.setAdditionalMod(txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()))) {
-				addModule (txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()));
-				Util.debug("Added: " + txtNewEst.getText() + "\t" + txtNewSize.getText());
+				addModule (txtNewEst.getText().trim(), Integer.parseInt(txtNewSize.getText().trim()));				
 			}			
 		}	
 	}	
@@ -351,6 +357,8 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 	private void addFile (String file) {
 		File f = new File (file);	
 		listModel.addElement(f.getName());	
+		this.plan.setFilename(file);
+		setIsDirty(true);
 	}
 	
 	private void setImages (String img) {
@@ -415,6 +423,9 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 		pnlCurrMod.add(addThis.get(1));
 		pnlCurrMod.revalidate();
 		pnlCurrMod.repaint();
+		
+		this.plan.setAdditionalMod(des, size);
+		setIsDirty(true);
 	}
 	
 	public void getFileNames () {
@@ -451,5 +462,17 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 				addFile (plan.getFilename(plan.getFilenames().size() - 1));
 			}
 		}
+	}
+	
+	public static void setIsDirty (boolean dirty) {
+		isDirty = dirty;
+		if (isDirty) {
+			PSP_Panel.setIsDirty(true);
+			PSP_Panel.myPanel.setSaveEnabled();
+		}
+	}
+
+	public static boolean getIsDirty () {
+		return isDirty;
 	}
 }

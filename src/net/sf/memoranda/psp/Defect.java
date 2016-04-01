@@ -23,4 +23,5 @@ public interface Defect {
 	public boolean removeRow(int index);
 	
 	public boolean getIsDirty();
+
 }

@@ -24,7 +24,8 @@ public class PSP_TimeLog extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	private static boolean isDirty = false;
+
 	private JPanel contentPane;
 	
 	private JTextField dateTextField;
@@ -183,6 +184,17 @@ public class PSP_TimeLog extends JPanel {
         				.addComponent(bttnDone, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)))
         );
         contentPane.setLayout(gl_contentPane);
+	}
+	public static void setIsDirty (boolean dirty) {
+		isDirty = dirty;
+		if (isDirty) {
+			PSP_Panel.setIsDirty(true);
+			PSP_Panel.myPanel.setSaveEnabled();
+		}
+	}
+
+	public static boolean getIsDirty () {
+		return isDirty;
 	}
 	
 	/**

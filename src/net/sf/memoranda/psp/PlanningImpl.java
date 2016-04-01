@@ -29,8 +29,6 @@ public class PlanningImpl implements Planning, Serializable {
 	private ArrayList <String> files = new ArrayList<String>();
 	private HashMap <String, Integer> moduleDescription;
 	
-	static boolean isDirty;
-	
 	//PlanningImpl class constructor with empty values and no parameters
 	public PlanningImpl() {
 		// TODO Auto-generated constructor stub
@@ -79,7 +77,6 @@ public class PlanningImpl implements Planning, Serializable {
 	//Mutator method that sets the estimated time (estTime) 
 	public void setEstTime(float estTime) {
 		this.estTime = estTime;
-		isDirty = true;
 	}
 
 	//Accessor method that gets the lines of code per hour (locHr) 
@@ -90,7 +87,6 @@ public class PlanningImpl implements Planning, Serializable {
 	//Mutator method that sets the lines of code per hour (locHr)
 	public void setLocHr(int locHr) {
 		this.locHr = locHr;
-		isDirty = true;
 	}
 	
 	//Accessor method that gets the estimated size (estSize)
@@ -101,7 +97,6 @@ public class PlanningImpl implements Planning, Serializable {
 	//Mutator method that sets the estimated size (estSize)
 	public void setEstSize(int estSize) {
 		this.estSize = estSize;
-		isDirty = true;
 	}
 
 	//Accessor method that gets the estimated number of defects (estDefect)
@@ -112,7 +107,6 @@ public class PlanningImpl implements Planning, Serializable {
 	//Mutator method that set the estimated number of defects (estDefect)
 	public void setEstDefect(int estDefect) {
 		this.estDefect = estDefect;
-		isDirty = true;
 	}
 	
 	//Returns the size associated with the description
@@ -123,7 +117,6 @@ public class PlanningImpl implements Planning, Serializable {
 	//Sets the size associated with the description
 	public void setDescriptionSize(int descriptionSize) {
 		this.descriptionSize = descriptionSize;
-		isDirty = true;
 	}
 
 	//Accessor abstract method that returns the name of the file to be used in the project (fileName)
@@ -148,7 +141,6 @@ public class PlanningImpl implements Planning, Serializable {
 	//Accessor method that sets the name of the file to be used in the project (fileName)
 	public void setFilenames (ArrayList<String> filenames) {
 		this.files = filenames;
-		isDirty = true;
 	}
 	
 	//Mutator method that sets the fileName given a file as a parameter
@@ -163,7 +155,6 @@ public class PlanningImpl implements Planning, Serializable {
 		
 		if (isAdded) {
 			this.files.add(filename);
-			isDirty = true;
 		}
 		return isAdded;
 	}
@@ -181,7 +172,6 @@ public class PlanningImpl implements Planning, Serializable {
 		
 		if (!this.moduleDescription.equals(modDescription)) { 
 			this.moduleDescription = modDescription;
-			isDirty = true;
 			isAdded = true;
 		}
 				
@@ -195,7 +185,6 @@ public class PlanningImpl implements Planning, Serializable {
 		if (!this.moduleDescription.containsKey(newMod)) {
 			this.moduleDescription.put(newMod, newSize);
 			isAdded = true;
-			isDirty = true;
 		}		
 		return isAdded;
 	}
@@ -225,6 +214,5 @@ public class PlanningImpl implements Planning, Serializable {
 	private void writeObject(ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
 		Util.debug("Planning wrtten");
-		isDirty = false;
 	}
 }
