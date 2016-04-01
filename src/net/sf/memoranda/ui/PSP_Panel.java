@@ -195,7 +195,8 @@ public class PSP_Panel extends JPanel{
         } else if (event.equals("DESIGN")) {
             addJPanel(new PSP_DesignPanel(this));
         } else if (event.equals("DEFECT")) {
-           addJPanel (new PSP_DefectPanel (defect));
+        	Util.debug("DEFECTING: " + pspI.getName());
+        	addJPanel (new PSP_DefectPanel (defect));
         } else if (event.equals("TIMELOG")) {
             addJPanel (new PSP_TimeLog (timelog));
         } else if (event.equals("DEVELOPMENT")) {
@@ -395,6 +396,7 @@ public class PSP_Panel extends JPanel{
             
             temp = new File (fs,  "." + pspI.getpId() + "_defect");
             if (temp.exists()) {
+            	Util.debug("Read in just fine DEFECT");
                 ois = new ObjectInputStream (new FileInputStream (temp));
                 defect = (Defect) ois.readObject(); 
                 ois.close();

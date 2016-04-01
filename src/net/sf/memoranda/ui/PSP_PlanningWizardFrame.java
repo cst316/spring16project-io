@@ -27,6 +27,8 @@ import net.sf.memoranda.psp.PspImpl;
 import net.sf.memoranda.psp.TimeLog;
 import net.sf.memoranda.psp.TimeLogImpl;
 import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.util.Util;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -648,19 +650,18 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			if (time != -1.0 && loc != -1 && size != -1 && defect != -1) {		
 				File fs = new File (System.getProperty("user.home") +  File.separator +	".memoranda" + 
 						File.separator + ".proj" + File.separator + '.' + getPID () );
-				PlanningImpl plan = new PlanningImpl (time, loc, size, defect,
+				PSP_Panel.plan  = new PlanningImpl (time, loc, size, defect,
 						getFilenames(), getProjDescription(), getPID());
 				oos = new ObjectOutputStream (new FileOutputStream (new File (fs, "." + getPID() + "_planning")));
-				oos.writeObject(plan);
+				oos.writeObject(PSP_Panel.plan );
 				oos.flush();
 				oos.close();
 				
 				PspImpl.setLastID(PspImpl.getLastID() + 1);
 				writepID(PspImpl.getLastID());
 				PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
-				PSP_Panel.plan = plan;
 				writeAdditionalFiles(fs);
-				p.addJPanel(new PSP_PlanningPanel (plan));
+				p.addJPanel(new PSP_PlanningPanel (PSP_Panel.plan));
 				addToolItems();
 				PSP_NPWizardFrame.npw = null;			
 				pwf = null;
@@ -676,23 +677,23 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		File temp = new File (fs, "." + getPID() + "_defect");
 		
 		try {
-			Defect defect = new DefectImpl (psp);
+			PSP_Panel.defect = new DefectImpl (psp);
 			ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (temp));		
-			oos.writeObject(defect);
+			oos.writeObject(PSP_Panel.defect);
 			oos.flush();
 			oos.close();
 			
 			temp = new File (fs, "." + getPID() + "_timelog");
-			TimeLog timelog = new TimeLogImpl (psp);
+			PSP_Panel.timelog = new TimeLogImpl (psp);
 			oos = new ObjectOutputStream (new FileOutputStream (temp));		
-			oos.writeObject(timelog);
+			oos.writeObject(PSP_Panel.timelog);
 			oos.flush();
 			oos.close();
 			
 			temp = new File (fs, "." + getPID() + "_development");
-			Development dev = new DevelopmentImpl (psp);
+			PSP_Panel.dev = new DevelopmentImpl (psp);
 			oos = new ObjectOutputStream (new FileOutputStream (temp));		
-			oos.writeObject(dev);
+			oos.writeObject(PSP_Panel.dev);
 			oos.flush();
 			oos.close();			
 		} catch (IOException e) {
