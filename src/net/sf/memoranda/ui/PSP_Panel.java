@@ -195,7 +195,6 @@ public class PSP_Panel extends JPanel{
         } else if (event.equals("DESIGN")) {
             addJPanel(new PSP_DesignPanel(this));
         } else if (event.equals("DEFECT")) {
-        	Util.debug("DEFECTING: " + pspI.getName());
         	addJPanel (new PSP_DefectPanel (defect));
         } else if (event.equals("TIMELOG")) {
             addJPanel (new PSP_TimeLog (timelog));
