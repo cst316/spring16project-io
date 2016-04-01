@@ -26,7 +26,7 @@ public class DefectImplTest {
 	Date date = new Date(1/1/2001);
 	String desc = "desc", filename = "filename", fix = "fix", 
 			injPoint = "injPoint",name = "name", fixRef = "fixRef",
-			remPhase = "remPhase", type = "type", defectType = "1";
+			remPhase = "remPhase", type = "type", defectType = "1", program = "my.java";
 	int pID = 123, defNum = 1234;
 	
 	@Before
@@ -34,7 +34,7 @@ public class DefectImplTest {
 		def = new DefectImpl();
 		
 		tro = new TestRowObject(name, date, defNum, defectType,
-				injPoint, remPhase, fix, fixRef);
+				injPoint, remPhase, fix, fixRef, program);
 		
 		path =  System.getProperty("user.home") + File.separator + 
 				".memoranda" + File.separator + ".proj" + File.separator + 

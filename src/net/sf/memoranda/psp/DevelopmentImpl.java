@@ -19,15 +19,30 @@ public class DevelopmentImpl implements Development, Serializable{
 	private static final long serialVersionUID = 9142054105867396986L;
 	private ArrayList<DevRowObject> rowObj;
 	private static boolean isDirty = false;
-	private Psp pspVal;
+	private Psp pspValues;
 	
 	public DevelopmentImpl(){
-		rowObj = null;
+		rowObj = new ArrayList<DevRowObject>();
+	}
+	
+	// This should be the main constructor to use
+	public DevelopmentImpl(Psp psp){
+		this();		// Calling empty constructor
+		this.pspValues = psp;
 	}
 	
 	public DevelopmentImpl(ArrayList<DevRowObject> rowObj){
-		super();
 		this.rowObj = rowObj;
+	}
+	
+	@Override
+	public void setPspValues (Psp pspValues) {
+		this.pspValues = pspValues;
+	}
+	
+	@Override
+	public Psp getPspValues () {
+		return this.pspValues;
 	}
 	
 	@Override
