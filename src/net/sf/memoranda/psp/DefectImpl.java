@@ -78,6 +78,18 @@ public class DefectImpl implements Defect, Serializable {
 		return temp;
 	}
 	
+	public boolean removeRow(int index){
+		boolean temp = true;
+		isDirty = true;
+		try{
+			testObj.remove(index);
+		}catch(NullPointerException e){
+			e.getMessage();
+			temp = false;
+		}
+		return temp;
+	}
+	
 //	/**
 //	 * Saves row object passed in resets isDirt value to false if status succeeds
 //	 * @param obj
