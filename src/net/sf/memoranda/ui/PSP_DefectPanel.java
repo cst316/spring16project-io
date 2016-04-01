@@ -11,6 +11,7 @@ import net.sf.memoranda.psp.TestRowObject;
 import net.sf.memoranda.util.Local;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
@@ -107,7 +108,11 @@ public class PSP_DefectPanel extends JPanel {
 	//frame compatible to the main panel
 	private Defect defect;
 	
-	private TestRowObject my_testRow = new TestRowObject(); 
+	private TestRowObject my_testRow = new TestRowObject();
+
+    private JLabel projectLabel;
+
+    private List<JLabel> projectLabelList = new ArrayList<JLabel>(); 
 
 	public PSP_DefectPanel() {
 		//this.defect = PSP_Panel.defect;
@@ -353,16 +358,16 @@ public class PSP_DefectPanel extends JPanel {
 	 */
 	private void updateDefectLogPanels() {
 		// TODO Auto-generated method stub
-		if (defect.getRow() != null) {
-			for (int i = 0; i < defect.getRow().size(); i++) {
-				programTextFieldList.get(i).setText(defect.getRow().get(i).getProject());
-				dateLabelList.get(i).setText(getDate(defect.getRow().get(i).getDate()));
-				numberLabelList.get(i).setText(defect.getRow().get(i).getDefNumber() + "");
-				typeTextFieldList.get(i).setText(defect.getRow().get(i).getDefType());
-				injectTextFieldList.get(i).setText(defect.getRow().get(i).getInjPhase());
-				removeTextFieldList.get(i).setText(defect.getRow().get(i).getRemPhase());
-				fixTextFieldList.get(i).setText(defect.getRow().get(i).getFix());
-				fixRefTextFieldList.get(i).setText(defect.getRow().get(i).getFixRef());
+		if (defect.getRowObject() != null) {
+			for (int i = 0; i < defect.getRowObject().size(); i++) {
+				programTextFieldList.get(i).setText(defect.getRowObject().get(i).getProject());
+				dateLabelList.get(i).setText(getDate(defect.getRowObject().get(i).getDate()));
+				numberLabelList.get(i).setText(defect.getRowObject().get(i).getDefNumber() + "");
+				typeTextFieldList.get(i).setText(defect.getRowObject().get(i).getDefType());
+				injectTextFieldList.get(i).setText(defect.getRowObject().get(i).getInjPhase());
+				removeTextFieldList.get(i).setText(defect.getRowObject().get(i).getRemPhase());
+				fixTextFieldList.get(i).setText(defect.getRowObject().get(i).getFix());
+				fixRefTextFieldList.get(i).setText(defect.getRowObject().get(i).getFixRef());
 				
 				buttonAction_Clicked ("ADD_DEFECT");
 			}
@@ -406,7 +411,13 @@ public class PSP_DefectPanel extends JPanel {
 		});
 		editButtonList.add(editButton);
 		
-	
+
+		projectLabel = new JLabel();
+		projectLabel.setBounds(0, 0, 147, 22);
+		projectLabel.setText("Current Project");
+		projectLabel.setToolTipText("Project's name");
+		projectLabelList.add(projectLabel);
+
 		programTextField = new JTextField();
 		programTextField.setBounds(0, 0, 147, 22);
 		//programLabel.setText(defect.getPspValues().getName());

@@ -73,19 +73,28 @@ public class PSP_NewTaskTable extends JPanel implements Serializable {
 		JButton btnEditTask = new JButton("Edit Task");
 		
 		JButton btnDeleteTask = new JButton("Delete Task");
+		btnDeleteTask.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			
+			{
+				
+				removeRow();
+				
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(btnNewTask)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnCloseTask)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnEditTask)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(18)
 					.addComponent(btnDeleteTask)
-					.addContainerGap(432, Short.MAX_VALUE))
+					.addGap(14)
+					.addComponent(btnEditTask)
+					.addGap(18)
+					.addComponent(btnCloseTask)
+					.addContainerGap(403, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 831, GroupLayout.PREFERRED_SIZE)
@@ -97,9 +106,9 @@ public class PSP_NewTaskTable extends JPanel implements Serializable {
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNewTask)
-						.addComponent(btnCloseTask)
 						.addComponent(btnEditTask)
-						.addComponent(btnDeleteTask))
+						.addComponent(btnDeleteTask)
+						.addComponent(btnCloseTask))
 					.addPreferredGap(ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -128,4 +137,19 @@ public class PSP_NewTaskTable extends JPanel implements Serializable {
 		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{PSP_NewTaskData.tdarray[0],PSP_NewTaskData.tdarray[1],PSP_NewTaskData.tdarray[2],null,PSP_NewTaskData.tdarray[3],null,PSP_NewTaskData.tdarray[4]});
 		
 	}
+	
+	public void removeRow()
+	{
+		   DefaultTableModel model = (DefaultTableModel) PSP_NewTaskTable.table.getModel();
+		   
+		   int[] rows = table.getSelectedRows();
+		   
+		   for(int i=0;i<rows.length;i++)
+		   {
+		   
+			   model.removeRow(rows[i]-i);
+			   
+		   }
+	}
+	
 }

@@ -11,9 +11,10 @@ public interface Defect {
 	
 	public Psp getPspValues ();
 	
-	public ArrayList<TestRowObject> getRow();
-	
-	public boolean setRow(ArrayList<TestRowObject> list);
+
+	public ArrayList<TestRowObject> getRowObject();
+
+	public boolean setRowObject(ArrayList<TestRowObject> list);
 
 	public boolean addRow(TestRowObject rowObj);
 	

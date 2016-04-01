@@ -618,6 +618,9 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		}
 	}
 	
+	/**
+	 * Handles the call finish after the wizard completes
+	 */
 	private void callFinish() {
 		ObjectOutputStream oos = null;
 		try {			
@@ -764,6 +767,10 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		}
 	}
 
+	/**
+	 * Project files are based on the project ID generated
+	 * @param lastID - used to determine files and folders to be made
+	 */
 	private void createProjectFiles(int lastID) {
 		File dir = new File (System.getProperty("user.home") + 
 				File.separator + ".memoranda" + File.separator + ".proj");
@@ -802,6 +809,10 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		} 		
 	}
 
+	/**
+	 * Project IDs are assigned sequentially from the last ID use
+	 * @param lastID - use to determine what the next assigned project ID can be
+	 */
 	private void writepID(int lastID) {
 		File idFile = new File(System.getProperty("user.home") + File.separator + 
 				".memoranda" + File.separator + ".proj" + File.separator + "psp_id");
