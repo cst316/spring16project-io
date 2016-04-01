@@ -28,7 +28,12 @@ public class DevelopmentImpl implements Development, Serializable{
 	
 	public DevelopmentImpl(ArrayList<DevRowObject> rowObj){
 	    isDirty = false;
-		this.rowObj = rowObj;
+	}
+
+	// This should be the main constructor to use
+	public DevelopmentImpl(Psp psp){
+		this();		// Calling empty constructor
+		this.pspVal = psp;
 	}
 	
 	public DevelopmentImpl(ArrayList<DevRowObject> rowObj, Psp pspVal){
@@ -36,6 +41,16 @@ public class DevelopmentImpl implements Development, Serializable{
         this.pspVal = pspVal;
         this.rowObj = rowObj;
     }
+	
+	@Override
+	public void setPspValues (Psp pspValues) {
+		this.pspVal = pspValues;
+	}
+	
+	@Override
+	public Psp getPspValues () {
+		return this.pspVal;
+	}
 	
 	@Override
 	public boolean setRow(ArrayList<DevRowObject> list) {

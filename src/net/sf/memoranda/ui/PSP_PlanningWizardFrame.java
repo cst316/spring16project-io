@@ -17,8 +17,15 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 
+import net.sf.memoranda.psp.Defect;
+import net.sf.memoranda.psp.DefectImpl;
+import net.sf.memoranda.psp.Development;
+import net.sf.memoranda.psp.DevelopmentImpl;
 import net.sf.memoranda.psp.PlanningImpl;
+import net.sf.memoranda.psp.Psp;
 import net.sf.memoranda.psp.PspImpl;
+import net.sf.memoranda.psp.TimeLog;
+import net.sf.memoranda.psp.TimeLogImpl;
 import net.sf.memoranda.util.Configuration;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -87,7 +94,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	private JScrollPane spFile;
 	
 	private JLabel lblProjId;
-	
+	PspImpl psp;
 	/**
 	 * General constructor
 	 */
@@ -619,7 +626,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		try {			
 			App.getFrame().setEnabled(true);
 			PSP_NPWizardFrame.npw.dispose();
-			PspImpl psp = new PspImpl (PSP_NPWizardFrame.getProjName(), PSP_NPWizardFrame
+			psp = new PspImpl (PSP_NPWizardFrame.getProjName(), PSP_NPWizardFrame
 					.getProjDescription(), Integer.parseInt(lblProjId.getText().trim()));
 			createProjectFiles(PspImpl.getLastID());
 			oos = new ObjectOutputStream(new FileOutputStream(new File(
@@ -638,13 +645,12 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			oos.flush();
 			oos.close();
 			
-			if (time != -1.0 && loc != -1 && size != -1 && defect != -1) {			
+			if (time != -1.0 && loc != -1 && size != -1 && defect != -1) {		
+				File fs = new File (System.getProperty("user.home") +  File.separator +	".memoranda" + 
+						File.separator + ".proj" + File.separator + '.' + getPID () );
 				PlanningImpl plan = new PlanningImpl (time, loc, size, defect,
 						getFilenames(), getProjDescription(), getPID());
-				oos = new ObjectOutputStream (new FileOutputStream (
-						System.getProperty("user.home") +  File.separator +	".memoranda" + 
-						File.separator + ".proj" + File.separator + '.' + getPID () + 
-						File.separator + '.' + getPID() + "_planning"));
+				oos = new ObjectOutputStream (new FileOutputStream (new File (fs, "." + getPID() + "_planning")));
 				oos.writeObject(plan);
 				oos.flush();
 				oos.close();
@@ -653,6 +659,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 				writepID(PspImpl.getLastID());
 				PSP_Panel p = PSP_NPWizardFrame.getPspPanel();
 				PSP_Panel.plan = plan;
+				writeAdditionalFiles(fs);
 				p.addJPanel(new PSP_PlanningPanel (plan));
 				addToolItems();
 				PSP_NPWizardFrame.npw = null;			
@@ -665,6 +672,35 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		}			
 	}
 	
+	private void writeAdditionalFiles(File fs) {
+		File temp = new File (fs, "." + getPID() + "_defect");
+		
+		try {
+			Defect defect = new DefectImpl (psp);
+			ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream (temp));		
+			oos.writeObject(defect);
+			oos.flush();
+			oos.close();
+			
+			temp = new File (fs, "." + getPID() + "_timelog");
+			TimeLog timelog = new TimeLogImpl (psp);
+			oos = new ObjectOutputStream (new FileOutputStream (temp));		
+			oos.writeObject(timelog);
+			oos.flush();
+			oos.close();
+			
+			temp = new File (fs, "." + getPID() + "_development");
+			Development dev = new DevelopmentImpl (psp);
+			oos = new ObjectOutputStream (new FileOutputStream (temp));		
+			oos.writeObject(dev);
+			oos.flush();
+			oos.close();			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+
 	private int getPID() {
 		int n = -1;
 		try {

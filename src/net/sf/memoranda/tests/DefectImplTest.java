@@ -28,7 +28,8 @@ public class DefectImplTest {
 	Date date = new Date(1/1/2001);
 	String desc = "desc", filename = "filename", fix = "fix", 
 			injPoint = "injPoint",name = "name", fixRef = "fixRef",
-			remPhase = "remPhase", type = "type", defectType = "1";
+			remPhase = "remPhase", type = "type", defectType = "1",
+			program = "program.java";
 	int pID = 123, defNum = 1234;
 	
 	@Before
@@ -36,7 +37,7 @@ public class DefectImplTest {
 		
 		array = new ArrayList<TestRowObject>();
 		tro = new TestRowObject(name, date, defNum, defectType,
-				injPoint, remPhase, fix, fixRef);
+				injPoint, remPhase, fix, fixRef, program);
 		array.add(tro);
 		def = new DefectImpl(array);
 		

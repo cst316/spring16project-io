@@ -5,51 +5,55 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import net.sf.memoranda.util.Util;
 
-/**
- * 
- * @author Joe Michaels
- *
- */
 public class DefectImpl implements Defect, Serializable {
 	
-	private static final long serialVersionUID 
-	                    = 8961650030847897462L;
-	private static boolean isDirty;
-	private Psp pspVal;
-	private ArrayList<TestRowObject> testObj  
-	                                = new ArrayList<TestRowObject>();
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -3899481284282752580L;
+	private static boolean isDirty = false;
+	private Psp pspValues;
+	private ArrayList<TestRowObject> testObj;
 	//private String path = ""; //temp values until rest of class is implemented
 	
 	public DefectImpl(){
-	    isDirty = false;
-		this.testObj = null;
+		this.testObj = new ArrayList<TestRowObject> ();
 		//path = null;
 	}
 	
+	//This should be the main constructor to use
+	public DefectImpl(Psp psp){
+		this();		// Calling empty constructor
+		this.pspValues = psp;
+	}
+	
 	public DefectImpl(ArrayList<TestRowObject> list){
-	    isDirty = false;
 		this.testObj = list;
 	}
 	
+	@Override
+	public void setPspValues (Psp pspValues) {
+		this.pspValues = pspValues;
+	}
 	
-    public DefectImpl(ArrayList<TestRowObject> list, Psp pspVal){
-        isDirty = false;
-        this.testObj = list;
-        this.pspVal = pspVal;
+	@Override
+	public Psp getPspValues () {
+		return this.pspValues;
+	}
+	
+	
+    @Override
+    public ArrayList<TestRowObject> getRowObject() {
+        // TODO Auto-generated method stub
+        return null;
     }
-	
-	@Override
-	public ArrayList<TestRowObject> getRowObject() {
-		return this.testObj;
-	}
 
-	@Override
-	public boolean setRowObject(ArrayList<TestRowObject> list) {
-		boolean temp = true;
-	    isDirty = true;
-		this.testObj = list;
-		return temp;
-	}
+    @Override
+    public boolean setRowObject(ArrayList<TestRowObject> list) {
+        isDirty = true;
+        this.testObj = list;
+        return false;
+    }
 	
 	@Override
 	public boolean addRow(TestRowObject rowObj) {
@@ -60,7 +64,18 @@ public class DefectImpl implements Defect, Serializable {
 		}catch(Exception e){
 			e.getMessage();
 			temp = false;
-			Util.debug("error adding row to TestRowObject");
+		}
+		return temp;
+	}
+	
+	public boolean removeRow(TestRowObject rowObj){
+		boolean temp = true;
+		isDirty = true;
+		try{
+			testObj.remove(rowObj);
+		}catch(NullPointerException e){
+			e.getMessage();
+			temp = false;
 		}
 		return temp;
 	}
@@ -73,12 +88,7 @@ public class DefectImpl implements Defect, Serializable {
 		}catch(NullPointerException e){
 			e.getMessage();
 			temp = false;
-			Util.debug("Null error removing row to TestRowObject");
-		}catch(Exception e){
-            e.getMessage();
-            temp = false;
-            Util.debug("error removing row to TestRowObject");
-        }
+		}
 		return temp;
 	}
 	
@@ -89,8 +99,7 @@ public class DefectImpl implements Defect, Serializable {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	private void readObject(java.io.ObjectInputStream stream) 
-	                throws IOException, ClassNotFoundException {
+	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		stream.defaultReadObject();
 		Util.debug("object retrieved");
 	}
@@ -100,8 +109,7 @@ public class DefectImpl implements Defect, Serializable {
 	 * @param stream
 	 * @throws IOException
 	 */
-	private void writeObject(java.io.ObjectOutputStream stream)
-	                throws IOException {
+	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
 		Util.debug("object wrtten");
 	}
@@ -109,23 +117,8 @@ public class DefectImpl implements Defect, Serializable {
 	public boolean getIsDirty(){
 		return isDirty;
 	}
-	
-	public static void setIsDirty(boolean dirty) {
-        isDirty = dirty;
-    }
-	
-	public int getPID(){
-	    int id = 0;
-	    try{
-	        id = pspVal.getpId();
-	    }catch(NullPointerException e){
-	        e.getMessage();
-	        Util.debug("psp Value not initialized");
-	    }catch(Exception e){
-	        e.getMessage();
-	        Util.debug("psp Value is " + pspVal.getpId() );
-	    }
-	    return id;
-	}
+
+
 
 }
+
