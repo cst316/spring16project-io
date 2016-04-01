@@ -315,7 +315,7 @@ public class PSP_DefectPanel extends JPanel {
 		containsLogsPanel.add(btnEditAll);
 				
 		createDefectLogPanel();
-		updateDefectLogPanels();		
+		updateDefectLogPanels();	
 	}
 	
 	
@@ -544,6 +544,9 @@ public class PSP_DefectPanel extends JPanel {
 				removeTextFieldList.remove(i);
 			    fixTextFieldList.remove(i);
 				fixRefTextFieldList.remove(i);
+				
+				defect.removeRow(my_testRow);
+				
 				break;
 			}
 		}
@@ -609,7 +612,6 @@ public class PSP_DefectPanel extends JPanel {
 		for (int i = 0; i < removeDefectButton.size(); i++) {
 			for (ActionListener al : removeDefectButton.get(i).getActionListeners()) 
 				removeDefectButton.get(i).removeActionListener(al);	
-			defect.removeRow(my_testRow);
 		}		
 	}
 	
