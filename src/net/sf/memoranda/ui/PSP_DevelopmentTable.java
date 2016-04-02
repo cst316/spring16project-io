@@ -20,7 +20,7 @@
  import java.io.Serializable;
  import java.awt.event.ActionEvent;
  
- public class PSP_NewTaskTable extends JPanel implements Serializable {
+ public class PSP_DevelopmentTable extends JPanel implements Serializable {
  
  	/**
  	 * 
@@ -32,11 +32,11 @@
  	
  	Development devel;
  
- 	public PSP_NewTaskTable () {
+ 	public PSP_DevelopmentTable () {
  		jbInit();
  	}
  	
- 	public PSP_NewTaskTable (Development devel) {
+ 	public PSP_DevelopmentTable (Development devel) {
  		this.devel = devel;
  		jbInit();
  	}
@@ -53,7 +53,7 @@
  			public void actionPerformed(ActionEvent e) {
  								
  				 //opens NewTaskDialog
- 				PSP_NewTaskDialog nw = new PSP_NewTaskDialog();
+ 				PSP_DevelopmentDialog nw = new PSP_DevelopmentDialog();
  				nw.NewScreen();
  				
  				
@@ -65,7 +65,7 @@
  			public void actionPerformed(ActionEvent arg0) {
  				
  			 //opens NewTaskDialog
- 			PSP_NewTaskDialogClose nw = new PSP_NewTaskDialogClose();
+ 			PSP_DevelopmentDialogClose nw = new PSP_DevelopmentDialogClose();
  			nw.NewScreen();
  				
  			}
@@ -135,13 +135,13 @@
  	
  	public static void insertRow() {
  		
- 		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{PSP_NewTaskData.tdarray[0],PSP_NewTaskData.tdarray[1],PSP_NewTaskData.tdarray[2],null,PSP_NewTaskData.tdarray[3],null,PSP_NewTaskData.tdarray[4]});
+ 		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(),new Object[]{PSP_DevelopmentData.tdarray[0],PSP_DevelopmentData.tdarray[1],PSP_DevelopmentData.tdarray[2],null,PSP_DevelopmentData.tdarray[3],null,PSP_DevelopmentData.tdarray[4]});
  		
  	}
  	
  	public void removeRow()
  	{
- 		   DefaultTableModel model = (DefaultTableModel) PSP_NewTaskTable.table.getModel();
+ 		   DefaultTableModel model = (DefaultTableModel) PSP_DevelopmentTable.table.getModel();
  		   
  		   int[] rows = table.getSelectedRows();
  		   

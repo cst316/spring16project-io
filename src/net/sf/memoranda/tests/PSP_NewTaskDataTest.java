@@ -2,10 +2,10 @@ package net.sf.memoranda.tests;
 
 import static org.junit.Assert.*;
 
-import net.sf.memoranda.ui.PSP_NewTaskData;
-import net.sf.memoranda.ui.PSP_NewTaskDialog;
-import net.sf.memoranda.ui.PSP_NewTaskDialogClose;
-import net.sf.memoranda.ui.PSP_NewTaskTable;
+import net.sf.memoranda.ui.PSP_DevelopmentData;
+import net.sf.memoranda.ui.PSP_DevelopmentDialog;
+import net.sf.memoranda.ui.PSP_DevelopmentDialogClose;
+import net.sf.memoranda.ui.PSP_DevelopmentTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class PSP_NewTaskDataTest
 
 {
 	
-	PSP_NewTaskData tdata = new PSP_NewTaskData();
+	PSP_DevelopmentData tdata = new PSP_DevelopmentData();
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception 
@@ -57,32 +57,32 @@ public class PSP_NewTaskDataTest
 		tdarray= "savedata0";
 		count = 0;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_NewTaskData.tdarray[0].contains(tdarray));
+		assertTrue(PSP_DevelopmentData.tdarray[0].contains(tdarray));
 		
 		tdarray = "savedata1";
 		count = 1;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_NewTaskData.tdarray[1].contains(tdarray));
+		assertTrue(PSP_DevelopmentData.tdarray[1].contains(tdarray));
 		
 		tdarray = "savedata2";
 		count = 2;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_NewTaskData.tdarray[2].contains(tdarray));
+		assertTrue(PSP_DevelopmentData.tdarray[2].contains(tdarray));
 		
 		tdarray = "savedata3";
 		count = 3;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_NewTaskData.tdarray[3].contains(tdarray));
+		assertTrue(PSP_DevelopmentData.tdarray[3].contains(tdarray));
 		
 		tdarray = "savedata4";
 		count = 4;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_NewTaskData.tdarray[4].contains(tdarray));
+		assertTrue(PSP_DevelopmentData.tdarray[4].contains(tdarray));
 		
 		tdarray = "savedata5";
 		count = 5;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_NewTaskData.tdarray[5].contains(tdarray));
+		assertTrue(PSP_DevelopmentData.tdarray[5].contains(tdarray));
 		
 	}
 
@@ -105,7 +105,7 @@ public class PSP_NewTaskDataTest
 		count = 6;
 		tdata.saveTaskData(tdarray, count);
 		
-		assertTrue(!PSP_NewTaskData.tdarray[6].contains(tdarray));
+		assertTrue(!PSP_DevelopmentData.tdarray[6].contains(tdarray));
 		
 		}
 		
@@ -122,7 +122,7 @@ public class PSP_NewTaskDataTest
 		count = -1;
 		tdata.saveTaskData(tdarray, count);
 		
-		assertTrue(!PSP_NewTaskData.tdarray[-1].contains(tdarray));
+		assertTrue(!PSP_DevelopmentData.tdarray[-1].contains(tdarray));
 		
 		}
 		

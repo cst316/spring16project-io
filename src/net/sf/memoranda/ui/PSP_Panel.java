@@ -164,7 +164,7 @@ public class PSP_Panel extends JPanel{
             toAdd.setName("TIMELOG");
         } else if (toAdd instanceof PSP_DetailsPanel) {
             toAdd.setName("PSP");
-        } else if (toAdd instanceof PSP_NewTaskTable) {
+        } else if (toAdd instanceof PSP_DevelopmentTable) {
             toAdd.setName("DEVELOPMENT");
         } 
         currentView = toAdd;
@@ -199,7 +199,7 @@ public class PSP_Panel extends JPanel{
         } else if (event.equals("TIMELOG")) {
             addJPanel (new PSP_TimeLog (timelog));
         } else if (event.equals("DEVELOPMENT")) {
-            addJPanel (new PSP_NewTaskTable (dev));
+            addJPanel (new PSP_DevelopmentTable (dev));
         } else if (event.equals("PSP")){
             PSP_DetailsPanel details = new PSP_DetailsPanel(pspI);                  
             addJPanel (details);
@@ -270,14 +270,14 @@ public class PSP_Panel extends JPanel{
                 PSP_TimeLog.setIsDirty(false);
             }
             
-            if (PSP_NewTaskTable.getIsDirty()) {
+            if (PSP_DevelopmentTable.getIsDirty()) {
                 temp = new File (fs, "." + pspI.getpId() + "_development");
                 oos = new ObjectOutputStream (new FileOutputStream (temp));             
                 oos.writeObject(dev);
                 oos.flush();
                 oos.close();
                 
-                PSP_NewTaskTable.setIsDirty(false);
+                PSP_DevelopmentTable.setIsDirty(false);
             }   
             
             setIsDirty(false);
@@ -343,7 +343,7 @@ public class PSP_Panel extends JPanel{
                     project_MouseEvent ("DEFECT");
                 } else if (currentView instanceof PSP_PlanningPanel) {
                     project_MouseEvent ("PLANNING");
-                } else if (currentView instanceof PSP_NewTaskTable) {
+                } else if (currentView instanceof PSP_DevelopmentTable) {
                     dev = (Development) ois.readObject();                                                       
                 } else if (currentView instanceof PSP_TimeLog) {
                     project_MouseEvent ("TIMELOG");
