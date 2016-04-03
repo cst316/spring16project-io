@@ -124,10 +124,6 @@ public class PSP_TimeLog extends JPanel {
         setLayout(null);
         bttnDone.setText("Done");
         
-        
-        /*
-         * Cephas methods
-         */
         pnlTimeLog = new JPanel();
         pnlTimeLog.setBounds(0, 75, 1276, 583);
 		this.add(pnlTimeLog);
@@ -261,9 +257,6 @@ public class PSP_TimeLog extends JPanel {
 		timeEntries.setPhase(phase);
 	}
 	
-	/*
-	 * Cephas Methods
-	 */
 	private void addTimeLog () {	
 		int width = 1270;
 		int height = 25;
@@ -285,6 +278,11 @@ public class PSP_TimeLog extends JPanel {
 	            new ImageIcon(
 	                net.sf.memoranda.ui.AppFrame.class.getResource
 	                ("resources/icons/time.png")));
+		btnAddTime.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startTime(e);
+			}
+		});
 		btnAddTimeList.add(btnAddTime);
 		
 		btnAddTime2 = new JButton("");
@@ -295,7 +293,13 @@ public class PSP_TimeLog extends JPanel {
 	            new ImageIcon(
 	                net.sf.memoranda.ui.AppFrame.class.getResource
 	                ("resources/icons/time.png")));
+		btnAddTime2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				interruptTime(e);
+			}
+		});
 		btnAddTimeList2.add(btnAddTime2);
+		
 		
 		btnAddTime3 = new JButton("");
 		btnAddTime3.setBorder(null);
@@ -305,6 +309,11 @@ public class PSP_TimeLog extends JPanel {
 	            new ImageIcon(
 	                net.sf.memoranda.ui.AppFrame.class.getResource
 	                ("resources/icons/time.png")));
+		btnAddTime3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				endTime(e);
+			}
+		});
 		btnAddTimeList3.add(btnAddTime3);
 		
 		dateLabel = new JLabel();
@@ -326,7 +335,7 @@ public class PSP_TimeLog extends JPanel {
 		txtEndTime = new JTextField();
 		txtEndTime.setBounds(695, 0, 153, 22);
 		txtEndTime.setColumns(10);
-		endTimeList.add(txtInterruptTime);
+		endTimeList.add(txtEndTime);
 		
 		txtPhase = new JTextField();
 		txtPhase.setBounds(904, 0, 153, 22);
@@ -350,9 +359,6 @@ public class PSP_TimeLog extends JPanel {
 		addButtonList.add(holdItems);
 		
 		remActionListener(actionList);
-		currentTimeActionListener(btnAddTimeList);
-		currentTime2ActionListener(btnAddTimeList2);
-		currentTime3ActionListener(btnAddTimeList3);
 		repaintPanel (addButtonList, actionList, pnlEachLog);
 		addModActionListner(actionList);
 		pnlEachLog.setPreferredSize(new Dimension (width, y + height));
@@ -452,37 +458,43 @@ public class PSP_TimeLog extends JPanel {
 		}		
 	}
 	
-	private void currentTimeActionListener (List<JButton> currentTimeLst) {
-		for (int i = 0; i < currentTimeLst.size(); i++) {{
-			currentTimeLst.get(i).addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							currentStartTime();
-						}
-					});	
-				}
-		}	
+	private void startTime(ActionEvent e)
+	{
+		for(int i = 0; i < addButtonList.size(); i++)
+		{
+			if (e.getSource() == btnAddTimeList.get(i)) {
+				DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT);
+				startTimeList.get(i).setText(df.format(date));
+				
+				break;
+			}
+		}				
 	}
 	
-	private void currentTime2ActionListener (List<JButton> currentTimeLst2) {
-		for (int i = 0; i < currentTimeLst2.size(); i++) {{
-			currentTimeLst2.get(i).addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							currentInterruptTime();
-						}
-					});	
-				}
-		}	
+	private void interruptTime(ActionEvent e)
+	{
+		for(int i = 0; i < addButtonList.size(); i++)
+		{
+			if (e.getSource() == btnAddTimeList2.get(i)) {
+				DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT);
+				interruptTimeList.get(i).setText(df.format(date));
+				
+				break;
+			}
+		}				
 	}
 	
-	private void currentTime3ActionListener (List<JButton> currentTimeLst3) {
-		for (int i = 0; i < currentTimeLst3.size(); i++) {{
-			currentTimeLst3.get(i).addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							currentEndTime();
-						}
-					});	
-				}
-		}	
+	private void endTime(ActionEvent e)
+	{
+		for(int i = 0; i < addButtonList.size(); i++)
+		{
+			if (e.getSource() == btnAddTimeList3.get(i)) {
+				DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT);
+				endTimeList.get(i).setText(df.format(date));
+				
+				break;
+			}
+		}				
 	}
 	
 	private void buttonAction_Clicked (String pan) {
@@ -493,27 +505,5 @@ public class PSP_TimeLog extends JPanel {
 			//Do nothing
 		}
 	}
-	
-	private void currentStartTime()
-	{
-		DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT);
-		
-		txtStartTime.setText(df.format(date));
-	}
-	
-	private void currentInterruptTime()
-	{
-		DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT);
-		
-		txtInterruptTime.setText(df.format(date));
-	}
-	
-	private void currentEndTime()
-	{
-		DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT);
-		
-		txtEndTime.setText(df.format(date));
-	}
-	
 	
 }
