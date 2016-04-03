@@ -12,6 +12,7 @@ import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 
@@ -109,9 +110,7 @@ public class PSP_DefectPanel extends JPanel {
 	//frame compatible to the main panel
 	private Defect defect;
 	
-	private TestRowObject my_testRow = new TestRowObject();
-
-    private JLabel projectLabel;
+	private JLabel projectLabel;
 
     private List<JLabel> projectLabelList = new ArrayList<JLabel>(); 
 
@@ -313,37 +312,51 @@ public class PSP_DefectPanel extends JPanel {
 		});
 		btnEditAll.setBounds(926, 394, 97, 25);
 		containsLogsPanel.add(btnEditAll);
-				
-		createDefectLogPanel();
-		updateDefectLogPanels();	
+		
+		createDefectLogPanel();		
+		
+		//If defect has some defects then set them
+		if (defect.getRowObject().size() > 0) {
+			updateDefectLogPanels();
+		}
 	}
-	
-	
+		
 	private void update()
 	{
+		boolean dirty = false;
+		
 		for (int i = 0; i < addButtonList.size(); i++) {
-			programTextFieldList.get(i).setEditable(false);
-			typeTextFieldList.get(i).setEditable(false);
-			injectTextFieldList.get(i).setEditable(false);
-			removeTextFieldList.get(i).setEditable(false);
-			fixTextFieldList.get(i).setEditable(false);
-			fixRefTextFieldList.get(i).setEditable(false);
+			//Adding some guards so we are not adding empty data
+			if (!programTextFieldList.get(i).getText().isEmpty() &&
+				!typeTextFieldList.get(i).getText().isEmpty() &&
+				!injectTextFieldList.get(i).getText().isEmpty() &&
+				!removeTextFieldList.get(i).getText().isEmpty() &&
+				!fixTextFieldList.get(i).getText().isEmpty() &&
+				!fixRefTextFieldList.get(i).getText().isEmpty()) {
 			
-			my_testRow.setProject(programTextFieldList.get(i).getText());
-			my_testRow.setDate(dateLabelList.get(i).getText());
-			my_testRow.setDefNumber((
-					Integer.parseInt(numberLabelList.get(i).getText().trim())));
-			my_testRow.setDefType(typeTextFieldList.get(i).getText());
-			my_testRow.setInjPhase(injectTextFieldList.get(i).getText());
-			my_testRow.setRemPhase(removeTextFieldList.get(i).getText());
-			my_testRow.setFix(fixTextFieldList.get(i).getText());
-			my_testRow.setFixRef(fixRefTextFieldList.get(i).getText());
-			defect.addRow(my_testRow);
+				programTextFieldList.get(i).setEditable(false);
+				typeTextFieldList.get(i).setEditable(false);
+				injectTextFieldList.get(i).setEditable(false);
+				removeTextFieldList.get(i).setEditable(false);
+				fixTextFieldList.get(i).setEditable(false);
+				fixRefTextFieldList.get(i).setEditable(false);
+				
+				//using edit to implement add and edit both
+				defect.editRow (i, this.createTestRow(i));
+				
+				//If dirt is not set already, then set it, else no need
+				if (!dirty) {
+					dirty = true;
+					setIsDirty(dirty);
+				}
+			}
 		}
 		
-		setIsDirty (true);
-		JOptionPane.showMessageDialog(App.getFrame(),
-				Local.getString("Updated and Saved!"));		
+		//If we actually updated something, then
+		if (dirty) {
+			JOptionPane.showMessageDialog(App.getFrame(),
+					Local.getString("Updated and Saved!"));
+		}
 	}
 	
 	/**
@@ -353,21 +366,31 @@ public class PSP_DefectPanel extends JPanel {
 	 */
 	private void updateDefectLogPanels() {
 		// TODO Auto-generated method stub
-		if (defect.getRowObject() != null) {
-			for (int i = 0; i < defect.getRowObject().size(); i++) {
-				programTextFieldList.get(i).setText(defect.getRowObject().get(i).getProject());
-				dateLabelList.get(i).setText(getDate(defect.getRowObject().get(i).getDate()));
-				numberLabelList.get(i).setText("                 "
-						+ defect.getRowObject().get(i).getDefNumber());
-				typeTextFieldList.get(i).setText(defect.getRowObject().get(i).getDefType());
-				injectTextFieldList.get(i).setText(defect.getRowObject().get(i).getInjPhase());
-				removeTextFieldList.get(i).setText(defect.getRowObject().get(i).getRemPhase());
-				fixTextFieldList.get(i).setText(defect.getRowObject().get(i).getFix());
-				fixRefTextFieldList.get(i).setText(defect.getRowObject().get(i).getFixRef());
-				
-				buttonAction_Clicked ("ADD_DEFECT");
+		
+		for (int i = 0; i < defect.getRowObject().size(); i++) {
+			programTextFieldList.get(i).setText(defect.getRowObject().get(i).getProgram());
+			dateLabelList.get(i).setText(getDate(defect.getRowObject().get(i).getDate()));
+			numberLabelList.get(i).setText("                 "
+					+ defect.getRowObject().get(i).getDefNumber());
+			typeTextFieldList.get(i).setText(defect.getRowObject().get(i).getDefType());
+			injectTextFieldList.get(i).setText(defect.getRowObject().get(i).getInjPhase());
+			removeTextFieldList.get(i).setText(defect.getRowObject().get(i).getRemPhase());
+			fixTextFieldList.get(i).setText(defect.getRowObject().get(i).getFix());
+			fixRefTextFieldList.get(i).setText(defect.getRowObject().get(i).getFixRef());
+			
+			//Disabling text field objects from editing unless you click on edit button
+			for (Component t : this.addDefectPanelsList.get(i).getComponents())
+			{
+				if (t instanceof JTextField) {
+					((JTextField) t).setEditable(false);
+				}
 			}
-		}		
+			
+			if (i == defect.getRowObject().size() - 1) {
+				count = defect.getRowObject().get(i).getDefNumber() + 1;
+			}
+			buttonAction_Clicked ("ADD_DEFECT");
+		}			
 	}
 
 	/**
@@ -402,7 +425,7 @@ public class PSP_DefectPanel extends JPanel {
 	                ("resources/icons/pencilsmall.png")));
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				edit();
+				edit(e);
 			}
 		});
 		editButtonList.add(editButton);
@@ -462,6 +485,7 @@ public class PSP_DefectPanel extends JPanel {
 		fixRefTextField.setToolTipText("Fix Reference Number");
 		fixRefTextField.setColumns(10);
 		fixRefTextField.setText("00" + count + "00");
+		fixRefTextField.setEditable(false);
 		fixRefTextFieldList.add(fixRefTextField);
 		
 		holdItems.setBackground(Color.WHITE);
@@ -478,36 +502,40 @@ public class PSP_DefectPanel extends JPanel {
 		holdItems.add(editButton);
 		holdItems.setBounds(x, y, width, height);
 		addDefectPanelsList.add(holdItems);
-		
-		
+				
 		removeDefectActionListener(addButtonList);
 		repaintPanel (addDefectPanelsList, addButtonList, eachDefect_panel);
 		addDefectLogActionListner(addButtonList);
 		eachDefect_panel.setPreferredSize(new Dimension (width, y + height));
-		scrollPaneDefectLog.setVerticalScrollBarPolicy
-			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
 	
-	private void edit()
+	private void edit(ActionEvent e)
 	{
-		for(int i = 0; i <= addButtonList.size()-1; i++)
+		for(int i = 0; i < addButtonList.size(); i++)
 		{
-			typeTextFieldList.get(i).setEditable(true);
-			typeTextFieldList.get(i).setEditable(true);
-			injectTextFieldList.get(i).setEditable(true);
-			removeTextFieldList.get(i).setEditable(true);
-			fixTextFieldList.get(i).setEditable(true);
-			fixRefTextFieldList.get(i).setEditable(true);
-		}
+			if (e.getSource() == editButtonList.get(i) && 
+					(!typeTextFieldList.get(i).isEditable())) {
+				//programTextFieldList.get(i).setEditable(true);
+				typeTextFieldList.get(i).setEditable(true);
+				typeTextFieldList.get(i).setEditable(true);
+				injectTextFieldList.get(i).setEditable(true);
+				removeTextFieldList.get(i).setEditable(true);
+				fixTextFieldList.get(i).setEditable(true);
+				fixRefTextFieldList.get(i).setEditable(true);
+				
 				JOptionPane.showMessageDialog(App.getFrame(), 
-						Local.getString("You can now edit this and all"
-								+ " other defects!"));
+						Local.getString("You can now edit this defect row"));
+				
+				break;
+			}
+		}				
 	}
 	
 	private void editAll()
 	{
-		for(int i = 0; i <= addButtonList.size()-1; i++)
+		for(int i = 0; i < addButtonList.size(); i++)
 		{
+			//programTextFieldList.get(i).setEditable(true);
 			typeTextFieldList.get(i).setEditable(true);
 			typeTextFieldList.get(i).setEditable(true);
 			injectTextFieldList.get(i).setEditable(true);
@@ -515,10 +543,11 @@ public class PSP_DefectPanel extends JPanel {
 			fixTextFieldList.get(i).setEditable(true);
 			fixRefTextFieldList.get(i).setEditable(true);
 		}
-				JOptionPane.showMessageDialog(App.getFrame(), 
-						Local.getString("You can now edit this and all"
-								+ " other defects!"));
+		JOptionPane.showMessageDialog(App.getFrame(), 
+				Local.getString("You can now edit all defects!"));
 	}
+	
+	
 	/**
 	 * Removes a defect log
 	 * @param e
@@ -543,11 +572,15 @@ public class PSP_DefectPanel extends JPanel {
 				injectTextFieldList.remove(i);
 				removeTextFieldList.remove(i);
 			    fixTextFieldList.remove(i);
-				fixRefTextFieldList.remove(i);
+				fixRefTextFieldList.remove(i);				
 				
-				
-				defect.removeRow(my_testRow);
-				
+				if (i < defect.getRowObject().size()) {
+					defect.removeRow(i);
+					//If isDirty is not set already, then set it, else no need
+					if (!getIsDirty()) {
+						setIsDirty(true);
+					}
+				}				
 				break;
 			}
 		}
@@ -559,13 +592,31 @@ public class PSP_DefectPanel extends JPanel {
 		
 		repaintPanel (addDefectPanelsList, addButtonList, eachDefect_panel);
 		addDefectLogActionListner(addButtonList);
-		eachDefect_panel.setPreferredSize(new Dimension (width, y));
-		scrollPaneDefectLog.setVerticalScrollBarPolicy
-			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-		setIsDirty(true);
+		eachDefect_panel.setPreferredSize(new Dimension (width, y));		
 	}
 	
+	/**
+	 * Creates and returns a new test row object based on index location
+	 * of defect panel row
+	 * @param index - location from the defect panel on the screen
+	 * @return - TestRowObject to be added or removed from this view
+	 */
+	private TestRowObject createTestRow(int index) {
+		// TODO Auto-generated method stub		
+		TestRowObject my_testRow = new TestRowObject();
+		my_testRow.setProgram(programTextFieldList.get(index).getText());
+		my_testRow.setDate(dateLabelList.get(index).getText());
+		my_testRow.setDefNumber((
+				Integer.parseInt(numberLabelList.get(index).getText().trim())));
+		my_testRow.setDefType(typeTextFieldList.get(index).getText());
+		my_testRow.setInjPhase(injectTextFieldList.get(index).getText());
+		my_testRow.setRemPhase(removeTextFieldList.get(index).getText());
+		my_testRow.setFix(fixTextFieldList.get(index).getText());
+		my_testRow.setFixRef(fixRefTextFieldList.get(index).getText());	
+		
+		return my_testRow;
+	}
+
 	//Same as Cephas's implementation in PSP_PlanningWizardFrame.java
 	private void repaintPanel (List<JPanel> repaintPnl, List<JButton> iconBtn, JPanel whichPnl) {
 		String icon = "/net/sf/memoranda/ui/resources/icons/minus.png";			
@@ -582,11 +633,16 @@ public class PSP_DefectPanel extends JPanel {
 		}
 		whichPnl.revalidate();
 		whichPnl.repaint();
+		scrollPaneDefectLog.setVerticalScrollBarPolicy
+		(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
 	
 	//Same as Cephas's implementation in PSP_PlanningWizardFrame.java
+	//Adding action listeners to buttons
 	private void addDefectLogActionListner (List<JButton> addDefectButton) {
 		for (int i = 0; i < addDefectButton.size(); i++) {
+			//If this is the last button then we know to it is the (+), else
+			//it needs to respond to the (-)
 			if (i == addDefectButton.size() - 1) {
 				addDefectButton.get(i).addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -609,6 +665,7 @@ public class PSP_DefectPanel extends JPanel {
 	}
 	
 	//Same as Cephas's implementation in PSP_PlanningWizardFrame.java
+	//removing action listeners from the panels
 	private void removeDefectActionListener (List<JButton> removeDefectButton) {
 		for (int i = 0; i < removeDefectButton.size(); i++) {
 			for (ActionListener al : removeDefectButton.get(i).getActionListeners()) 

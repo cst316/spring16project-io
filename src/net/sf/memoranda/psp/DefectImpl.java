@@ -50,46 +50,76 @@ public class DefectImpl implements Defect, Serializable {
 
     @Override
     public boolean setRowObject(ArrayList<TestRowObject> list) {
-        isDirty = true;
-        this.testObj = list;
-        return true;
+        boolean isSet = false;
+        
+        if (list != null) {
+        	this.testObj = list;
+        	isSet = true;
+        	isDirty = true;
+        }
+        return isSet;
     }
 	
-	@Override
+    @Override
 	public boolean addRow(TestRowObject rowObj) {
-		boolean temp = true;
+		boolean isAdded = true;
+		
 		try{
-			isDirty = true;
 			testObj.add(rowObj);
 		}catch(Exception e){
 			e.getMessage();
-			temp = false;
+			isAdded = false;
 		}
-		return temp;
+		return isAdded;
 	}
 	
-	public boolean removeRow(TestRowObject rowObj){
-		boolean temp = true;
-		isDirty = true;
+	@Override
+	public boolean editRow (int index, TestRowObject rowObj) {
+		// TODO Auto-generated method stub
+		boolean isEdited = false;
+		
+		if (index < this.testObj.size() && rowObj != null) {
+			testObj.set(index, rowObj);  //Overwrites the object at the index
+			isEdited = true;
+		} else if (rowObj != null) {
+			isEdited = addRow(rowObj);	//Adds new object to Arraylist
+		}
+		
+		if (isEdited) {
+			isDirty = true;
+		}
+		
+		return isEdited;
+	}
+    
+	@Override
+	public boolean removeRow (TestRowObject rowObj){
+		boolean isRemoved = true;
+		
 		try{
 			testObj.remove(rowObj);
+			isDirty = true;		
 		}catch(NullPointerException e){
 			e.getMessage();
-			temp = false;
+			isRemoved = false;
 		}
-		return temp;
+		
+		return isRemoved;
 	}
 	
+	@Override
 	public boolean removeRow(int index){
-		boolean temp = true;
-		isDirty = true;
+		boolean isRemoved = true;
+		
 		try{
 			testObj.remove(index);
+			isDirty = true;		
 		}catch(NullPointerException e){
 			e.getMessage();
-			temp = false;
+			isRemoved = false;
 		}
-		return temp;
+		
+		return isRemoved;
 	}
 
 	/**
@@ -100,7 +130,7 @@ public class DefectImpl implements Defect, Serializable {
 	 */
 	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		stream.defaultReadObject();
-		Util.debug("object retrieved");
+		Util.debug("Defect retrieved");
 	}
 	
 	/**
@@ -110,7 +140,7 @@ public class DefectImpl implements Defect, Serializable {
 	 */
 	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
-		Util.debug("object wrtten");
+		Util.debug("Defect wrtten");
 	}
 
 	public boolean getIsDirty(){
