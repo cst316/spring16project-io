@@ -194,6 +194,7 @@ public class PSP_DefectPanel extends JPanel {
 		dateTextField.setColumns(10);
 		dateTextField.setBounds(92, 98, 166, 22);
 		dateTextField.setText(getDate());
+		dateTextField.setEditable(false);
 		add(dateTextField);
 		
 		prjctTextField = new JTextField();
@@ -202,6 +203,7 @@ public class PSP_DefectPanel extends JPanel {
 		prjctTextField.setText(defect.getPspValues().getName());
 		prjctTextField.setColumns(10);
 		prjctTextField.setBounds(344, 48, 166, 22);
+		prjctTextField.setEditable(false);
 		add(prjctTextField);
 		
 		prjctNumberTextField = new JTextField();
@@ -209,6 +211,7 @@ public class PSP_DefectPanel extends JPanel {
 		prjctNumberTextField.setText(defect.getPspValues().getpId() + "");
 		prjctNumberTextField.setColumns(10);
 		prjctNumberTextField.setBounds(344, 98, 166, 22);
+		prjctNumberTextField.setEditable(false);
 		add(prjctNumberTextField);
 		
 		JLabel testingFrameTitleLbl = new JLabel
@@ -515,7 +518,7 @@ public class PSP_DefectPanel extends JPanel {
 		{
 			if (e.getSource() == editButtonList.get(i) && 
 					(!typeTextFieldList.get(i).isEditable())) {
-				//programTextFieldList.get(i).setEditable(true);
+				programTextFieldList.get(i).setEditable(true);
 				typeTextFieldList.get(i).setEditable(true);
 				typeTextFieldList.get(i).setEditable(true);
 				injectTextFieldList.get(i).setEditable(true);
