@@ -671,6 +671,11 @@ public class AppFrame extends JFrame {
                         if(dlg.CANCELLED) return;
         }
 
+        // Last chance to save items from PSP before exiting
+        if (PSP_Panel.getIsDirty()) {
+        	PSP_Panel.saveChanges();
+        }
+
         Context.put("FRAME_WIDTH", new Integer(this.getWidth()));
         Context.put("FRAME_HEIGHT", new Integer(this.getHeight()));
         Context.put("FRAME_XPOS", new Integer(this.getLocation().x));
