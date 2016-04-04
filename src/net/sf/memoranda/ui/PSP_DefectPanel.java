@@ -345,7 +345,7 @@ public class PSP_DefectPanel extends JPanel {
 				fixRefTextFieldList.get(i).setEditable(false);
 				
 				//using edit to implement add and edit both
-				defect.editRow (i, this.createTestRow(i));
+				dirty = defect.editRow (i, this.createTestRow(i));
 				
 				//If dirt is not set already, then set it, else no need
 				if (!dirty) {
