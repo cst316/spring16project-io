@@ -5,26 +5,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-
 import net.sf.memoranda.psp.TimeLog;
 import net.sf.memoranda.psp.TimeRowObject;
 import net.sf.memoranda.util.Util;
 
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.EtchedBorder;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -171,17 +162,6 @@ public class PSP_TimeLog extends JPanel {
         this.add(bttnDone);
         this.add(lblTimeLogEntries);
 	}
-	public static void setIsDirty (boolean dirty) {
-		isDirty = dirty;
-		if (isDirty) {
-			PSP_Panel.setIsDirty(true);
-			PSP_Panel.myPanel.setSaveEnabled();
-		}
-	}
-
-	public static boolean getIsDirty () {
-		return isDirty;
-	}
 	
 	/**
 	 * 
@@ -202,9 +182,9 @@ public class PSP_TimeLog extends JPanel {
 	 */
 	public static void setTimeLogStartTime(TimeRowObject timeEntries, String startTime){
 		try{
-			timeEntries.setStartTime(Float.parseFloat(startTime));
+			timeEntries.setStartTime(startTime);
 		}catch(NumberFormatException e){
-			Util.debug("Unable to convert startTime to Float");
+			Util.debug("Unable to convert time entered, check format \"hh:mm a\"");
 			e.printStackTrace();
 		}
 	}
@@ -234,9 +214,9 @@ public class PSP_TimeLog extends JPanel {
 	 */
 	public static void setTimeLogEndTime(TimeRowObject timeEntries, String endTime){
 		try{
-			timeEntries.setEndTime(Float.parseFloat(endTime));
+			timeEntries.setEndTime(endTime);
 		}catch (NumberFormatException e){
-			Util.debug("Unable to convert endTime to Float");
+			Util.debug("Unable to convert time entered, check format \"hh:mm a\"");
 			e.printStackTrace();
 		}
 	}
@@ -267,8 +247,7 @@ public class PSP_TimeLog extends JPanel {
 		
 		dateTxt = new JTextField();
 		dateTxt.setBounds(80, 0, 130, 22);
-		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-		dateTxt.setText(df.format(date));
+		dateTxt.setText(getDateTime(date, 0));
 		dateTxtList.add(dateTxt);
 		
 		txtStartTime = new JTextField();
@@ -410,4 +389,31 @@ public class PSP_TimeLog extends JPanel {
 		}
 	}
 	
+	//Return date (0) or time (1) in a short format
+	private String getDateTime (Date d, int code) {
+		DateFormat df = null;
+		switch (code) {
+			case 0:
+				df = DateFormat.getDateInstance(DateFormat.SHORT);
+				break;
+			case 1:
+				df = DateFormat.getTimeInstance(DateFormat.SHORT);
+				break;
+			default:
+				Util.debug("Never should have gotten here");
+		}		
+		return (df.format(d));
+	}
+	
+	public static void setIsDirty (boolean dirty) {
+		isDirty = dirty;
+		if (isDirty) {
+			PSP_Panel.setIsDirty(true);
+			PSP_Panel.myPanel.setSaveEnabled();
+		}
+	}
+
+	public static boolean getIsDirty () {
+		return isDirty;
+	}	
 }

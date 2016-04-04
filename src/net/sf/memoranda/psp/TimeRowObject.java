@@ -23,16 +23,17 @@ public class TimeRowObject implements Serializable {
 	 */
 	private static final long serialVersionUID = 7354700070702212027L;
 	private Date date;
-	private float startTime;
-	private float endTime;
+	private Date startTime;
+	private Date endTime;
 	private float interruptTime;
 	private String phase;	
 	
-	private static boolean isDirty;	
-	
 	public TimeRowObject () {
-		this.date = new Date();
-		this.startTime = 0.0f;		
+		this.date = null;
+		this.startTime = null;
+		this.endTime = null;
+		this.interruptTime = 0.0f;
+		this.phase = null;
 	}
 	
 	public void setDate(Date date) {
@@ -40,31 +41,45 @@ public class TimeRowObject implements Serializable {
 		this.date = date;
 	}
 	
-	public void setDate(String date) {
+	public boolean setDate(String date) {
 		// TODO Auto-generated method stub
+		boolean dateSet = false;
 		DateFormat formatter ; 
 		formatter = new SimpleDateFormat("MM/dd/yy");
 		try {
 			this.date = formatter.parse(date);
-			isDirty = true;
+			dateSet = true;
 			System.out.println("The parsed date is: " + date.toString());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			Util.debug ("Date parsing issue: ".toUpperCase() + e.getMessage());
 		}
+		
+		return dateSet;
 	}
 	
 	public Date getDate() {
 		// TODO Auto-generated method stub
-		return date;
+		return this.date;
 	}
 	
-	public void setStartTime(float time) {
+	public boolean setStartTime(String time) {
 		// TODO Auto-generated method stub
-		this.startTime = time;
+		boolean isSet = false;
+		DateFormat formatter ; 
+		formatter = new SimpleDateFormat("hh:mm a");
+		try {
+			this.startTime = formatter.parse(time);
+			isSet = true;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			Util.debug ("Time parsing issue: ".toUpperCase() + e.getMessage());
+		}
+		
+		return isSet;
 	}
 	
-	public float getStartTime() {
+	public Date getStartTime() {
 		// TODO Auto-generated method stub
 		return this.startTime;
 	}
@@ -79,12 +94,23 @@ public class TimeRowObject implements Serializable {
 		return this.interruptTime;
 	}
 	
-	public void setEndTime(float time) {
+	public boolean setEndTime(String time) {
 		// TODO Auto-generated method stub
-		this.endTime = time;
+		boolean isSet = false;
+		DateFormat formatter ; 
+		formatter = new SimpleDateFormat("hh:mm a");
+		try {
+			this.endTime = formatter.parse(time);
+			isSet = true;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			Util.debug ("Time parsing issue: ".toUpperCase() + e.getMessage());
+		}
+		
+		return isSet;
 	}
 
-	public float getEndTime() {
+	public Date getEndTime() {
 		// TODO Auto-generated method stub
 		return this.endTime;
 	}
