@@ -1,45 +1,69 @@
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-
 import net.sf.memoranda.psp.TimeLog;
 import net.sf.memoranda.psp.TimeRowObject;
 import net.sf.memoranda.util.Util;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ImageIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class PSP_TimeLog extends JPanel {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private static boolean isDirty = false;
+	private static final long serialVersionUID = -9032126534041955899L;
 
-	private JPanel contentPane;
+	private static boolean isDirty = false;
+	
+	private JButton bttnDone;
+	
+	private TimeRowObject timeEntries;
 	
 	private JTextField dateTextField;
 	private JTextField startTimeTextField;
 	private JTextField interruptTimeTextField;
-	private JTextField endTimeTextField;
 	private JTextField phaseTextField;
+	private JTextField endTimeTextField;
+	private JButton btnAddModule;
+
+	private List <JTextField> dateTxtList = new ArrayList <JTextField>();
+	private List <JTextField> startTimeList = new ArrayList <JTextField>();
+	private List <JTextField> interruptTimeList = new ArrayList <JTextField>();
+	private List <JTextField> phaseList = new ArrayList <JTextField>();
+	private List <JTextField> endTimeList = new ArrayList <JTextField>();
+	private List <JPanel> addButtonList = new ArrayList <JPanel> ();
+	private List <JButton> actionList = new ArrayList <JButton> ();
 	
-	private JButton bttnDone;
-	private JButton bttnMoreEntries;
+	private JPanel pnlEachLog;
+	private JPanel pnlTimeLog;
+	private JScrollPane spTimeLog;
 	
-	private TimeLog timelog;
-	private TimeRowObject timeEntries;
+	private Date date = new Date(); 
 	
+	/**
+	 * Used in the phase entry
+	 *
+	 */
+	public enum Phase{
+		PLANNING, DESIGN, CODE, CODE_REVIEW, TEST, POSTMORTEM
+	}
 
 	/**
 	 * Create the panel.
@@ -52,7 +76,6 @@ public class PSP_TimeLog extends JPanel {
 	 * Create the panel.
 	 */
 	public PSP_TimeLog(TimeLog timelog) {	
-		this.timelog = timelog;
 		try{
 			jInit();
 		} catch (Exception ex) {
@@ -63,48 +86,32 @@ public class PSP_TimeLog extends JPanel {
 	}
 	
 	public void jInit () {
-		setLayout(new BorderLayout(0, 0));
-		contentPane = new JPanel();
+		this.setBounds(0, 0, 1262, 743);
+		this.setBackground(Color.WHITE);
+		
+		
+		JTextArea phaseKey = new JTextArea();
+		phaseKey.setText("Phases of PSP:\n" +
+		"\nPLANNING     \tDESIGN" +
+		"\nCODE     \tCODE_REVIEW" + 
+		"\nTEST     \tPOSTMORTEM");
+		
+		phaseKey.setBounds(900, 13, 300, 85);
+		phaseKey.setToolTipText("Phase Key");
+		phaseKey.setEditable(false);
+		add(phaseKey);
         
         JLabel lblTimeLogEntries = new JLabel("Time Log Entries");
+        lblTimeLogEntries.setBounds(597, 13, 189, 40);
         lblTimeLogEntries.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 18));
         lblTimeLogEntries.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        JLabel lblDate = new JLabel("Date");
-        
-        JLabel lblStartTime = new JLabel("Start Time");
-        
-        JLabel lblInterruptTime = new JLabel("Interrupt Time");
-        
-        JLabel lblEndTime = new JLabel("End Time");
-        
-        JLabel lblPhase = new JLabel("Phase");
-        
-        dateTextField = new JTextField();
-        dateTextField.setColumns(10);
-        
-        startTimeTextField = new JTextField();
-        startTimeTextField.setColumns(10);
-        
-        interruptTimeTextField = new JTextField();
-        interruptTimeTextField.setColumns(10);
-        
-        endTimeTextField = new JTextField();
-        endTimeTextField.setColumns(10);
-        
-        phaseTextField = new JTextField();
-        phaseTextField.setColumns(10);
-        
-        bttnMoreEntries = new JButton();
-        bttnMoreEntries.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		
-        	}
-        });
-        bttnMoreEntries.setText("More Entries");
+        lblTimeLogEntries.setIcon(
+	            new ImageIcon(
+	                net.sf.memoranda.ui.AppFrame.class.getResource
+	                ("resources/icons/time.png")));
         
         bttnDone = new JButton();
+        bttnDone.setBounds(620, 671, 65, 45);
         bttnDone.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
@@ -116,85 +123,61 @@ public class PSP_TimeLog extends JPanel {
         		setTimeLogPhase(timeEntries, phaseTextField.getText());
         	}
         });
+        setLayout(null);
         bttnDone.setText("Done");
         
-        add(contentPane);
-        GroupLayout gl_contentPane = new GroupLayout(contentPane);
-        gl_contentPane.setHorizontalGroup(
-        	gl_contentPane.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_contentPane.createSequentialGroup()
-        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-        				.addGroup(gl_contentPane.createSequentialGroup()
-        					.addGap(83)
-        					.addComponent(bttnMoreEntries, GroupLayout.PREFERRED_SIZE, 125, 
-        							GroupLayout.PREFERRED_SIZE)
-        					.addGap(120)
-        					.addComponent(bttnDone, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
-        				.addGroup(gl_contentPane.createSequentialGroup()
-        					.addGap(34)
-        					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-        						.addComponent(lblTimeLogEntries)
-        						.addGroup(gl_contentPane.createSequentialGroup()
-        							.addComponent(lblDate)
-        							.addGap(53)
-        							.addComponent(lblStartTime)
-        							.addGap(31)
-        							.addComponent(lblInterruptTime)
-        							.addGap(33)))
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(lblEndTime, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-        					.addGap(15)
-        					.addComponent(lblPhase, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
-        				.addGroup(gl_contentPane.createSequentialGroup()
-        					.addContainerGap()
-        					.addComponent(dateTextField, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(startTimeTextField, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(interruptTimeTextField, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(endTimeTextField, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(phaseTextField, GroupLayout.PREFERRED_SIZE, 
-        							GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-        			.addGap(24))
-        );
-        gl_contentPane.setVerticalGroup(
-        	gl_contentPane.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_contentPane.createSequentialGroup()
-        			.addComponent(lblTimeLogEntries, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        			.addGap(5)
-        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-        				.addComponent(lblDate, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-        					.addComponent(lblStartTime, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        					.addComponent(lblInterruptTime, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        					.addComponent(lblPhase, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        					.addComponent(lblEndTime, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
-        			.addGap(5)
-        			.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(dateTextField, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(startTimeTextField, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(interruptTimeTextField, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(endTimeTextField, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(phaseTextField, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-        			.addGap(60)
-        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-        				.addComponent(bttnMoreEntries, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(bttnDone, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)))
-        );
-        contentPane.setLayout(gl_contentPane);
-	}
-	public static void setIsDirty (boolean dirty) {
-		isDirty = dirty;
-		if (isDirty) {
-			PSP_Panel.setIsDirty(true);
-			PSP_Panel.myPanel.setSaveEnabled();
-		}
-	}
-
-	public static boolean getIsDirty () {
-		return isDirty;
+        pnlTimeLog = new JPanel();
+        pnlTimeLog.setBounds(0, 75, 1276, 583);
+		this.add(pnlTimeLog);
+		pnlTimeLog.setBackground(Color.WHITE);
+		pnlTimeLog.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(0, 75, 1276, 508);
+		pnlTimeLog.add(panel_1);
+		panel_1.setLayout(new BorderLayout());
+		
+		spTimeLog = new JScrollPane();
+		spTimeLog.setBorder(null);
+		panel_1.add(spTimeLog);
+		spTimeLog.setHorizontalScrollBarPolicy
+				(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		spTimeLog.setBounds(0, 75, 1276, 508);
+		
+		pnlEachLog = new JPanel();
+		spTimeLog.setViewportView(pnlEachLog);
+		pnlEachLog.setLayout(null);
+		pnlEachLog.setBounds(0, 75, 1276, 508);
+		pnlEachLog.setBackground(Color.WHITE);
+		
+		addTimeLog ();
+        this.add(pnlTimeLog);
+        
+        JLabel dateLabel = new JLabel("Date");
+        dateLabel.setBounds(84, 26, 26, 40);
+        pnlTimeLog.add(dateLabel);
+        
+        JLabel startTimeLabel = new JLabel("Start Time");
+        startTimeLabel.setBounds(274, 22, 61, 40);
+        pnlTimeLog.add(startTimeLabel);
+        
+        JLabel interruptTimeLabel = new JLabel("Interrupt Time");
+        interruptTimeLabel.setBounds(507, 22, 83, 40);
+        pnlTimeLog.add(interruptTimeLabel);
+        
+        JLabel endTimeLabel = new JLabel("End Time");
+        endTimeLabel.setBounds(736, 26, 59, 40);
+        pnlTimeLog.add(endTimeLabel);
+        
+        JLabel phaseLabel = new JLabel("Phase");
+        phaseLabel.setBounds(952, 22, 83, 40);
+        pnlTimeLog.add(phaseLabel);
+        
+        JLabel addMoreLogsLabel = new JLabel("Add More Logs");
+        addMoreLogsLabel.setBounds(1109, 34, 98, 16);
+        pnlTimeLog.add(addMoreLogsLabel);
+        this.add(bttnDone);
+        this.add(lblTimeLogEntries);
 	}
 	
 	/**
@@ -216,9 +199,9 @@ public class PSP_TimeLog extends JPanel {
 	 */
 	public static void setTimeLogStartTime(TimeRowObject timeEntries, String startTime){
 		try{
-			timeEntries.setStartTime(Float.parseFloat(startTime));
+			timeEntries.setStartTime(startTime);
 		}catch(NumberFormatException e){
-			Util.debug("Unable to convert startTime to Float");
+			Util.debug("Unable to convert time entered, check format \"hh:mm a\"");
 			e.printStackTrace();
 		}
 	}
@@ -248,9 +231,9 @@ public class PSP_TimeLog extends JPanel {
 	 */
 	public static void setTimeLogEndTime(TimeRowObject timeEntries, String endTime){
 		try{
-			timeEntries.setEndTime(Float.parseFloat(endTime));
+			timeEntries.setEndTime(endTime);
 		}catch (NumberFormatException e){
-			Util.debug("Unable to convert endTime to Float");
+			Util.debug("Unable to convert time entered, check format \"hh:mm a\"");
 			e.printStackTrace();
 		}
 	}
@@ -264,4 +247,192 @@ public class PSP_TimeLog extends JPanel {
 	public static void setTimeLogPhase(TimeRowObject timeEntries, String phase){
 		timeEntries.setPhase(phase);
 	}
+	
+	private void addTimeLog () {	
+		int width = 1270;
+		int height = 25;
+		int x = 0;
+		int y = (addButtonList.size() == 0 ? 0 : 
+			addButtonList.get(addButtonList.size() - 1).getY() + height + 5);
+
+		btnAddModule = new JButton("");
+		btnAddModule.setBorder(null);
+		btnAddModule.setBounds(1140, 0, 25, 25);
+		btnAddModule.setBackground(Color.WHITE);
+		actionList.add(btnAddModule);
+		
+		
+		dateTextField = new JTextField();
+		dateTextField.setBounds(80, 0, 130, 22);
+		dateTextField.setText(getDateTime(date, 0));
+		dateTextField.setToolTipText("Date you worked on the project");
+		dateTxtList.add(dateTextField);
+		
+		startTimeTextField = new JTextField();
+		startTimeTextField.setBounds(228, 0, 153, 22);
+		startTimeTextField.setColumns(10);
+		startTimeTextField.setToolTipText("Time you started working on the project");
+		startTimeList.add(startTimeTextField);
+	
+		interruptTimeTextField = new JTextField();
+		interruptTimeTextField.setBounds(475, 0, 153, 22);
+		interruptTimeTextField.setColumns(10);
+		interruptTimeTextField.setToolTipText("Interrupt time for this time entry");
+		interruptTimeList.add(interruptTimeTextField);
+		
+		endTimeTextField = new JTextField();
+		endTimeTextField.setBounds(695, 0, 153, 22);
+		endTimeTextField.setColumns(10);
+		endTimeTextField.setToolTipText("Time done working on project");
+		endTimeList.add(endTimeTextField);
+		
+		phaseTextField = new JTextField();
+		phaseTextField.setBounds(904, 0, 153, 22);
+		phaseTextField.setColumns(10);
+		phaseTextField.setToolTipText("Phase of project - see Phase Key");
+		phaseList.add(phaseTextField);
+		
+		
+		JPanel holdItems = new JPanel();
+		holdItems.setBackground(Color.WHITE);
+		holdItems.setLayout(null);
+		holdItems.add(dateTextField);
+		holdItems.add(startTimeTextField);
+		holdItems.add(btnAddModule);
+		holdItems.add(interruptTimeTextField);
+		holdItems.add(endTimeTextField);
+		holdItems.add(phaseTextField);
+		holdItems.setBounds(x, y, width, height);
+		addButtonList.add(holdItems);
+		
+		remActionListener(actionList);
+		repaintPanel (addButtonList, actionList, pnlEachLog);
+		addModActionListner(actionList);
+		pnlEachLog.setPreferredSize(new Dimension (width, y + height));
+		spTimeLog.setVerticalScrollBarPolicy
+			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+	}
+	
+	/**
+	 * Removing a specific row of items from the display
+	 * @param e - takes in an ActionEvent as to know which specific
+	 * item to remove from the display of file items
+	 */
+	private void removeTimeLog (ActionEvent e) {	
+		int width = 1270;
+		int height = 25;
+		int x = 0;
+		int y = 0;
+		
+		remActionListener (actionList);
+		for (int i = 0; i < actionList.size(); i++) {
+			if (e.getSource() == actionList.get(i)) {
+				actionList.remove(i);
+				addButtonList.remove(i);
+				dateTxtList.remove(i);
+				startTimeList.remove(i);
+				interruptTimeList.remove(i);
+				endTimeList.remove(i);
+				phaseList.remove(i);
+				break;
+			}
+		}
+		
+		for (int i = 0; i < actionList.size(); i++) {
+			addButtonList.get(i).setBounds(x, y, width, height);
+			y += height + 5;
+		}		
+		
+		repaintPanel (addButtonList, actionList, pnlEachLog);
+		addModActionListner(actionList);
+		pnlEachLog.setPreferredSize(new Dimension (width, y));
+		spTimeLog.setVerticalScrollBarPolicy
+			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+	}
+	
+	/**
+	 * Repaints the Current JPanel due to the changes for add and remove
+	 * @param repaintPnl - List of items within that panel
+	 * @param iconBtn - buttons that need to have action listeners enabled
+	 * @param whichPnl - panel to repaint changes onto
+	 */
+	private void repaintPanel (List<JPanel> repaintPnl, List<JButton> iconBtn, JPanel whichPnl) {
+		String icon = "/net/sf/memoranda/ui/resources/icons/minus.png";			
+		
+		whichPnl.removeAll();
+		for (int i = 0; i < repaintPnl.size(); i++) {
+			whichPnl.add(repaintPnl.get(i));
+			if (i == repaintPnl.size() - 1) { 
+				icon = "/net/sf/memoranda/ui/resources/icons/plus.png";
+				repaintPnl.get(i).getComponent(0).requestFocus();
+			}
+			iconBtn.get(i).setIcon(new ImageIcon(
+					PSP_PlanningWizardFrame.class.getResource(icon)));	
+		}
+		whichPnl.revalidate();
+		whichPnl.repaint();
+	}
+	
+	/**
+	 * Adding action listeners
+	 * @param addB - module buttons to add action listener to
+	 */
+	private void addModActionListner (List<JButton> addB) {
+		for (int i = 0; i < addB.size(); i++) {
+			if (i == addB.size() - 1) {
+				addB.get(i).addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						buttonAction_Clicked ("ADD_MOD");
+					}
+				});
+			} else {
+				addB.get(i).addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						removeTimeLog (e);
+					}
+				});
+			}
+		}		
+	}
+	
+	private void remActionListener (List<JButton> remB) {
+		for (int i = 0; i < remB.size(); i++) {
+			for (ActionListener al : remB.get(i).getActionListeners()) 
+				remB.get(i).removeActionListener(al);			
+		}		
+	}
+	
+	private void buttonAction_Clicked (String pan) {
+		if (pan.equals("ADD_MOD")) {	
+			addTimeLog ();	
+		}
+	}
+	
+	//Need date code 0 or time code 1 in a short format; Date/Time is part of the Date class
+	private String getDateTime (Date d, int code) {
+		DateFormat df = null;
+		switch (code) {
+			case 0:
+				df = DateFormat.getDateInstance(DateFormat.SHORT);
+				break;
+			case 1:
+				df = DateFormat.getTimeInstance(DateFormat.SHORT);
+				break;
+			default:
+				Util.debug("Never should have gotten here");
+		}		
+		return (df.format(d));
+	}
+	
+	public static void setIsDirty (boolean dirty) {
+		isDirty = dirty;
+		if (isDirty) {
+			PSP_Panel.setIsDirty(true);
+			PSP_Panel.myPanel.setSaveEnabled();
+		}
+	}
+
+	public static boolean getIsDirty () {
+		return isDirty;
+	}	
 }
