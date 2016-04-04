@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -36,11 +37,11 @@ public class PSP_TimeLog extends JPanel {
 	private TimeLog timelog;
 	private TimeRowObject timeEntries;
 	
-	private JTextField dateTxt;
-	private JTextField txtStartTime;
-	private JTextField txtInterruptTime;
-	private JTextField txtPhase;
-	private JTextField txtEndTime;
+	private JTextField dateTextField;
+	private JTextField startTimeTextField;
+	private JTextField interruptTimeTextField;
+	private JTextField phaseTextField;
+	private JTextField endTimeTextField;
 	private JButton btnAddModule;
 
 	private List <JTextField> dateTxtList = new ArrayList <JTextField>();
@@ -56,6 +57,14 @@ public class PSP_TimeLog extends JPanel {
 	private JScrollPane spTimeLog;
 	
 	private Date date = new Date(); 
+	
+	/**
+	 * Used in the phase entry
+	 *
+	 */
+	public enum Phase{
+		PLANNING, DESIGN, CODE, CODE_REVIEW, TEST, POSTMORTEM
+	}
 
 	/**
 	 * Create the panel.
@@ -81,6 +90,18 @@ public class PSP_TimeLog extends JPanel {
 	public void jInit () {
 		this.setBounds(0, 0, 1262, 743);
 		this.setBackground(Color.WHITE);
+		
+		
+		JTextArea phaseKey = new JTextArea();
+		phaseKey.setText("Phases of PSP:\n" +
+		"\nPLANNING     \tDESIGN" +
+		"\nCODE     \tCODE_REVIEW" + 
+		"\nTEST     \tPOSTMORTEM");
+		
+		phaseKey.setBounds(900, 13, 300, 85);
+		phaseKey.setToolTipText("Phase Key");
+		phaseKey.setEditable(false);
+		add(phaseKey);
         
         JLabel lblTimeLogEntries = new JLabel("Time Log Entries");
         lblTimeLogEntries.setBounds(597, 13, 189, 40);
@@ -97,11 +118,11 @@ public class PSP_TimeLog extends JPanel {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		timeEntries = new TimeRowObject();
-        		setTimeLogDate(timeEntries, dateTxt.getText());
-        		setTimeLogStartTime(timeEntries, txtStartTime.getText());
-        		setTimeLogInterruptTime(timeEntries, txtInterruptTime.getText());
-        		setTimeLogEndTime(timeEntries, txtEndTime.getText());
-        		setTimeLogPhase(timeEntries, txtPhase.getText());
+        		setTimeLogDate(timeEntries, dateTextField.getText());
+        		setTimeLogStartTime(timeEntries, startTimeTextField.getText());
+        		setTimeLogInterruptTime(timeEntries, interruptTimeTextField.getText());
+        		setTimeLogEndTime(timeEntries, endTimeTextField.getText());
+        		setTimeLogPhase(timeEntries, phaseTextField.getText());
         	}
         });
         setLayout(null);
@@ -134,29 +155,29 @@ public class PSP_TimeLog extends JPanel {
 		addTimeLog ();
         this.add(pnlTimeLog);
         
-        JLabel label = new JLabel("Date");
-        label.setBounds(84, 26, 26, 40);
-        pnlTimeLog.add(label);
+        JLabel dateLabel = new JLabel("Date");
+        dateLabel.setBounds(84, 26, 26, 40);
+        pnlTimeLog.add(dateLabel);
         
-        JLabel label_1 = new JLabel("Start Time");
-        label_1.setBounds(274, 22, 61, 40);
-        pnlTimeLog.add(label_1);
+        JLabel startTimeLabel = new JLabel("Start Time");
+        startTimeLabel.setBounds(274, 22, 61, 40);
+        pnlTimeLog.add(startTimeLabel);
         
-        JLabel label_2 = new JLabel("Interrupt Time");
-        label_2.setBounds(507, 22, 83, 40);
-        pnlTimeLog.add(label_2);
+        JLabel interruptTimeLabel = new JLabel("Interrupt Time");
+        interruptTimeLabel.setBounds(507, 22, 83, 40);
+        pnlTimeLog.add(interruptTimeLabel);
         
-        JLabel label_3 = new JLabel("End Time");
-        label_3.setBounds(736, 26, 59, 40);
-        pnlTimeLog.add(label_3);
+        JLabel endTimeLabel = new JLabel("End Time");
+        endTimeLabel.setBounds(736, 26, 59, 40);
+        pnlTimeLog.add(endTimeLabel);
         
-        JLabel label_4 = new JLabel("Phase");
-        label_4.setBounds(952, 22, 83, 40);
-        pnlTimeLog.add(label_4);
+        JLabel phaseLabel = new JLabel("Phase");
+        phaseLabel.setBounds(952, 22, 83, 40);
+        pnlTimeLog.add(phaseLabel);
         
-        JLabel lblAddMoreLogs = new JLabel("Add More Logs");
-        lblAddMoreLogs.setBounds(1109, 34, 98, 16);
-        pnlTimeLog.add(lblAddMoreLogs);
+        JLabel addMoreLogsLabel = new JLabel("Add More Logs");
+        addMoreLogsLabel.setBounds(1109, 34, 98, 16);
+        pnlTimeLog.add(addMoreLogsLabel);
         this.add(bttnDone);
         this.add(lblTimeLogEntries);
 	}
@@ -243,41 +264,46 @@ public class PSP_TimeLog extends JPanel {
 		actionList.add(btnAddModule);
 		
 		
-		dateTxt = new JTextField();
-		dateTxt.setBounds(80, 0, 130, 22);
-		dateTxt.setText(getDateTime(date, 0));
-		dateTxtList.add(dateTxt);
+		dateTextField = new JTextField();
+		dateTextField.setBounds(80, 0, 130, 22);
+		dateTextField.setText(getDateTime(date, 0));
+		dateTextField.setToolTipText("Date you worked on the project");
+		dateTxtList.add(dateTextField);
 		
-		txtStartTime = new JTextField();
-		txtStartTime.setBounds(228, 0, 153, 22);
-		txtStartTime.setColumns(10);
-		startTimeList.add(txtStartTime);
+		startTimeTextField = new JTextField();
+		startTimeTextField.setBounds(228, 0, 153, 22);
+		startTimeTextField.setColumns(10);
+		startTimeTextField.setToolTipText("Time you started working on the project");
+		startTimeList.add(startTimeTextField);
 	
-		txtInterruptTime = new JTextField();
-		txtInterruptTime.setBounds(475, 0, 153, 22);
-		txtInterruptTime.setColumns(10);
-		interruptTimeList.add(txtInterruptTime);
+		interruptTimeTextField = new JTextField();
+		interruptTimeTextField.setBounds(475, 0, 153, 22);
+		interruptTimeTextField.setColumns(10);
+		interruptTimeTextField.setToolTipText("Interrupt time for this time entry");
+		interruptTimeList.add(interruptTimeTextField);
 		
-		txtEndTime = new JTextField();
-		txtEndTime.setBounds(695, 0, 153, 22);
-		txtEndTime.setColumns(10);
-		endTimeList.add(txtEndTime);
+		endTimeTextField = new JTextField();
+		endTimeTextField.setBounds(695, 0, 153, 22);
+		endTimeTextField.setColumns(10);
+		endTimeTextField.setToolTipText("Time done working on project");
+		endTimeList.add(endTimeTextField);
 		
-		txtPhase = new JTextField();
-		txtPhase.setBounds(904, 0, 153, 22);
-		txtPhase.setColumns(10);
-		phaseList.add(txtPhase);
+		phaseTextField = new JTextField();
+		phaseTextField.setBounds(904, 0, 153, 22);
+		phaseTextField.setColumns(10);
+		phaseTextField.setToolTipText("Phase of project");
+		phaseList.add(phaseTextField);
 		
 		
 		JPanel holdItems = new JPanel();
 		holdItems.setBackground(Color.WHITE);
 		holdItems.setLayout(null);
-		holdItems.add(dateTxt);
-		holdItems.add(txtStartTime);
+		holdItems.add(dateTextField);
+		holdItems.add(startTimeTextField);
 		holdItems.add(btnAddModule);
-		holdItems.add(txtInterruptTime);
-		holdItems.add(txtEndTime);
-		holdItems.add(txtPhase);
+		holdItems.add(interruptTimeTextField);
+		holdItems.add(endTimeTextField);
+		holdItems.add(phaseTextField);
 		holdItems.setBounds(x, y, width, height);
 		addButtonList.add(holdItems);
 		
@@ -381,9 +407,6 @@ public class PSP_TimeLog extends JPanel {
 	private void buttonAction_Clicked (String pan) {
 		if (pan.equals("ADD_MOD")) {	
 			addTimeLog ();	
-		}
-		else {
-			//Do nothing
 		}
 	}
 	
