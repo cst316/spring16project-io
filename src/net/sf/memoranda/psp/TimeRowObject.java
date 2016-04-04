@@ -43,19 +43,17 @@ public class TimeRowObject implements Serializable {
 	
 	public boolean setDate(String date) {
 		// TODO Auto-generated method stub
-		boolean dateSet = false;
+		boolean isSet = false;
 		DateFormat formatter ; 
 		formatter = new SimpleDateFormat("MM/dd/yy");
 		try {
 			this.date = formatter.parse(date);
-			dateSet = true;
-			System.out.println("The parsed date is: " + date.toString());
+			isSet = true;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			Util.debug ("Date parsing issue: ".toUpperCase() + e.getMessage());
-		}
-		
-		return dateSet;
+		}		
+		return isSet;
 	}
 	
 	public Date getDate() {
@@ -74,8 +72,7 @@ public class TimeRowObject implements Serializable {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			Util.debug ("Time parsing issue: ".toUpperCase() + e.getMessage());
-		}
-		
+		}		
 		return isSet;
 	}
 	
@@ -105,8 +102,7 @@ public class TimeRowObject implements Serializable {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			Util.debug ("Time parsing issue: ".toUpperCase() + e.getMessage());
-		}
-		
+		}		
 		return isSet;
 	}
 

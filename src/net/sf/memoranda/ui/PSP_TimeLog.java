@@ -27,10 +27,8 @@ import java.util.List;
 
 public class PSP_TimeLog extends JPanel {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -9032126534041955899L;
+
 	private static boolean isDirty = false;
 	
 	private JButton bttnDone;
