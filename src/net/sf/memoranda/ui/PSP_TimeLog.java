@@ -34,7 +34,6 @@ public class PSP_TimeLog extends JPanel {
 	
 	private JButton bttnDone;
 	
-	private TimeLog timelog;
 	private TimeRowObject timeEntries;
 	
 	private JTextField dateTextField;
@@ -77,7 +76,6 @@ public class PSP_TimeLog extends JPanel {
 	 * Create the panel.
 	 */
 	public PSP_TimeLog(TimeLog timelog) {	
-		this.timelog = timelog;
 		try{
 			jInit();
 		} catch (Exception ex) {
@@ -291,7 +289,7 @@ public class PSP_TimeLog extends JPanel {
 		phaseTextField = new JTextField();
 		phaseTextField.setBounds(904, 0, 153, 22);
 		phaseTextField.setColumns(10);
-		phaseTextField.setToolTipText("Phase of project");
+		phaseTextField.setToolTipText("Phase of project - see Phase Key");
 		phaseList.add(phaseTextField);
 		
 		
