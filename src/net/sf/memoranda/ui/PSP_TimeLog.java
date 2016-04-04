@@ -387,7 +387,7 @@ public class PSP_TimeLog extends JPanel {
 		}
 	}
 	
-	//Return date (0) or time (1) in a short format
+	//Need date code 0 or time code 1 in a short format; Date/Time is part of the Date class
 	private String getDateTime (Date d, int code) {
 		DateFormat df = null;
 		switch (code) {
