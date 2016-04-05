@@ -187,6 +187,9 @@ public class PSP_Panel extends JPanel{
             setEnabledFlag (lblOpenProject, getIsNeeded());
             (new PSP_NPWizardFrame(this)).setVisible(true);         
         } else if (event.equals("OPEN PROJECT")) {
+        	if (getIsDirty()) {
+                saveChanges();
+            }
             openFileDialog();           
         } else if (event.equals("SAVE PROJECT")) {
             saveProjectDialog();            
