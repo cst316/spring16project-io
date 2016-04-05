@@ -5,11 +5,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import net.sf.memoranda.util.Util;
 
+/**
+ * This is the controller class for PSP_DefectPanel
+ * @author Joe Michaels
+ * 4/5/2016
+ * 
+ */
 public class DefectImpl implements Defect, Serializable {
 	
-	/**
-     * 
-     */
     private static final long serialVersionUID = -3899481284282752580L;
 	private static boolean isDirty = false;
 	private Psp pspValues;
@@ -27,40 +30,78 @@ public class DefectImpl implements Defect, Serializable {
 		this.pspValues = psp;
 	}
 	
+	/**
+	 * Stores full TestRowObject ArrayList
+	 * @param list
+	 */
 	public DefectImpl(ArrayList<TestRowObject> list){
 
 		this.testObj = list;
 	}
 	
+	/**
+	 * Imports psp values from project if needed
+	 * @param pspValues
+	 */
 	@Override
 	public void setPspValues (Psp pspValues) {
 		this.pspValues = pspValues;
 	}
 	
+	/**
+	 * returns psp information as Psp type
+	 * @return pspValues
+	 */
 	@Override
 	public Psp getPspValues () {
 		return this.pspValues;
 	}
 	
+	/**
+	 * retrieves current working list object object as ArrayList<TestRowObject>
+	 * @return testObj
+	 */
 	@Override
     public ArrayList<TestRowObject> getRowObject() {
         // TODO Auto-generated method stub
         return this.testObj;
     }
 
+	/**
+	 * Changes current testObj with new list, if succesfull returns true.
+	 * Will make isDirty = true
+	 * @param list
+	 * @return temp
+	 * @throws NullPointerException
+	 */
     @Override
     public boolean setRowObject(ArrayList<TestRowObject> list) {
-        boolean isSet = false;
-        
-        if (list != null) {
-        	this.testObj = list;
-        	isSet = true;
-        	isDirty = true;
+        isDirty = true;
+        boolean temp = true;
+        try{
+            this.testObj = list;
+            if(list == null){
+                throw new NullPointerException();
+            }
+        }catch(NullPointerException npe){
+            npe.getMessage();
+            Util.debug("null object");
+            temp = false;
+        }catch(Exception e){
+            e.getMessage();
+            temp = false;
         }
-        return isSet;
+        return temp;
     }
 	
-    @Override
+    /**
+     * Adds new TestRowObject to existing ArrayList, throws exception if error.
+     * Will make isDirty = true
+     * @param rowObj
+     * @return temp
+     * @throws Exception
+     */
+	@Override
 	public boolean addRow(TestRowObject rowObj) {
 		boolean isAdded = true;
 		
@@ -92,21 +133,37 @@ public class DefectImpl implements Defect, Serializable {
 		return isEdited;
 	}
     
-	@Override
-	public boolean removeRow (TestRowObject rowObj){
+
+	/**
+	 * Removes row from ArrayList by matching object 
+	 * @param rowObj
+	 * @return temp
+	 * @throws NullPointerException
+	 */
+	public boolean removeRow(TestRowObject rowObj){
 		boolean isRemoved = true;
-		
+		isDirty = true;
 		try{
 			testObj.remove(rowObj);
 			isDirty = true;		
 		}catch(NullPointerException e){
 			e.getMessage();
 			isRemoved = false;
+			Util.debug("Null pointer for object " + rowObj.toString());
+			isRemoved = false;
+		}catch(Exception e){
+		    e.getMessage();
+		    isRemoved = false;
 		}
-		
 		return isRemoved;
 	}
-	
+
+    /**
+     * Removes row from ArrayList by index in ArrayList 
+     * @param index
+     * @return temp
+     * @throws NullPointerException
+     */
 	@Override
 	public boolean removeRow(int index){
 		boolean isRemoved = true;
@@ -117,6 +174,11 @@ public class DefectImpl implements Defect, Serializable {
 		}catch(NullPointerException e){
 			e.getMessage();
 			isRemoved = false;
+			Util.debug("Index does not exist. Index number: " + index);
+			isRemoved = false;
+		}catch(Exception e){
+		    e.getMessage();
+		    isRemoved = false;
 		}
 		
 		return isRemoved;
@@ -143,6 +205,10 @@ public class DefectImpl implements Defect, Serializable {
 		Util.debug("Defect wrtten");
 	}
 
+	/**
+	 * gets isDirty status
+	 * @return isDirty
+	 */
 	public boolean getIsDirty(){
 		return isDirty;
 	}
