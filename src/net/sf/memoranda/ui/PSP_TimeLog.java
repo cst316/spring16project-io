@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -32,6 +33,9 @@ public class PSP_TimeLog extends JPanel {
 
 	private static boolean isDirty = false;
 	
+	private String[] phases = {"Planning", "Design", "Code", 
+			"Code Review", "Test", "Postmortem"};
+	
 	private JButton bttnDone;
 	
 	private TimeRowObject timeEntries;
@@ -39,14 +43,14 @@ public class PSP_TimeLog extends JPanel {
 	private JTextField dateTextField;
 	private JTextField startTimeTextField;
 	private JTextField interruptTimeTextField;
-	private JTextField phaseTextField;
+	private JComboBox phaseTextField;
 	private JTextField endTimeTextField;
 	private JButton btnAddModule;
 
 	private List <JTextField> dateTxtList = new ArrayList <JTextField>();
 	private List <JTextField> startTimeList = new ArrayList <JTextField>();
 	private List <JTextField> interruptTimeList = new ArrayList <JTextField>();
-	private List <JTextField> phaseList = new ArrayList <JTextField>();
+	private List <JComboBox> phaseList = new ArrayList <JComboBox>();
 	private List <JTextField> endTimeList = new ArrayList <JTextField>();
 	private List <JPanel> addButtonList = new ArrayList <JPanel> ();
 	private List <JButton> actionList = new ArrayList <JButton> ();
@@ -56,14 +60,7 @@ public class PSP_TimeLog extends JPanel {
 	private JScrollPane spTimeLog;
 	
 	private Date date = new Date(); 
-	
-	/**
-	 * Used in the phase entry
-	 *
-	 */
-	public enum Phase{
-		PLANNING, DESIGN, CODE, CODE_REVIEW, TEST, POSTMORTEM
-	}
+
 
 	/**
 	 * Create the panel.
@@ -115,12 +112,7 @@ public class PSP_TimeLog extends JPanel {
         bttnDone.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
-        		timeEntries = new TimeRowObject();
-        		setTimeLogDate(timeEntries, dateTextField.getText());
-        		setTimeLogStartTime(timeEntries, startTimeTextField.getText());
-        		setTimeLogInterruptTime(timeEntries, interruptTimeTextField.getText());
-        		setTimeLogEndTime(timeEntries, endTimeTextField.getText());
-        		setTimeLogPhase(timeEntries, phaseTextField.getText());
+        		bttnDoneAction();
         	}
         });
         setLayout(null);
@@ -178,6 +170,15 @@ public class PSP_TimeLog extends JPanel {
         pnlTimeLog.add(addMoreLogsLabel);
         this.add(bttnDone);
         this.add(lblTimeLogEntries);
+	}
+	
+	private void bttnDoneAction(){
+		timeEntries = new TimeRowObject();
+		setTimeLogDate(timeEntries, dateTextField.getText());
+		setTimeLogStartTime(timeEntries, startTimeTextField.getText());
+		setTimeLogInterruptTime(timeEntries, interruptTimeTextField.getText());
+		setTimeLogEndTime(timeEntries, endTimeTextField.getText());
+		setTimeLogPhase(timeEntries, phaseTextField.getSelectedIndex());
 	}
 	
 	/**
@@ -244,8 +245,29 @@ public class PSP_TimeLog extends JPanel {
 	 * @param phase the phase of the time log entry
 	 * Sets the phase of the time log entry
 	 */
-	public static void setTimeLogPhase(TimeRowObject timeEntries, String phase){
-		timeEntries.setPhase(phase);
+	public static void setTimeLogPhase(TimeRowObject timeEntries, int phase){
+		String strPhase = "";
+		switch(phase){
+			case 1:
+				strPhase = "Planning";
+				break;
+			case 2:
+				strPhase = "Design";
+				break;
+			case 3:
+				strPhase = "Code";
+				break;
+			case 4:
+				strPhase = "Code Review";
+				break;
+			case 5:
+				strPhase = "Test";
+				break;
+			case 6:
+				strPhase = "Postmortem";
+				break;
+		}
+		timeEntries.setPhase(strPhase);
 	}
 	
 	private void addTimeLog () {	
@@ -286,9 +308,9 @@ public class PSP_TimeLog extends JPanel {
 		endTimeTextField.setToolTipText("Time done working on project");
 		endTimeList.add(endTimeTextField);
 		
-		phaseTextField = new JTextField();
+		phaseTextField = new JComboBox(phases);
 		phaseTextField.setBounds(904, 0, 153, 22);
-		phaseTextField.setColumns(10);
+		phaseTextField.setEditable(true);
 		phaseTextField.setToolTipText("Phase of project - see Phase Key");
 		phaseList.add(phaseTextField);
 		
