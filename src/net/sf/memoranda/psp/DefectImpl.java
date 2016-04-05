@@ -94,15 +94,14 @@ public class DefectImpl implements Defect, Serializable {
         return temp;
     }
 	
-    /**
+    /*
      * Adds new TestRowObject to existing ArrayList, throws exception if error.
      * Will make isDirty = true
      * @param rowObj
      * @return temp
      * @throws Exception
      */
-	@Override
-	public boolean addRow(TestRowObject rowObj) {
+	private boolean addRow(TestRowObject rowObj) {
 		boolean isAdded = true;
 		
 		try{
@@ -119,10 +118,10 @@ public class DefectImpl implements Defect, Serializable {
 		// TODO Auto-generated method stub
 		boolean isEdited = false;
 		
-		if (index < this.testObj.size() && rowObj != null) {
+		if (index < this.testObj.size()) {
 			testObj.set(index, rowObj);  //Overwrites the object at the index
 			isEdited = true;
-		} else if (rowObj != null) {
+		} else {
 			isEdited = addRow(rowObj);	//Adds new object to Arraylist
 		}
 		

@@ -26,4 +26,6 @@ public interface TimeLog {
 	public boolean removeAllObjects ();
 	
 	public boolean removeTimeRowObject (TimeRowObject timerow, int index);
+	
+	public boolean editRow (int index, TimeRowObject rowObj);
 }

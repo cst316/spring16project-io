@@ -12,8 +12,6 @@ public interface Defect {
 
 	public boolean setRowObject(ArrayList<TestRowObject> list);
 
-	public boolean addRow(TestRowObject rowObj);
-	
 	public boolean removeRow(TestRowObject rowObj);
 	
 	public boolean removeRow(int index);

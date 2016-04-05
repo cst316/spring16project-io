@@ -18,9 +18,6 @@ import net.sf.memoranda.util.Util;
  */
 public class TimeLogImpl implements TimeLog, Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3790546736695557381L;
 	
 	private Psp pspValues;
@@ -65,6 +62,33 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		boolean isAdded = true;
 		this.timerow = timerow;
 		return isAdded;
+	}
+	
+	private boolean addRow(TimeRowObject rowObj) {
+		boolean isAdded = false;
+		
+		try {
+			this.timerow.add(rowObj);
+			isAdded = true;
+		} catch(Exception e) {
+			e.getMessage();
+		}
+		return isAdded;
+	}
+	
+	@Override
+	public boolean editRow (int index, TimeRowObject rowObj) {
+		// TODO Auto-generated method stub
+		boolean isEdited = false;
+		
+		if (index < this.timerow.size()) {
+			timerow.set(index, rowObj);  //Overwrites the object at the index
+			isEdited = true;
+		} else {
+			isEdited = addRow(rowObj);	//Adds new object to Arraylist
+		}
+		
+		return isEdited;
 	}
 
 	@Override
