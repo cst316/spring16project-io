@@ -76,7 +76,7 @@ public class PSP_TimeLog extends JPanel {
 		try{
 			jInit();
 		} catch (Exception ex) {
-			System.out.println("Exception while trying to intilize PSP_TimeLog GUI");
+			Util.debug("Exception while trying to intilize PSP_TimeLog GUI");
 			new ExceptionDialog(ex);
 			ex.printStackTrace();
 		}
@@ -287,7 +287,7 @@ public class PSP_TimeLog extends JPanel {
 		dateTextField = new JTextField();
 		dateTextField.setBounds(80, 0, 130, 22);
 		dateTextField.setText(getDateTime(date, 0));
-		dateTextField.setToolTipText("Date you worked on the project");
+		dateTextField.setToolTipText("Date you worked on the project: mm/dd/yy");
 		dateTxtList.add(dateTextField);
 		
 		startTimeTextField = new JTextField();
@@ -310,8 +310,8 @@ public class PSP_TimeLog extends JPanel {
 		
 		phaseTextField = new JComboBox(phases);
 		phaseTextField.setBounds(904, 0, 153, 22);
-		phaseTextField.setEditable(true);
-		phaseTextField.setToolTipText("Phase of project - see Phase Key");
+		phaseTextField.setSelectedIndex(-1);
+		phaseTextField.setToolTipText("Phase of project");
 		phaseList.add(phaseTextField);
 		
 		

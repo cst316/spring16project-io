@@ -37,12 +37,10 @@ public class TimeRowObject implements Serializable {
 	}
 	
 	public void setDate(Date date) {
-		// TODO Auto-generated method stub
 		this.date = date;
 	}
 	
 	public boolean setDate(String date) {
-		// TODO Auto-generated method stub
 		boolean isSet = false;
 		DateFormat formatter ; 
 		formatter = new SimpleDateFormat("MM/dd/yy");
@@ -50,19 +48,16 @@ public class TimeRowObject implements Serializable {
 			this.date = formatter.parse(date);
 			isSet = true;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			Util.debug ("Date parsing issue: ".toUpperCase() + e.getMessage());
 		}		
 		return isSet;
 	}
 	
 	public Date getDate() {
-		// TODO Auto-generated method stub
 		return this.date;
 	}
 	
 	public boolean setStartTime(String time) {
-		// TODO Auto-generated method stub
 		boolean isSet = false;
 		DateFormat formatter ; 
 		formatter = new SimpleDateFormat("hh:mm a");
@@ -70,29 +65,24 @@ public class TimeRowObject implements Serializable {
 			this.startTime = formatter.parse(time);
 			isSet = true;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			Util.debug ("Time parsing issue: ".toUpperCase() + e.getMessage());
 		}		
 		return isSet;
 	}
 	
 	public Date getStartTime() {
-		// TODO Auto-generated method stub
 		return this.startTime;
 	}
 	
 	public void setInterruptTime(float time) {
-		// TODO Auto-generated method stub
 		this.interruptTime = time;
 	}
 	
 	public float getInterruptTime() {
-		// TODO Auto-generated method stub
 		return this.interruptTime;
 	}
 	
 	public boolean setEndTime(String time) {
-		// TODO Auto-generated method stub
 		boolean isSet = false;
 		DateFormat formatter ; 
 		formatter = new SimpleDateFormat("hh:mm a");
@@ -100,24 +90,20 @@ public class TimeRowObject implements Serializable {
 			this.endTime = formatter.parse(time);
 			isSet = true;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			Util.debug ("Time parsing issue: ".toUpperCase() + e.getMessage());
 		}		
 		return isSet;
 	}
 
 	public Date getEndTime() {
-		// TODO Auto-generated method stub
 		return this.endTime;
 	}
 	
 	public void setPhase(String phase) {
-		// TODO Auto-generated method stub
 		this.phase = phase;
 	}
 
 	public String getPhase() {
-		// TODO Auto-generated method stub
 		return this.phase;
 	}
 }
