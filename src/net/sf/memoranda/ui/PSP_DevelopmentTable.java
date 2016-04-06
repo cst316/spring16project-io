@@ -136,8 +136,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
  		
  		/*
  		 * Dropdown on priority/status columns starts here
- 		 * May break complete method for status
- 		 * 
+ 		 *  
  		 */
  		
  		TableColumn statusColumn = table.getColumnModel().getColumn(5); //5 is status
@@ -152,6 +151,13 @@ import javax.swing.LayoutStyle.ComponentPlacement;
  		comboBox2.addItem("MEDIUM");
  		comboBox2.addItem("HIGH");
  		priorityColumn.setCellEditor(new DefaultCellEditor(comboBox2));
+ 		
+ 		TableColumn estpercentColumn1 = table.getColumnModel().getColumn(8); //8 is percent complete estimate
+ 		JComboBox comboBox3 = new JComboBox();
+ 		comboBox3.addItem("LOW");
+ 		comboBox3.addItem("MEDIUM");
+ 		comboBox3.addItem("HIGH");
+ 		estpercentColumn1.setCellEditor(new DefaultCellEditor(comboBox3));
  		
  		
  		
