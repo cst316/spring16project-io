@@ -86,35 +86,59 @@ import javax.swing.LayoutStyle.ComponentPlacement;
  				
  			}
  		});
+ 		
+ 		JButton btnViewDescription = new JButton("View Description");
+ 		btnViewDescription.addActionListener(new ActionListener() {
+ 			public void actionPerformed(ActionEvent arg0) 
+ 			
+ 			{
+ 				
+ 				//view description method will call new jframe with
+ 				//task description text of selected row
+ 				
+ 				PSP_DevelopmentTaskDescription nw = new PSP_DevelopmentTaskDescription();
+ 	 			nw.NewScreen();
+ 				
+ 				
+ 			}
+ 			
+ 			
+ 			
+ 		});
  		GroupLayout gl_contentPane = new GroupLayout(contentPane);
  		gl_contentPane.setHorizontalGroup(
  			gl_contentPane.createParallelGroup(Alignment.LEADING)
- 				.addGroup(gl_contentPane.createSequentialGroup()
+ 				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
  					.addContainerGap()
- 					.addComponent(btnNewTask)
- 					.addGap(18)
- 					.addComponent(btnDeleteTask)
- 					.addGap(14)
- 					.addComponent(btnEditTask)
- 					.addGap(18)
- 					.addComponent(btnCloseTask)
- 					.addContainerGap(403, Short.MAX_VALUE))
- 				.addGroup(gl_contentPane.createSequentialGroup()
- 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
- 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 831, GroupLayout.PREFERRED_SIZE)
- 					.addContainerGap())
+ 					.addComponent(btnViewDescription)
+ 					.addPreferredGap(ComponentPlacement.RELATED)
+ 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+ 						.addGroup(gl_contentPane.createSequentialGroup()
+ 							.addComponent(btnNewTask)
+ 							.addGap(26)
+ 							.addComponent(btnDeleteTask)
+ 							.addPreferredGap(ComponentPlacement.UNRELATED)
+ 							.addComponent(btnEditTask)
+ 							.addGap(18)
+ 							.addComponent(btnCloseTask)
+ 							.addContainerGap(397, Short.MAX_VALUE))
+ 						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+ 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 831, GroupLayout.PREFERRED_SIZE)
+ 							.addContainerGap())))
  		);
  		gl_contentPane.setVerticalGroup(
  			gl_contentPane.createParallelGroup(Alignment.LEADING)
- 				.addGroup(gl_contentPane.createSequentialGroup()
- 					.addContainerGap()
+ 				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+ 					.addGap(30)
  					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
- 						.addComponent(btnNewTask)
+ 						.addComponent(btnCloseTask)
  						.addComponent(btnEditTask)
  						.addComponent(btnDeleteTask)
- 						.addComponent(btnCloseTask))
- 					.addPreferredGap(ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
- 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE)
+ 						.addComponent(btnNewTask))
+ 					.addGap(18, 34, Short.MAX_VALUE)
+ 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+ 						.addComponent(btnViewDescription)
+ 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE))
  					.addContainerGap())
  		);
  		
@@ -225,5 +249,4 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 	public static boolean getIsDirty () {
 		return isDirty;
 	}
- 	
  }
