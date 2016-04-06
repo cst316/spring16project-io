@@ -18,6 +18,10 @@ import java.awt.event.ActionEvent;
 
 public class PSP_DevelopmentDialogClose extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4364375426252043089L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;

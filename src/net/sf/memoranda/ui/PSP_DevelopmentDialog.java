@@ -108,17 +108,10 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 	            String tdarray;
 	            int count=0;
 	            
-	            // places whatever text is in the Jtextfield into a string variable
+	            // places whatever text is in the Jtextfield into a string variable, sends value to array.
 	            
 	            tdarray=taskTextField.getText();
-	            
-	            // saves the value of the string variable and calls method to build array, places
-	            // var on the the index of the current count
-	            
 	            tdata.saveTaskData(tdarray, count);
-	                     
-	            //increase count to move down array index and populate other fields
-	            
 	            count++;
 	                    
 	            tdarray=startDateTextField.getText();
@@ -158,6 +151,7 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 			
 			{
 				
+				//PSP_NewTaskTable.editRow();
 				dispose();
 				
 			}

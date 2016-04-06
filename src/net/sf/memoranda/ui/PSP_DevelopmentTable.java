@@ -143,6 +143,7 @@
  	{
  		   DefaultTableModel model = (DefaultTableModel) PSP_DevelopmentTable.table.getModel();
  		   
+ 		   //rows = value of the rows that are selected/clicked
  		   int[] rows = table.getSelectedRows();
  		   
  		   for(int i=0;i<rows.length;i++)
@@ -152,6 +153,22 @@
  			   
  		   }
  	}
+ 	
+	public static void editRow() 
+	{
+		//not finished
+		
+		//row = value of specific single row
+		int row = table.getSelectedRow();
+		
+		//takes in string value that goes into cell, the row's number and the row's column
+		((DefaultTableModel) table.getModel()).setValueAt("DEL", row, 3);
+								
+	}
+	
+ 	
+ 	
+ 	
 		public static void setIsDirty (boolean dirty) {
 		isDirty = dirty;
 		if (isDirty) {
