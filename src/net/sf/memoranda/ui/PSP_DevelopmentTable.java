@@ -118,7 +118,7 @@
  		table = new JTable();
  		table.setModel(new DefaultTableModel(
  			new Object[][] {
- 				{null, null, null, "", null, null, null, null, null},
+ 				{"Example", "Example", "Example", "Example", "Example", "Example", "Example", "Example", "Example"},
  			},
  			new String[] {
  				"Task", "Start Date", "Est. End Date", "Actual End Date", "Priority", "Status", "Estimate (Hrs)", "Actual (Hrs)", "% Done"
@@ -157,12 +157,22 @@
 	public static void editRow() 
 	{
 		//not finished
+		String existingrow1; //TODO: getvalueat at (row, col0), (row, col1), etc.
 		
 		//row = value of specific single row
 		int row = table.getSelectedRow();
 		
 		//takes in string value that goes into cell, the row's number and the row's column
 		((DefaultTableModel) table.getModel()).setValueAt("DEL", row, 3);
+								
+	}
+	
+	public static void closeTask() 
+	{
+		int row = table.getSelectedRow();
+		
+		((DefaultTableModel) table.getModel()).setValueAt("COMPLETE", row, 5);
+		//column 5 hold the "status"
 								
 	}
 	

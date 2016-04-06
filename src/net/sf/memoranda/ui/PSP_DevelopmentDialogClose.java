@@ -66,10 +66,11 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		
-		JButton btnOk = new JButton("OK");
+		JButton btnOk = new JButton("Close Task");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				PSP_DevelopmentTable.closeTask();
 				dispose();
 				
 			}
