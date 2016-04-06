@@ -154,9 +154,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
  		
  		TableColumn estpercentColumn1 = table.getColumnModel().getColumn(8); //8 is percent complete estimate
  		JComboBox comboBox3 = new JComboBox();
- 		comboBox3.addItem("LOW");
- 		comboBox3.addItem("MEDIUM");
- 		comboBox3.addItem("HIGH");
+ 		comboBox3.addItem("25");
+ 		comboBox3.addItem("50");
+ 		comboBox3.addItem("75");
+ 		comboBox3.addItem("100");
  		estpercentColumn1.setCellEditor(new DefaultCellEditor(comboBox3));
  		
  		
