@@ -6,16 +6,19 @@
  import javax.swing.JFrame;
  import javax.swing.JPanel;
  import javax.swing.border.EmptyBorder;
- import javax.swing.GroupLayout;
+import javax.swing.DefaultCellEditor;
+import javax.swing.GroupLayout;
  import javax.swing.GroupLayout.Alignment;
  import javax.swing.JScrollPane;
  import javax.swing.JTable;
  import javax.swing.table.DefaultTableModel;
- 
- import net.sf.memoranda.psp.Development;
+import javax.swing.table.TableColumn;
+
+import net.sf.memoranda.psp.Development;
  
  import javax.swing.JButton;
- import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JComboBox;
+import javax.swing.LayoutStyle.ComponentPlacement;
  import java.awt.event.ActionListener;
  import java.io.Serializable;
  import java.awt.event.ActionEvent;
@@ -126,8 +129,33 @@
  		));
  		table.getColumnModel().getColumn(2).setPreferredWidth(99);
  		table.getColumnModel().getColumn(3).setPreferredWidth(104);
+ 		table.getColumnModel().getColumn(5).setPreferredWidth(76); //status column
  		table.getColumnModel().getColumn(6).setPreferredWidth(102);
  		table.getColumnModel().getColumn(7).setPreferredWidth(86);
+ 		
+ 		
+ 		/*
+ 		 * Dropdown on priority/status columns starts here
+ 		 * May break complete method for status
+ 		 * 
+ 		 */
+ 		
+ 		TableColumn statusColumn = table.getColumnModel().getColumn(5); //5 is status
+ 		JComboBox comboBox1 = new JComboBox();
+ 		comboBox1.addItem("OPEN");
+ 		comboBox1.addItem("COMPLETE");
+ 		statusColumn.setCellEditor(new DefaultCellEditor(comboBox1));
+ 		
+ 		TableColumn priorityColumn = table.getColumnModel().getColumn(4); //4 is priority
+ 		JComboBox comboBox2 = new JComboBox();
+ 		comboBox2.addItem("LOW");
+ 		comboBox2.addItem("MEDIUM");
+ 		comboBox2.addItem("HIGH");
+ 		priorityColumn.setCellEditor(new DefaultCellEditor(comboBox2));
+ 		
+ 		
+ 		
+ 		
  		scrollPane.setViewportView(table);
  		contentPane.setLayout(gl_contentPane);
  		add(contentPane);
