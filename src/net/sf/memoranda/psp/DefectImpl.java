@@ -94,11 +94,11 @@ public class DefectImpl implements Defect, Serializable {
         return temp;
     }
 	
-    /*
+    /**
      * Adds new TestRowObject to existing ArrayList, throws exception if error.
      * Will make isDirty = true
      * @param rowObj
-     * @return temp
+     * @return isAdded
      * @throws Exception
      */
 	private boolean addRow(TestRowObject rowObj) {
@@ -113,18 +113,31 @@ public class DefectImpl implements Defect, Serializable {
 		return isAdded;
 	}
 	
+	/**
+	 * Edits specific row with new object information
+	 * @param
+	 * @return
+	 * @throws
+	 */
 	@Override
 	public boolean editRow (int index, TestRowObject rowObj) {
-		// TODO Auto-generated method stub
 		boolean isEdited = false;
-		
-		if (index < this.testObj.size()) {
-			testObj.set(index, rowObj);  //Overwrites the object at the index
-			isEdited = true;
-		} else {
-			isEdited = addRow(rowObj);	//Adds new object to Arraylist
+		try{
+		    
+    		if (index < this.testObj.size()) {
+    			testObj.set(index, rowObj);  //Overwrites the object at the index
+    			isEdited = true;
+    		} else {
+    			isEdited = addRow(rowObj);	//Adds new object to Arraylist
+    		}
+		}catch(NullPointerException npe){
+		    npe.getMessage();
+		    Util.debug("null pointer thrown at index: " + index);
+		    isEdited = false;
+		}catch(Exception e){
+            e.getMessage();
+            isEdited = false;		    
 		}
-		
 		if (isEdited) {
 			isDirty = true;
 		}
@@ -138,6 +151,7 @@ public class DefectImpl implements Defect, Serializable {
 	 * @param rowObj
 	 * @return temp
 	 * @throws NullPointerException
+	 * @throws Exception
 	 */
 	public boolean removeRow(TestRowObject rowObj){
 		boolean isRemoved = true;
@@ -162,6 +176,7 @@ public class DefectImpl implements Defect, Serializable {
      * @param index
      * @return temp
      * @throws NullPointerException
+     * @throws Exception
      */
 	@Override
 	public boolean removeRow(int index){

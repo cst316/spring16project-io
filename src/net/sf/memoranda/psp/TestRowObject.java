@@ -12,7 +12,9 @@ import java.util.Date;
  * @author Team-IO
  * CST316 - Spring 2016
  * This class is designed to easily hold and manipulate data
- * from a row in the psp testing classes (not for junit tests).
+ * from a row in the psp defect classes (not for junit tests).
+ * This can be easily saved and referenced from anywhere in
+ * the application that requires the information.
  * 03/15/2016
  */
 
@@ -81,7 +83,6 @@ public class TestRowObject implements Serializable{
 		try {
 			this.date = df.parse(strDate);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

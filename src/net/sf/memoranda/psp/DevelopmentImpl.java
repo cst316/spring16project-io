@@ -10,7 +10,8 @@ import net.sf.memoranda.util.Util;
  * 
  * @author Joe Michaels
  * 3/28/2016
- * development gui controller, handles arrayList of DevRowObject object
+ *  controller for PSP_Development gui, handles arrayList 
+ *  of DevRowObject object
  *
  */
 public class DevelopmentImpl implements Development, Serializable{
@@ -59,6 +60,13 @@ public class DevelopmentImpl implements Development, Serializable{
 		return false;
 	}
 
+	/**
+	 * adds another element to ArrayList object
+	 * @param rowObj is of type DevRowObject 
+	 * @return temp returns true if addition of element
+	 * did not throw errors
+	 * @throws Exception
+	 */
 	@Override
 	public boolean addRow(DevRowObject rowObj) {
 		boolean temp = true;
@@ -73,16 +81,24 @@ public class DevelopmentImpl implements Development, Serializable{
 		return temp;
 	}
 
+	/**
+	 * removes row from ArrayList rowObj by specified index
+	 * @param index index number to remove from ArrayList rowObj
+	 * @return temp boolean value indicating successful 
+	 * removal of element from ArrayList, will be false if error occurs.
+	 * @throws NullPointerException 
+	 * @throws Exception
+	 */
 	@Override
-	public boolean removeRow(int i) {
+	public boolean removeRow(int index) {
 		boolean temp = true;
 		isDirty = true;
 		try{
-			this.rowObj.remove(i);
+			this.rowObj.remove(index);
 		}catch(NullPointerException e){
 			e.getMessage();
 			temp = false;
-		    Util.debug("Null error removing row to DevRowObject");
+		    Util.debug("Null error removing row from rowObj at index" + index);
         }catch(Exception e){
             e.getMessage();
             temp = false;
@@ -126,12 +142,18 @@ public class DevelopmentImpl implements Development, Serializable{
         isDirty = dirty;
     }
     
+	/**
+	 * getter for project ID value
+	 * @return id returns project id number of current open application
+	 * @throws NullPointerException thrown if pspVal is not initialized at some point
+	 * @throws Exception
+	 */
     public int getPID(){
         int id = 0;
         try{
             id = pspVal.getpId();
-        }catch(NullPointerException e){
-            e.getMessage();
+        }catch(NullPointerException npe){
+            npe.getMessage();
             Util.debug("psp Value not initialized");
         }catch(Exception e){
             e.getMessage();

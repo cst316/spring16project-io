@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Joe Michaels
  * @author Team-IO
  * CST316 - Spring 2016
- * Object to manipulate development statistics
+ * Object to manipulate development statistics and easily save/retrieve needed data
  * 
  * 03/28/2016
  */

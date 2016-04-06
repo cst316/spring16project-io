@@ -4,6 +4,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * Interface for DesignImpl class 
+ * @author Josh Kappamamoottil
+ *
+ */
 public interface Design {
 	
 	public String getFileName();
