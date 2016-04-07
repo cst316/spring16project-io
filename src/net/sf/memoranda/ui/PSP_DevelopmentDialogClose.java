@@ -27,7 +27,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField actualHoursTextField;
-	private JTextField textField_1;
+	private JTextField actualEndDateTextField;
 
 	/**
 	 * Launch the application.
@@ -75,7 +75,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				String actualHours = actualHoursTextField.getText();
-				String actualEndDate = actualHoursTextField.getText();
+				String actualEndDate = actualEndDateTextField.getText();
 				
 				
 				PSP_DevelopmentTable.closeTask(actualHours,actualEndDate);
@@ -92,8 +92,8 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 			}
 		});
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		actualEndDateTextField = new JTextField();
+		actualEndDateTextField.setColumns(10);
 		
 		JLabel lblActualEndDate = new JLabel("Actual End Date:");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -115,7 +115,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 										.addComponent(lblActualEfforthours))
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(actualEndDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 										.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)))))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(174)
@@ -139,7 +139,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 						.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(actualEndDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblActualEndDate))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)

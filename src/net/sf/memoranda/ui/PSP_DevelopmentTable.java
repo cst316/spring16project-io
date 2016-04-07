@@ -243,6 +243,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 		((DefaultTableModel) table.getModel()).setValueAt(actualEndDate, row, 3);
 		((DefaultTableModel) table.getModel()).setValueAt("COMPLETE", row, 5);
 		//column 5 hold the "status"
+		((DefaultTableModel) table.getModel()).setValueAt("100", row, 8); // 8 = est%
 								
 	}
 	
