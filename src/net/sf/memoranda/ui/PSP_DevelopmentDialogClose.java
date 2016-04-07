@@ -22,9 +22,10 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -4364375426252043089L;
+	public static Object actualHours;
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField actualHoursTextField;
 
 	/**
 	 * Launch the application.
@@ -63,14 +64,18 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		
 		JLabel lblActualEfforthours = new JLabel("Actual Effort (hours):");
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		actualHoursTextField = new JTextField();
+		//textField_1.setText("1");
+		actualHoursTextField.setColumns(10);
 		
 		JButton btnOk = new JButton("Close Task");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				PSP_DevelopmentTable.closeTask();
+				String actualHours = actualHoursTextField.getText();
+				
+				
+				PSP_DevelopmentTable.closeTask(actualHours);
 				dispose();
 				
 			}
@@ -99,7 +104,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(lblActualEfforthours)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))))
+									.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(174)
 							.addComponent(btnOk)
@@ -119,7 +124,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 					.addGap(26)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblActualEfforthours)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancel)

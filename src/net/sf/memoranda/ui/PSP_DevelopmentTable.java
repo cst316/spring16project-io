@@ -235,10 +235,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 								
 	}
 	
-	public static void closeTask() 
+	public static void closeTask(String actualHours) 
 	{
 		int row = table.getSelectedRow();
 		
+		((DefaultTableModel) table.getModel()).setValueAt(actualHours, row, 7);
 		((DefaultTableModel) table.getModel()).setValueAt("COMPLETE", row, 5);
 		//column 5 hold the "status"
 								
