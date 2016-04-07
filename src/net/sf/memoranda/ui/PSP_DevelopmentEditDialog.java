@@ -30,12 +30,12 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 	 */
 	private static final long serialVersionUID = -4064987826608820142L;
 	private JPanel contentPane;
-	private JTextField taskTextField;
-	private JTextField descriptionTextField;
-	private JTextField startDateTextField;
-	private JTextField estDateTextField;
-	private JTextField estTimeTextField;
-	private JTextField priorityTextField;
+	private JTextField editTaskTextField;
+	private JTextField editDescriptionTextField;
+	private JTextField editStartDateTextField;
+	private JTextField editEstDateTextField;
+	private JTextField editEstTimeTextField;
+	private JTextField editPriorityTextField;
 	PSP_DevelopmentData tdata = new PSP_DevelopmentData();
 	
 	List<String> n = new ArrayList<String>();
@@ -79,25 +79,40 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		
 		JLabel lblPriority = new JLabel("Edit Priority:");
 		
-		taskTextField = new JTextField();
-		taskTextField.setColumns(10);
+		//eidt dialog populates value from existing row
+		editTaskTextField = new JTextField();
+		Object ETT = PSP_DevelopmentTable.getCellValues(0);
+		editTaskTextField.setText((String) ETT);
+		editTaskTextField.setColumns(10);
 		
-		descriptionTextField = new JTextField();
-		descriptionTextField.setColumns(10);
+		editDescriptionTextField = new JTextField();
+		editDescriptionTextField.setColumns(10);
 		
-		startDateTextField = new JTextField();
-		startDateTextField.setColumns(10);
+		editStartDateTextField = new JTextField();
+		Object ESD = PSP_DevelopmentTable.getCellValues(1);
+		editStartDateTextField.setText((String) ESD);
+		//editStartDateTextField.setText("test");
+		editStartDateTextField.setColumns(10);
 		
 		JLabel lblEndDate_1 = new JLabel("Edit End date:");
 		
-		estDateTextField = new JTextField();
-		estDateTextField.setColumns(10);
+		editEstDateTextField = new JTextField();
+		Object ESDTF = PSP_DevelopmentTable.getCellValues(2);
+		editEstDateTextField.setText((String) ESDTF);
+		//editEstDateTextField.setText("test");
+		editEstDateTextField.setColumns(10);
 		
-		estTimeTextField = new JTextField();
-		estTimeTextField.setColumns(10);
+		editEstTimeTextField = new JTextField();
+		Object EETTF = PSP_DevelopmentTable.getCellValues(3);
+		editEstTimeTextField.setText((String) EETTF);
+		//editEstTimeTextField.setText("test");
+		editEstTimeTextField.setColumns(10);
 		
-		priorityTextField = new JTextField();
-		priorityTextField.setColumns(10);
+		editPriorityTextField = new JTextField();
+		Object EPTF = PSP_DevelopmentTable.getCellValues(4);
+		editPriorityTextField.setText((String) EPTF);
+		//editPriorityTextField.setText("test");
+		editPriorityTextField.setColumns(10);
 		
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
@@ -110,6 +125,10 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 	           * string to respective row/column with editrow method, etc, etc.
 	           * 
 	          */
+				
+				
+				
+				
 
 	            				
 			}
@@ -136,22 +155,22 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		   .addGroup(gl_contentPane.createSequentialGroup()
 		    .addComponent(lblTaskName)
 		    .addPreferredGap(ComponentPlacement.UNRELATED)
-		    .addComponent(taskTextField, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
+		    .addComponent(editTaskTextField, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
 		   .addGroup(gl_contentPane.createSequentialGroup()
 		    .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 		     .addComponent(lblTaskDescription)
 		     .addComponent(lblStartDate))
 		    .addPreferredGap(ComponentPlacement.UNRELATED)
 		    .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-		     .addComponent(descriptionTextField, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+		     .addComponent(editDescriptionTextField, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
 		     .addGroup(gl_contentPane.createSequentialGroup()
 		      .addGap(15)
 		      .addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 		       .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-		        .addComponent(startDateTextField, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+		        .addComponent(editStartDateTextField, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
 		        .addGroup(gl_contentPane.createSequentialGroup()
 		         .addPreferredGap(ComponentPlacement.RELATED)
-		         .addComponent(estTimeTextField, 0, 0, Short.MAX_VALUE)))
+		         .addComponent(editEstTimeTextField, 0, 0, Short.MAX_VALUE)))
 		       .addGroup(gl_contentPane.createSequentialGroup()
 		        .addComponent(btnOk)
 		        .addPreferredGap(ComponentPlacement.RELATED)))
@@ -167,9 +186,9 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		        .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 		        .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 		         .addGroup(gl_contentPane.createSequentialGroup()
-		          .addComponent(estDateTextField, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+		          .addComponent(editEstDateTextField, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
 		          .addPreferredGap(ComponentPlacement.RELATED))
-		         .addComponent(priorityTextField, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)))
+		         .addComponent(editPriorityTextField, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)))
 		       .addGroup(gl_contentPane.createSequentialGroup()
 		        .addGap(44)
 		        .addComponent(btnCancel))))))
@@ -188,7 +207,7 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		  .addGap(27)
 		  .addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 		   .addComponent(lblTaskName)
-		   .addComponent(taskTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		   .addComponent(editTaskTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		  .addPreferredGap(ComponentPlacement.UNRELATED)
 		  .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 		   .addGroup(gl_contentPane.createSequentialGroup()
@@ -196,16 +215,16 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		    .addGap(91)
 		    .addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 		     .addComponent(lblStartDate)
-		     .addComponent(startDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-		     .addComponent(estDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		     .addComponent(editStartDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		     .addComponent(editEstDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 		     .addComponent(lblEndDate_1)))
-		   .addComponent(descriptionTextField, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+		   .addComponent(editDescriptionTextField, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
 		  .addGap(34)
 		  .addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 		   .addComponent(lblEstimatedTime)
 		   .addComponent(lblPriority)
-		   .addComponent(estTimeTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-		   .addComponent(priorityTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		   .addComponent(editEstTimeTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		   .addComponent(editPriorityTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		  .addPreferredGap(ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
 		  .addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 		   .addComponent(btnOk)

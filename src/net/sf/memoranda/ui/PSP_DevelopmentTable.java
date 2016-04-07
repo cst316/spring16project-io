@@ -75,6 +75,15 @@ import javax.swing.LayoutStyle.ComponentPlacement;
  		});
  		
  		JButton btnEditTask = new JButton("Edit Task");
+ 		btnEditTask.addActionListener(new ActionListener() {
+ 			public void actionPerformed(ActionEvent arg0) 
+ 			{
+ 				
+ 				PSP_DevelopmentEditDialog nw = new PSP_DevelopmentEditDialog();
+ 	 			nw.NewScreen();
+ 				
+ 			}
+ 		});
  		
  		JButton btnDeleteTask = new JButton("Delete Task");
  		btnDeleteTask.addActionListener(new ActionListener() {
@@ -145,7 +154,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
  		table = new JTable();
  		table.setModel(new DefaultTableModel(
  			new Object[][] {
- 				{"Example", "Example", "Example", "Example", "Example", "Example", "Example", "Example", "Example"},
+ 				{"Example0", "Example1", "Example2", "Example3", "Example4", "Example5", "Example6", "Example7", "Example8"},
  			},
  			new String[] {
  				"Task", "Start Date", "Est. End Date", "Actual End Date", "Priority", "Status", "Estimate (Hrs)", "Actual (Hrs)", "% Done"
@@ -233,6 +242,16 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 		((DefaultTableModel) table.getModel()).setValueAt("COMPLETE", row, 5);
 		//column 5 hold the "status"
 								
+	}
+	
+	public static Object getCellValues(int col) 
+	{
+		int row = table.getSelectedRow();
+		//int col = table.getSelectedColumn();
+				
+		Object cellvalue = ((DefaultTableModel) table.getModel()).getValueAt(row, col);
+		
+		return cellvalue;						
 	}
 	
  	
