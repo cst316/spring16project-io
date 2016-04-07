@@ -23,9 +23,11 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 	 */
 	private static final long serialVersionUID = -4364375426252043089L;
 	public static Object actualHours;
+	public static Object actualEndDate;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField actualHoursTextField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -73,9 +75,10 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				String actualHours = actualHoursTextField.getText();
+				String actualEndDate = actualHoursTextField.getText();
 				
 				
-				PSP_DevelopmentTable.closeTask(actualHours);
+				PSP_DevelopmentTable.closeTask(actualHours,actualEndDate);
 				dispose();
 				
 			}
@@ -88,6 +91,11 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 				dispose();
 			}
 		});
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		
+		JLabel lblActualEndDate = new JLabel("Actual End Date:");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -102,9 +110,13 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 								.addComponent(lblComments)
 								.addComponent(textField, GroupLayout.PREFERRED_SIZE, 339, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblActualEfforthours)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+										.addComponent(lblActualEndDate, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblActualEfforthours))
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))))
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)))))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(174)
 							.addComponent(btnOk)
@@ -125,7 +137,11 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblActualEfforthours)
 						.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblActualEndDate))
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancel)
 						.addComponent(btnOk))
@@ -133,5 +149,4 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
-
 }
