@@ -3,6 +3,11 @@ package net.sf.memoranda.psp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Interface for psp planning controller 
+ * @author Cephas
+ *
+ */
 public interface Planning {
 	
 	public void setPspValues (Psp pspValues);

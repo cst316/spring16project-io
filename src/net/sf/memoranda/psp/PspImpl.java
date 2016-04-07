@@ -7,11 +7,14 @@ import java.io.Serializable;
 import java.util.Date;
 import net.sf.memoranda.util.Util;
 
+/**
+ * Implementation of PSP class
+ * @author Cephas
+ *
+ */
 public class PspImpl implements Psp, Serializable {
 	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 4409606508885247769L;
 	private int pID;
 	private String name;
@@ -118,7 +121,10 @@ public class PspImpl implements Psp, Serializable {
 		Util.debug("Psp wrtten");
 	}	
 	
-	//toString method that returns all of PspImpl's attributes
+	/**
+	 * toString method that returns all of PspImpl's attributes
+	 * @return string information of current project
+	 */
 	@Override
 	public String toString() {
 		return "PSP Project Information:\n"

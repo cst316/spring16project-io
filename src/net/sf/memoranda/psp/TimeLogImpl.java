@@ -42,18 +42,46 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		return this.pspValues;
 	}
 	
+	/**
+	 * Handles addition of new row into object of rows
+	 * @param timeRow send in TimeRowObject that holds attributes
+	 * for time recording logs
+	 * @return isAdded boolean value returns based on 
+	 * success of addition of object into timerow ArrayList
+	 */
 	@Override
-	public boolean addTimeRowObject(TimeRowObject timerow) {
+	public boolean addTimeRowObject(TimeRowObject timeRow) {
 		boolean isAdded = true;
-		this.timerow.add(timerow);
+		this.timerow.add(timeRow);
 		return isAdded;
 	}
 
+	/**
+	 * @param index location in List to return object
+	 * @return obj TimeRowObject that is returned to caller
+	 * @throws NullPointerException is thrown in chance caller gives
+	 * invalid location
+	 * @throws Exception 
+	 */
 	@Override
 	public TimeRowObject getTimeRowObject(int index) {
-		return this.timerow.get(index);
+	    TimeRowObject obj = new TimeRowObject();
+	    try{
+	        obj = this.timerow.get(index);
+	    }catch(NullPointerException npe){
+	        npe.getMessage();
+	        Util.debug("null pointer at index: " + index);
+	    }catch(Exception e){
+	        e.getMessage();
+	    }
+		return obj;
 	}
 
+	/**
+	 * replaces current List of objects, basically a setter
+	 * @param timerow List of objects to replace current List
+	 * @return isAdded boolean value returned in success of addition
+	 */
 	@Override
 	public boolean addTimeRowObject(List<TimeRowObject> timerow) {
 		boolean isAdded = true;
@@ -61,6 +89,12 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		return isAdded;
 	}
 	
+	/**
+	 * private method to add TimeRowObject to current List
+	 * @param rowObj object to add to list
+	 * @return isAdded status returning whether addition was valid
+	 * @throws Exception 
+	 */
 	private boolean addRow(TimeRowObject rowObj) {
 		boolean isAdded = false;
 		
@@ -73,6 +107,13 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		return isAdded;
 	}
 	
+	/**
+	 * This method replaces element in specific index with new element
+	 * @param rowObj value of replacement data
+	 * @param index int value of index to replace
+	 * @return isEdited boolean value returned is operation is successful
+	 * 
+	 */
 	@Override
 	public boolean editRow (int index, TimeRowObject rowObj) {
 		boolean isEdited = false;
@@ -98,10 +139,29 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		return false;
 	}
 
+	/**
+	 * removes element at given index
+	 * @param timerow
+	 * @param index location of element to remove
+	 * @return isRemoved boolean detailing success of operation
+	 * @throws NullPointerException thrown if index is not within timerow's
+	 * size
+	 * @throws Exception
+	 * Note: needs to be refactored
+	 */
 	@Override
 	public boolean removeTimeRowObject(TimeRowObject timerow, int index) {
 		boolean isRemoved = true;
-		this.timerow.remove(index);
+		try{
+		    this.timerow.remove(index);
+		}catch(NullPointerException npe){
+		    npe.getMessage();
+		    Util.debug("null pointer at index: " + index);
+		    isRemoved = false;
+		}catch(Exception e){
+		    e.getMessage();
+		    isRemoved = false;
+		}
 		return isRemoved;
 	}	
 	

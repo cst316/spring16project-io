@@ -54,16 +54,22 @@ public class DevRowObject implements Serializable{
 		this.percentDone = calcPercentDone();
 	}
 	
+	/**
+	 * 
+	 * @return value calculates value of percent of the project done based on estimates
+	 * @throws Exception in the off chance this 
+	 * method is called and estimate is set to 0
+	 */
 	private float calcPercentDone(){
-		float temp;
+		float value;
 		
 		try{
-			temp = this.actualComplete/this.estimate;
+			value = this.actualComplete/this.estimate;
 		}catch(Exception e){
 			e.getMessage();
-			temp = 0;
+			value = 0;
 		}
-		return temp;
+		return value;
 	}
 	
 	public Date getStartDate() {
