@@ -222,7 +222,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
  		   }
  	}
  	
-	public static void editRow() 
+	public static void editRow(String col0) 
 	{
 		//not finished
 		String existingrow1; //TODO: getvalueat at (row, col0), (row, col1), etc.
@@ -230,9 +230,15 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 		//row = value of specific single row
 		int row = table.getSelectedRow();
 		
+		//String col0;
 		//takes in string value that goes into cell, the row's number and the row's column
-		((DefaultTableModel) table.getModel()).setValueAt("DEL", row, 3);
-								
+		((DefaultTableModel) table.getModel()).setValueAt(col0, row, 0);
+		((DefaultTableModel) table.getModel()).setValueAt("ED1", row, 1);
+		((DefaultTableModel) table.getModel()).setValueAt("ED2", row, 2);
+		((DefaultTableModel) table.getModel()).setValueAt("ED4", row, 4);
+		((DefaultTableModel) table.getModel()).setValueAt("ED6", row, 6);
+		((DefaultTableModel) table.getModel()).setValueAt("ED8", row, 8);
+									
 	}
 	
 	public static void closeTask(String actualHours, String actualEndDate) 
