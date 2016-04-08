@@ -21,13 +21,14 @@ public class DefectImpl implements Defect, Serializable {
 	
 	public DefectImpl(){
 		this.testObj = new ArrayList<TestRowObject> ();
-		//path = null;
+		isDirty = false;
 	}
 	
 	//This should be the main constructor to use
 	public DefectImpl(Psp psp){
 		this();		// Calling empty constructor
 		this.pspValues = psp;
+		isDirty = false;
 	}
 	
 	/**
@@ -115,18 +116,19 @@ public class DefectImpl implements Defect, Serializable {
 	
 	/**
 	 * Edits specific row with new object information
-	 * @param
-	 * @return
-	 * @throws
+	 * @param index in arrayList to edit with new data
+	 * @param rowObj new data to edit current list
+	 * @return isEdited boolean status detailing if operation was successful
+	 * @throws NullPointerException thrown if index is null in list
+	 * @throws Exception
 	 */
 	@Override
 	public boolean editRow (int index, TestRowObject rowObj) {
-		boolean isEdited = false;
+		boolean isEdited = true;
 		try{
 		    
     		if (index < this.testObj.size()) {
     			testObj.set(index, rowObj);  //Overwrites the object at the index
-    			isEdited = true;
     		} else {
     			isEdited = addRow(rowObj);	//Adds new object to Arraylist
     		}
