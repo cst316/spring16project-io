@@ -538,7 +538,7 @@ public class PSP_DefectPanel extends JPanel {
 	{
 		for(int i = 0; i < addButtonList.size(); i++)
 		{
-			//programTextFieldList.get(i).setEditable(true);
+			programTextFieldList.get(i).setEditable(true);
 			typeTextFieldList.get(i).setEditable(true);
 			typeTextFieldList.get(i).setEditable(true);
 			injectTextFieldList.get(i).setEditable(true);
