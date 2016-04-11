@@ -41,6 +41,7 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 	
 	List<String> n = new ArrayList<String>();
 	private JTextField editPercentField;
+	private JTextField editStatusField;
 
 	/**
 	 * Launch the application.
@@ -81,6 +82,9 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		
 		JLabel lblPriority = new JLabel("Edit Priority:");
 		
+		JLabel lblEditStatus = new JLabel("Edit status");
+		
+
 		//eidt dialog populates value from existing row
 		editTaskTextField = new JTextField();
 		Object ETT = PSP_DevelopmentTable.getCellValues(0);
@@ -115,6 +119,11 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		editPriorityTextField.setText((String) EPTF);
 		//editPriorityTextField.setText("test");
 		editPriorityTextField.setColumns(10);
+		
+		editStatusField = new JTextField();
+		Object ESF = PSP_DevelopmentTable.getCellValues(5);
+		editStatusField.setText((String) ESF);
+		editStatusField.setColumns(10);
 						
 		JLabel lblEditComplete = new JLabel("Edit % Complete");
 		editPercentField = new JTextField();
@@ -137,13 +146,34 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 	           * 
 	          */
 				
-				String col0=editTaskTextField.getText();
+				String cellvalue0=editTaskTextField.getText();
+				PSP_DevelopmentTable.editRow(cellvalue0, 0);
+								
+				String cellvalue1=editStartDateTextField.getText();
+				PSP_DevelopmentTable.editRow(cellvalue1, 1);
 				
-				PSP_DevelopmentTable.editRow(col0);
+				String cellvalue2=editEstDateTextField.getText();
+				PSP_DevelopmentTable.editRow(cellvalue2, 2);
+				
+				//cell3
+				
+				String cellvalue4=editPriorityTextField.getText();
+				PSP_DevelopmentTable.editRow(cellvalue4, 4);
+				
+				//cell 5, 6, 7
+				
+				String cellvalue5=editStatusField.getText();
+				PSP_DevelopmentTable.editRow(cellvalue5, 5);
+								
+				String cellvalue6=editEstTimeTextField.getText();
+				PSP_DevelopmentTable.editRow(cellvalue6, 6);
+				
+			
+				String cellvalue8=editPercentField.getText();
+				PSP_DevelopmentTable.editRow(cellvalue8, 8);
+								
 				dispose();
-				
-
-	            				
+					            				
 			}
 		});
 		
@@ -161,6 +191,8 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		
 
 		
+
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -170,7 +202,7 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblTaskName)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(editTaskTextField, GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE))
+							.addComponent(editTaskTextField, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblTaskDescription)
@@ -178,7 +210,7 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 								.addComponent(lblEditComplete, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(editDescriptionTextField, GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+								.addComponent(editDescriptionTextField, GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGap(15)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -196,14 +228,9 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 											.addPreferredGap(ComponentPlacement.RELATED)))
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 										.addGroup(gl_contentPane.createSequentialGroup()
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addGap(12)
-													.addComponent(lblEndDate_1))
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addGap(24)
-													.addComponent(lblPriority)))
-											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addGap(12)
+											.addComponent(lblEndDate_1)
+											.addPreferredGap(ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
 											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 												.addGroup(gl_contentPane.createSequentialGroup()
 													.addComponent(editEstDateTextField, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
@@ -211,13 +238,22 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 												.addComponent(editPriorityTextField, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)))
 										.addGroup(gl_contentPane.createSequentialGroup()
 											.addGap(44)
-											.addComponent(btnCancel))))))
+											.addComponent(btnCancel))
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addGap(24)
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_contentPane.createSequentialGroup()
+													.addComponent(lblEditStatus, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addComponent(editStatusField, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE))
+												.addComponent(lblPriority))
+											.addPreferredGap(ComponentPlacement.RELATED))))))
 						.addComponent(lblEstimatedTime))
 					.addGap(153))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(237)
 					.addComponent(lblCreateNewTask)
-					.addContainerGap(294, Short.MAX_VALUE))
+					.addContainerGap(374, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -248,7 +284,9 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 					.addGap(27)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(editPercentField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblEditComplete))
+						.addComponent(lblEditComplete)
+						.addComponent(lblEditStatus)
+						.addComponent(editStatusField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnOk)
