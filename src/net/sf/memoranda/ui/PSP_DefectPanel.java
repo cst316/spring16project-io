@@ -358,7 +358,7 @@ public class PSP_DefectPanel extends JPanel {
 		//If we actually updated something, then
 		if (dirty) {
 			JOptionPane.showMessageDialog(App.getFrame(),
-					Local.getString("Updated and Saved!"));
+					Local.getString("Updated!"));
 		}
 	}
 	
