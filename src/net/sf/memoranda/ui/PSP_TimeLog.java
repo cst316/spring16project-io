@@ -43,20 +43,23 @@ public class PSP_TimeLog extends JPanel {
 			"Code Review", "Test", "Postmortem"};
 	
 	private JButton bttnDone;
+	private JButton btnAddModule;
+	private JButton editButton;
+	private JButton btnEditAll;
 	
 	private JTextField dateTextField;
 	private JTextField startTimeTextField;
 	private JTextField interruptTimeTextField;
 	private JComboBox<String> phaseTextField;
 	private JTextField endTimeTextField;
-	private JButton btnAddModule;
 
-	private List <JTextField> dateTxtList = new ArrayList <JTextField>();
+	private List <JTextField> dateTextList = new ArrayList <JTextField>();
 	private List <JTextField> startTimeList = new ArrayList <JTextField>();
 	private List <JTextField> interruptTimeList = new ArrayList <JTextField>();
 	private List <JComboBox> phaseList = new ArrayList <JComboBox>();
 	private List <JTextField> endTimeList = new ArrayList <JTextField>();
 	private List <JPanel> addButtonList = new ArrayList <JPanel> ();
+	private List <JButton> editButtonList = new ArrayList <JButton> ();
 	private List <JButton> actionList = new ArrayList <JButton> ();
 	
 	private JPanel pnlEachLog;
@@ -124,6 +127,14 @@ public class PSP_TimeLog extends JPanel {
         });
         bttnDone.setText("Done");
         
+        btnEditAll = new JButton("Edit All");
+		btnEditAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				editAll();
+			}
+		});
+		add(btnEditAll);
+        
         xSpace = (getWidth() - 930) / 2;
         containsTimeLogs = new JPanel();
         containsTimeLogs.setBounds(xSpace, 75, 930, getHeight() - 105);
@@ -183,7 +194,11 @@ public class PSP_TimeLog extends JPanel {
         containsTimeLogs.add(addMoreLogsLabel);
         
         xSpace = xSpace + containsTimeLogs.getWidth() - 80;
-        bttnDone.setBounds(xSpace, getHeight() - 50, 80, 25);              
+        bttnDone.setBounds(xSpace, getHeight() - 50, 80, 25);   
+        
+		
+		btnEditAll.setBounds(xSpace - 100, getHeight() - 50, 97, 25);
+		
         
         addTimeLog ();
     	if (timelog.getTimeRowLists().size() > 0) {
@@ -196,17 +211,18 @@ public class PSP_TimeLog extends JPanel {
 		
 		for(int i = 0; i < actionList.size(); ++i){
 			//Adding some guards so we are not adding empty data
-			if (!dateTxtList.get(i).getText().isEmpty() &&
+			if (!dateTextList.get(i).getText().isEmpty() &&
 				!startTimeList.get(i).getText().isEmpty() &&
 				!interruptTimeList.get(i).getText().isEmpty() &&
 				!endTimeList.get(i).getText().isEmpty() &&
 				!(phaseList.get(i).getSelectedIndex() == -1)) {
 			
-				/*dateTxtList.get(i).setEditable(false);
+				//Make it so that once Done is clicked, values cannot be changed
+				dateTextList.get(i).setEditable(false);
 				startTimeList.get(i).setEditable(false);
 				interruptTimeList.get(i).setEditable(false);
 				endTimeList.get(i).setEditable(false);
-				phaseList.get(i).setEditable(false);*/
+				phaseList.get(i).setEnabled(false);
 				
 				timelog.editRow (i, this.createTestRow(i));
 				
@@ -231,7 +247,7 @@ public class PSP_TimeLog extends JPanel {
 		
 		for (int i = 0; i < timelog.getTimeRowLists().size(); i++) {
 			startTimeList.get(i).setText(getDateTime (timelog.getTimeRowLists().get(i).getStartTime(), 1));
-			dateTxtList.get(i).setText(getDateTime (timelog.getTimeRowLists().get(i).getDate(), 0));
+			dateTextList.get(i).setText(getDateTime (timelog.getTimeRowLists().get(i).getDate(), 0));
 			interruptTimeList.get(i).setText(""
 					+ timelog.getTimeRowLists().get(i).getInterruptTime());
 			endTimeList.get(i).setText(getDateTime(timelog.getTimeRowLists().get(i).getEndTime(), 1));
@@ -248,10 +264,9 @@ public class PSP_TimeLog extends JPanel {
 		}			
 	}
 	
-	private TimeRowObject createTestRow(int index) {
-		// TODO Auto-generated method stub		
+	private TimeRowObject createTestRow(int index) {		
 		TimeRowObject my_timeRow = new TimeRowObject();
-		my_timeRow.setDate(dateTxtList.get(index).getText());
+		my_timeRow.setDate(dateTextList.get(index).getText());
 		my_timeRow.setStartTime(startTimeList.get(index).getText());
 		my_timeRow.setInterruptTime(
 				Float.parseFloat(interruptTimeList.get(index).getText()));
@@ -303,15 +318,32 @@ public class PSP_TimeLog extends JPanel {
 
 		btnAddModule = new JButton("");
 		btnAddModule.setBorder(null);
-		btnAddModule.setBounds(880, 0, 25, 25);
+		btnAddModule.setBounds(855, 0, 25, 25);
 		btnAddModule.setBackground(Color.WHITE);
 		actionList.add(btnAddModule);
+		
+		editButton = new JButton("");
+		editButton.setBorder(null);
+		editButton.setBounds(905, 0, 25, 25);
+		editButton.setBackground(Color.WHITE);
+		editButton.setToolTipText("Edit Defects");
+		//From http://findicons.com/icon/180634/pencil_medium?id=377514
+		editButton.setIcon(
+	            new ImageIcon(
+	                net.sf.memoranda.ui.AppFrame.class.getResource
+	                ("resources/icons/pencilsmall.png")));
+		editButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				edit(e);
+			}
+		});
+		editButtonList.add(editButton);
 				
 		dateTextField = new JTextField();
 		dateTextField.setBounds(85, 0, 105, 25);
 		dateTextField.setText(getDateTime(date, 0));
 		dateTextField.setToolTipText("Date you worked on the project: mm/dd/yy");
-		dateTxtList.add(dateTextField);
+		dateTextList.add(dateTextField);
 		
 		startTimeTextField = new JTextField();
 		startTimeTextField.setBounds(210, 0, 105, 25);
@@ -346,6 +378,7 @@ public class PSP_TimeLog extends JPanel {
 		holdItems.add(interruptTimeTextField);
 		holdItems.add(endTimeTextField);
 		holdItems.add(phaseTextField);
+		holdItems.add(editButton);
 		holdItems.setBounds(x, y, width, height);
 		
 		for (Component c : holdItems.getComponents()) {
@@ -360,6 +393,42 @@ public class PSP_TimeLog extends JPanel {
 		repaintPanel (addButtonList, actionList, pnlEachLog);
 		addModActionListner(actionList);
 		pnlEachLog.setPreferredSize(new Dimension (width, y + height));
+	}
+	
+	private void edit(ActionEvent e)
+	{
+		for(int i = 0; i < addButtonList.size(); i++)
+		{
+			if (e.getSource() == editButtonList.get(i) && 
+					(!dateTextList.get(i).isEditable())) {
+				dateTextList.get(i).setEditable(true);
+				startTimeList.get(i).setEditable(true);
+				interruptTimeList.get(i).setEditable(true);
+				phaseList.get(i).setEnabled(true);
+				endTimeList.get(i).setEditable(true);
+
+				
+				JOptionPane.showMessageDialog(App.getFrame(), 
+						Local.getString("You can now edit this time log row"));
+				
+				break;
+			}
+		}				
+	}
+	
+	private void editAll()
+	{
+		for(int i = 0; i < addButtonList.size(); i++)
+		{
+			dateTextList.get(i).setEditable(true);
+			startTimeList.get(i).setEditable(true);
+			interruptTimeList.get(i).setEditable(true);
+			phaseList.get(i).setEnabled(true);
+			endTimeList.get(i).setEditable(true);
+			//fixRefTextFieldList.get(i).setEditable(true);
+		}
+		JOptionPane.showMessageDialog(App.getFrame(), 
+				Local.getString("You can now edit all time log entries!"));
 	}
 	
 	/**
@@ -378,7 +447,7 @@ public class PSP_TimeLog extends JPanel {
 			if (e.getSource() == actionList.get(i)) {
 				actionList.remove(i);
 				addButtonList.remove(i);
-				dateTxtList.remove(i);
+				dateTextList.remove(i);
 				startTimeList.remove(i);
 				interruptTimeList.remove(i);
 				endTimeList.remove(i);
