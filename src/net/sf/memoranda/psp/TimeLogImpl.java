@@ -18,9 +18,14 @@ import net.sf.memoranda.util.Util;
  */
 public class TimeLogImpl implements TimeLog, Serializable {
 	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 3790546736695557381L;
 	
 	private Psp pspValues;
+	
+	private static boolean isDirty = false;
 	
 	private List<TimeRowObject> timerow = new ArrayList<TimeRowObject>();
 	
@@ -42,128 +47,81 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		return this.pspValues;
 	}
 	
-	/**
-	 * Handles addition of new row into object of rows
-	 * @param timeRow send in TimeRowObject that holds attributes
-	 * for time recording logs
-	 * @return isAdded boolean value returns based on 
-	 * success of addition of object into timerow ArrayList
-	 */
 	@Override
-	public boolean addTimeRowObject(TimeRowObject timeRow) {
+	public boolean addTimeRowObject(TimeRowObject timerow) {
+		// TODO Auto-generated method stub
 		boolean isAdded = true;
-		this.timerow.add(timeRow);
+		this.timerow.add(timerow);
 		return isAdded;
 	}
 
-	/**
-	 * @param index location in List to return object
-	 * @return obj TimeRowObject that is returned to caller
-	 * @throws NullPointerException is thrown in chance caller gives
-	 * invalid location
-	 * @throws Exception 
-	 */
 	@Override
 	public TimeRowObject getTimeRowObject(int index) {
-	    TimeRowObject obj = new TimeRowObject();
-	    try{
-	        obj = this.timerow.get(index);
-	    }catch(NullPointerException npe){
-	        npe.getMessage();
-	        Util.debug("null pointer at index: " + index);
-	    }catch(Exception e){
-	        e.getMessage();
-	    }
-		return obj;
+		// TODO Auto-generated method stub
+		return this.timerow.get(index);
 	}
 
-	/**
-	 * replaces current List of objects, basically a setter
-	 * @param timerow List of objects to replace current List
-	 * @return isAdded boolean value returned in success of addition
-	 */
 	@Override
 	public boolean addTimeRowObject(List<TimeRowObject> timerow) {
+		// TODO Auto-generated method stub
 		boolean isAdded = true;
 		this.timerow = timerow;
 		return isAdded;
 	}
-	
-	/**
-	 * private method to add TimeRowObject to current List
-	 * @param rowObj object to add to list
-	 * @return isAdded status returning whether addition was valid
-	 * @throws Exception 
-	 */
-	private boolean addRow(TimeRowObject rowObj) {
-		boolean isAdded = false;
-		
-		try {
-			this.timerow.add(rowObj);
-			isAdded = true;
-		} catch(Exception e) {
-			e.getMessage();
-		}
-		return isAdded;
-	}
-	
-	/**
-	 * This method replaces element in specific index with new element
-	 * @param rowObj value of replacement data
-	 * @param index int value of index to replace
-	 * @return isEdited boolean value returned is operation is successful
-	 * 
-	 */
-	@Override
-	public boolean editRow (int index, TimeRowObject rowObj) {
-		boolean isEdited = false;
-		
-		if (index < this.timerow.size()) {
-			timerow.set(index, rowObj);  //Overwrites the object at the index
-			isEdited = true;
-		} else {
-			isEdited = addRow(rowObj);	//Adds new object to Arraylist
-		}
-		
-		return isEdited;
-	}
 
 	@Override
 	public List<TimeRowObject> getTimeRowLists() {
+		// TODO Auto-generated method stub
 		return this.timerow;
 	}
 	
 	@Override
 	public boolean removeAllObjects() {
+		// TODO Auto-generated method stub
 		this.timerow.clear();
 		return false;
 	}
 
-	/**
-	 * removes element at given index
-	 * @param timerow
-	 * @param index location of element to remove
-	 * @return isRemoved boolean detailing success of operation
-	 * @throws NullPointerException thrown if index is not within timerow's
-	 * size
-	 * @throws Exception
-	 * Note: needs to be refactored
-	 */
 	@Override
 	public boolean removeTimeRowObject(TimeRowObject timerow, int index) {
+		// TODO Auto-generated method stub
 		boolean isRemoved = true;
+		this.timerow.remove(index);
+		return isRemoved;
+	}	
+	
+	public boolean removeRow(int index){
+		boolean isRemoved = true;
+		
 		try{
-		    this.timerow.remove(index);
-		}catch(NullPointerException npe){
-		    npe.getMessage();
-		    Util.debug("null pointer at index: " + index);
-		    isRemoved = false;
+			timerow.remove(index);
+			isDirty = true;		
+		}catch(NullPointerException e){
+			e.getMessage();
+			isRemoved = false;
+			Util.debug("Index does not exist. Index number: " + index);
+			isRemoved = false;
 		}catch(Exception e){
 		    e.getMessage();
 		    isRemoved = false;
 		}
+		
 		return isRemoved;
-	}	
+	}
+
+	
+	@Override
+	public boolean addRow(TimeRowObject rowObj) {
+		boolean isAdded = true;
+		
+		try{
+			timerow.add(rowObj);
+		}catch(Exception e){
+			e.getMessage();
+			isAdded = false;
+		}
+		return isAdded;
+	}
 	
 	/**
 	 * Implement custom object reader
@@ -185,4 +143,23 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		stream.defaultWriteObject();
 		Util.debug("Time Log wrtten");
 	}
+
+	@Override
+	public boolean editRow(int index, TimeRowObject rowObj) {
+		boolean isEdited = false;
+		
+		if (index < this.timerow.size() && rowObj != null) {
+			timerow.set(index, rowObj); //Overwrites the object at the index
+			isEdited = true;
+		} else if (rowObj != null) {
+			isEdited = addRow(rowObj);	//Adds new object to Arraylist
+		}
+		
+		if (isEdited) {
+			isDirty = true;
+		}
+		
+		return isEdited;
+	}
+
 }

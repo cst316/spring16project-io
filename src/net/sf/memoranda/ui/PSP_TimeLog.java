@@ -14,7 +14,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+
+import net.sf.memoranda.psp.Psp;
 import net.sf.memoranda.psp.TimeLog;
+import net.sf.memoranda.psp.TimeLogImpl;
 import net.sf.memoranda.psp.TimeRowObject;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
@@ -41,12 +44,12 @@ public class PSP_TimeLog extends JPanel {
 	
 	private JButton bttnDone;
 	
-	private TimeRowObject timeEntries;
+	//private TimeRowObject timeEntries;
 	
 	private JTextField dateTextField;
 	private JTextField startTimeTextField;
 	private JTextField interruptTimeTextField;
-	private JComboBox<String> phaseTextField;
+	private JComboBox phaseTextField;
 	private JTextField endTimeTextField;
 	private JButton btnAddModule;
 
@@ -63,35 +66,47 @@ public class PSP_TimeLog extends JPanel {
 	private JScrollPane spTimeLog;
 	
 	private Date date = new Date(); 
+	
+	private TimeLog timelog;
 
 
 	/**
 	 * Create the panel.
 	 */
 	public PSP_TimeLog() {		
-		jInit();
+		try {
+			jInit();
+		}
+		catch(Exception ex) {
+			new ExceptionDialog(ex);
+			ex.printStackTrace();
+		}
 	}
-	
 	/**
 	 * Create the panel.
 	 */
 	public PSP_TimeLog(TimeLog timelog) {	
 		try{
+			this.timelog = timelog;
 			jInit();
 		} catch (Exception ex) {
-			Util.debug("Exception while trying to intilize PSP_TimeLog GUI");
+			System.out.println("Exception while trying to intilize PSP_TimeLog GUI");
 			new ExceptionDialog(ex);
 			ex.printStackTrace();
 		}
 	}
 	
+	public PSP_TimeLog(Psp pspVal) {
+		this.timelog = new TimeLogImpl(pspVal);
+		jInit();
+	}
+	
 	public void jInit () {
-		setBounds(0, 0, PSP_Panel.currentView.getWidth(), PSP_Panel.currentView.getHeight());
-		setBackground(Color.WHITE);
+		this.setBounds(0, 0, 1262, 743);
+		this.setBackground(Color.WHITE);
         
-		int xSpace = (getWidth() - 200) / 2 ;
         JLabel lblTimeLogEntries = new JLabel("Time Log Entries");
-        lblTimeLogEntries.setBounds(xSpace, 15, 250, 40);
+        lblTimeLogEntries.setBounds(597, 13, 189, 40);
         lblTimeLogEntries.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 18));
         lblTimeLogEntries.setHorizontalAlignment(SwingConstants.CENTER);
         lblTimeLogEntries.setIcon(
@@ -100,8 +115,71 @@ public class PSP_TimeLog extends JPanel {
 	                ("resources/icons/time.png")));
         this.add(lblTimeLogEntries);
         
-        bttnDone = new JButton();                
-        add(bttnDone);
+        containsTimeLogs = new JPanel();
+        containsTimeLogs.setBounds(0, 75, 1276, 583);
+		this.add(containsTimeLogs);
+		containsTimeLogs.setBackground(Color.WHITE);
+		containsTimeLogs.setLayout(null);
+		
+		JPanel eachTimeLog = new JPanel();
+		eachTimeLog.setBounds(0, 75, 1276, 508);
+		containsTimeLogs.add(eachTimeLog);
+		eachTimeLog.setLayout(new BorderLayout());
+        setLayout(null);
+		
+		/*bttnDone = new JButton("Done");
+		bttnDone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					bttnDoneAction();
+			}
+		});
+		bttnDone.setBounds(1047, 394, 97, 25);
+		bttnDone.setToolTipText("Save Time Log");
+		eachTimeLog.add(bttnDone);*/
+		
+		spTimeLog = new JScrollPane();
+		spTimeLog.setBorder(null);
+		eachTimeLog.add(spTimeLog);
+		spTimeLog.setHorizontalScrollBarPolicy
+				(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		spTimeLog.setBounds(0, 75, 1276, 508);
+		
+		pnlEachLog = new JPanel();
+		spTimeLog.setViewportView(pnlEachLog);
+		pnlEachLog.setLayout(null);
+		pnlEachLog.setBounds(0, 75, 1276, 508);
+		pnlEachLog.setBackground(Color.WHITE);
+		
+		addTimeLog ();
+        this.add(containsTimeLogs);
+        
+        JLabel dateLabel = new JLabel("Date");
+        dateLabel.setBounds(84, 26, 26, 40);
+        containsTimeLogs.add(dateLabel);
+        
+        JLabel startTimeLabel = new JLabel("Start Time");
+        startTimeLabel.setBounds(274, 22, 61, 40);
+        containsTimeLogs.add(startTimeLabel);
+        
+        JLabel interruptTimeLabel = new JLabel("Interrupt Time");
+        interruptTimeLabel.setBounds(507, 22, 83, 40);
+        containsTimeLogs.add(interruptTimeLabel);
+        
+        JLabel endTimeLabel = new JLabel("End Time");
+        endTimeLabel.setBounds(736, 26, 59, 40);
+        containsTimeLogs.add(endTimeLabel);
+        
+        JLabel phaseLabel = new JLabel("Phase");
+        phaseLabel.setBounds(952, 22, 83, 40);
+        containsTimeLogs.add(phaseLabel);
+        
+        JLabel addMoreLogsLabel = new JLabel("Add More Logs");
+        addMoreLogsLabel.setBounds(1109, 34, 98, 16);
+        containsTimeLogs.add(addMoreLogsLabel);
+        
+        bttnDone = new JButton();
+        bttnDone.setBounds(1185, 2, 65, 45);
+        containsTimeLogs.add(bttnDone);
         bttnDone.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
@@ -109,92 +187,44 @@ public class PSP_TimeLog extends JPanel {
         	}
         });
         bttnDone.setText("Done");
+        pnlEachLog.add(bttnDone);
         
-        xSpace = (getWidth() - 930) / 2;
-        containsTimeLogs = new JPanel();
-        containsTimeLogs.setBounds(xSpace, 75, 930, getHeight() - 105);
-		this.add(containsTimeLogs);
-		containsTimeLogs.setBackground(Color.WHITE);
-		containsTimeLogs.setLayout(null);
-		
-		JPanel eachTimeLog = new JPanel();
-		eachTimeLog.setBounds(0, 40, containsTimeLogs.getWidth(), containsTimeLogs.getHeight() - 100);
-		containsTimeLogs.add(eachTimeLog);
-		eachTimeLog.setLayout(new BorderLayout());
-        setLayout(null);
-		
-		spTimeLog = new JScrollPane();
-		spTimeLog.setBorder(null);
-		eachTimeLog.add(spTimeLog);
-		spTimeLog.setHorizontalScrollBarPolicy
-				(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		spTimeLog.setBounds(0, 40, containsTimeLogs.getWidth(), containsTimeLogs.getHeight() - 100);
-		
-		pnlEachLog = new JPanel();
-		spTimeLog.setViewportView(pnlEachLog);
-		pnlEachLog.setLayout(null);
-		pnlEachLog.setBounds(0, 75, containsTimeLogs.getWidth(), containsTimeLogs.getHeight() - 100);
-		pnlEachLog.setBackground(Color.WHITE);
-		
-		addTimeLog ();
-        this.add(containsTimeLogs);
+        addTimeLog ();
+    	if (timelog.getTimeRowLists().size() > 0) {
+			updateTimeRowPanels();
+		}
+
         
-        JLabel dateLabel = new JLabel("Date");
-        dateLabel.setBounds(85, 0, 105, 25);
-        dateLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        containsTimeLogs.add(dateLabel);
-        
-        JLabel startTimeLabel = new JLabel("Start Time");
-        startTimeLabel.setBounds(210, 0, 105, 25);
-        startTimeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        containsTimeLogs.add(startTimeLabel);
-        
-        JLabel interruptTimeLabel = new JLabel("Interrupt Time");
-        interruptTimeLabel.setBounds(335, 0, 105, 25);
-        interruptTimeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        containsTimeLogs.add(interruptTimeLabel);
-        
-        JLabel endTimeLabel = new JLabel("End Time");
-        endTimeLabel.setBounds(460, 0, 105, 25);
-        endTimeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        containsTimeLogs.add(endTimeLabel);
-        
-        JLabel phaseLabel = new JLabel("Phase");
-        phaseLabel.setBounds(585, 0, 250, 25);
-        phaseLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        containsTimeLogs.add(phaseLabel);
-        
-        JLabel addMoreLogsLabel = new JLabel("(+/-) Logs");
-        addMoreLogsLabel.setBounds(855, 0, 75, 25);
-        addMoreLogsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        containsTimeLogs.add(addMoreLogsLabel);
-        
-        xSpace = xSpace + containsTimeLogs.getWidth() - 80;
-        bttnDone.setBounds(xSpace, getHeight() - 50, 80, 25);              
 	}
 	
 	private void bttnDoneAction(){
 		boolean dirty = false;
 		
-		timeEntries = new TimeRowObject();
-		for(int i = 0; i < addButtonList.size(); ++i){
-			if(dateTextField.getText() != null &&
-					startTimeTextField.getText() != null &&
-					interruptTimeTextField.getText() != null &&
-					endTimeTextField.getText() != null &&
-					phaseTextField.getSelectedIndex() != -1){
+		//timeEntries = new TimeRowObject();
+		for(int i = 0; i < actionList.size(); ++i){
+			//Adding some guards so we are not adding empty data
+			if (!dateTxtList.get(i).getText().isEmpty() &&
+				!startTimeList.get(i).getText().isEmpty() &&
+				!interruptTimeList.get(i).getText().isEmpty() &&
+				!endTimeList.get(i).getText().isEmpty() &&
+				!(phaseList.get(i).getSelectedIndex() == -1)) {
+			
+				dateTxtList.get(i).setEditable(false);
+				startTimeList.get(i).setEditable(false);
+				interruptTimeList.get(i).setEditable(false);
+				endTimeList.get(i).setEditable(false);
+				phaseList.get(i).setEditable(false);
 				
-				setTimeLogDate(timeEntries, dateTextField.getText());
-				setTimeLogStartTime(timeEntries, startTimeTextField.getText());
-				setTimeLogInterruptTime(timeEntries, interruptTimeTextField.getText());
-				setTimeLogEndTime(timeEntries, endTimeTextField.getText());
-				setTimeLogPhase(timeEntries, phaseTextField.getSelectedIndex());
+				//using edit to implement add and edit both
+				timelog.editRow (i, this.createTestRow(i));
 				
-				dirty = true;
+				//If dirt is not set already, then set it, else no need
+				if (!dirty) {
+					dirty = true;
+					setIsDirty(dirty);
+				}
 			}				
 		}
-		
-		setIsDirty(dirty);
 		
 		if(dirty){
 			JOptionPane.showMessageDialog(App.getFrame(),
@@ -204,6 +234,41 @@ public class PSP_TimeLog extends JPanel {
 					Local.getString("Error in saving Time Log\n" +
 							"Check that all fields are filled in and try again"));
 		}
+	}
+	
+	private void updateTimeRowPanels() {
+		// TODO Auto-generated method stub
+		//timelog.getTimeRowLists()
+		for (int i = 0; i < timelog.getTimeRowLists().size(); i++) {
+			startTimeList.get(i).setText(getDateTime (timelog.getTimeRowLists().get(i).getStartTime(), 1));
+			dateTxtList.get(i).setText(getDateTime (timelog.getTimeRowLists().get(i).getDate(), 0));
+			interruptTimeList.get(i).setText(""
+					+ timelog.getTimeRowLists().get(i).getInterruptTime());
+			endTimeList.get(i).setText(getDateTime(timelog.getTimeRowLists().get(i).getEndTime(), 1));
+			//phaseList.get(i).setText(timelog.getTimeRowLists().get(i).getPhase());
+			
+			//Disabling text field objects from editing unless you click on edit button
+			for (Component t : this.addButtonList.get(i).getComponents())
+			{
+				if (t instanceof JTextField) {
+					((JTextField) t).setEditable(false);
+				}
+			}
+			buttonAction_Clicked ("ADD_MOD");
+		}			
+	}
+	
+	private TimeRowObject createTestRow(int index) {
+		// TODO Auto-generated method stub		
+		TimeRowObject my_timeRow = new TimeRowObject();
+		my_timeRow.setDate(dateTxtList.get(index).getText());
+		my_timeRow.setStartTime(startTimeList.get(index).getText());
+		my_timeRow.setInterruptTime(
+				Float.parseFloat(interruptTimeList.get(index).getText()));
+		my_timeRow.setEndTime(endTimeList.get(index).getText());
+		//my_timeRow.setPhase(phaseList.get(index).getText());
+		
+		return my_timeRow;
 	}
 	
 	/**
@@ -295,48 +360,51 @@ public class PSP_TimeLog extends JPanel {
 		timeEntries.setPhase(strPhase);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void addTimeLog () {	
-		int width = containsTimeLogs.getWidth();
+		int width = 1270;
 		int height = 25;
 		int x = 0;
 		int y = (addButtonList.size() == 0 ? 0 : 
-			addButtonList.get(addButtonList.size() - 1).getY() + height + 15);
+			addButtonList.get(addButtonList.size() - 1).getY() + height + 5);
 
 		btnAddModule = new JButton("");
 		btnAddModule.setBorder(null);
-		btnAddModule.setBounds(880, 0, 25, 25);
+		btnAddModule.setBounds(1140, 0, 25, 25);
 		btnAddModule.setBackground(Color.WHITE);
 		actionList.add(btnAddModule);
-				
+		
+		
 		dateTextField = new JTextField();
-		dateTextField.setBounds(85, 0, 105, 25);
+		dateTextField.setBounds(80, 0, 130, 22);
 		dateTextField.setText(getDateTime(date, 0));
 		dateTextField.setToolTipText("Date you worked on the project: mm/dd/yy");
 		dateTxtList.add(dateTextField);
 		
 		startTimeTextField = new JTextField();
-		startTimeTextField.setBounds(210, 0, 105, 25);
+		startTimeTextField.setBounds(228, 0, 153, 22);
 		startTimeTextField.setColumns(10);
 		startTimeTextField.setToolTipText("Time started working on project: (hh:mm am/pm) 12 hour format");
 		startTimeList.add(startTimeTextField);
 	
 		interruptTimeTextField = new JTextField();
-		interruptTimeTextField.setBounds(335, 0, 105, 25);
+		interruptTimeTextField.setBounds(475, 0, 153, 22);
 		interruptTimeTextField.setColumns(10);
 		interruptTimeTextField.setToolTipText("Interrupt time for this time entry (hh.mm)");
 		interruptTimeList.add(interruptTimeTextField);
 		
 		endTimeTextField = new JTextField();
-		endTimeTextField.setBounds(460, 0, 105, 25);
+		endTimeTextField.setBounds(695, 0, 153, 22);
 		endTimeTextField.setColumns(10);
 		endTimeTextField.setToolTipText("Time done working on project: (hh:mm am/pm) 12 hour format");
 		endTimeList.add(endTimeTextField);
 		
-		phaseTextField = new JComboBox<String>(phases);
-		phaseTextField.setBounds(585, 0, 250, 25);
+		phaseTextField = new JComboBox(phases);
+		phaseTextField.setBounds(904, 0, 153, 22);
 		phaseTextField.setSelectedIndex(-1);
 		phaseTextField.setToolTipText("Phase of project");
-		phaseList.add(phaseTextField);		
+		phaseList.add(phaseTextField);
+		
 		
 		JPanel holdItems = new JPanel();
 		holdItems.setBackground(Color.WHITE);
@@ -348,19 +416,14 @@ public class PSP_TimeLog extends JPanel {
 		holdItems.add(endTimeTextField);
 		holdItems.add(phaseTextField);
 		holdItems.setBounds(x, y, width, height);
-		
-		for (Component c : holdItems.getComponents()) {
-			if ( c instanceof JTextField) {
-				((JTextField) c).setHorizontalAlignment(SwingConstants.CENTER);
-			}
-		}
-		
 		addButtonList.add(holdItems);
 		
 		remActionListener(actionList);
 		repaintPanel (addButtonList, actionList, pnlEachLog);
 		addModActionListner(actionList);
 		pnlEachLog.setPreferredSize(new Dimension (width, y + height));
+		spTimeLog.setVerticalScrollBarPolicy
+			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
 	
 	/**
@@ -369,7 +432,7 @@ public class PSP_TimeLog extends JPanel {
 	 * item to remove from the display of file items
 	 */
 	private void removeTimeLog (ActionEvent e) {	
-		int width = containsTimeLogs.getWidth();
+		int width = 1270;
 		int height = 25;
 		int x = 0;
 		int y = 0;
@@ -390,12 +453,14 @@ public class PSP_TimeLog extends JPanel {
 		
 		for (int i = 0; i < actionList.size(); i++) {
 			addButtonList.get(i).setBounds(x, y, width, height);
-			y += height + 15;
+			y += height + 5;
 		}		
 		
 		repaintPanel (addButtonList, actionList, pnlEachLog);
 		addModActionListner(actionList);
 		pnlEachLog.setPreferredSize(new Dimension (width, y));
+		spTimeLog.setVerticalScrollBarPolicy
+			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
 	
 	/**
@@ -417,10 +482,6 @@ public class PSP_TimeLog extends JPanel {
 			iconBtn.get(i).setIcon(new ImageIcon(
 					PSP_PlanningWizardFrame.class.getResource(icon)));	
 		}
-		
-
-		spTimeLog.setVerticalScrollBarPolicy
-			(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		whichPnl.revalidate();
 		whichPnl.repaint();
 	}
