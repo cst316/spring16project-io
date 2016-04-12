@@ -109,6 +109,7 @@ public class DevelopmentImpl implements Development, Serializable{
 
 	@Override
 	public ArrayList<DevRowObject> getRow() {
+		
 		return this.rowObj;
 	}
 	
@@ -161,4 +162,27 @@ public class DevelopmentImpl implements Development, Serializable{
         }
         return id;
     }
+    
+    @Override
+	public boolean editRow (int index, DevRowObject rowObj) {
+		boolean isEdited = true;
+		try{
+		    
+    		this.rowObj.set(index, rowObj);  //Overwrites the object at the index
+    		
+		}catch(NullPointerException npe){
+		    npe.getMessage();
+		    Util.debug("null pointer thrown at index: " + index);
+		    isEdited = false;
+		}catch(Exception e){
+            e.getMessage();
+            isEdited = false;		    
+		}
+		if (isEdited) {
+			isDirty = true;
+		}
+		
+		return isEdited;
+	}
+    
 }

@@ -1,6 +1,9 @@
 package net.sf.memoranda.psp;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -21,6 +24,7 @@ public class DevRowObject implements Serializable{
 	private String taskName, status;
 	private int priority, estimate;
 	private float percentDone, actualComplete;
+	private String closingComment;
 	
 	public DevRowObject(){
 		this.startDate = null;
@@ -51,7 +55,20 @@ public class DevRowObject implements Serializable{
 		this.estimate = estimate; 
 		this.actualComplete = actualComplete;
 		
-		this.percentDone = calcPercentDone();
+		//this.percentDone = calcPercentDone();
+	}
+	
+	public Date setDate(String strDate) {
+		Date date = new Date();
+		DateFormat df ; 
+		df = new SimpleDateFormat("MM/dd/yy");
+		try {
+			date = df.parse(strDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return date;
 	}
 	
 	/**
@@ -75,20 +92,23 @@ public class DevRowObject implements Serializable{
 	public Date getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	
+	public void setStartDate(String startDate) {
+		this.startDate = this.setDate(startDate);;
+		
 	}
+	
 	public Date getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndDate(String endDate) {
+		this.endDate = this.setDate(endDate);
 	}
 	public Date getEstDate() {
 		return estDate;
 	}
-	public void setEstDate(Date estDate) {
-		this.estDate = estDate;
+	public void setEstDate(String estDate) {
+		this.estDate = this.setDate(estDate);
 	}
 	public String getTaskName() {
 		return taskName;
@@ -121,8 +141,23 @@ public class DevRowObject implements Serializable{
 		this.actualComplete = actualComplete;
 	}
 	
+	public void setPercentComplete(float percentComplete) {
+		
+		this.percentDone = percentComplete;
+	}
+	
 	public float getPercentComplete(){
 		return this.percentDone = calcPercentDone();
 	}
 	
+	public void setCloseComment(String comment) {
+		
+		this.closingComment = comment;
+	}
+	
+	public String getCloseComment(String comment) {
+	
+		return this.closingComment;
+	
+	}
 }

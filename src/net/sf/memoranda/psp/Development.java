@@ -23,4 +23,6 @@ public interface Development {
 	public boolean removeRow(int i);
 	
 	public boolean getIsDirty();
+	
+	public boolean editRow (int index, DevRowObject rowObj); 
 }

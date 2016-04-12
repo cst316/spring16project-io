@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import net.sf.memoranda.psp.DevRowObject;
+import net.sf.memoranda.psp.Development;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -18,20 +22,29 @@ import java.awt.event.ActionEvent;
 
 public class PSP_DevelopmentDialogClose extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4364375426252043089L;
 	public static Object actualHours;
 	public static Object actualEndDate;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField actualHoursTextField;
-	private JTextField actualEndDateTextField;
+	protected JTextField commentsTextField;
+	protected JTextField actualHoursTextField;
+	protected JTextField actualEndDateTextField;
+	PSP_DevelopmentTable myDevTable;
+	int index;
+	DevRowObject myDevRow;
+	Development devel;
+	
+	public PSP_DevelopmentDialogClose(PSP_DevelopmentTable myDevTable, int index) {
+		this.myDevTable = myDevTable;
+		this.index = index;
+		this.myDevRow = (DevRowObject) myDevTable.devel.getRow().get(index);
+		jbInit();
+	}
+	
+	public PSP_DevelopmentDialogClose() {
+		jbInit();
+	}
 
-	/**
-	 * Launch the application.
-	 */
 	public static void NewScreen() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -44,11 +57,8 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
-	public PSP_DevelopmentDialogClose() {
+	
+	private void jbInit() {
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 536, 389);
@@ -59,8 +69,8 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		JLabel lblCloseTask = new JLabel("CLOSE TASK");
 		lblCloseTask.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		commentsTextField = new JTextField();
+		commentsTextField.setColumns(10);
 		
 		JLabel lblComments = new JLabel("Comments:");
 		
@@ -74,12 +84,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String actualHours = actualHoursTextField.getText();
-				String actualEndDate = actualEndDateTextField.getText();
-				
-				
-				PSP_DevelopmentTable.closeTask(actualHours,actualEndDate);
-				dispose();
+				closeTask();
 				
 			}
 		});
@@ -108,7 +113,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 							.addGap(78)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblComments)
-								.addComponent(textField, GroupLayout.PREFERRED_SIZE, 339, GroupLayout.PREFERRED_SIZE)
+								.addComponent(commentsTextField, GroupLayout.PREFERRED_SIZE, 339, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 										.addComponent(lblActualEndDate, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
@@ -132,7 +137,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 					.addGap(12)
 					.addComponent(lblComments)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+					.addComponent(commentsTextField, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
 					.addGap(26)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblActualEfforthours)
@@ -148,5 +153,24 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 					.addGap(24))
 		);
 		contentPane.setLayout(gl_contentPane);
+	}
+	
+	protected void closeTask() {
+		
+		String actualHours = actualHoursTextField.getText();
+		String actualEndDate = actualEndDateTextField.getText();
+		PSP_DevelopmentTable.closeTask(actualHours,actualEndDate);
+		closeDevRow();
+		dispose();
+		
+	}
+
+	private void closeDevRow() {
+		
+		myDevRow.setEndDate(actualEndDateTextField.getText());
+		myDevRow.setActualComplete(Float.parseFloat(actualHoursTextField.getText()));
+		myDevRow.setCloseComment(commentsTextField.getText());
+		devel.editRow(index, myDevRow);
+			
 	}
 }
