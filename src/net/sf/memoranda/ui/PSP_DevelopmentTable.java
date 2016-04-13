@@ -83,9 +83,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 
 		JButton btnDeleteTask = new JButton("Delete Task");
 		btnDeleteTask.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-
-			{
+			public void actionPerformed(ActionEvent arg0){
 
 				removeRow();
 
@@ -94,9 +92,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 
 		JButton btnViewDescription = new JButton("View Description");
 		btnViewDescription.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-
-			{
+			public void actionPerformed(ActionEvent arg0){
 
 				// view description method will call new jframe with
 				// task description text of selected row

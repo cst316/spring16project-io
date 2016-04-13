@@ -426,8 +426,7 @@ public class ProjectSummaryCreator {
 	public static boolean checkFolderSystem(){
 		boolean success= true;
 		try{
-			if(!Files.exists(Paths.get(FILE)))
-			{
+			if(!Files.exists(Paths.get(FILE))){
 				File file = new File(FILE);
 				file.mkdirs();
 			}

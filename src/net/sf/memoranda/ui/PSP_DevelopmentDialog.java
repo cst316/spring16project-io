@@ -105,9 +105,7 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-
-			{
+			public void actionPerformed(ActionEvent e){
 
 				// PSP_NewTaskTable.editRow();
 				dispose();

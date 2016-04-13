@@ -10,16 +10,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-class PSP_BackGround extends JPanel
-{
-	/**
-	 * 
-	 */
+class PSP_BackGround extends JPanel{
+
 	private static final long serialVersionUID = -2755213468898545438L;
-private BufferedImage img;
+	private BufferedImage img;
 	
-	public PSP_BackGround (String img, JPanel parent) throws IOException 
-	{
+	public PSP_BackGround (String img, JPanel parent) throws IOException {
 		this.img = ImageIO.read(new File(img));
 		
 		setBounds (0, 0, (int) (parent.getWidth() * 0.95), (int) (parent.getHeight() * 0.95));
@@ -28,8 +24,7 @@ private BufferedImage img;
 		setLayout(null);				
 	}	
 	
-	public PSP_BackGround (String img, int width, int height) throws IOException 
-	{
+	public PSP_BackGround (String img, int width, int height) throws IOException {
 		this.img = ImageIO.read(new File(img));
 		
 		setBounds (0, 0, width, height);
@@ -39,8 +34,7 @@ private BufferedImage img;
 	}	
  
 	//Handles the drawing and scaling
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		double xScale = 1.0;
 		double yScale = 1.0;

@@ -1192,7 +1192,7 @@ public class HTMLEditor extends JPanel {
 		//System.out.print(editor.getCaretPosition()+" :
 		// "+document.getCharacterElement(editor.getCaretPosition()).getName()+"
 		// -> ");
-		if (editor.getCaretPosition() > 0)
+		if (editor.getCaretPosition() > 0){
 			try {
 				charattrs =
 					document
@@ -1200,12 +1200,14 @@ public class HTMLEditor extends JPanel {
 						.getAttributes();
 			} catch (Exception ex) {
 				ex.printStackTrace();
-			} else
+			} 
+		}else{
 			charattrs =
 				document
 					.getCharacterElement(editor.getCaretPosition())
 					.getAttributes();
-
+		}
+		
 		if (charattrs
 			.containsAttribute(StyleConstants.Bold, new Boolean(true))) {
 			boldActionB.setBorder(border2);

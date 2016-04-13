@@ -17,40 +17,32 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class PSP_NewTaskDataTest 
-
-{
+public class PSP_NewTaskDataTest {
 	
 	PSP_DevelopmentData tdata = new PSP_DevelopmentData();
 
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception 
-	{
+	public static void setUpBeforeClass() throws Exception {
 		
 	}
 
 	@AfterClass
-	public static void tearDownAfterClass() throws Exception 
-	{
+	public static void tearDownAfterClass() throws Exception {
 		
 	}
 
 	@Before
-	public void setUp() throws Exception
-	{
+	public void setUp() throws Exception{
 
 	}
 
 	@After
-	public void tearDown() throws Exception 
-	{
+	public void tearDown() throws Exception {
 		
 	}
 
 	@Test
-	public void testSaveTaskData() 
-	
-	{
+	public void testSaveTaskData() {
 		String tdarray;
 		int count;
 		
@@ -86,53 +78,36 @@ public class PSP_NewTaskDataTest
 		
 	}
 
-	private void assertTrue(boolean b) 
-	{
+	private void assertTrue(boolean b) {
 			
 	}
 
 	@Test
-	public void testSaveTaskDataBounds() 
-	{
+	public void testSaveTaskDataBounds() {
 		
 		String tdarray;
 		int count;
 		
-		try 
-		{
+		try {
+			tdarray = "savedata6";
+			count = 6;
+			tdata.saveTaskData(tdarray, count);
 			
-		tdarray = "savedata6";
-		count = 6;
-		tdata.saveTaskData(tdarray, count);
-		
-		assertTrue(!PSP_DevelopmentData.tdarray[6].contains(tdarray));
-		
-		}
-		
-	    catch (ArrayIndexOutOfBoundsException e) {
-
+			assertTrue(!PSP_DevelopmentData.tdarray[6].contains(tdarray));
+		}catch (ArrayIndexOutOfBoundsException e) {
 	    	System.out.println("expected OOB");
-
 	    }
 		
-		try 
-		{
+		try {
 			
-		tdarray = "savedata-1";
-		count = -1;
-		tdata.saveTaskData(tdarray, count);
+			tdarray = "savedata-1";
+			count = -1;
+			tdata.saveTaskData(tdarray, count);
+			
+			assertTrue(!PSP_DevelopmentData.tdarray[-1].contains(tdarray));
 		
-		assertTrue(!PSP_DevelopmentData.tdarray[-1].contains(tdarray));
-		
-		}
-		
-	    catch (ArrayIndexOutOfBoundsException e) {
-
+		}catch (ArrayIndexOutOfBoundsException e) {
 	        System.out.println("expected OOB");
-
 	    }  
-		
-	
 	}
-
 }

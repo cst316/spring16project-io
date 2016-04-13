@@ -53,8 +53,7 @@ public class PSP_DevelopmentTaskDescription extends JFrame {
 		
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 			

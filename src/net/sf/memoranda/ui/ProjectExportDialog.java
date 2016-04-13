@@ -60,9 +60,10 @@ public class ProjectExportDialog extends JDialog {
     okB.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(ActionEvent e) {
         okB_actionPerformed(e);
-		if (fileChooser.getUI() instanceof BasicFileChooserUI) //Added to fix problem with export note
-		//jcscoobyrs 17-Nov-2003 at 08:36:14 AM
-		{//Added to fix problem with export note jcscoobyrs 17-Nov-2003 at 08:36:14 AM
+		if (fileChooser.getUI() instanceof BasicFileChooserUI){ 
+			//Added to fix problem with export note
+			//jcscoobyrs 17-Nov-2003 at 08:36:14 AM
+			//Added to fix problem with export note jcscoobyrs 17-Nov-2003 at 08:36:14 AM
 			BasicFileChooserUI ui = (BasicFileChooserUI)fileChooser.getUI();//Added to fix problem with export note
 			//jcscoobyrs 17-Nov-2003 at 08:36:14 AM
 			ui.getApproveSelectionAction().actionPerformed(e);//Added to fix problem with export note
