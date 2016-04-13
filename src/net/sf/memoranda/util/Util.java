@@ -6,7 +6,14 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda team: http://memoranda.sf.net
  */
+
 package net.sf.memoranda.util;
+
+import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.ui.App;
+import net.sf.memoranda.ui.AppFrame;
+import net.sf.memoranda.ui.ExceptionDialog;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,10 +25,6 @@ import java.util.Iterator;
 
 import javax.swing.JFileChooser;
 
-import net.sf.memoranda.date.CalendarDate;
-import net.sf.memoranda.ui.App;
-import net.sf.memoranda.ui.AppFrame;
-import net.sf.memoranda.ui.ExceptionDialog;
 import java.util.Random;
 
 /**
@@ -153,7 +156,8 @@ public class Util {
 
 			public void actionPerformed(ActionEvent arg0) {
 				for (Iterator i = tempFiles.iterator(); i.hasNext();) 
-					((File)i.next()).delete();				}
+					((File)i.next()).delete();				
+				}
 			});
     }
     

@@ -1,12 +1,10 @@
 package net.sf.memoranda.ui.treetable;
 
-import java.awt.Component;
-import java.awt.event.*;
-import java.awt.AWTEvent;
+import java.util.EventObject;
 import javax.swing.*;
 import javax.swing.event.*;
-import java.util.EventObject;
-import java.io.Serializable;
+
+
 
 public class AbstractCellEditor implements CellEditor {
 

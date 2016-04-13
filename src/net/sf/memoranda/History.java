@@ -6,21 +6,26 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package net.sf.memoranda;
+
+import net.sf.memoranda.util.Local;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-import java.util.Vector;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
+
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import net.sf.memoranda.util.Local;
+
 /**
  * 
  */

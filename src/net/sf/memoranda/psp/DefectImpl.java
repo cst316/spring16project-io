@@ -59,7 +59,7 @@ public class DefectImpl implements Defect, Serializable {
 	}
 	
 	/**
-	 * retrieves current working list object object as ArrayList<TestRowObject>
+	 * Retrieves current working list object object as ArrayList<TestRowObject>
 	 * @return testObj
 	 */
 	@Override
