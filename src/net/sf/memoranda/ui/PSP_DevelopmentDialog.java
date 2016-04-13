@@ -51,6 +51,10 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 		jbInit();
 	}
 
+	public PSP_DevelopmentDialog() {
+		jbInit();
+	}
+
 	private void jbInit() {
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
