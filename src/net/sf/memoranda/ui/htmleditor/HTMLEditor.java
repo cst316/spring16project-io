@@ -1,5 +1,7 @@
 package net.sf.memoranda.ui.htmleditor;
 
+import net.sf.memoranda.ui.htmleditor.util.Local; 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -56,7 +58,6 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 
-import net.sf.memoranda.ui.htmleditor.util.Local;
 
 /**
  *  
@@ -1692,6 +1693,7 @@ public class HTMLEditor extends JPanel {
 					if (!url.getProtocol().startsWith("http"))
 						path = imagesDir + "/" + url.getFile();
 				} catch (MalformedURLException e1) {
+					e1.printStackTrace();
 				}
 			}
 			try {

@@ -2,16 +2,8 @@
  * AgendaGenerator.java Package: net.sf.memoranda.util Created on 13.01.2004
  * 5:52:54 @author Alex
  */
-package net.sf.memoranda.util;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Vector;
-import java.util.Collections;
+package net.sf.memoranda.util;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Event;
@@ -23,9 +15,15 @@ import net.sf.memoranda.Task;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import nu.xom.Element;
-/**
- *  
- */
+
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Vector;
 
 /*$Id: AgendaGenerator.java,v 1.12 2005/06/13 21:25:27 velhonoja Exp $*/
 
@@ -136,10 +134,11 @@ public class AgendaGenerator {
 
 		int pg = t.getProgress();
 		String progress = "";
-		if (pg == 100)
+		if (pg == 100){
 			progress = "<font color=\"green\">"+Local.getString("Completed")+"</font>";
-		else
+		}else{
 			progress = pg + Local.getString("% donetest");
+		}
 
 		//		String nbsp = "&nbsp;&nbsp;";
 		//		String spacing = "";
@@ -197,11 +196,11 @@ public class AgendaGenerator {
 		    }                    
 		}
 =======*/
-		if (t.getEndDate().equals(date))
+		if (t.getEndDate().equals(date)){
 			s += "<p><font color=\"#FF9900\"><b>"
 					+ Local.getString("Should be done today")
 					+ ".</b></font></p>";
-		else {
+		}else {
 			Calendar endDateCal = t.getEndDate().getCalendar();
 			Calendar dateCal = date.getCalendar();
 			int numOfDays = (endDateCal.get(Calendar.YEAR)*365 + endDateCal.get(Calendar.DAY_OF_YEAR)) - 
@@ -210,8 +209,7 @@ public class AgendaGenerator {
 			if(numOfDays > 0) {
 				if (numOfDays > 1) {
 					days = Local.getString("in")+" "+numOfDays+" "+Local.getString("day(s)");		        
-				}
-				else {
+				}else {
 					days = Local.getString("tomorrow");		        
 				}
 				s += "<p>"
@@ -219,15 +217,13 @@ public class AgendaGenerator {
 						+ ": <i>"
 						+ t.getEndDate().getMediumDateString()
 						+ "</i> ("+days+")</p>";		        
-			}
-			else if ((numOfDays < 0) && (numOfDays > -10000)) {
+			}else if ((numOfDays < 0) && (numOfDays > -10000)) {
 				String overdueDays = String.valueOf(-1 * numOfDays);
 				s += "<p><font color=\"#FF9900\"><b>"
 						+ overdueDays + " "
 						+ Local.getString("days overdue")
 						+ ".</b></font></p>";
-			}
-			else {
+			}else {
 				// tasks that have no deadline
 				s += "<p>"
 						+ Local.getString("No Deadline")
@@ -241,8 +237,9 @@ public class AgendaGenerator {
 
 	static int getProgress(TaskList tl) {
 		Vector v = (Vector) tl.getAllSubTasks(null);
-		if (v.size() == 0)
+		if (v.size() == 0){
 			return -1;
+		}
 		int p = 0;
 		for (Enumeration en = v.elements(); en.hasMoreElements();) {
 			Task t = (Task) en.nextElement();
@@ -275,9 +272,10 @@ public class AgendaGenerator {
 				+ "</a></h2>\n"
 				+ "<table border=\"0\" width=\"100%\" cellpadding=\"2\" bgcolor=\"#EFEFEF\"><tr><td>" 
 				+ Local.getString("Start date")+": <i>"+p.getStartDate().getMediumDateString()+"</i>\n";
-		if (p.getEndDate() != null)
+		if (p.getEndDate() != null){
 			s += "<br>" + Local.getString("End date")+": <i>"+p.getEndDate().getMediumDateString()
-			+"</i>\n";        
+			+"</i>\n"; 
+		}
 		return s + generateTasksInfo(p, date,expandedTasks);        
 	}
 
@@ -292,8 +290,9 @@ public class AgendaGenerator {
 				i.hasNext();
 				) {
 			Project p = (Project) i.next();
-			if (!p.getID().equals(CurrentProject.get().getID()))
+			if (!p.getID().equals(CurrentProject.get().getID())){
 				s += generateProjectInfo(p, date, expandedTasks);
+			}
 		}
 		return s + "</td>";
 	}

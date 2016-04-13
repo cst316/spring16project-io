@@ -1007,8 +1007,9 @@ public class AltHTMLWriter extends AbstractWriter {
      * the purpose of writing them out.  Any keys that
      * have been converted will not appear in the resultant
      * set.  Any keys not converted will appear in the
-     * resultant set the same as the received set.<p>
-     * This will put the converted values into <code>to</code>, unless
+     * resultant set the same as the received set.
+     * 
+     * <p>This will put the converted values into <code>to</code>, unless
      * it is null in which case a temporary AttributeSet will be returned.
      */
     AttributeSet convertToHTML(AttributeSet from, MutableAttributeSet to) {
@@ -1743,9 +1744,11 @@ public class AltHTMLWriter extends AbstractWriter {
          * values in the range [anchor, oldLeadIndex], then select all the values 
          * values in the range [anchor, newLeadIndex], where oldLeadIndex is the old 
          * leadIndex and newLeadIndex is the new one. 
+         * 
          * <p> 
          * If the value at the anchor index is not selected, do the same thing in reverse, 
          * selecting values in the old range and deslecting values in the new one. 
+         * 
          * <p>
          * Generate a single event for this change and notify all listeners. 
          * For the purposes of generating minimal bounds in this event, do the 
@@ -1756,6 +1759,7 @@ public class AltHTMLWriter extends AbstractWriter {
          * but two events would be generated and the bounds around the changed values 
          * would be wider, including cells that had been first cleared and only 
          * to later be set. 
+         * 
          * <p>
          * This method can be used in the mouseDragged() method of a UI class 
          * to extend a selection.  

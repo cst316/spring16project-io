@@ -1,16 +1,16 @@
 package net.sf.memoranda.tests;
 
+import net.sf.memoranda.psp.DefectImpl;
+import net.sf.memoranda.psp.TestRowObject;
+
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import org.junit.Before;
-import org.junit.Test;
 
-import net.sf.memoranda.psp.Defect;
-import net.sf.memoranda.psp.DefectImpl;
-import net.sf.memoranda.psp.TestRowObject;
 
 public class DefectImplTest {
 	String path;

@@ -616,9 +616,9 @@ public class AppFrame extends JFrame {
             int w = new Integer((String) fwo).intValue();
             int h = new Integer((String) fho).intValue();
             this.setSize(w, h);
-        }
-        else
+        }else{
             this.setExtendedState(Frame.MAXIMIZED_BOTH);
+        }
 
         Object xo = Context.get("FRAME_XPOS");
         Object yo = Context.get("FRAME_YPOS");
@@ -668,7 +668,9 @@ public class AppFrame extends JFrame {
                         ExitConfirmationDialog dlg = new ExitConfirmationDialog(this,Local.getString("Exit"));
                         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
                         dlg.setVisible(true);
-                        if(dlg.CANCELLED) return;
+                        if(dlg.CANCELLED){
+                        	return;
+                        }
         }
 
         // Last chance to save items from PSP before exiting
@@ -726,8 +728,9 @@ public class AppFrame extends JFrame {
     }
 
     private static void exitNotify() {
-        for (int i = 0; i < exitListeners.size(); i++)
+        for (int i = 0; i < exitListeners.size(); i++){
             ((ActionListener) exitListeners.get(i)).actionPerformed(null);
+        }
     }
 
     public void setEnabledEditorMenus(boolean enabled) {
@@ -785,10 +788,12 @@ public class AppFrame extends JFrame {
         }
         //---------------------------------------------------------------------
 
-        if (lastSel != null)
+        if (lastSel != null){
             chooser.setCurrentDirectory(lastSel);
-        if (chooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION)
+        }
+        if (chooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION){
             return;
+        }
         Context.put("LAST_SELECTED_PACK_FILE", chooser.getSelectedFile());        
         java.io.File f = chooser.getSelectedFile();
         ProjectPackager.pack(CurrentProject.get(), f);
@@ -841,10 +846,12 @@ public class AppFrame extends JFrame {
         }
         //---------------------------------------------------------------------
 
-        if (lastSel != null)
+        if (lastSel != null){
             chooser.setCurrentDirectory(lastSel);
-        if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION)
+        }
+        if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){
             return;
+        }
         Context.put("LAST_SELECTED_PACK_FILE", chooser.getSelectedFile());        
         java.io.File f = chooser.getSelectedFile();
         ProjectPackager.unpack(f);
