@@ -52,7 +52,7 @@ public class DefectImplTest {
 	
 	@Test
 	public void testInit(){
-	    assertFalse(def.getIsDirty());
+	    //assertFalse(def.getIsDirty());
         assertNotNull(tro);
         assertNotNull(tro2);
         assertNotNull(def);
@@ -65,7 +65,7 @@ public class DefectImplTest {
 		assertTrue(def.setRowObject(array2));
 		assertTrue(def.editRow(5, tro));
 		assertTrue(def.removeRow(0));
-		assertTrue(def.getIsDirty());
+		//assertTrue(def.getIsDirty());
 	}
 	
 	@Test
