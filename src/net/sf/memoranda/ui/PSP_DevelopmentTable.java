@@ -28,9 +28,10 @@ import java.awt.event.ActionEvent;
 
 public class PSP_DevelopmentTable extends JPanel implements Serializable {
 
-	private static final long serialVersionUID = 1223267046325848388L;
+	private static final long serialVersionUID = 1L;
+
 	private JPanel contentPane;
-	private static JTable table;
+	static JTable table;
 	private static boolean isDirty = false;
 
 	protected Development devel;
@@ -134,46 +135,21 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 				new Object[][] { { "Example0", "Example1", "Example2", "Example3", "Example4", "Example5", "Example6",
 						"Example7", "Example8" }, },
 				new String[] { "Task", "Start Date", "Est. End Date", "Actual End Date", "Priority", "Status",
-						"Estimate (Hrs)", "Actual (Hrs)", "% Done" }));
+						"Estimate (Hrs)", "Actual (Hrs)", "% Done" }) {
+
+			private static final long serialVersionUID = 1L;
+
+			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, true };
+
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		table.getColumnModel().getColumn(2).setPreferredWidth(99);
 		table.getColumnModel().getColumn(3).setPreferredWidth(104);
-		table.getColumnModel().getColumn(5).setPreferredWidth(76); // status
-																	// column
+		table.getColumnModel().getColumn(5).setPreferredWidth(76);
 		table.getColumnModel().getColumn(6).setPreferredWidth(102);
 		table.getColumnModel().getColumn(7).setPreferredWidth(86);
-
-		/*
-		 * Dropdown on priority/status columns starts here
-		 * 
-		 */
-
-		TableColumn statusColumn = table.getColumnModel().getColumn(5); // 5 is
-																		// status
-		JComboBox comboBox1 = new JComboBox();
-		comboBox1.addItem("OPEN");
-		comboBox1.addItem("COMPLETE");
-		statusColumn.setCellEditor(new DefaultCellEditor(comboBox1));
-
-		TableColumn priorityColumn = table.getColumnModel().getColumn(4); // 4
-																			// is
-																			// priority
-		JComboBox comboBox2 = new JComboBox();
-		comboBox2.addItem("LOW");
-		comboBox2.addItem("MEDIUM");
-		comboBox2.addItem("HIGH");
-		priorityColumn.setCellEditor(new DefaultCellEditor(comboBox2));
-
-		TableColumn estpercentColumn1 = table.getColumnModel().getColumn(8); // 8
-																				// is
-																				// percent
-																				// complete
-																				// estimate
-		JComboBox comboBox3 = new JComboBox();
-		comboBox3.addItem("25");
-		comboBox3.addItem("50");
-		comboBox3.addItem("75");
-		comboBox3.addItem("100");
-		estpercentColumn1.setCellEditor(new DefaultCellEditor(comboBox3));
 
 		scrollPane.setViewportView(table);
 		contentPane.setLayout(gl_contentPane);
@@ -210,15 +186,11 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 	}
 
 	public static void editRow(String cellvalue, int col) {
-		// not finished
-		String existingrow1; // TODO: getvalueat at (row, col0), (row, col1),
-								// etc.
 
 		// row = value of specific single row
 		int row = table.getSelectedRow();
 
-		// takes in string value that goes into cell, the row's number and the
-		// row's column
+		// string and the row/column it goes to
 		((DefaultTableModel) table.getModel()).setValueAt(cellvalue, row, col);
 
 	}
@@ -229,15 +201,12 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		((DefaultTableModel) table.getModel()).setValueAt(actualHours, row, 7);
 		((DefaultTableModel) table.getModel()).setValueAt(actualEndDate, row, 3);
 		((DefaultTableModel) table.getModel()).setValueAt("COMPLETE", row, 5);
-		// column 5 hold the "status"
-		((DefaultTableModel) table.getModel()).setValueAt("100", row, 8); // 8 =
-																			// est%
-
+		// column 5 hold the "status", 8 est
+		((DefaultTableModel) table.getModel()).setValueAt("100", row, 8);
 	}
 
 	public static Object getCellValues(int col) {
 		int row = table.getSelectedRow();
-		// int col = table.getSelectedColumn();
 
 		Object cellvalue = ((DefaultTableModel) table.getModel()).getValueAt(row, col);
 
@@ -263,20 +232,18 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 			nw.setVisible(true);
 
 		} else if (a.equalsIgnoreCase("Close Task")) {
-			
+
 			PSP_DevelopmentDialogClose nw = new PSP_DevelopmentDialogClose();
 			nw.index = table.getSelectedRow();
 			nw.devel = devel;
 			nw.setVisible(true);
 
 		} else if (a.equalsIgnoreCase("Edit Task")) {
-			 
+
 			PSP_DevelopmentEditDialog nw = new PSP_DevelopmentEditDialog();
 			nw.indexCount = table.getSelectedRow();
 			nw.myDevel = devel;
 			nw.setVisible(true);
-			
-			
 
 		}
 
