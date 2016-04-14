@@ -20,10 +20,12 @@ import javax.swing.border.EmptyBorder;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import net.sf.memoranda.psp.DevRowObject;
+import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.Util;
 import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 
@@ -50,6 +52,7 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 	}
 	
 	private void jbInit() {
+		setLook ();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 605, 468);
 		contentPane = new JPanel();
@@ -272,7 +275,7 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 			if (!editEstDateTextField.getText().isEmpty()) {
 				myDevRow.setEstDate(editEstDateTextField.getText());
 			}
-			if (NumberUtils.isParsable(editEstTimeTextField.getText())) {
+			if (NumberUtils.isNumber(editEstTimeTextField.getText())) {
 				myDevRow.setEstimate(Integer.parseInt(editEstTimeTextField.getText().trim()));
 			}
 			myDevRow.setDescription (editDescriptionTextField.getText());
@@ -305,5 +308,23 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		Util.debug("In here: " + d.toString());
 				
 		return (df.format(d));
-	}	
+	}
+	
+	private static void setLook () {
+		try {
+			if (Configuration.get("LOOK_AND_FEEL").equals("system"))
+				UIManager.setLookAndFeel(
+					UIManager.getSystemLookAndFeelClassName());
+			else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
+				UIManager.setLookAndFeel(
+					UIManager.getCrossPlatformLookAndFeelClassName());					
+			else if (
+				Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+				UIManager.setLookAndFeel(
+					Configuration.get("LOOK_AND_FEEL").toString());
+		} catch (Exception e) {		    
+			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", 
+					"Make sure that specified look-and-feel library classes are on the CLASSPATH.");
+		}
+	}
 }

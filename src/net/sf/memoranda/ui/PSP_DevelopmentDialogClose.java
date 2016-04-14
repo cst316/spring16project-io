@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import net.sf.memoranda.psp.DevRowObject;
+import net.sf.memoranda.util.Configuration;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 public class PSP_DevelopmentDialogClose extends JFrame {
 
@@ -38,6 +40,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 	}
 	
 	private void jbInit() {
+		setLook();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 536, 389);
 		contentPane = new JPanel();
@@ -151,6 +154,24 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 			
 			dispose();			
 			PSP_DevelopmentTable.closeTask(myDevRow);			
+		}
+	}
+	
+	private static void setLook () {
+		try {
+			if (Configuration.get("LOOK_AND_FEEL").equals("system"))
+				UIManager.setLookAndFeel(
+					UIManager.getSystemLookAndFeelClassName());
+			else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
+				UIManager.setLookAndFeel(
+					UIManager.getCrossPlatformLookAndFeelClassName());					
+			else if (
+				Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+				UIManager.setLookAndFeel(
+					Configuration.get("LOOK_AND_FEEL").toString());
+		} catch (Exception e) {		    
+			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", 
+					"Make sure that specified look-and-feel library classes are on the CLASSPATH.");
 		}
 	}
 }

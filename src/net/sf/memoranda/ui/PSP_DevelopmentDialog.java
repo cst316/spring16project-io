@@ -3,13 +3,10 @@ package net.sf.memoranda.ui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-
 import net.sf.memoranda.psp.DevRowObject;
+import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.Util;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
@@ -23,6 +20,8 @@ import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 import java.awt.Color;
 
 public class PSP_DevelopmentDialog extends JFrame implements Serializable {
@@ -48,6 +47,7 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 	}
 
 	private void jbInit() {
+		setLook();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 589, 408);
 		contentPane = new JPanel();
@@ -198,7 +198,7 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 				myDevRow.setEstDate(estDateTextField.getText());
 			}
 			myDevRow.setPriority(jcbPriority.getSelectedIndex());
-			if (NumberUtils.isParsable(estTimeTextField.getText())) {
+			if (NumberUtils.isNumber(estTimeTextField.getText())) {
 				Util.debug("IS NUMERIC");
 				myDevRow.setEstimate(Integer.parseInt(estTimeTextField.getText()));
 			}
@@ -209,6 +209,24 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 			PSP_DevelopmentTable.insertRow(myDevRow);
 		} else {
 			taskTextField.requestFocus();
+		}
+	}
+	
+	private static void setLook () {
+		try {
+			if (Configuration.get("LOOK_AND_FEEL").equals("system"))
+				UIManager.setLookAndFeel(
+					UIManager.getSystemLookAndFeelClassName());
+			else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
+				UIManager.setLookAndFeel(
+					UIManager.getCrossPlatformLookAndFeelClassName());					
+			else if (
+				Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+				UIManager.setLookAndFeel(
+					Configuration.get("LOOK_AND_FEEL").toString());
+		} catch (Exception e) {		    
+			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", 
+					"Make sure that specified look-and-feel library classes are on the CLASSPATH.");
 		}
 	}
 }

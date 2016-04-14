@@ -258,9 +258,6 @@ public class PSP_NPWizardFrame extends JFrame {
 		}		
 	}
 	
-	/**
-	 * Sets the look and feel for this frame based on look and feel for parent frame
-	 */
 	private void setLook () {
 		try {
 			if (Configuration.get("LOOK_AND_FEEL").equals("system"))
