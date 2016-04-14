@@ -23,21 +23,20 @@ import java.awt.Color;
 
 public class PSP_DevelopmentTable extends JPanel implements Serializable {
 
-	private static final long serialVersionUID = 1223267046325848388L;
+	private static final long serialVersionUID = 1L;
+
 	private JPanel contentPane;
-	private static JTable table;
+	static JTable table;
 	private static boolean isDirty = false;
 
 	protected static Development devel;
 
 	public PSP_DevelopmentTable() {
-		devel = new DevelopmentImpl();
-		jbInit();
+		this(new DevelopmentImpl());
 	}
 
 	public PSP_DevelopmentTable(Development devel) {
 		PSP_DevelopmentTable.devel = devel;
-		Util.debug("Devel initialized: ".toUpperCase());
 		jbInit();
 	}
 
@@ -119,13 +118,21 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		
 		table.setModel(new DefaultTableModel(new Object[][] {{},},
 				new String[] { "Task", "Start Date", "Est. End Date", "Actual End Date", "Priority", "Status",
-						"Estimate (Hrs)", "Actual (Hrs)", "% Done" }));
+						"Estimate (Hrs)", "Actual (Hrs)", "% Done" }) {
+			private static final long serialVersionUID = 1L;
+
+			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, true };
+
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		
 		table.getColumnModel().getColumn(2).setPreferredWidth(99);
 		table.getColumnModel().getColumn(3).setPreferredWidth(104);
 		table.getColumnModel().getColumn(5).setPreferredWidth(76);
 		table.getColumnModel().getColumn(6).setPreferredWidth(102);
 		table.getColumnModel().getColumn(7).setPreferredWidth(86);
-		
 		setLayout(null);
 
 		scrollPane.setViewportView(table);
@@ -149,8 +156,9 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		
 		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(), tdarray);
 		
-		dirty = devel.addRow(devRow);		
-		if (!dirty) {
+		dirty = devel.addRow(devRow);	
+		
+		if (!getIsDirty()) {
 			setIsDirty(dirty);
 		}
 		
@@ -163,7 +171,6 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		}
 	}
 
-	// Add the remaining of the table rows here
 	private static void updateRowData(DevRowObject myDevRow) {
 		Object[] tdarray = new Object [9];
 		
@@ -225,6 +232,10 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 				}
 			}
 		}
+		
+		if (table.getRowCount() == 0) {
+			((DefaultTableModel) table.getModel()).insertRow(0, new Object[9]);	
+		}
 	}
 
 	protected static void editRow(DevRowObject myDevRow) {
@@ -283,8 +294,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 	private void button_clicked(String a) {
 		int index = table.getSelectedRow();
 		DevRowObject myDevRow = new DevRowObject();
-		
-		
+				
 		if (index >= 0 && index < devel.getRow().size()) {
 			myDevRow = devel.getRow().get(index); 
 		}
@@ -310,7 +320,6 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 	
 	protected static void editDescription (String str) {
 		int index = table.getSelectedRow();
-		
 		devel.getRow().get(index).setDescription(str);
 	}
 
@@ -331,6 +340,8 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 
 	public static void setIsDirty(boolean dirty) {
 		isDirty = dirty;
+		
+		Util.debug("Interesting Phenom");
 		if (isDirty) {
 			PSP_Panel.setIsDirty(true);
 			PSP_Panel.myPanel.setSaveEnabled();

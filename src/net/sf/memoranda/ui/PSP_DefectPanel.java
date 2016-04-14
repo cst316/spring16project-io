@@ -324,8 +324,7 @@ public class PSP_DefectPanel extends JPanel {
 		}
 	}
 		
-	private void update()
-	{
+	private void update(){
 		boolean dirty = false;
 		
 		for (int i = 0; i < addButtonList.size(); i++) {
@@ -382,8 +381,7 @@ public class PSP_DefectPanel extends JPanel {
 			fixRefTextFieldList.get(i).setText(defect.getRowObject().get(i).getFixRef());
 			
 			//Disabling text field objects from editing unless you click on edit button
-			for (Component t : this.addDefectPanelsList.get(i).getComponents())
-			{
+			for (Component t : this.addDefectPanelsList.get(i).getComponents()){
 				if (t instanceof JTextField) {
 					((JTextField) t).setEditable(false);
 				}
@@ -512,12 +510,11 @@ public class PSP_DefectPanel extends JPanel {
 		eachDefect_panel.setPreferredSize(new Dimension (width, y + height));
 	}
 	
-	private void edit(ActionEvent e)
-	{
-		for(int i = 0; i < addButtonList.size(); i++)
-		{
+	private void edit(ActionEvent e){
+		for(int i = 0; i < addButtonList.size(); i++){
 			if (e.getSource() == editButtonList.get(i) && 
-					(!typeTextFieldList.get(i).isEditable())) {
+					(!typeTextFieldList.get(i).isEditable())){
+				
 				programTextFieldList.get(i).setEditable(true);
 				typeTextFieldList.get(i).setEditable(true);
 				typeTextFieldList.get(i).setEditable(true);
@@ -534,10 +531,8 @@ public class PSP_DefectPanel extends JPanel {
 		}				
 	}
 	
-	private void editAll()
-	{
-		for(int i = 0; i < addButtonList.size(); i++)
-		{
+	private void editAll(){
+		for(int i = 0; i < addButtonList.size(); i++){
 			programTextFieldList.get(i).setEditable(true);
 			typeTextFieldList.get(i).setEditable(true);
 			typeTextFieldList.get(i).setEditable(true);

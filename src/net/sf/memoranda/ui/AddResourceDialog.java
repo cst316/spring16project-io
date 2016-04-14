@@ -1,5 +1,7 @@
 package net.sf.memoranda.ui;
 
+import net.sf.memoranda.util.Local;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,21 +12,22 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.event.CaretEvent;
 
-import net.sf.memoranda.util.Local;
+
 
 /*$Id: AddResourceDialog.java,v 1.12 2007/03/20 06:21:46 alexeya Exp $*/
 public class AddResourceDialog extends JDialog {
@@ -272,8 +275,9 @@ public class AddResourceDialog extends JDialog {
         /*java.io.File lastSel = (java.io.File) Context.get("LAST_SELECTED_RESOURCE_FILE");
         if (lastSel != null)
             chooser.setCurrentDirectory(lastSel);*/
-        if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION)
+        if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){
             return;
+        }
         /*try {
             Context.put("LAST_SELECTED_RESOURCE_FILE", chooser.getSelectedFile());
         }

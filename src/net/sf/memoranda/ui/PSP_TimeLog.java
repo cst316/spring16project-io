@@ -397,10 +397,8 @@ public class PSP_TimeLog extends JPanel {
 		pnlEachLog.setPreferredSize(new Dimension (width, y + height));
 	}
 	
-	private void edit(ActionEvent e)
-	{
-		for(int i = 0; i < addButtonList.size(); i++)
-		{
+	private void edit(ActionEvent e){
+		for(int i = 0; i < addButtonList.size(); i++){
 			if (e.getSource() == editButtonList.get(i) && 
 					(!dateTextList.get(i).isEditable())) {
 				dateTextList.get(i).setEditable(true);
@@ -417,10 +415,8 @@ public class PSP_TimeLog extends JPanel {
 		}				
 	}
 	
-	private void editAll()
-	{
-		for(int i = 0; i < addButtonList.size(); i++)
-		{
+	private void editAll(){
+		for(int i = 0; i < addButtonList.size(); i++){
 			dateTextList.get(i).setEditable(true);
 			startTimeList.get(i).setEditable(true);
 			interruptTimeList.get(i).setEditable(true);

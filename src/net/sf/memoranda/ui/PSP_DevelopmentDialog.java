@@ -22,16 +22,14 @@ import java.awt.Color;
 public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 
 	private static final long serialVersionUID = -4064987826608820142L;
-	public static Object[] tdarray;
+	
 	protected JPanel contentPane;
 	protected JTextField taskTextField;
 	protected JTextField descriptionTextField;
 	protected JTextField startDateTextField;
 	protected JTextField estDateTextField;
 	protected JTextField estTimeTextField;
-	
 	private DevRowObject myDevRow;
-	private boolean isDirty;
 	private JComboBox<String> jcbPriority;
 
 	public PSP_DevelopmentDialog() {
@@ -89,15 +87,13 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				buildArray();
+				insertRow();
 			}
 		});
 
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-
-			{
+			public void actionPerformed(ActionEvent e){
 				dispose();
 			}
 		});
@@ -186,8 +182,7 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 		contentPane.setLayout(gl_contentPane);
 	}
 
-	private void buildArray() {
-
+	private void insertRow() {
 		if (!taskTextField.getText().isEmpty()) {
 			myDevRow.setTaskName(taskTextField.getText());
 			myDevRow.setStartDate(startDateTextField.getText());
@@ -202,13 +197,5 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 		} else {
 			taskTextField.requestFocus();
 		}
-	}
-
-	public void setIsDirty(boolean dirty) {
-		this.isDirty = dirty;
-	}
-
-	public boolean getIsDirty() {
-		return this.isDirty;
 	}
 }

@@ -43,8 +43,7 @@ public class ProjectPackager {
     public static void pack(Project prj, File zipfile) {
         ZipOutputStream zip = null;
         
-        if(zipfile.getName().indexOf(".zip") == -1)
-        {
+        if(zipfile.getName().indexOf(".zip") == -1){
             zipfile = new File(zipfile.getPath() + ".zip");
         }
         
@@ -97,8 +96,7 @@ public class ProjectPackager {
             Enumeration files;           
             for (files = zip.entries(); files.hasMoreElements();){
                 ZipEntry ze = (ZipEntry)files.nextElement();
-                if ( ze.isDirectory() )
-                {
+                if ( ze.isDirectory() ){
                    File theDirectory = new File (JN_DOCPATH + prj.getID()+ "/" + ze.getName() );
                    // create this directory (including any necessary parent directories)
                    theDirectory.mkdirs();
@@ -132,20 +130,17 @@ public class ProjectPackager {
      * Packs all files in the given directory into the given ZIP stream.
      * Also recurses down into subdirectories.
      */
-    public static void PackDirectory( String startingDirectory,
-                                    File theDirectory,
-                                    ZipOutputStream theZIPStream )
-    throws java.io.IOException
-    {
+    public static void PackDirectory( String startingDirectory, File theDirectory,
+    		ZipOutputStream theZIPStream) throws java.io.IOException{
+    	
        File[] theFiles = theDirectory.listFiles();
        File stDirectory = new File(startingDirectory);
-       System.out.println("Path="+stDirectory.getPath()+";length="+stDirectory.getPath().length() + "==>"+theFiles[0]);
+       System.out.println("Path="+stDirectory.getPath() + ";length=" 
+    		   + stDirectory.getPath().length() + "==>"+theFiles[0]);
        int j = stDirectory.getPath().length();
-       for ( int i=0 ; i<theFiles.length ; i++ )
-       {
+       for ( int i=0 ; i<theFiles.length ; i++ ){
           String sRelPath = theFiles[i].getPath().substring(j);
-          if ( theFiles[i].isDirectory() )
-          {
+          if ( theFiles[i].isDirectory() ){
              // create a directory entry.
              // directory entries must be terminated by a slash!
              ZipEntry theEntry = new ZipEntry("."+sRelPath+"/" );
@@ -154,9 +149,8 @@ public class ProjectPackager {
 
              // recurse down
              PackDirectory( startingDirectory, theFiles[i], theZIPStream );
-          }
-          else // regular file
-          { 
+          }else{ // regular file
+        	  
             File f = theFiles[i];
             ZipEntry ze = new ZipEntry("."+sRelPath);
             FileInputStream in = new FileInputStream(f);
@@ -169,5 +163,4 @@ public class ProjectPackager {
           }
        }
     }
-
 }

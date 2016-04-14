@@ -20,7 +20,7 @@ public class Resource {
     /**
      * Constructor for Resource.
      * @param path, the path to the file.
-     * @param isInetShortcut, if the resource is a internet shortcut.
+     * @param isInetShortcut, if the resource is a Internet shortcut.
      * @param isProjectFile, if file is copied to project directory.
      */
     public Resource(String path, boolean isInetShortcut, boolean isProjectFile) {

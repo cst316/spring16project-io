@@ -13,8 +13,9 @@ package net.sf.memoranda.ui.treetable;
  * you entered into with Sun.
  */
 
-import javax.swing.tree.*;
 import javax.swing.event.*;
+import javax.swing.tree.*;
+
  
 /**
  * @version 1.2 10/27/98
@@ -81,9 +82,10 @@ public abstract class AbstractTreeTableModel implements TreeTableModel {
         for (int i = listeners.length-2; i>=0; i-=2) {
             if (listeners[i]==TreeModelListener.class) {
                 // Lazily create the event:
-                if (e == null)
-                    e = new TreeModelEvent(source, path, 
-                                           childIndices, children);
+                if (e == null){
+                	e = new TreeModelEvent(source, path,childIndices, children);
+                }
+                                           
                 ((TreeModelListener)listeners[i+1]).treeNodesChanged(e);
             }          
         }
@@ -107,9 +109,10 @@ public abstract class AbstractTreeTableModel implements TreeTableModel {
         for (int i = listeners.length-2; i>=0; i-=2) {
             if (listeners[i]==TreeModelListener.class) {
                 // Lazily create the event:
-                if (e == null)
+                if (e == null){
                     e = new TreeModelEvent(source, path, 
                                            childIndices, children);
+                }
                 ((TreeModelListener)listeners[i+1]).treeNodesInserted(e);
             }          
         }
@@ -133,9 +136,10 @@ public abstract class AbstractTreeTableModel implements TreeTableModel {
         for (int i = listeners.length-2; i>=0; i-=2) {
             if (listeners[i]==TreeModelListener.class) {
                 // Lazily create the event:
-                if (e == null)
+                if (e == null){
                     e = new TreeModelEvent(source, path, 
                                            childIndices, children);
+                }
                 ((TreeModelListener)listeners[i+1]).treeNodesRemoved(e);
             }          
         }
@@ -159,9 +163,10 @@ public abstract class AbstractTreeTableModel implements TreeTableModel {
         for (int i = listeners.length-2; i>=0; i-=2) {
             if (listeners[i]==TreeModelListener.class) {
                 // Lazily create the event:
-                if (e == null)
+                if (e == null){
                     e = new TreeModelEvent(source, path, 
                                            childIndices, children);
+                }
                 ((TreeModelListener)listeners[i+1]).treeStructureChanged(e);
             }          
         }
@@ -171,7 +176,9 @@ public abstract class AbstractTreeTableModel implements TreeTableModel {
     // Default impelmentations for methods in the TreeTableModel interface. 
     //
 
-    public Class getColumnClass(int column) { return Object.class; }
+    public Class getColumnClass(int column){
+    	return Object.class;
+    }
 
    /** By default, make the column with the Tree in it the only editable one. 
     *  Making this column editable causes the JTable to forward mouse 

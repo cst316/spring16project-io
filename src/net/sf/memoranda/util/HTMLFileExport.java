@@ -59,8 +59,7 @@ public class HTMLFileExport {
 					//Added to fix the file if there was no extention given
 					//jcscoobyrs 17-Nov-2003 at 09:08:55
 					//------------------------------------------------------
-					if(f.getName().indexOf(".htm") == -1)
-					{
+					if(f.getName().indexOf(".htm") == -1){
 						String dir = f.getPath();
 						String ext = ".html";
 						//String ps = System.getProperty("file.separator");

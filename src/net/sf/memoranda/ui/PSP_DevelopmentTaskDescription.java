@@ -17,7 +17,6 @@ public class PSP_DevelopmentTaskDescription extends JFrame {
 	private static final long serialVersionUID = 2118032659774440714L;
 	private JPanel contentPane;
 	protected JTextField txtTextPopulatedFrom;
-	private String description = "";
 	private DevRowObject myDevRow;
 	
 	public PSP_DevelopmentTaskDescription(DevRowObject devRow) {
@@ -45,11 +44,9 @@ public class PSP_DevelopmentTaskDescription extends JFrame {
 		
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
+			public void actionPerformed(ActionEvent arg0)	{
 				button_clicked ();
-			}
-			
+			}			
 		});
 		btnOk.setBounds(195, 262, 97, 25);
 		contentPane.add(btnOk);

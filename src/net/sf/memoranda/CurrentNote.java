@@ -18,7 +18,8 @@ public class CurrentNote {
     }
 
     public static void reset() {
-//    	 set toSave to true to mimic status quo behaviour only. the appropriate setting could be false
+    	/*Set toSave to true to mimic status quo behavior only. 
+    	The appropriate setting could be false*/
         set(null, true);
     }
 

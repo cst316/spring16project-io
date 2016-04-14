@@ -8,7 +8,6 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import net.sf.memoranda.ui.App;
 import net.sf.memoranda.util.Local;
-import net.sf.memoranda.util.Util;
 
 /**
  * 
@@ -42,23 +41,6 @@ public class DevRowObject implements Serializable{
 		this.actualComplete = 0;
 		
 		this.percentDone = calcPercentDone();
-	}
-	
-	public DevRowObject(Date startDate, Date endDate, Date estDate,
-			String taskName, String status, int priority, int estimate,
-			float actualComplete){
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.estDate = estDate;
-		this.taskName = taskName;
-		this.status = status;
-		this.priority = priority;
-		
-		// must be 1 incase percent complete is called to be calculated
-		this.estimate = estimate; 
-		this.actualComplete = actualComplete;
-		
-		//this.percentDone = calcPercentDone();
 	}
 	
 	public Date setDate(String strDate) {

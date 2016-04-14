@@ -33,15 +33,13 @@ public class DesignImpl implements Design, Serializable {
 		this.filePath = filePath;
 	}
 	
-	public DesignImpl()
-	{
+	public DesignImpl(){
 		filePath = "";
 		files = null;
 		pspValues = null;
 	}
 	
-	public DesignImpl(ArrayList<String> theFiles, String nameOfFile)
-	{
+	public DesignImpl(ArrayList<String> theFiles, String nameOfFile){
 		filePath = nameOfFile;
 		files = theFiles;
 	}
@@ -64,8 +62,7 @@ public class DesignImpl implements Design, Serializable {
 		return true;
 	}
 	
-	public void fileAdd(String the_filePath)
-	{
+	public void fileAdd(String the_filePath){
 		files.add(the_filePath);
 	}
 	
@@ -84,21 +81,15 @@ public class DesignImpl implements Design, Serializable {
 		try{
 				theFileToUse = new File(thePathOfFile);
 			
-			if (theFileToUse.getName().contains(".png"))
-			{
+			if (theFileToUse.getName().contains(".png")){
 				ImageIO.write(myImage, "png", new File(thePathOfFile + File.separator + theFileToUse.getName()));
-			}
-			else if (theFileToUse.getName().contains(".jpg"))
-			{
+			}else if (theFileToUse.getName().contains(".jpg")){
 				ImageIO.write(myImage, "jpg", new File(thePathOfFile + File.separator + theFileToUse.getName())); 
-			}else if (theFileToUse.getName().contains(".img"))
-			{
+			}else if (theFileToUse.getName().contains(".img")){
 				ImageIO.write(myImage, "img", new File(thePathOfFile + File.separator + theFileToUse.getName()));
-			} else if (theFileToUse.getName().contains(".tif"))
-			{
+			}else if (theFileToUse.getName().contains(".tif")){
 				ImageIO.write(myImage, "tif", new File(thePathOfFile + File.separator + theFileToUse.getName())); 
-			} else
-			{
+			}else{
 				System.out.println("Invalid file format!");
 			}
 			
@@ -123,8 +114,8 @@ public class DesignImpl implements Design, Serializable {
 	 * if file size is 0 or null 
 	 * @throws Exception catch any left over exception that could possibly occur
 	 */
-	public boolean deleteImageFile()
-	{
+	public boolean deleteImageFile(){
+		
 	    boolean temp = true;
 	    try{
 	        files.remove(files.size()-1);

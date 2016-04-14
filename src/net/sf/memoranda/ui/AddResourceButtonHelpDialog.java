@@ -1,5 +1,7 @@
 package net.sf.memoranda.ui;
 
+import net.sf.memoranda.util.Local;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,19 +16,10 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.event.CaretEvent;
-
-import net.sf.memoranda.util.Local;
 import javax.swing.JTextPane;
-import java.awt.Label;
 
 public class AddResourceButtonHelpDialog extends JDialog{	
 	JPanel resButtonHelpdialogTitlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -61,12 +54,14 @@ public class AddResourceButtonHelpDialog extends JDialog{
     void jbInit() throws Exception {
 		this.setResizable(false);
 		resButtonHelpdialogTitlePanel.setBackground(Color.WHITE);
-		resButtonHelpdialogTitlePanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+		resButtonHelpdialogTitlePanel.setBorder(
+				BorderFactory.createEmptyBorder(0, 5, 0, 5));
 		resButtonHelpheader.setFont(new java.awt.Font("Dialog", 0, 20));
 		resButtonHelpheader.setForeground(new Color(0, 0, 124));
 		resButtonHelpheader.setText(Local.getString("Resource Button Help"));
-		resButtonHelpheader.setIcon(new ImageIcon(net.sf.memoranda.ui.AddResourceDialog.class.getResource(
-            "resources/icons/help.png")));
+		resButtonHelpheader.setIcon(new ImageIcon(
+				net.sf.memoranda.ui.AddResourceDialog.class.getResource(
+					"resources/icons/help.png")));
 		resButtonHelpdialogTitlePanel.add(resButtonHelpheader);
         this.getContentPane().add(resButtonHelpdialogTitlePanel, BorderLayout.NORTH);
         this.getContentPane().add(areaPanel, BorderLayout.CENTER);
@@ -76,14 +71,15 @@ public class AddResourceButtonHelpDialog extends JDialog{
         gbc_resourceButtons.fill = GridBagConstraints.BOTH;
         gbc_resourceButtons.gridx = 1;
         gbc_resourceButtons.gridy = 0;
-        resourceButtons.setText("New Resource button: allows you to add a new resource.\n"
-        		+ "You can either type the file path or browse for the file path.\n" +
-        		"You can also choose to copy the file to memoranda to save it for a later use.\n" +
-        		"If you choose Internet Shortcut, make sure to type the URL or paste the URL from your browser.\n"
-        		+ "                                 \n" + "Remove Resource button: when clicked, a selected resource is instantly removed.\n"
-        		+ "                  \n" + "Refresh Resource button:"
-        				+ " if you're not seeing your resource, use the refresh resource button.\n"
-        		+ "           \n" + "Undo button: the last resource that is added is removed.\n");
+        resourceButtons.setText("New Resource button: allows you to add a new resource.\n" +
+        		"You can either type the file path or browse for the file path.\n" +
+        		"You can also choose to copy the file to memoranda to save it for " +
+        		"a later use.\n If you choose Internet Shortcut, make sure to type " +
+        		"the URL or paste the URL from your browser.\n" + 
+        		"\nRemove Resource button: when clicked, a selected resource is " + 
+        		"instantly removed.\n\n Refresh Resource button: if you're not " + 
+        		"seeing your resource, use the refresh resource button.\n" +
+        		"\nUndo button: the last resource that is added is removed.\n");
         resourceButtons.setEditable(false);
         areaPanel.add(resourceButtons, gbc_resourceButtons);
         
@@ -95,12 +91,15 @@ public class AddResourceButtonHelpDialog extends JDialog{
         
         newResource.setIcon(new ImageIcon(net.sf.memoranda.ui.AddResourceDialog.class.getResource(
                 "resources/icons/addresource.png")));
-        removeResource.setIcon(new ImageIcon(net.sf.memoranda.ui.AddResourceDialog.class.getResource(
-                "resources/icons/removeresource.png")));
-        refreshResource.setIcon(new ImageIcon(net.sf.memoranda.ui.AddResourceDialog.class.getResource(
-                "resources/icons/refreshres.png")));
-        undoResource.setIcon(new ImageIcon(net.sf.memoranda.ui.AddResourceDialog.class.getResource(
-                "resources/icons/events_undo.png")));
+        removeResource.setIcon(new ImageIcon(
+        		net.sf.memoranda.ui.AddResourceDialog.class.getResource(
+        				"resources/icons/removeresource.png")));
+        refreshResource.setIcon(new ImageIcon(
+        		net.sf.memoranda.ui.AddResourceDialog.class.getResource(
+        				"resources/icons/refreshres.png")));
+        undoResource.setIcon(new ImageIcon(
+        		net.sf.memoranda.ui.AddResourceDialog.class.getResource(
+        				"resources/icons/events_undo.png")));
         panel.add(newResource);
         
         panel.add(removeResource);
