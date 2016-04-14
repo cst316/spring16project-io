@@ -150,19 +150,32 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		if (devel.getRow().size() < 1) {
 			((DefaultTableModel) table.getModel()).removeRow(0);
 		}
-		
-		Object[] tdarray = { devRow.getTaskName(), getDateTime(devRow.getStartDate(), 0), 
-				getDateTime(devRow.getEstDate(), 0), null, getPriorityItem(devRow.getPriority()), null, devRow.getEstimate() };
-		
-		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(), tdarray);
+			
+		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(), getObject(devRow));
 		
 		dirty = devel.addRow(devRow);	
 		
 		if (!getIsDirty()) {
 			setIsDirty(dirty);
 		}
+	}
+	
+	private static Object[] getObject (DevRowObject devRow) {
+		Object[] tdarray = new Object[9];		
+		tdarray[0] = devRow.getTaskName();
+		tdarray[1] = (devRow.getStartDate() != null ? 
+				getDateTime(devRow.getStartDate(), 0) : "");
+		tdarray[2] = (devRow.getEstDate() != null ? 
+				getDateTime (devRow.getEstDate(), 0) : "");
+		tdarray[3] = (devRow.getEndDate() != null ? 
+				getDateTime (devRow.getEndDate(), 0) : "");
+		tdarray[4] = getPriorityItem (devRow.getPriority());
+		tdarray[5] = devRow.getStatus();
+		tdarray[6] = devRow.getEstimate() + "";
+		tdarray[7] = devRow.getActualComplete() + "";
+		tdarray[8] = devRow.getPercentComplete() + "";
 		
-		Util.debug("ADDED TO DEVEL: " + devRow.getDescription());
+		return tdarray;
 	}
 
 	private static void updateTableData() {
@@ -171,27 +184,12 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		}
 	}
 
-	private static void updateRowData(DevRowObject myDevRow) {
-		Object[] tdarray = new Object [9];
-		
-		tdarray[0] = myDevRow.getTaskName();
-		tdarray[1] = (myDevRow.getStartDate() != null ? 
-				getDateTime(myDevRow.getStartDate(), 0) : "");
-		tdarray[2] = (myDevRow.getEstDate() != null ? 
-				getDateTime (myDevRow.getEstDate(), 0) : "");
-		tdarray[3] = (myDevRow.getEndDate() != null ? 
-				getDateTime (myDevRow.getEndDate(), 0) : "");
-		tdarray[4] = getPriorityItem (myDevRow.getPriority());
-		tdarray[5] = myDevRow.getStatus();
-		tdarray[6] = myDevRow.getEstimate() + "";
-		tdarray[7] = myDevRow.getActualComplete() + "";
-		tdarray[8] = myDevRow.getPercentComplete() + "";
-		
+	private static void updateRowData(DevRowObject devRow) {
 		if ((String)(table.getModel().getValueAt(0, 0)) == null) {
 			((DefaultTableModel) table.getModel()).removeRow(0);
-		}
-		
-		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(), tdarray);	
+		}		
+		((DefaultTableModel) table.getModel()).insertRow(
+				table.getRowCount(), getObject(devRow));	
 	}
 
 	private static String getPriorityItem (int priority) {
@@ -210,7 +208,6 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 			default:
 				strItem = "NONE";
 		}		
-		
 		return strItem;
 	}
 
@@ -238,20 +235,10 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		}
 	}
 
-	protected static void editRow(DevRowObject myDevRow) {
+	protected static void editRow(DevRowObject devRow) {
 		int row = table.getSelectedRow();
 		boolean dirty = false;
-		String cellValue[] = new String[9];
-		
-		cellValue[0] = myDevRow.getTaskName();
-		cellValue[1] = getDateTime(myDevRow.getStartDate(), 0);
-		cellValue[2] = getDateTime (myDevRow.getEstDate(), 0);
-		cellValue[3] = "";
-		cellValue[4] = getPriorityItem (myDevRow.getPriority());
-		cellValue[5] = myDevRow.getStatus();
-		cellValue[6] = myDevRow.getEstimate() + "";
-		cellValue[7] = "";
-		cellValue[8] = myDevRow.getPercentComplete() + "";
+		Object cellValue[] = getObject(devRow);
 		
 		for (int i = 0; i < 9; i++) {
 			if (i==3 || i==7)
@@ -260,7 +247,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		}
 		
 		if (row < devel.getRow().size()) {
-			dirty = devel.editRow(row, myDevRow);
+			dirty = devel.editRow(row, devRow);
 			
 			if (!getIsDirty()) {
 				setIsDirty(dirty);

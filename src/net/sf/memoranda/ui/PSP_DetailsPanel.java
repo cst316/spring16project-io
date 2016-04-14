@@ -44,7 +44,6 @@ public class PSP_DetailsPanel extends JPanel {
 	JLabel lblProjectID;
 	JButton btnEdit;
 	JButton btnUpdate;
-	JButton btnEndProject;
 	JTextArea txtDescription;
 	
 	Psp pspI;
@@ -79,14 +78,14 @@ public class PSP_DetailsPanel extends JPanel {
 		btnUpdate.setEnabled(isToggled);
 		btnUpdate.setPreferredSize(new Dimension(115, 25));
 		
-		btnEndProject = new JButton("End Project");
+		/*btnEndProject = new JButton("End Project");
 		btnEndProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				button_ActionClicked("END");
 			}
 		});
 		btnEndProject.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		btnEndProject.setPreferredSize(new Dimension(115, 25));
+		btnEndProject.setPreferredSize(new Dimension(115, 25));*/
 		
 		btnEdit = new JButton("Edit Details");
 		btnEdit.addActionListener(new ActionListener() {
@@ -97,9 +96,7 @@ public class PSP_DetailsPanel extends JPanel {
 		});
 		btnEdit.setPreferredSize(new Dimension(115, 25));
 		
-		hgap = (int)   ((500 - (btnEdit.getPreferredSize().getWidth() + btnEndProject.getPreferredSize().
-				getWidth() + btnUpdate.getPreferredSize().getWidth())) / 2);			
-				//(int)   (145 / 2);
+		hgap = (int) (375 - btnUpdate.getPreferredSize().getWidth());		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -108,15 +105,12 @@ public class PSP_DetailsPanel extends JPanel {
 					.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(hgap)
 					.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addGap(hgap)
-					.addComponent(btnEndProject, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 					.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addComponent(btnEndProject, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
 		panel.setLayout(gl_panel);

@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import net.sf.memoranda.psp.DevRowObject;
 import net.sf.memoranda.util.Util;
 import javax.swing.JComboBox;
@@ -86,14 +88,16 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		editDescriptionTextField.setColumns(10);
 
 		editStartDateTextField = new JTextField();
-		editStartDateTextField.setText(getDateTime(myDevRow.getStartDate(), 0));
+		editStartDateTextField.setText(myDevRow.getStartDate() != null ? 
+				getDateTime(myDevRow.getStartDate(), 0) : "");
 		editStartDateTextField.setColumns(10);
 
 		JLabel lblEndDate_1 = new JLabel("Est End date:");
 		lblEndDate_1.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		editEstDateTextField = new JTextField();
-		editEstDateTextField.setText(getDateTime(myDevRow.getEstDate(), 0));
+		editEstDateTextField.setText(myDevRow.getEstDate() != null ? 
+						getDateTime(myDevRow.getEstDate(), 0) : "");
 		editEstDateTextField.setColumns(10);
 
 		editEstTimeTextField = new JTextField();
@@ -262,9 +266,15 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		if (!editTaskTextField.getText().trim().isEmpty()) {
 			myDevRow.setPriority(jcbPriority.getSelectedIndex());
 			myDevRow.setTaskName(editTaskTextField.getText().trim());
-			myDevRow.setStartDate(editStartDateTextField.getText().trim());
-			myDevRow.setEstDate(editEstDateTextField.getText().trim());
-			myDevRow.setEstimate(Integer.parseInt(editEstTimeTextField.getText().trim()));
+			if (!editStartDateTextField.getText().isEmpty()) {
+				myDevRow.setStartDate(editStartDateTextField.getText());
+			}
+			if (!editEstDateTextField.getText().isEmpty()) {
+				myDevRow.setEstDate(editEstDateTextField.getText());
+			}
+			if (NumberUtils.isParsable(editEstTimeTextField.getText())) {
+				myDevRow.setEstimate(Integer.parseInt(editEstTimeTextField.getText().trim()));
+			}
 			myDevRow.setDescription (editDescriptionTextField.getText());
 			myDevRow.setStatus(jcbStatus.getSelectedItem()+"");
 			

@@ -3,7 +3,13 @@ package net.sf.memoranda.ui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+
 import net.sf.memoranda.psp.DevRowObject;
+import net.sf.memoranda.util.Util;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
@@ -185,10 +191,17 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 	private void insertRow() {
 		if (!taskTextField.getText().isEmpty()) {
 			myDevRow.setTaskName(taskTextField.getText());
-			myDevRow.setStartDate(startDateTextField.getText());
-			myDevRow.setEstDate(estDateTextField.getText());
+			if (!startDateTextField.getText().isEmpty()) {
+				myDevRow.setStartDate(startDateTextField.getText());
+			}
+			if (!estDateTextField.getText().isEmpty()) {
+				myDevRow.setEstDate(estDateTextField.getText());
+			}
 			myDevRow.setPriority(jcbPriority.getSelectedIndex());
-			myDevRow.setEstimate(Integer.parseInt(estTimeTextField.getText()));
+			if (NumberUtils.isParsable(estTimeTextField.getText())) {
+				Util.debug("IS NUMERIC");
+				myDevRow.setEstimate(Integer.parseInt(estTimeTextField.getText()));
+			}
 			myDevRow.setDescription(descriptionTextField.getText());
 			myDevRow.setStatus("OPEN");
 			dispose();

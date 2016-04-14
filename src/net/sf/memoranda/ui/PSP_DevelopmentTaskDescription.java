@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class PSP_DevelopmentTaskDescription extends JFrame {
 
@@ -28,11 +29,13 @@ public class PSP_DevelopmentTaskDescription extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 494, 347);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		txtTextPopulatedFrom = new JTextField();
+		txtTextPopulatedFrom.setEnabled(false);
 		txtTextPopulatedFrom.setText(myDevRow.getDescription());
 		txtTextPopulatedFrom.setBounds(55, 60, 376, 186);
 		contentPane.add(txtTextPopulatedFrom);

@@ -17,6 +17,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class PSP_DevelopmentDialogClose extends JFrame {
 
@@ -40,6 +41,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 536, 389);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
@@ -52,6 +54,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		JLabel lblComments = new JLabel("Comments:");
 		
 		JLabel lblActualEfforthours = new JLabel("Actual Effort (hours):");
+		lblActualEfforthours.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		actualHoursTextField = new JTextField();
 		actualHoursTextField.setColumns(10);
@@ -77,6 +80,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		actualEndDateTextField.setColumns(10);
 		
 		JLabel lblActualEndDate = new JLabel("Actual End Date:");
+		lblActualEndDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -89,21 +93,21 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 							.addGap(78)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblComments)
-								.addComponent(commentsTextField, GroupLayout.PREFERRED_SIZE, 339, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-										.addComponent(lblActualEndDate, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblActualEfforthours))
+										.addComponent(lblActualEndDate, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblActualEfforthours, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(actualEndDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)))))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(174)
-							.addComponent(btnOk)
-							.addGap(34)
-							.addComponent(btnCancel)))
-					.addContainerGap(91, Short.MAX_VALUE))
+										.addComponent(actualEndDateTextField, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
+										.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+									.addGroup(gl_contentPane.createSequentialGroup()
+										.addComponent(btnOk)
+										.addGap(144)
+										.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
+									.addComponent(commentsTextField, GroupLayout.PREFERRED_SIZE, 339, GroupLayout.PREFERRED_SIZE)))))
+					.addContainerGap(107, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -116,12 +120,12 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 					.addComponent(commentsTextField, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
 					.addGap(26)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblActualEfforthours)
-						.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblActualEfforthours, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(actualHoursTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(actualEndDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblActualEndDate))
+						.addComponent(actualEndDateTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblActualEndDate, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancel)
