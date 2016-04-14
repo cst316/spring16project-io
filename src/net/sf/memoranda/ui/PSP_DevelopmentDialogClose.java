@@ -1,18 +1,16 @@
 package net.sf.memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import net.sf.memoranda.psp.DevRowObject;
-import net.sf.memoranda.psp.Development;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -23,43 +21,22 @@ import java.awt.event.ActionEvent;
 public class PSP_DevelopmentDialogClose extends JFrame {
 
 	private static final long serialVersionUID = -4364375426252043089L;
-	public static Object actualHours;
-	public static Object actualEndDate;
 	private JPanel contentPane;
 	protected JTextField commentsTextField;
 	protected JTextField actualHoursTextField;
 	protected JTextField actualEndDateTextField;
-	PSP_DevelopmentTable myDevTable;
-	int index;
-	DevRowObject myDevRow;
-	Development devel;
-	
-	public PSP_DevelopmentDialogClose(PSP_DevelopmentTable myDevTable, int index) {
-		this.myDevTable = myDevTable;
-		this.index = index;
-		this.myDevRow = (DevRowObject) myDevTable.devel.getRow().get(index);
-		jbInit();
-	}
+	private DevRowObject myDevRow;
 	
 	public PSP_DevelopmentDialogClose() {
-		jbInit();
+		this (new DevRowObject());
 	}
-
-	public static void NewScreen() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PSP_DevelopmentDialogClose frame = new PSP_DevelopmentDialogClose();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	
+	public PSP_DevelopmentDialogClose(DevRowObject myDevRow) {
+		this.myDevRow = myDevRow;
+		jbInit();
 	}
 	
 	private void jbInit() {
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 536, 389);
 		contentPane = new JPanel();
@@ -77,7 +54,6 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		JLabel lblActualEfforthours = new JLabel("Actual Effort (hours):");
 		
 		actualHoursTextField = new JTextField();
-		//textField_1.setText("1");
 		actualHoursTextField.setColumns(10);
 		
 		JButton btnOk = new JButton("Close Task");
@@ -155,22 +131,22 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 	
-	protected void closeTask() {
+	protected void closeTask() {		
+		myDevRow.setCloseComment(this.commentsTextField.getText().trim());
+				
+		String actualEndDate = actualEndDateTextField.getText();
+		if (!actualEndDateTextField.getText().trim().isEmpty()) {
+			myDevRow.setEndDate(actualEndDate);
+		} 
 		
 		String actualHours = actualHoursTextField.getText();
-		String actualEndDate = actualEndDateTextField.getText();
-		PSP_DevelopmentTable.closeTask(actualHours,actualEndDate);
-		closeDevRow();
-		dispose();
-		
-	}
-
-	private void closeDevRow() {
-		
-		myDevRow.setEndDate(actualEndDateTextField.getText());
-		myDevRow.setActualComplete(Float.parseFloat(actualHoursTextField.getText()));
-		myDevRow.setCloseComment(commentsTextField.getText());
-		devel.editRow(index, myDevRow);
+		if (!actualHours.trim().isEmpty()) {
+			myDevRow.setActualComplete(Float.parseFloat(actualHours));
+			myDevRow.setStatus("COMPLETE");
+			myDevRow.setPercentComplete(100.0f);
 			
+			dispose();			
+			PSP_DevelopmentTable.closeTask(myDevRow);			
+		}
 	}
 }

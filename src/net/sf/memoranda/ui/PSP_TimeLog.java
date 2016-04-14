@@ -66,7 +66,7 @@ public class PSP_TimeLog extends JPanel {
 	private JPanel containsTimeLogs;
 	private JScrollPane spTimeLog;
 	
-	private Date date = new Date(); 
+	private Date date;
 	
 	private TimeLog timelog;
 
@@ -103,6 +103,8 @@ public class PSP_TimeLog extends JPanel {
 	}
 	
 	private void jInit () {
+		this.date = new Date();
+		
 		setBounds(0, 0, PSP_Panel.currentView.getWidth(), PSP_Panel.currentView.getHeight());
 		setBackground(Color.WHITE);
         
@@ -341,7 +343,7 @@ public class PSP_TimeLog extends JPanel {
 				
 		dateTextField = new JTextField();
 		dateTextField.setBounds(85, 0, 105, 25);
-		dateTextField.setText(getDateTime(date, 0));
+		//dateTextField.setText(getDateTime(date, 0));
 		dateTextField.setToolTipText("Date you worked on the project: mm/dd/yy");
 		dateTextList.add(dateTextField);
 		
@@ -406,7 +408,6 @@ public class PSP_TimeLog extends JPanel {
 				interruptTimeList.get(i).setEditable(true);
 				phaseList.get(i).setEnabled(true);
 				endTimeList.get(i).setEditable(true);
-
 				
 				JOptionPane.showMessageDialog(App.getFrame(), 
 						Local.getString("You can now edit this time log row"));

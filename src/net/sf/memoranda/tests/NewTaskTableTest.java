@@ -47,30 +47,17 @@ public class NewTaskTableTest {
 	}
 
 	@Test
-	public void testtable() {
-				
-		assertTrue(tabletest.isShowing());
-
-		
-		
+	public void testtable() {				
+		assertTrue(tabletest.isShowing());		
 	}
 	
 	@Test
 	public void testnewtask() {
-				
-
-		assertTrue(!newtasktest.isShowing());
-
-		
-		
+		assertTrue(!newtasktest.isShowing());		
 	}
 	
 	@Test
 	public void testclosetask() {
-				
-
-		assertTrue(closetasktest.isShowing());
-		
-		
+		assertTrue(closetasktest.isShowing());		
 	}
 }

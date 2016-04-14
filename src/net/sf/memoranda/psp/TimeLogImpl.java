@@ -18,14 +18,9 @@ import net.sf.memoranda.util.Util;
  */
 public class TimeLogImpl implements TimeLog, Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3790546736695557381L;
 	
 	private Psp pspValues;
-	
-	private static boolean isDirty = false;
 	
 	private List<TimeRowObject> timerow = new ArrayList<TimeRowObject>();
 	
@@ -95,7 +90,6 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		
 		try{
 			timerow.remove(index);
-			isDirty = true;		
 		}catch(NullPointerException e){
 			e.getMessage();
 			isRemoved = false;
@@ -153,10 +147,6 @@ public class TimeLogImpl implements TimeLog, Serializable {
 			isEdited = true;
 		} else if (rowObj != null) {
 			isEdited = addRow(rowObj);	//Adds new object to Arraylist
-		}
-		
-		if (isEdited) {
-			isDirty = true;
 		}
 		
 		return isEdited;

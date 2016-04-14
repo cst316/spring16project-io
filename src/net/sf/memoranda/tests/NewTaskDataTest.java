@@ -1,4 +1,8 @@
-package net.sf.memoranda.tests;
+//There's no more development data, we have DevRowObject
+//To serve the same purpose
+
+
+/*package net.sf.memoranda.tests;
 
 import static org.junit.Assert.*;
 
@@ -17,11 +21,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class PSP_NewTaskDataTest 
+public class NewTaskDataTest 
 
 {
 	
-	PSP_DevelopmentData tdata = new PSP_DevelopmentData();
+	DevelopmentData tdata = new DevelopmentData();
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception 
@@ -57,32 +61,32 @@ public class PSP_NewTaskDataTest
 		tdarray= "savedata0";
 		count = 0;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_DevelopmentData.tdarray[0].contains(tdarray));
+		assertTrue(DevelopmentData.tdarray[0].contains(tdarray));
 		
 		tdarray = "savedata1";
 		count = 1;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_DevelopmentData.tdarray[1].contains(tdarray));
+		assertTrue(DevelopmentData.tdarray[1].contains(tdarray));
 		
 		tdarray = "savedata2";
 		count = 2;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_DevelopmentData.tdarray[2].contains(tdarray));
+		assertTrue(DevelopmentData.tdarray[2].contains(tdarray));
 		
 		tdarray = "savedata3";
 		count = 3;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_DevelopmentData.tdarray[3].contains(tdarray));
+		assertTrue(DevelopmentData.tdarray[3].contains(tdarray));
 		
 		tdarray = "savedata4";
 		count = 4;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_DevelopmentData.tdarray[4].contains(tdarray));
+		assertTrue(DevelopmentData.tdarray[4].contains(tdarray));
 		
 		tdarray = "savedata5";
 		count = 5;
 		tdata.saveTaskData(tdarray, count);
-		assertTrue(PSP_DevelopmentData.tdarray[5].contains(tdarray));
+		assertTrue(DevelopmentData.tdarray[5].contains(tdarray));
 		
 	}
 
@@ -93,8 +97,7 @@ public class PSP_NewTaskDataTest
 
 	@Test
 	public void testSaveTaskDataBounds() 
-	{
-		
+	{		
 		String tdarray;
 		int count;
 		
@@ -105,7 +108,7 @@ public class PSP_NewTaskDataTest
 		count = 6;
 		tdata.saveTaskData(tdarray, count);
 		
-		assertTrue(!PSP_DevelopmentData.tdarray[6].contains(tdarray));
+		assertTrue(!DevelopmentData.tdarray[6].contains(tdarray));
 		
 		}
 		
@@ -122,7 +125,7 @@ public class PSP_NewTaskDataTest
 		count = -1;
 		tdata.saveTaskData(tdarray, count);
 		
-		assertTrue(!PSP_DevelopmentData.tdarray[-1].contains(tdarray));
+		assertTrue(!DevelopmentData.tdarray[-1].contains(tdarray));
 		
 		}
 		
@@ -130,9 +133,7 @@ public class PSP_NewTaskDataTest
 
 	        System.out.println("expected OOB");
 
-	    }  
-		
-	
+	    }	
 	}
-
 }
+*/

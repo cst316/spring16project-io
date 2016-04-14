@@ -1,11 +1,11 @@
 package net.sf.memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import net.sf.memoranda.psp.DevRowObject;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -14,25 +14,18 @@ import java.awt.event.ActionEvent;
 
 public class PSP_DevelopmentTaskDescription extends JFrame {
 
+	private static final long serialVersionUID = 2118032659774440714L;
 	private JPanel contentPane;
-	private JTextField txtTextPopulatedFrom;
-
-
-	public static void NewScreen() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PSP_DevelopmentTaskDescription frame = new PSP_DevelopmentTaskDescription();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	protected JTextField txtTextPopulatedFrom;
+	private String description = "";
+	private DevRowObject myDevRow;
+	
+	public PSP_DevelopmentTaskDescription(DevRowObject devRow) {
+		this.myDevRow = devRow;
+		jbInit();
 	}
-
-
-	public PSP_DevelopmentTaskDescription() {
+	
+	private void jbInit() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 494, 347);
 		contentPane = new JPanel();
@@ -41,8 +34,7 @@ public class PSP_DevelopmentTaskDescription extends JFrame {
 		contentPane.setLayout(null);
 		
 		txtTextPopulatedFrom = new JTextField();
-		txtTextPopulatedFrom.setText("text populated from task description of selected row goes here");
-		//change set text to pull string from value of row's task description
+		txtTextPopulatedFrom.setText(myDevRow.getDescription());
 		txtTextPopulatedFrom.setBounds(55, 60, 376, 186);
 		contentPane.add(txtTextPopulatedFrom);
 		txtTextPopulatedFrom.setColumns(10);
@@ -55,11 +47,19 @@ public class PSP_DevelopmentTaskDescription extends JFrame {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				dispose();
+				button_clicked ();
 			}
 			
 		});
 		btnOk.setBounds(195, 262, 97, 25);
 		contentPane.add(btnOk);
+	}
+	
+	private void button_clicked () {
+		if (myDevRow.getDescription().trim().equalsIgnoreCase(
+				txtTextPopulatedFrom.getText().trim())) {
+			PSP_DevelopmentTable.editDescription (txtTextPopulatedFrom.getText().trim());
+		}
+		dispose();
 	}
 }

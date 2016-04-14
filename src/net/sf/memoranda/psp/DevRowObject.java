@@ -5,6 +5,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import net.sf.memoranda.ui.App;
+import net.sf.memoranda.util.Local;
+import net.sf.memoranda.util.Util;
 
 /**
  * 
@@ -24,16 +28,15 @@ public class DevRowObject implements Serializable{
 	private String taskName, status;
 	private int priority, estimate;
 	private float percentDone, actualComplete;
-	private String closingComment;
+	private String closingComment, description;
 	
 	public DevRowObject(){
 		this.startDate = null;
 		this.endDate = null;
 		this.estDate = null;
-		this.taskName = null;
-		this.status = null;
-		this.priority = 0;
-		
+		this.taskName = "";
+		this.status = "";
+		this.priority = -1;
 		// must be 1 incase percent complete is called to be calculated
 		this.estimate = 1; 
 		this.actualComplete = 0;
@@ -65,6 +68,8 @@ public class DevRowObject implements Serializable{
 		try {
 			date = df.parse(strDate);
 		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(App.getFrame(),
+					Local.getString("Invalid date entry mm\\dd\\yy"));
 			e.printStackTrace();
 		}
 		
@@ -94,8 +99,7 @@ public class DevRowObject implements Serializable{
 	}
 	
 	public void setStartDate(String startDate) {
-		this.startDate = this.setDate(startDate);;
-		
+		this.startDate = this.setDate(startDate);		
 	}
 	
 	public Date getEndDate() {
@@ -142,12 +146,11 @@ public class DevRowObject implements Serializable{
 	}
 	
 	public void setPercentComplete(float percentComplete) {
-		
 		this.percentDone = percentComplete;
 	}
 	
 	public float getPercentComplete(){
-		return this.percentDone = calcPercentDone();
+		return this.percentDone;
 	}
 	
 	public void setCloseComment(String comment) {
@@ -155,9 +158,18 @@ public class DevRowObject implements Serializable{
 		this.closingComment = comment;
 	}
 	
-	public String getCloseComment(String comment) {
+	public String getCloseComment() {
 	
 		return this.closingComment;
 	
+	}
+	
+	public void setDescription (String comment) {
+		
+		this.description = comment;
+	}
+	
+	public String getDescription () {	
+		return this.description;	
 	}
 }
