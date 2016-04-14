@@ -440,6 +440,7 @@ public class TaskTable extends JTable {
          * model.
          */
         protected void updateSelectedPathsFromSelectedRows() {
+            TreePath selPath = null;
             if (!updatingListSelectionModel) {
                 updatingListSelectionModel = true;
                 try {
@@ -451,12 +452,11 @@ public class TaskTable extends JTable {
                     clearSelection();
                     if (min != -1 && max != -1) {
                         for (int counter = min; counter <= max; counter++) {
-                            if (listSelectionModel.isSelectedIndex(counter)) {
-                                TreePath selPath = tree.getPathForRow(counter);
-
-                                if (selPath != null) {
-                                    addSelectionPath(selPath);
-                                }
+                            if (listSelectionModel.isSelectedIndex(counter) 
+                                    && tree.getPathForRow(counter) != null) {
+                                
+                                selPath = tree.getPathForRow(counter);
+                                addSelectionPath(selPath);
                             }
                         }
                     }

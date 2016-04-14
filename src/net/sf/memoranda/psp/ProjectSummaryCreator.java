@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.Hashtable;
 
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
@@ -150,36 +151,48 @@ public class ProjectSummaryCreator {
   	  	//Save total actual to date
 	    totalActualToDate = actualTime[7];
 
+	    //reduces cyclomatic complexity if I remove switch
+	    Hashtable<Integer, String> hash = new Hashtable<Integer, String>();
+	    
+	    hash.put(0, "Planning");
+	    hash.put(1, "Design");
+	    hash.put(2, "Code");
+	    hash.put(3, "Code Review");
+	    hash.put(4, "Compile");
+	    hash.put(5, "Test");
+	    hash.put(6, "Post Mortem");
+	    hash.put(7, "TOTAL");
 	    
 	    //Add the data to the table
 	    for(int i = 0; i < 8; ++i){
+	        timeTable.addCell(hash.get(i));
 	    	//Add Table labels in first column
-	    	switch(i){	    	
-	    	case 0:
-	    		timeTable.addCell("Planning");
-	    		break;
-	    	case 1:
-	    		timeTable.addCell("Design");
-	    		break;
-	    	case 2:
-	    		timeTable.addCell("Code");
-	    		break;
-	    	case 3:
-	    		timeTable.addCell("Code Review");
-	    		break;
-	    	case 4:
-	    		timeTable.addCell("Compile");
-	    		break;
-	    	case 5:
-	    		timeTable.addCell("Test");
-	    		break;
-	    	case 6:
-	    		timeTable.addCell("Postmortem");
-	    		break;
-	    	case 7:
-	    		timeTable.addCell("TOTAL");
-	    		break;
-	    	}
+//	    	switch(i){	    	
+//	    	case 0:
+//	    		timeTable.addCell("Planning");
+//	    		break;
+//	    	case 1:
+//	    		timeTable.addCell("Design");
+//	    		break;
+//	    	case 2:
+//	    		timeTable.addCell("Code");
+//	    		break;
+//	    	case 3:
+//	    		timeTable.addCell("Code Review");
+//	    		break;
+//	    	case 4:
+//	    		timeTable.addCell("Compile");
+//	    		break;
+//	    	case 5:
+//	    		timeTable.addCell("Test");
+//	    		break;
+//	    	case 6:
+//	    		timeTable.addCell("Postmortem");
+//	    		break;
+//	    	case 7:
+//	    		timeTable.addCell("TOTAL");
+//	    		break;
+//	    	}
 	    	
 	    	//Add estimated time to table
 	    	String formattedEstimatedTime = String.format("%.2f",estimatedTime[i]);
@@ -229,6 +242,7 @@ public class ProjectSummaryCreator {
 	 */
 	private static void createDefectTable(Document document, int [] estimatedDefects, int [] actualDefects){
 		Paragraph table2 = new Paragraph();
+		
 		addEmptyLine(table2, 2);
 		PdfPTable defectTable = new PdfPTable(5);
 		
@@ -238,6 +252,18 @@ public class ProjectSummaryCreator {
 		double totalActualToDate = 0;
 		double actualToDatePercent = 0;
 		
+		//this is to help reduce complexity
+		Hashtable<Integer, String> hash = new Hashtable<Integer, String>();
+		
+		hash.put(0, "Planning");
+        hash.put(1, "Design");
+        hash.put(2, "Code");
+        hash.put(3, "Code Review");
+        hash.put(4, "Compile");
+        hash.put(5, "Test");
+        hash.put(6, "Post Mortem");
+        hash.put(7, "TOTAL");
+        
 		addEmptyLine(table2, 2);
 		
 		//Add headers to table
@@ -266,35 +292,39 @@ public class ProjectSummaryCreator {
 	    totalActualToDate = actualDefects[7];
 
 	    
+	    
 	    //Add the data to the table
 	    for(int i = 0; i < 8; ++i){
 	    	//Add Table labels in first column
-	    	switch(i){	    	
-	    	case 0:
-	    		defectTable.addCell("Planning");
-	    		break;
-	    	case 1:
-	    		defectTable.addCell("Design");
-	    		break;
-	    	case 2:
-	    		defectTable.addCell("Code");
-	    		break;
-	    	case 3:
-	    		defectTable.addCell("Code Review");
-	    		break;
-	    	case 4:
-	    		defectTable.addCell("Compile");
-	    		break;
-	    	case 5:
-	    		defectTable.addCell("Test");
-	    		break;
-	    	case 6:
-	    		defectTable.addCell("Postmortem");
-	    		break;
-	    	case 7:
-	    		defectTable.addCell("TOTAL");
-	    		break;
-	    	}
+	        defectTable.addCell(hash.get(i));
+	        
+	        //reduces cyclomatic complexity
+//	    	switch(i){	    	
+//	    	case 0:
+//	    		defectTable.addCell("Planning");
+//	    		break;
+//	    	case 1:
+//	    		defectTable.addCell("Design");
+//	    		break;
+//	    	case 2:
+//	    		defectTable.addCell("Code");
+//	    		break;
+//	    	case 3:
+//	    		defectTable.addCell("Code Review");
+//	    		break;
+//	    	case 4:
+//	    		defectTable.addCell("Compile");
+//	    		break;
+//	    	case 5:
+//	    		defectTable.addCell("Test");
+//	    		break;
+//	    	case 6:
+//	    		defectTable.addCell("Postmortem");
+//	    		break;
+//	    	case 7:
+//	    		defectTable.addCell("TOTAL");
+//	    		break;
+//	    	}
 	    	
 	    	//Add estimated time to table
 	    	String formattedEstimatedDefects = String.valueOf(estimatedDefects[i]);
@@ -371,19 +401,27 @@ public class ProjectSummaryCreator {
 	    tableHeading.setHorizontalAlignment(Element.ALIGN_CENTER);
 	    summaryTable.addCell(tableHeading);
 	    
+	    //CC reduction
+	    Hashtable<Integer, String> hash = new Hashtable<Integer, String>();
+        
+        hash.put(0, "Program Size (LOC)");
+        hash.put(1, "LOC/Hour");
+        hash.put(2, "Defect/KLOC");
+	    
 	    //Add data to the table
 	    for(int i = 0; i < 3; ++i){
-	    	switch(i){
-	    	case 0:
-	    		summaryTable.addCell("Program Size (LOC)");
-	    		break;
-	    	case 1:
-	    		summaryTable.addCell("LOC/Hour");
-	    		break;
-	    	case 2:
-	    		summaryTable.addCell("Defect/KLOC");
-	    		break;
-	    	}
+	        summaryTable.addCell(hash.get(i));
+//	    	switch(i){
+//	    	case 0:
+//	    		summaryTable.addCell("Program Size (LOC)");
+//	    		break;
+//	    	case 1:
+//	    		summaryTable.addCell("LOC/Hour");
+//	    		break;
+//	    	case 2:
+//	    		summaryTable.addCell("Defect/KLOC");
+//	    		break;
+//	    	}
 	    	
 	    	String formattedEstimatedTotal = String.format("%.2f", estimatedTotal[i]);
 	    	summaryTable.addCell(formattedEstimatedTotal);
