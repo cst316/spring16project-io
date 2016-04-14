@@ -96,12 +96,13 @@ public class NoteImpl implements Note, Comparable {
     public void setMark(boolean mark) {
         Attribute ma = _el.getAttribute("bookmark");        
         if (ma == null) {
-            if (mark)
+            if (mark){
                 _el.addAttribute(new Attribute("bookmark", "yes"));
+            }
             return;
-        }
-        else if (!mark)
+        }else if (!mark) {
             _el.removeAttribute(ma);
+        }
     }
 	
 	/*
@@ -109,12 +110,15 @@ public class NoteImpl implements Note, Comparable {
 	 */
 	public int compareTo(Object o) {
 		Note note = (Note) o;
-		if(getDate().getDate().getTime() > note.getDate().getDate().getTime())
+		if(getDate().getDate().getTime() > note.getDate()
+		        .getDate().getTime()){
 			return 1;
-		else if(getDate().getDate().getTime() < note.getDate().getDate().getTime())
+		}else if(getDate().getDate().getTime() < note.getDate()
+		        .getDate().getTime()){
 			return -1;
-		else 
+		}else{ 
 			return 0;
+		}
 	}
     
 }

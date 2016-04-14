@@ -72,12 +72,10 @@ public class TaskImpl implements Task, Comparable {
     	Attribute attr = _element.getAttribute("effort");
     	if (attr == null) {
     		return 0;
-    	}
-    	else {
+    	}else {
     		try {
         		return Long.parseLong(attr.getValue());
-    		}
-    		catch (NumberFormatException e) {
+    		}catch (NumberFormatException e) {
     			return 0;
     		}
     	}
@@ -111,8 +109,7 @@ public class TaskImpl implements Task, Comparable {
     	Element thisElement = _element.getFirstChildElement("description");
     	if (thisElement == null) {
     		return null;
-    	}
-    	else {
+    	}else {
        		return thisElement.getValue();
     	}
     }
@@ -123,8 +120,7 @@ public class TaskImpl implements Task, Comparable {
         	desc = new Element("description");
             desc.appendChild(s);
             _element.appendChild(desc);    	
-    	}
-    	else {
+    	}else {
             desc.removeChildren();
             desc.appendChild(s);    	
     	}
@@ -136,18 +132,21 @@ public class TaskImpl implements Task, Comparable {
     public int getStatus(CalendarDate date) {
         CalendarDate start = getStartDate();
         CalendarDate end = getEndDate();
-        if (isFrozen())
+        if (isFrozen()){
             return Task.FROZEN;
-        if (isCompleted())
+        }
+        
+        if (isCompleted()){
                 return Task.COMPLETED;
+        }
         
 		if (date.inPeriod(start, end)) {
-            if (date.equals(end))
+            if (date.equals(end)){
                 return Task.DEADLINE;
-            else
+            }else {
                 return Task.ACTIVE;
-        }
-		else if(date.before(start)) {
+            }
+        }else if(date.before(start)) {
 				return Task.SCHEDULED;
 		}
 		

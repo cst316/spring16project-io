@@ -41,9 +41,9 @@ public class ProjectManager {
 //            _root.appendChild(new Comment("This is JNotes 2 data file. Do not modify."));
             _doc = new Document(_root);
             createProject("__default", Local.getString("Default project"), CalendarDate.today(), null);
-        }
-        else
+        }else {
             _root = _doc.getRootElement();
+        }
     }
 
     public static Project getProject(String id) {
@@ -69,8 +69,7 @@ public class ProjectManager {
 		int i;
         try {
 			i = ((Elements)_root.getChildElements("project")).size();
-		}
-		catch (NullPointerException e) {
+		}catch (NullPointerException e) {
 			i = 1;
 		}
 		return i;

@@ -44,8 +44,7 @@ public class AddResourceButtonHelpDialog extends JDialog{
         try {
             jbInit();
             pack();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             new ExceptionDialog(ex);
             ex.printStackTrace();
         }

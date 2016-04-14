@@ -250,8 +250,7 @@ public class AppFrame extends JFrame {
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
         try {
             jbInit();
-        }
-        catch (Exception e) {
+        }catch (Exception e) {
             new ExceptionDialog(e);
         }
     }
@@ -579,8 +578,7 @@ public class AppFrame extends JFrame {
                 if (prPanelExpanded) {
                     prPanelExpanded = false;
                     splitPane.setDividerLocation(28);
-                }
-                else {
+                }else {
                     prPanelExpanded = true;
                     splitPane.setDividerLocation(0.2);
                 }
@@ -708,12 +706,10 @@ public class AppFrame extends JFrame {
     	if (e.getID() == WindowEvent.WINDOW_CLOSING) {
             // Changed status of this condition to exit the frame via doExit() method
     		doExit();               
-        } 
-        else if (e.getID() == WindowEvent.WINDOW_ICONIFIED) {
+        }else if (e.getID() == WindowEvent.WINDOW_ICONIFIED) {
             // Changed status of this condition to minimize the Frame instead of closing            
             doMinimize();
-        }
-        else {
+        }else {
         	// Left alone from before - untouched
             super.processWindowEvent(e);
         }
@@ -782,8 +778,7 @@ public class AppFrame extends JFrame {
 
         try {
             lastSel = (java.io.File) Context.get("LAST_SELECTED_PACK_FILE");
-        }
-        catch (ClassCastException cce) {
+        }catch (ClassCastException cce) {
             lastSel = new File(System.getProperty("user.dir") + File.separator);
         }
         //---------------------------------------------------------------------
@@ -791,6 +786,7 @@ public class AppFrame extends JFrame {
         if (lastSel != null){
             chooser.setCurrentDirectory(lastSel);
         }
+        
         if (chooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION){
             return;
         }
@@ -840,8 +836,7 @@ public class AppFrame extends JFrame {
 
         try {
             lastSel = (java.io.File) Context.get("LAST_SELECTED_PACK_FILE");
-        }
-        catch (ClassCastException cce) {
+        }catch (ClassCastException cce) {
             lastSel = new File(System.getProperty("user.dir") + File.separator);
         }
         //---------------------------------------------------------------------
@@ -991,8 +986,7 @@ public class AppFrame extends JFrame {
 
             try {
                 lastSel = (java.io.File) Context.get("LAST_SELECTED_NOTE_FILE");
-            }
-            catch (ClassCastException cce) {
+            }catch (ClassCastException cce) {
                 lastSel = new File(System.getProperty("user.dir") + File.separator);
             }
             //---------------------------------------------------------------------
@@ -1085,8 +1079,7 @@ public class AppFrame extends JFrame {
 
             try {
                 lastSel = (java.io.File) Context.get("LAST_SELECTED_NOTE_FILE");
-            }
-            catch (ClassCastException cce) {
+            }catch (ClassCastException cce) {
                 lastSel = new File(System.getProperty("user.dir") + File.separator);
             }
             //---------------------------------------------------------------------

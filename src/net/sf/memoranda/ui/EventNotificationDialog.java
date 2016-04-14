@@ -40,11 +40,10 @@ public class EventNotificationDialog extends JFrame {
     super();
     this.setTitle(title);
     try {
-      jbInit();
-      pack();
-    }
-    catch(Exception ex) {
-      new ExceptionDialog(ex);
+        jbInit();
+        pack();
+    }catch(Exception ex) {
+        new ExceptionDialog(ex);
     }
     timeLabel.setText(time);
     timeLabel.setIcon(new ImageIcon(net.sf.memoranda.ui.TaskDialog.class.getResource(

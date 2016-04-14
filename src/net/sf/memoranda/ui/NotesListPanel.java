@@ -11,17 +11,16 @@ public class NotesListPanel extends JPanel {
   JScrollPane scrollPane = new JScrollPane();
   public NotesList notesList = new NotesList();
 
-  public NotesListPanel() {
-    try {
-      jbInit();
+    public NotesListPanel() {
+        try {
+            jbInit();
+        }catch(Exception ex) {
+            new ExceptionDialog(ex);
+        }
     }
-    catch(Exception ex) {
-      new ExceptionDialog(ex);
+    void jbInit() throws Exception {
+        this.setLayout(borderLayout1);
+        this.add(scrollPane, BorderLayout.CENTER);
+        scrollPane.getViewport().add(notesList, null);
     }
-  }
-  void jbInit() throws Exception {
-    this.setLayout(borderLayout1);
-    this.add(scrollPane, BorderLayout.CENTER);
-    scrollPane.getViewport().add(notesList, null);
-  }
 }

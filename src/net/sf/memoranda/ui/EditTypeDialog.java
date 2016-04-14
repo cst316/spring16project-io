@@ -78,8 +78,7 @@ public class EditTypeDialog extends JDialog {
         try {
             jbInit();
             pack();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             new ExceptionDialog(ex);
         }
     }
@@ -249,12 +248,11 @@ public class EditTypeDialog extends JDialog {
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 iconLabel.setIcon(new ImageIcon(chooser.getSelectedFile().getPath()));
-           }
-            catch (Exception ex) {
-		    //ex.printStackTrace();
-	    }
-            finally {
-                iconPath = chooser.getSelectedFile().getPath();
+            }catch (Exception ex) {
+                ex.getMessage();
+                ex.printStackTrace();
+    	    }finally {
+    	        iconPath = chooser.getSelectedFile().getPath();
             }
 
         }

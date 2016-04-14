@@ -75,27 +75,29 @@ public class ProjectImpl implements Project {
      * @see net.sf.memoranda.Project#getStatus()
      */
     public int getStatus() {
-        if (isFrozen())
+        if (isFrozen()){
             return Project.FROZEN;
+        }
         CalendarDate today = CurrentDate.get();
         CalendarDate prStart = getStartDate();
         CalendarDate prEnd = getEndDate();
         if (prEnd == null) {
-            if (today.before(prStart))
+            if (today.before(prStart)){
                 return Project.SCHEDULED;
-            else
-                return Project.ACTIVE;                
+            }else{
+                return Project.ACTIVE;
+            }
         }    
-        if (today.inPeriod(prStart, prEnd))
+        if (today.inPeriod(prStart, prEnd)){
             return Project.ACTIVE;
-        else if (today.after(prEnd)) {
+        }else if (today.after(prEnd)) {
             //if (getProgress() == 100)
                 return Project.COMPLETED;
             /*else
                 return Project.FAILED;*/
-        }
-        else
+        }else{
             return Project.SCHEDULED;
+        }
     }
 
     private boolean isFrozen() {
@@ -151,19 +153,18 @@ public class ProjectImpl implements Project {
         if (a == null) {
             if (value != null)
              _root.addAttribute(new Attribute(name, value));
-        }
-        else if (value != null)        
+        }else if (value != null){     
             a.setValue(value);
-        else 
+        }else{ 
             _root.removeAttribute(a);
+        }
     }
 
 	public String getDescription() {
     	Element thisElement = _root.getFirstChildElement("description");
     	if (thisElement == null) {
     		return null;
-    	}
-    	else {
+    	}else {
        		return thisElement.getValue();
     	}
     }
@@ -174,8 +175,7 @@ public class ProjectImpl implements Project {
         	desc = new Element("description");
             desc.appendChild(s);
             _root.appendChild(desc);    	
-    	}
-    	else {
+    	}else {
             desc.removeChildren();
             desc.appendChild(s);    	
     	}

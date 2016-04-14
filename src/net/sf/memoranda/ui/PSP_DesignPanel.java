@@ -75,8 +75,7 @@ public class PSP_DesignPanel extends JPanel {
 		
 		try {
             jbInit();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
         }
 	}
@@ -88,8 +87,7 @@ public class PSP_DesignPanel extends JPanel {
 		
 		try {
             jbInit();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
         }
 	}
@@ -100,8 +98,7 @@ public class PSP_DesignPanel extends JPanel {
 		
 		try {
             jbInit();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
         }
 		

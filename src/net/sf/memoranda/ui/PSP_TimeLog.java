@@ -77,8 +77,7 @@ public class PSP_TimeLog extends JPanel {
 	public PSP_TimeLog() {		
 		try {
 			jInit();
-		}
-		catch(Exception ex) {
+		}catch(Exception ex) {
 			new ExceptionDialog(ex);
 			ex.printStackTrace();
 		}

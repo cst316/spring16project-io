@@ -61,8 +61,7 @@ public class AppFrame_AboutBox extends JDialog implements ActionListener {
     enableEvents(AWTEvent.WINDOW_EVENT_MASK);
     try {
       jbInit();
-    }
-    catch(Exception e) {
+    }catch(Exception e) {
       e.printStackTrace();
     }
     setSize(400, 500);

@@ -86,8 +86,7 @@ public class EventDialog extends JDialog implements WindowListener {
         try {
             jbInit();
             pack();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             new ExceptionDialog(ex);
         }
         super.addWindowListener(this);
