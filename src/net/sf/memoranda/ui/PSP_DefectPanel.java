@@ -254,17 +254,17 @@ public class PSP_DefectPanel extends JPanel {
 		eachLogPanel.add(typeLabel_1);
 		
 		JLabel injectLabel_1 = new JLabel("Inject");
-		injectLabel_1.setToolTipText("Number of Defects Injected\r\n");
+		injectLabel_1.setToolTipText("Phase Defect Injected\r\n");
 		injectLabel_1.setBounds(551, 16, 56, 16);
 		eachLogPanel.add(injectLabel_1);
 		
 		JLabel removeLabel_1 = new JLabel("Remove");
-		removeLabel_1.setToolTipText("Number of Defects Removed");
+		removeLabel_1.setToolTipText("Phase Defect Removed");
 		removeLabel_1.setBounds(664, 16, 56, 16);
 		eachLogPanel.add(removeLabel_1);
 		
 		JLabel fixLabel_1 = new JLabel("Fix");
-		fixLabel_1.setToolTipText("Number of Defects Fixed");
+		fixLabel_1.setToolTipText("Phase Defect Fixed");
 		fixLabel_1.setBounds(799, 16, 56, 16);
 		eachLogPanel.add(fixLabel_1);
 		
