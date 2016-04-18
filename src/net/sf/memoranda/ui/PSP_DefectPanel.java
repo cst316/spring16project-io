@@ -352,6 +352,12 @@ public class PSP_DefectPanel extends JPanel {
 					setIsDirty(dirty);
 				}
 			}
+			else
+			{
+				JOptionPane.showMessageDialog(App.getFrame(),
+						Local.getString("All fields must be filled out!"));
+				dirty = false;
+			}
 		}
 		
 		//If we actually updated something, then
@@ -466,19 +472,19 @@ public class PSP_DefectPanel extends JPanel {
 		injectTextField = new JTextField();
 		injectTextField.setBounds(521, 0, 87, 22);
 		injectTextField.setColumns(10);
-		injectTextField.setToolTipText("Number of Defects Inject");
+		injectTextField.setToolTipText("Phase Defect Injected");
 		injectTextFieldList.add(injectTextField);
 
 		removeTextField = new JTextField();
 		removeTextField.setBounds(635, 0, 87, 22);
 		removeTextField.setColumns(10);
-		removeTextField.setToolTipText("Defects Removed");
+		removeTextField.setToolTipText("Phase Defect Removed");
 		removeTextFieldList.add(removeTextField);
 		
 		fixTextField = new JTextField();
 		fixTextField.setBounds(738, 0, 130, 22);
 		fixTextField.setColumns(10);
-		fixTextField.setToolTipText("Defects fixed");
+		fixTextField.setToolTipText("Phase Defect Fixed");
 		fixTextFieldList.add(fixTextField);
 		
 		fixRefTextField = new JTextField();
