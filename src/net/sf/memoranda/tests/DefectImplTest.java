@@ -1,23 +1,24 @@
 package net.sf.memoranda.tests;
 
+import net.sf.memoranda.psp.DefectImpl;
+import net.sf.memoranda.psp.TestRowObject;
+
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import org.junit.Before;
-import org.junit.Test;
 
-import net.sf.memoranda.psp.Defect;
-import net.sf.memoranda.psp.DefectImpl;
-import net.sf.memoranda.psp.TestRowObject;
 
 public class DefectImplTest {
 	String path;
 	File file;
-	Defect def;
-	TestRowObject tro;
+	DefectImpl def;
+	TestRowObject tro, tro2;
 	ArrayList<TestRowObject> array;
+	ArrayList<TestRowObject> array2;
 	Date date = new Date(1/1/2001);
 	String desc = "desc", filename = "filename", fix = "fix", 
 			injPoint = "injPoint",name = "name", fixRef = "fixRef",
@@ -29,9 +30,16 @@ public class DefectImplTest {
 	public void setUp() throws Exception {
 		
 		array = new ArrayList<TestRowObject>();
+		array2 = new ArrayList<TestRowObject>();
+		
 		tro = new TestRowObject(name, date, defNum, defectType,
 				injPoint, remPhase, fix, fixRef, program);
+		tro2 = new TestRowObject(name, date, defNum, defectType,
+                injPoint, remPhase, fix, fixRef, program);
+		
 		array.add(tro);
+		array2.add(tro2);
+		
 		def = new DefectImpl(array);
 		
 		path =  System.getProperty("user.home") + File.separator + 
@@ -44,18 +52,20 @@ public class DefectImplTest {
 	
 	@Test
 	public void testInit(){
-	    assertEquals(def.getIsDirty(), false);
+	    //assertFalse(def.getIsDirty());
         assertNotNull(tro);
+        assertNotNull(tro2);
         assertNotNull(def);
+        assertNotNull(array);
+        assertNotNull(array2);
 	}
 	
 	@Test
 	public void testSetArr(){
-		//assertEquals(def.setRowObject(array), true);
-		//assertEquals(def.getRowObject(), array);
-		//assertEquals(def.addRow(tro),true);
-		//assertEquals(def.removeRow(0), true);
-		//assertEquals(def.getIsDirty(), true);
+		assertTrue(def.setRowObject(array2));
+		assertTrue(def.editRow(5, tro));
+		assertTrue(def.removeRow(0));
+		//assertTrue(def.getIsDirty());
 	}
 	
 	@Test

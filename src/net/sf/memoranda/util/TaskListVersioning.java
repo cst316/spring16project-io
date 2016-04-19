@@ -106,11 +106,8 @@ public class TaskListVersioning {
 //                }
                 
                 Attribute parentAttr = task.getAttribute("parent");
-            	if ((parentAttr == null) || (parentAttr.getValue() == "")) {
-            		// no parent, do nothing here
-            	}
-            	else {
-                	// put the task under the parent task
+            	if ((parentAttr != null) && (parentAttr.getValue() != "")) {
+                	// put the task under the parent task if it has value
                     String parentId = parentAttr.getValue();
                     for (int k = 0; k < tasks.size(); k++) {
                         Element potentialParent = tasks.get(k);
@@ -121,7 +118,7 @@ public class TaskListVersioning {
                             potentialParent.appendChild(task);                            
                         }
                     }
-            	}            	
+            	}//else do nothing            	
             }
             doc.setDocType(getCurrentDocType());
             FileStorage.saveDocument(doc,filePath);

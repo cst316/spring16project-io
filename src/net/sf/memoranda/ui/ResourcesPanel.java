@@ -449,18 +449,15 @@ public class ResourcesPanel extends JPanel {
 	  //Store all resources in a vector
 	  Vector<Resource> undoMostRecentResource = CurrentProject.getResourcesList().getAllResources();
 	  //Message pops up if no resources available and undo buttons are clicked
-	  if(undoMostRecentResource.size() == 0)
-	  {
+	  if(undoMostRecentResource.size() == 0){
 		  JOptionPane.showMessageDialog(App.getFrame(), Local.getString("No resources to undo!"));
-	  }
-	  else
-	  {
+	  }else{
 	  //Performs undo on the resource regardless of whether it is selected or not
 	  CurrentProject.getResourcesList().removeResource(
 		  ((Resource) resourcesTable.getModel().getValueAt(undoMostRecentResource.size()-1, ResourcesTable._RESOURCE)).getPath());
 	  }
 	  resourcesTable.tableChanged();
-	 }
+  }
   void ppRedo_actionPerformed(ActionEvent e) {
       AddResourceButtonHelpDialog dlg = new AddResourceButtonHelpDialog(App.getFrame(), Local.getString("Resource button help"));
       Dimension frmSize = App.getFrame().getSize();

@@ -1,14 +1,20 @@
 package net.sf.memoranda.psp;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import net.sf.memoranda.ui.App;
+import net.sf.memoranda.util.Local;
 
 /**
  * 
  * @author Joe Michaels
  * @author Team-IO
  * CST316 - Spring 2016
- * Object to manipulate development statistics
+ * Object to manipulate development statistics and easily save/retrieve needed data
  * 
  * 03/28/2016
  */
@@ -21,15 +27,15 @@ public class DevRowObject implements Serializable{
 	private String taskName, status;
 	private int priority, estimate;
 	private float percentDone, actualComplete;
+	private String closingComment, description;
 	
 	public DevRowObject(){
 		this.startDate = null;
 		this.endDate = null;
 		this.estDate = null;
-		this.taskName = null;
-		this.status = null;
-		this.priority = 0;
-		
+		this.taskName = "";
+		this.status = "";
+		this.priority = -1;
 		// must be 1 incase percent complete is called to be calculated
 		this.estimate = 1; 
 		this.actualComplete = 0;
@@ -37,52 +43,58 @@ public class DevRowObject implements Serializable{
 		this.percentDone = calcPercentDone();
 	}
 	
-	public DevRowObject(Date startDate, Date endDate, Date estDate,
-			String taskName, String status, int priority, int estimate,
-			float actualComplete){
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.estDate = estDate;
-		this.taskName = taskName;
-		this.status = status;
-		this.priority = priority;
+	public Date setDate(String strDate) {
+		Date date = new Date();
+		DateFormat df ; 
+		df = new SimpleDateFormat("MM/dd/yy");
+		try {
+			date = df.parse(strDate);
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(App.getFrame(),
+					Local.getString("Invalid date entry mm\\dd\\yy"));
+			e.printStackTrace();
+		}
 		
-		// must be 1 incase percent complete is called to be calculated
-		this.estimate = estimate; 
-		this.actualComplete = actualComplete;
-		
-		this.percentDone = calcPercentDone();
+		return date;
 	}
 	
+	/**
+	 * 
+	 * @return value calculates value of percent of the project done based on estimates
+	 * @throws Exception in the off chance this 
+	 * method is called and estimate is set to 0
+	 */
 	private float calcPercentDone(){
-		float temp;
+		float value;
 		
 		try{
-			temp = this.actualComplete/this.estimate;
+			value = this.actualComplete/this.estimate;
 		}catch(Exception e){
 			e.getMessage();
-			temp = 0;
+			value = 0;
 		}
-		return temp;
+		return value;
 	}
 	
 	public Date getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	
+	public void setStartDate(String startDate) {
+		this.startDate = this.setDate(startDate);		
 	}
+	
 	public Date getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndDate(String endDate) {
+		this.endDate = this.setDate(endDate);
 	}
 	public Date getEstDate() {
 		return estDate;
 	}
-	public void setEstDate(Date estDate) {
-		this.estDate = estDate;
+	public void setEstDate(String estDate) {
+		this.estDate = this.setDate(estDate);
 	}
 	public String getTaskName() {
 		return taskName;
@@ -115,8 +127,31 @@ public class DevRowObject implements Serializable{
 		this.actualComplete = actualComplete;
 	}
 	
-	public float getPercentComplete(){
-		return this.percentDone = calcPercentDone();
+	public void setPercentComplete(float percentComplete) {
+		this.percentDone = percentComplete;
 	}
 	
+	public float getPercentComplete(){
+		return this.percentDone;
+	}
+	
+	public void setCloseComment(String comment) {
+		
+		this.closingComment = comment;
+	}
+	
+	public String getCloseComment() {
+	
+		return this.closingComment;
+	
+	}
+	
+	public void setDescription (String comment) {
+		
+		this.description = comment;
+	}
+	
+	public String getDescription () {	
+		return this.description;	
+	}
 }

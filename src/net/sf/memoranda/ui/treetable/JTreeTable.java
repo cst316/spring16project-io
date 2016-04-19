@@ -205,12 +205,10 @@ public class JTreeTable extends JTable {
 		public Component getTableCellRendererComponent(JTable table,
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
-			if (isSelected)
+			if (isSelected){
 				setBackground(table.getSelectionBackground());
-			else
+			}else{
 				setBackground(table.getBackground());
-			if (value instanceof Task) {
-				
 			}
 			visibleRow = row;
 			return this;
@@ -230,6 +228,7 @@ public class JTreeTable extends JTable {
 		/**
 		 * Overridden to return false, and if the event is a mouse event it is
 		 * forwarded to the tree.
+		 * 
 		 * <p>
 		 * The behavior for this is debatable, and should really be offered as a
 		 * property. By returning false, all keyboard actions are implemented in
@@ -242,6 +241,7 @@ public class JTreeTable extends JTable {
 		 * clicking outside of the bounds of the tree node, but still in the
 		 * tree column will select the row, whereas if this returned true that
 		 * wouldn't be the case.
+		 * 
 		 * <p>
 		 * By returning false we are also enforcing the policy that the tree
 		 * will never be editable (at least by a key sequence).
@@ -323,6 +323,7 @@ public class JTreeTable extends JTable {
 		 * model.
 		 */
 		protected void updateSelectedPathsFromSelectedRows() {
+		    TreePath selPath = null;
 			if (!updatingListSelectionModel) {
 				updatingListSelectionModel = true;
 				try {
@@ -334,12 +335,11 @@ public class JTreeTable extends JTable {
 					clearSelection();
 					if (min != -1 && max != -1) {
 						for (int counter = min; counter <= max; counter++) {
-							if (listSelectionModel.isSelectedIndex(counter)) {
-								TreePath selPath = tree.getPathForRow(counter);
-
-								if (selPath != null) {
-									addSelectionPath(selPath);
-								}
+							if (listSelectionModel.isSelectedIndex(counter) 
+							        && tree.getPathForRow(counter) != null) {
+							    
+								selPath = tree.getPathForRow(counter);
+								addSelectionPath(selPath);
 							}
 						}
 					}

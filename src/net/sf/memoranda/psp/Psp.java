@@ -1,7 +1,11 @@
 package net.sf.memoranda.psp;
 
 import java.util.Date;
-
+/**
+ * Interface for psp related classes
+ * @author Cephas
+ *
+ */
 public interface Psp {
 	
 	//Static integer value that is a unique project ID (pID) to every project

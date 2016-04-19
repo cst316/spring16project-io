@@ -250,8 +250,7 @@ public class AppFrame extends JFrame {
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
         try {
             jbInit();
-        }
-        catch (Exception e) {
+        }catch (Exception e) {
             new ExceptionDialog(e);
         }
     }
@@ -579,8 +578,7 @@ public class AppFrame extends JFrame {
                 if (prPanelExpanded) {
                     prPanelExpanded = false;
                     splitPane.setDividerLocation(28);
-                }
-                else {
+                }else {
                     prPanelExpanded = true;
                     splitPane.setDividerLocation(0.2);
                 }
@@ -616,9 +614,9 @@ public class AppFrame extends JFrame {
             int w = new Integer((String) fwo).intValue();
             int h = new Integer((String) fho).intValue();
             this.setSize(w, h);
-        }
-        else
+        }else{
             this.setExtendedState(Frame.MAXIMIZED_BOTH);
+        }
 
         Object xo = Context.get("FRAME_XPOS");
         Object yo = Context.get("FRAME_YPOS");
@@ -668,7 +666,9 @@ public class AppFrame extends JFrame {
                         ExitConfirmationDialog dlg = new ExitConfirmationDialog(this,Local.getString("Exit"));
                         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
                         dlg.setVisible(true);
-                        if(dlg.CANCELLED) return;
+                        if(dlg.CANCELLED){
+                        	return;
+                        }
         }
 
         // Last chance to save items from PSP before exiting
@@ -706,12 +706,10 @@ public class AppFrame extends JFrame {
     	if (e.getID() == WindowEvent.WINDOW_CLOSING) {
             // Changed status of this condition to exit the frame via doExit() method
     		doExit();               
-        } 
-        else if (e.getID() == WindowEvent.WINDOW_ICONIFIED) {
+        }else if (e.getID() == WindowEvent.WINDOW_ICONIFIED) {
             // Changed status of this condition to minimize the Frame instead of closing            
             doMinimize();
-        }
-        else {
+        }else {
         	// Left alone from before - untouched
             super.processWindowEvent(e);
         }
@@ -726,8 +724,9 @@ public class AppFrame extends JFrame {
     }
 
     private static void exitNotify() {
-        for (int i = 0; i < exitListeners.size(); i++)
+        for (int i = 0; i < exitListeners.size(); i++){
             ((ActionListener) exitListeners.get(i)).actionPerformed(null);
+        }
     }
 
     public void setEnabledEditorMenus(boolean enabled) {
@@ -779,16 +778,18 @@ public class AppFrame extends JFrame {
 
         try {
             lastSel = (java.io.File) Context.get("LAST_SELECTED_PACK_FILE");
-        }
-        catch (ClassCastException cce) {
+        }catch (ClassCastException cce) {
             lastSel = new File(System.getProperty("user.dir") + File.separator);
         }
         //---------------------------------------------------------------------
 
-        if (lastSel != null)
+        if (lastSel != null){
             chooser.setCurrentDirectory(lastSel);
-        if (chooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION)
+        }
+        
+        if (chooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION){
             return;
+        }
         Context.put("LAST_SELECTED_PACK_FILE", chooser.getSelectedFile());        
         java.io.File f = chooser.getSelectedFile();
         ProjectPackager.pack(CurrentProject.get(), f);
@@ -835,16 +836,17 @@ public class AppFrame extends JFrame {
 
         try {
             lastSel = (java.io.File) Context.get("LAST_SELECTED_PACK_FILE");
-        }
-        catch (ClassCastException cce) {
+        }catch (ClassCastException cce) {
             lastSel = new File(System.getProperty("user.dir") + File.separator);
         }
         //---------------------------------------------------------------------
 
-        if (lastSel != null)
+        if (lastSel != null){
             chooser.setCurrentDirectory(lastSel);
-        if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION)
+        }
+        if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){
             return;
+        }
         Context.put("LAST_SELECTED_PACK_FILE", chooser.getSelectedFile());        
         java.io.File f = chooser.getSelectedFile();
         ProjectPackager.unpack(f);
@@ -984,8 +986,7 @@ public class AppFrame extends JFrame {
 
             try {
                 lastSel = (java.io.File) Context.get("LAST_SELECTED_NOTE_FILE");
-            }
-            catch (ClassCastException cce) {
+            }catch (ClassCastException cce) {
                 lastSel = new File(System.getProperty("user.dir") + File.separator);
             }
             //---------------------------------------------------------------------
@@ -1078,8 +1079,7 @@ public class AppFrame extends JFrame {
 
             try {
                 lastSel = (java.io.File) Context.get("LAST_SELECTED_NOTE_FILE");
-            }
-            catch (ClassCastException cce) {
+            }catch (ClassCastException cce) {
                 lastSel = new File(System.getProperty("user.dir") + File.separator);
             }
             //---------------------------------------------------------------------

@@ -21,13 +21,14 @@ public class DefectImpl implements Defect, Serializable {
 	
 	public DefectImpl(){
 		this.testObj = new ArrayList<TestRowObject> ();
-		//path = null;
+		isDirty = false;
 	}
 	
 	//This should be the main constructor to use
 	public DefectImpl(Psp psp){
 		this();		// Calling empty constructor
 		this.pspValues = psp;
+		isDirty = false;
 	}
 	
 	/**
@@ -58,7 +59,7 @@ public class DefectImpl implements Defect, Serializable {
 	}
 	
 	/**
-	 * retrieves current working list object object as ArrayList<TestRowObject>
+	 * Retrieves current working list object object as ArrayList<TestRowObject>
 	 * @return testObj
 	 */
 	@Override
@@ -98,11 +99,10 @@ public class DefectImpl implements Defect, Serializable {
      * Adds new TestRowObject to existing ArrayList, throws exception if error.
      * Will make isDirty = true
      * @param rowObj
-     * @return temp
+     * @return isAdded
      * @throws Exception
      */
-	@Override
-	public boolean addRow(TestRowObject rowObj) {
+	private boolean addRow(TestRowObject rowObj) {
 		boolean isAdded = true;
 		
 		try{
@@ -114,18 +114,32 @@ public class DefectImpl implements Defect, Serializable {
 		return isAdded;
 	}
 	
+	/**
+	 * Edits specific row with new object information
+	 * @param index in arrayList to edit with new data
+	 * @param rowObj new data to edit current list
+	 * @return isEdited boolean status detailing if operation was successful
+	 * @throws NullPointerException thrown if index is null in list
+	 * @throws Exception
+	 */
 	@Override
 	public boolean editRow (int index, TestRowObject rowObj) {
-		// TODO Auto-generated method stub
-		boolean isEdited = false;
-		
-		if (index < this.testObj.size() && rowObj != null) {
-			testObj.set(index, rowObj);  //Overwrites the object at the index
-			isEdited = true;
-		} else if (rowObj != null) {
-			isEdited = addRow(rowObj);	//Adds new object to Arraylist
+		boolean isEdited = true;
+		try{
+		    
+    		if (index < this.testObj.size()) {
+    			testObj.set(index, rowObj);  //Overwrites the object at the index
+    		} else {
+    			isEdited = addRow(rowObj);	//Adds new object to Arraylist
+    		}
+		}catch(NullPointerException npe){
+		    npe.getMessage();
+		    Util.debug("null pointer thrown at index: " + index);
+		    isEdited = false;
+		}catch(Exception e){
+            e.getMessage();
+            isEdited = false;		    
 		}
-		
 		if (isEdited) {
 			isDirty = true;
 		}
@@ -139,6 +153,7 @@ public class DefectImpl implements Defect, Serializable {
 	 * @param rowObj
 	 * @return temp
 	 * @throws NullPointerException
+	 * @throws Exception
 	 */
 	public boolean removeRow(TestRowObject rowObj){
 		boolean isRemoved = true;
@@ -163,6 +178,7 @@ public class DefectImpl implements Defect, Serializable {
      * @param index
      * @return temp
      * @throws NullPointerException
+     * @throws Exception
      */
 	@Override
 	public boolean removeRow(int index){

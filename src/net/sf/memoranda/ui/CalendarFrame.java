@@ -18,10 +18,9 @@ public class CalendarFrame extends JInternalFrame {
 
   public CalendarFrame() {
     try {
-      jbInit();
-    }
-    catch(Exception e) {
-      new ExceptionDialog(e);
+        jbInit();
+    }catch(Exception e) {
+        new ExceptionDialog(e);
     }
 
   }

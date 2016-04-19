@@ -99,7 +99,8 @@ public class CurrentProject {
         return projectListeners;
     }
 
-    private static void notifyListenersBefore(Project project, NoteList nl, TaskList tl, ResourcesList rl) {
+    private static void notifyListenersBefore(Project project, NoteList nl, 
+    		TaskList tl, ResourcesList rl) {
         for (int i = 0; i < projectListeners.size(); i++) {
             ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, rl);
             /*DEBUGSystem.out.println(projectListeners.get(i));*/

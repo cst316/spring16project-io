@@ -33,8 +33,7 @@ import javax.swing.event.TreeModelListener;
  * @author Philip Milne
  * @author Scott Violet
  */
-public class TreeTableModelAdapter extends AbstractTableModel
-{
+public class TreeTableModelAdapter extends AbstractTableModel{
     JTree tree;
     TreeTableModel treeTableModel;
 

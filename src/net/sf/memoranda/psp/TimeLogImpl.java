@@ -18,9 +18,6 @@ import net.sf.memoranda.util.Util;
  */
 public class TimeLogImpl implements TimeLog, Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3790546736695557381L;
 	
 	private Psp pspValues;
@@ -88,6 +85,38 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		return isRemoved;
 	}	
 	
+	public boolean removeRow(int index){
+		boolean isRemoved = true;
+		
+		try{
+			timerow.remove(index);
+		}catch(NullPointerException e){
+			e.getMessage();
+			isRemoved = false;
+			Util.debug("Index does not exist. Index number: " + index);
+			isRemoved = false;
+		}catch(Exception e){
+		    e.getMessage();
+		    isRemoved = false;
+		}
+		
+		return isRemoved;
+	}
+
+	
+	@Override
+	public boolean addRow(TimeRowObject rowObj) {
+		boolean isAdded = true;
+		
+		try{
+			timerow.add(rowObj);
+		}catch(Exception e){
+			e.getMessage();
+			isAdded = false;
+		}
+		return isAdded;
+	}
+	
 	/**
 	 * Implement custom object reader
 	 * @param stream
@@ -108,4 +137,19 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		stream.defaultWriteObject();
 		Util.debug("Time Log wrtten");
 	}
+
+	@Override
+	public boolean editRow(int index, TimeRowObject rowObj) {
+		boolean isEdited = false;
+		
+		if (index < this.timerow.size() && rowObj != null) {
+			timerow.set(index, rowObj); //Overwrites the object at the index
+			isEdited = true;
+		} else if (rowObj != null) {
+			isEdited = addRow(rowObj);	//Adds new object to Arraylist
+		}
+		
+		return isEdited;
+	}
+
 }

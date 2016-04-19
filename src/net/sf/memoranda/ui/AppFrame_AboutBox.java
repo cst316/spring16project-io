@@ -61,8 +61,7 @@ public class AppFrame_AboutBox extends JDialog implements ActionListener {
     enableEvents(AWTEvent.WINDOW_EVENT_MASK);
     try {
       jbInit();
-    }
-    catch(Exception e) {
+    }catch(Exception e) {
       e.printStackTrace();
     }
     setSize(400, 500);
@@ -73,11 +72,13 @@ public class AppFrame_AboutBox extends JDialog implements ActionListener {
     text += "<b>"+product+"</b><br><br>";
     text += copyright + "<br>" + url + "<br><br>";
     text += "<b>" + developersHead + "</b><br>";    
-    for (int i = 0; i < developers.length; i++)
-        text += developers[i]+"<br>";    
+    for (int i = 0; i < developers.length; i++){
+        text += developers[i]+"<br>";
+    }
     text += "<br><b>" + othersHead + "</b><br>";    
-    for (int i = 0; i < others.length; i++)
+    for (int i = 0; i < others.length; i++){
         text += others[i]+"<br>"; 
+    }
     
     text += "</html>";
     

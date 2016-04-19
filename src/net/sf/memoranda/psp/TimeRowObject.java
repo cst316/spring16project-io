@@ -37,87 +37,91 @@ public class TimeRowObject implements Serializable {
 	}
 	
 	public void setDate(Date date) {
-		// TODO Auto-generated method stub
 		this.date = date;
 	}
 	
+	/**
+	 * setter for consistent date value
+	 * @param date input to be parse to set date
+	 * @return isSet boolean value returns success of set date
+	 * @throws ParseException
+	 */
 	public boolean setDate(String date) {
-		// TODO Auto-generated method stub
-		boolean isSet = false;
+		boolean isSet = true;
 		DateFormat formatter ; 
 		formatter = new SimpleDateFormat("MM/dd/yy");
 		try {
 			this.date = formatter.parse(date);
-			isSet = true;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			Util.debug ("Date parsing issue: ".toUpperCase() + e.getMessage());
+			isSet = false;
 		}		
 		return isSet;
 	}
 	
 	public Date getDate() {
-		// TODO Auto-generated method stub
 		return this.date;
 	}
 	
+	/**
+	 * parse and set start time
+	 * @param time string input to be parsed
+	 * @return isSet boolean value indicates successful parse
+	 * @throws ParseException outputs debug information 
+	 */
 	public boolean setStartTime(String time) {
-		// TODO Auto-generated method stub
-		boolean isSet = false;
+		boolean isSet = true;
 		DateFormat formatter ; 
 		formatter = new SimpleDateFormat("hh:mm a");
 		try {
 			this.startTime = formatter.parse(time);
-			isSet = true;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			Util.debug ("Time parsing issue: ".toUpperCase() + e.getMessage());
+            isSet = false;
 		}		
 		return isSet;
 	}
 	
 	public Date getStartTime() {
-		// TODO Auto-generated method stub
 		return this.startTime;
 	}
 	
 	public void setInterruptTime(float time) {
-		// TODO Auto-generated method stub
 		this.interruptTime = time;
 	}
 	
 	public float getInterruptTime() {
-		// TODO Auto-generated method stub
 		return this.interruptTime;
 	}
 	
+	/**
+	 * parse and set ending time
+	 * @param time string value to parse into dateFormat
+	 * @return isSet boolean value indicates success of parse
+	 * @throws ParseException details time parse failure
+	 */
 	public boolean setEndTime(String time) {
-		// TODO Auto-generated method stub
-		boolean isSet = false;
+		boolean isSet = true;
 		DateFormat formatter ; 
 		formatter = new SimpleDateFormat("hh:mm a");
 		try {
 			this.endTime = formatter.parse(time);
-			isSet = true;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			Util.debug ("Time parsing issue: ".toUpperCase() + e.getMessage());
+            isSet = false;
 		}		
 		return isSet;
 	}
 
 	public Date getEndTime() {
-		// TODO Auto-generated method stub
 		return this.endTime;
 	}
 	
 	public void setPhase(String phase) {
-		// TODO Auto-generated method stub
 		this.phase = phase;
 	}
 
 	public String getPhase() {
-		// TODO Auto-generated method stub
 		return this.phase;
 	}
 }

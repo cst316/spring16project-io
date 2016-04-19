@@ -26,4 +26,10 @@ public interface TimeLog {
 	public boolean removeAllObjects ();
 	
 	public boolean removeTimeRowObject (TimeRowObject timerow, int index);
+	
+	public boolean removeRow(int index);
+	
+	public boolean editRow(int index, TimeRowObject rowObj);
+	
+	public boolean addRow(TimeRowObject rowObj);
 }

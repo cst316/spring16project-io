@@ -170,16 +170,17 @@ public class ResourcesTable extends JTable {
         
 public Class getColumnClass(int col) {
             try {
-            switch (col) {
-                case 0 :
-                case 1 :
-                case 3 :
-                    return Class.forName("java.lang.String");
-                case 2 :
-                    return Class.forName("java.util.Date");
+	            switch (col) {
+	                case 0 :
+	                case 1 :
+	                case 3 :
+	                    return Class.forName("java.lang.String");
+	                case 2 :
+	                    return Class.forName("java.util.Date");
+	            }
+            }catch (Exception ex) {
+            	new ExceptionDialog(ex);
             }
-            }
-            catch (Exception ex) {new ExceptionDialog(ex);}
             return null;
         }
     }

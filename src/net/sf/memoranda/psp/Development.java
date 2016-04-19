@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * 
  * @author Joe Michaels
  *	3/28/2016
- *	interface for development controller
+ *	interface for Developmentimpl
  */
 public interface Development {
 	
@@ -22,5 +22,5 @@ public interface Development {
 	
 	public boolean removeRow(int i);
 	
-	public boolean getIsDirty();
+	public boolean editRow (int index, DevRowObject rowObj); 
 }

@@ -75,8 +75,7 @@ public class PSP_DesignPanel extends JPanel {
 		
 		try {
             jbInit();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
         }
 	}
@@ -88,8 +87,7 @@ public class PSP_DesignPanel extends JPanel {
 		
 		try {
             jbInit();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
         }
 	}
@@ -100,15 +98,13 @@ public class PSP_DesignPanel extends JPanel {
 		
 		try {
             jbInit();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
         }
 		
     }
 	
-	private void jbInit() throws Exception 
-	{
+	private void jbInit() throws Exception {
 		try{
 			fileList = new JList<String>(getFileList());
 		}catch (Exception e){
@@ -212,33 +208,26 @@ public class PSP_DesignPanel extends JPanel {
 					("user.home") + File.separator + "Pictures"));
 			File selectedFile = null;			
 			int result = fileChooser.showOpenDialog(this);
-			if (result == JFileChooser.APPROVE_OPTION) 
-			{
+			if (result == JFileChooser.APPROVE_OPTION) {
 				selectedFile = fileChooser.getSelectedFile();
 				image = ImageIO.read(selectedFile);
 				Util.debug("Selected file: " + selectedFile.getName());
 				
 				//pathways need to be updated to be relative.
-				if(!Files.exists(Paths.get(getPath())))
-				{
+				if(!Files.exists(Paths.get(getPath()))){
 					File file = new File(getPath());
 					file.mkdirs();
 				}
 				
 				Util.debug("Up until now");
 			
-				if (selectedFile.getName().toLowerCase().contains(".png"))
-				{
+				if (selectedFile.getName().toLowerCase().contains(".png")){
 					ImageIO.write(image, "png", new File(getPath() + File.separator + selectedFile.getName()));
-				}
-				else if (selectedFile.getName().toLowerCase().contains(".jpg"))
-				{
+				}else if (selectedFile.getName().toLowerCase().contains(".jpg")){
 					ImageIO.write(image, "jpg", new File(getPath() + File.separator + selectedFile.getName()));
-				}else if (selectedFile.getName().toLowerCase().contains(".img"))
-				{
+				}else if (selectedFile.getName().toLowerCase().contains(".img")){
 					ImageIO.write(image, "img", new File(getPath() + File.separator + selectedFile.getName()));
-				} else if (selectedFile.getName().toLowerCase().contains(".tif"))
-				{
+				} else if (selectedFile.getName().toLowerCase().contains(".tif")){
 					ImageIO.write(image, "tif", new File(getPath() + File.separator + selectedFile.getName()));
 				}
 				//fileList = new JList<String>(getFileList());
@@ -326,14 +315,12 @@ public class PSP_DesignPanel extends JPanel {
 	 * @return imports file names from folder, returns as string array
 	 * Note: update path once tacked down. Should I also buffer the images in the file as well?
 	 */
-	public DefaultListModel<String> getFileList()
-	{
+	public DefaultListModel<String> getFileList(){
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		//need to narrow its search to display only picture files types like png, jpg, img etc...
 		File data = new File(getPath());
 		File[] files = data.listFiles();
-		for(int i = 0; i < files.length; ++i)
-		{
+		for(int i = 0; i < files.length; ++i){
 			listModel.addElement(files[i].getName());
 		}
 		

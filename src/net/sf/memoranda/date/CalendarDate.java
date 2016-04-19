@@ -124,12 +124,10 @@ public class CalendarDate {
         if (object.getClass().isInstance(CalendarDate.class)) {
             CalendarDate d2 = (CalendarDate) object;
             return ((d2.getDay() == getDay()) && (d2.getMonth() == getMonth()) && (d2.getYear() == getYear()));
-        }
-        else if (object.getClass().isInstance(Calendar.class)) {
+        }else if (object.getClass().isInstance(Calendar.class)) {
             Calendar cal = (Calendar) object;
             return this.equals(new CalendarDate(cal));
-        }
-        else if (object.getClass().isInstance(Date.class)) {
+        }else if (object.getClass().isInstance(Date.class)) {
             Date d = (Date) object;
             return this.equals(new CalendarDate(d));
         }

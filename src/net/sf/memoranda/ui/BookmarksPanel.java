@@ -21,10 +21,9 @@ public class BookmarksPanel extends JPanel {
 
   public BookmarksPanel() {
     try {
-      jbInit();
-    }
-    catch(Exception ex) {
-      new ExceptionDialog(ex);
+        jbInit();
+    }catch(Exception ex) {
+        new ExceptionDialog(ex);
     }
   }
   void jbInit() throws Exception {

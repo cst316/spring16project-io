@@ -60,7 +60,7 @@ public class PSP_DefectPanel extends JPanel {
 	 * Label variables for project name, date and defect number
 	 */
 	private JTextField programTextField;
-	private JLabel dateLabel;
+	private JTextField dateTextField_2;
 	private JLabel numberLabel;
 	
 	/**
@@ -73,7 +73,7 @@ public class PSP_DefectPanel extends JPanel {
 	 * List variables that stores a list of each of the attributes above
 	 */
 	private List <JTextField> programTextFieldList = new ArrayList <JTextField>();
-	private List <JLabel> dateLabelList = new ArrayList <JLabel>();
+	private List <JTextField> dateTextFieldList_2 = new ArrayList <JTextField>();
 	private List <JLabel> numberLabelList = new ArrayList <JLabel>();
 	private List <JTextField> typeTextFieldList = new ArrayList <JTextField>();
 	private List <JTextField> injectTextFieldList = new ArrayList <JTextField>();
@@ -254,17 +254,17 @@ public class PSP_DefectPanel extends JPanel {
 		eachLogPanel.add(typeLabel_1);
 		
 		JLabel injectLabel_1 = new JLabel("Inject");
-		injectLabel_1.setToolTipText("Number of Defects Injected\r\n");
+		injectLabel_1.setToolTipText("Phase Defect Injected\r\n");
 		injectLabel_1.setBounds(551, 16, 56, 16);
 		eachLogPanel.add(injectLabel_1);
 		
 		JLabel removeLabel_1 = new JLabel("Remove");
-		removeLabel_1.setToolTipText("Number of Defects Removed");
+		removeLabel_1.setToolTipText("Phase Defect Removed");
 		removeLabel_1.setBounds(664, 16, 56, 16);
 		eachLogPanel.add(removeLabel_1);
 		
 		JLabel fixLabel_1 = new JLabel("Fix");
-		fixLabel_1.setToolTipText("Number of Defects Fixed");
+		fixLabel_1.setToolTipText("Phase Defect Fixed");
 		fixLabel_1.setBounds(799, 16, 56, 16);
 		eachLogPanel.add(fixLabel_1);
 		
@@ -324,8 +324,7 @@ public class PSP_DefectPanel extends JPanel {
 		}
 	}
 		
-	private void update()
-	{
+	private void update(){
 		boolean dirty = false;
 		
 		for (int i = 0; i < addButtonList.size(); i++) {
@@ -353,12 +352,18 @@ public class PSP_DefectPanel extends JPanel {
 					setIsDirty(dirty);
 				}
 			}
+			else
+			{
+				JOptionPane.showMessageDialog(App.getFrame(),
+						Local.getString("All fields must be filled out!"));
+				dirty = false;
+			}
 		}
 		
 		//If we actually updated something, then
 		if (dirty) {
 			JOptionPane.showMessageDialog(App.getFrame(),
-					Local.getString("Updated and Saved!"));
+					Local.getString("Updated!"));
 		}
 	}
 	
@@ -372,7 +377,7 @@ public class PSP_DefectPanel extends JPanel {
 		
 		for (int i = 0; i < defect.getRowObject().size(); i++) {
 			programTextFieldList.get(i).setText(defect.getRowObject().get(i).getProgram());
-			dateLabelList.get(i).setText(getDate(defect.getRowObject().get(i).getDate()));
+			dateTextFieldList_2.get(i).setText(getDate(defect.getRowObject().get(i).getDate()));
 			numberLabelList.get(i).setText("                 "
 					+ defect.getRowObject().get(i).getDefNumber());
 			typeTextFieldList.get(i).setText(defect.getRowObject().get(i).getDefType());
@@ -382,8 +387,7 @@ public class PSP_DefectPanel extends JPanel {
 			fixRefTextFieldList.get(i).setText(defect.getRowObject().get(i).getFixRef());
 			
 			//Disabling text field objects from editing unless you click on edit button
-			for (Component t : this.addDefectPanelsList.get(i).getComponents())
-			{
+			for (Component t : this.addDefectPanelsList.get(i).getComponents()){
 				if (t instanceof JTextField) {
 					((JTextField) t).setEditable(false);
 				}
@@ -446,11 +450,11 @@ public class PSP_DefectPanel extends JPanel {
 		programTextField.setToolTipText("Program's name");
 		programTextFieldList.add(programTextField);
 		
-		dateLabel = new JLabel();
-		dateLabel.setBounds(198, 0, 56, 16);
-		dateLabel.setText(getDate());
-		dateLabel.setToolTipText("Date");
-		dateLabelList.add(dateLabel);
+		dateTextField_2 = new JTextField();
+		dateTextField_2.setBounds(198, 0, 56, 16);
+		dateTextField_2.setText(getDate());
+		dateTextField_2.setToolTipText("Date");
+		dateTextFieldList_2.add(dateTextField_2);
 		
 		numberLabel = new JLabel();
 		numberLabel.setBounds(298, 0, 87, 22);
@@ -468,19 +472,19 @@ public class PSP_DefectPanel extends JPanel {
 		injectTextField = new JTextField();
 		injectTextField.setBounds(521, 0, 87, 22);
 		injectTextField.setColumns(10);
-		injectTextField.setToolTipText("Number of Defects Inject");
+		injectTextField.setToolTipText("Phase Defect Injected");
 		injectTextFieldList.add(injectTextField);
 
 		removeTextField = new JTextField();
 		removeTextField.setBounds(635, 0, 87, 22);
 		removeTextField.setColumns(10);
-		removeTextField.setToolTipText("Defects Removed");
+		removeTextField.setToolTipText("Phase Defect Removed");
 		removeTextFieldList.add(removeTextField);
 		
 		fixTextField = new JTextField();
 		fixTextField.setBounds(738, 0, 130, 22);
 		fixTextField.setColumns(10);
-		fixTextField.setToolTipText("Defects fixed");
+		fixTextField.setToolTipText("Phase Defect Fixed");
 		fixTextFieldList.add(fixTextField);
 		
 		fixRefTextField = new JTextField();
@@ -494,7 +498,7 @@ public class PSP_DefectPanel extends JPanel {
 		holdItems.setBackground(Color.WHITE);
 		holdItems.setLayout(null);
 		holdItems.add(programTextField);
-		holdItems.add(dateLabel);
+		holdItems.add(dateTextField_2);
 		holdItems.add(numberLabel);
 		holdItems.add(typeTextField);
 		holdItems.add(injectTextField);
@@ -512,12 +516,11 @@ public class PSP_DefectPanel extends JPanel {
 		eachDefect_panel.setPreferredSize(new Dimension (width, y + height));
 	}
 	
-	private void edit(ActionEvent e)
-	{
-		for(int i = 0; i < addButtonList.size(); i++)
-		{
+	private void edit(ActionEvent e){
+		for(int i = 0; i < addButtonList.size(); i++){
 			if (e.getSource() == editButtonList.get(i) && 
-					(!typeTextFieldList.get(i).isEditable())) {
+					(!typeTextFieldList.get(i).isEditable())){
+				
 				programTextFieldList.get(i).setEditable(true);
 				typeTextFieldList.get(i).setEditable(true);
 				typeTextFieldList.get(i).setEditable(true);
@@ -534,11 +537,9 @@ public class PSP_DefectPanel extends JPanel {
 		}				
 	}
 	
-	private void editAll()
-	{
-		for(int i = 0; i < addButtonList.size(); i++)
-		{
-			//programTextFieldList.get(i).setEditable(true);
+	private void editAll(){
+		for(int i = 0; i < addButtonList.size(); i++){
+			programTextFieldList.get(i).setEditable(true);
 			typeTextFieldList.get(i).setEditable(true);
 			typeTextFieldList.get(i).setEditable(true);
 			injectTextFieldList.get(i).setEditable(true);
@@ -568,7 +569,7 @@ public class PSP_DefectPanel extends JPanel {
 				addButtonList.remove(i);
 				addDefectPanelsList.remove(i);
 				programTextFieldList.remove(i);
-				dateLabelList.remove(i);
+				dateTextFieldList_2.remove(i);
 				editButtonList.remove(i);
 				numberLabelList.remove(i);
 				typeTextFieldList.remove(i);
@@ -608,7 +609,7 @@ public class PSP_DefectPanel extends JPanel {
 		// TODO Auto-generated method stub		
 		TestRowObject my_testRow = new TestRowObject();
 		my_testRow.setProgram(programTextFieldList.get(index).getText());
-		my_testRow.setDate(dateLabelList.get(index).getText());
+		my_testRow.setDate(dateTextFieldList_2.get(index).getText());
 		my_testRow.setDefNumber((
 				Integer.parseInt(numberLabelList.get(index).getText().trim())));
 		my_testRow.setDefType(typeTextFieldList.get(index).getText());
@@ -654,7 +655,7 @@ public class PSP_DefectPanel extends JPanel {
 						String num = "           " + count;
 						fixRefTextField.setText("00" + count + "00");
 						numberLabel.setText("      " + num);
-						dateLabel.setText(getDate());
+						dateTextField_2.setText(getDate());
 					}
 				});
 			} else {

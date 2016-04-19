@@ -106,8 +106,7 @@ public class DailyItemsPanel extends JPanel {
         try {
             parentPanel = _parentPanel;
             jbInit();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             new ExceptionDialog(ex);
         }
     }
@@ -338,8 +337,7 @@ public class DailyItemsPanel extends JPanel {
         if ((currentNote != null) && (currentNote.isMarked())) {
             currentDateLabel.setIcon(bookmarkIcon);
             currentDateLabel.setHorizontalTextPosition(SwingConstants.LEFT);
-        }
-        else {
+        }else {
             currentDateLabel.setIcon(null);
         }		
 
@@ -411,8 +409,7 @@ public class DailyItemsPanel extends JPanel {
             controlPanel.add(toggleToolBar, BorderLayout.EAST);
             splitPane.setDividerLocation((int) controlPanel.getMinimumSize().getWidth());
 
-        }
-        else {
+        }else {
             expanded = true;
             toggleButton.setIcon(collIcon);
             controlPanel.remove(toggleToolBar);

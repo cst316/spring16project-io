@@ -2,6 +2,12 @@ package net.sf.memoranda.psp;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * interface for DefectImpl class
+ * @author Joe Michaels
+ *
+ */
 public interface Defect {
 
 	public void setPspValues (Psp pspValues);
@@ -12,8 +18,6 @@ public interface Defect {
 
 	public boolean setRowObject(ArrayList<TestRowObject> list);
 
-	public boolean addRow(TestRowObject rowObj);
-	
 	public boolean removeRow(TestRowObject rowObj);
 	
 	public boolean removeRow(int index);

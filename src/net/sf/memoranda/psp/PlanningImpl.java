@@ -11,7 +11,8 @@ import net.sf.memoranda.util.Util;
 public class PlanningImpl implements Planning, Serializable {
 	
 	/**
-	 * 
+	 * Implementation of the PSP_Planning controller
+	 * @author Cephas
 	 */
 	private static final long serialVersionUID = 2767071770527400292L;
 
@@ -143,7 +144,11 @@ public class PlanningImpl implements Planning, Serializable {
 		this.files = filenames;
 	}
 	
-	//Mutator method that sets the fileName given a file as a parameter
+	/**
+	 * Mutator method that sets the fileName given a file as a parameter
+	 * @param filename name of file to add to list for planning
+	 * @return isAdded boolean value to return if addition is successful
+	 */
 	public boolean setFilename(String filename) {
 		boolean isAdded = true;
 		
@@ -159,7 +164,10 @@ public class PlanningImpl implements Planning, Serializable {
 		return isAdded;
 	}
 
-	//toString method returns a String of all the instance variables
+	/**
+	 * toString method returns a String of all the instance variables
+	 * @return string details of application
+	 */
 	public String toString() {
 		return "Planning:\n" + "Estimated Time = " + this.getEstTime() + ", Lines of Code = " + this.getLocHr() + 
 				", Estimated Size = " + this.getEstSize() + ", Estimated Defects = " + this.getEstDefect() + 

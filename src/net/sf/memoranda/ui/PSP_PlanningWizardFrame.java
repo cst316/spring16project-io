@@ -121,10 +121,8 @@ public class PSP_PlanningWizardFrame extends JFrame {
 		this.setLocation((dim.width - xsize)/2, (dim.height - ysize)/2);
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		addWindowListener( new WindowAdapter()
-		{
-		    public void windowClosing(WindowEvent e)
-		    {
+		addWindowListener( new WindowAdapter(){
+		    public void windowClosing(WindowEvent e){
 		    	buttonAction_Clicked ("CANCEL");
 		    }
 		});
@@ -526,8 +524,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 			} else if (code == 1) {
 				addB.get(i).addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						for (int i=0; i< addB.size(); i++)
-						{
+						for (int i=0; i< addB.size(); i++){
 							if (e.getSource() == addB.get(i))
 								buttonAction_Clicked ("OPEN_FILE " + i);
 						}						
@@ -838,8 +835,7 @@ public class PSP_PlanningWizardFrame extends JFrame {
 	public HashMap<String, Integer> getProjDescription() {
 		HashMap<String, Integer> modDesc = new HashMap<String, Integer>();
 		
-		for (int i = 0; i < modDescription.size(); i++)
-		{
+		for (int i = 0; i < modDescription.size(); i++){
 			String mod = modDescription.get(i).getText();
 			String size = modSize.get(i).getText();
 			if (!mod.isEmpty() && !size.isEmpty())

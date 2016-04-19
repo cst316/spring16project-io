@@ -63,8 +63,7 @@ public class ProjectDialog extends JDialog {
         try {
             jbInit();
             pack();
-        }
-        catch(Exception ex) {
+        }catch(Exception ex) {
             new ExceptionDialog(ex);
         }
     }
@@ -283,8 +282,9 @@ public class ProjectDialog extends JDialog {
         if (endDateChB.isSelected()) {
             endDateChB.setForeground(Color.BLACK);
             endDate.getModel().setValue(startDate.getModel().getValue());
+        }else {
+            endDateChB.setForeground(Color.GRAY);
         }
-        else endDateChB.setForeground(Color.GRAY);
     }
     
     void sdButton_actionPerformed(ActionEvent e) {
