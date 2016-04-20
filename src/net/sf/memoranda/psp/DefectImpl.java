@@ -14,21 +14,16 @@ import net.sf.memoranda.util.Util;
 public class DefectImpl implements Defect, Serializable {
 	
     private static final long serialVersionUID = -3899481284282752580L;
-	private static boolean isDirty = false;
 	private Psp pspValues;
 	private ArrayList<TestRowObject> testObj;
-	//private String path = ""; //temp values until rest of class is implemented
 	
 	public DefectImpl(){
 		this.testObj = new ArrayList<TestRowObject> ();
-		isDirty = false;
 	}
 	
-	//This should be the main constructor to use
 	public DefectImpl(Psp psp){
-		this();		// Calling empty constructor
+		this();
 		this.pspValues = psp;
-		isDirty = false;
 	}
 	
 	/**
@@ -36,7 +31,6 @@ public class DefectImpl implements Defect, Serializable {
 	 * @param list
 	 */
 	public DefectImpl(ArrayList<TestRowObject> list){
-
 		this.testObj = list;
 	}
 	
@@ -77,7 +71,6 @@ public class DefectImpl implements Defect, Serializable {
 	 */
     @Override
     public boolean setRowObject(ArrayList<TestRowObject> list) {
-        isDirty = true;
         boolean temp = true;
         try{
             this.testObj = list;
@@ -140,9 +133,6 @@ public class DefectImpl implements Defect, Serializable {
             e.getMessage();
             isEdited = false;		    
 		}
-		if (isEdited) {
-			isDirty = true;
-		}
 		
 		return isEdited;
 	}
@@ -157,10 +147,8 @@ public class DefectImpl implements Defect, Serializable {
 	 */
 	public boolean removeRow(TestRowObject rowObj){
 		boolean isRemoved = true;
-		isDirty = true;
 		try{
 			testObj.remove(rowObj);
-			isDirty = true;		
 		}catch(NullPointerException e){
 			e.getMessage();
 			isRemoved = false;
@@ -186,7 +174,6 @@ public class DefectImpl implements Defect, Serializable {
 		
 		try{
 			testObj.remove(index);
-			isDirty = true;		
 		}catch(NullPointerException e){
 			e.getMessage();
 			isRemoved = false;
@@ -219,14 +206,6 @@ public class DefectImpl implements Defect, Serializable {
 	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
 		Util.debug("Defect wrtten");
-	}
-
-	/**
-	 * gets isDirty status
-	 * @return isDirty
-	 */
-	public boolean getIsDirty(){
-		return isDirty;
 	}
 }
 

@@ -11,26 +11,21 @@ import javax.imageio.ImageIO;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.util.Util;
 
+/**
+ * Controller for PSP_Design class.
+ * @author Josh Kappamamoottil
+ */
 public class DesignImpl implements Design, Serializable {
-	
 
-	/**
-	 * Controller for PSP_Design class.
-     * @author Josh Kappamamoottil
-	 */
 	private static final long serialVersionUID = -121825052540382970L;
 	private String filePath;
-	protected ArrayList<String> files;
-	private Psp pspValues;
-	
+	private ArrayList<String> files;
+	private Psp pspValues;	
 	private BufferedImage myImage; 
 	
-	public String getFilePath() {
-		return filePath;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+	public DesignImpl(ArrayList<String> theFiles, String nameOfFile){
+		filePath = nameOfFile;
+		files = theFiles;
 	}
 	
 	public DesignImpl(){
@@ -39,29 +34,39 @@ public class DesignImpl implements Design, Serializable {
 		pspValues = null;
 	}
 	
-	public DesignImpl(ArrayList<String> theFiles, String nameOfFile){
-		filePath = nameOfFile;
-		files = theFiles;
+	@Override
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+		
+	@Override
+	public String getFilePath() {
+		return filePath;
 	}
 
+	@Override
 	public String getFileName() {
 		return filePath;
 	}
 
+	@Override
 	public boolean setFileName(String theFileName) {
 		this.filePath = theFileName;
 		return true;
 	}
 
+	@Override
 	public ArrayList<String> getFiles() {
 		return files;
 	}
 
+	@Override
 	public boolean setFiles(ArrayList<String> theFiles) {
 		this.files = theFiles;
 		return true;
 	}
 	
+	@Override
 	public void fileAdd(String the_filePath){
 		files.add(the_filePath);
 	}
@@ -141,5 +146,4 @@ public class DesignImpl implements Design, Serializable {
 		// TODO Auto-generated method stub
 		return this.pspValues;
 	}
-
 }

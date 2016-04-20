@@ -18,9 +18,6 @@ import net.sf.memoranda.util.Util;
  */
 public class TimeRowObject implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7354700070702212027L;
 	private Date date;
 	private Date startTime;

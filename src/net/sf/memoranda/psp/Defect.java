@@ -22,7 +22,5 @@ public interface Defect {
 	
 	public boolean removeRow(int index);
 	
-	public boolean getIsDirty();
-	
 	public boolean editRow (int index, TestRowObject editThis);
 }

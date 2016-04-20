@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 /**
  * Interface for psp planning controller 
- * @author Cephas
- *
+ * @author Josh
+ * and edited by Cephas
  */
 public interface Planning {
 	
