@@ -44,7 +44,6 @@ public class TimeLogImpl implements TimeLog, Serializable {
 	
 	@Override
 	public boolean addTimeRowObject(TimeRowObject timerow) {
-		// TODO Auto-generated method stub
 		boolean isAdded = true;
 		this.timerow.add(timerow);
 		return isAdded;
@@ -52,13 +51,11 @@ public class TimeLogImpl implements TimeLog, Serializable {
 
 	@Override
 	public TimeRowObject getTimeRowObject(int index) {
-		// TODO Auto-generated method stub
 		return this.timerow.get(index);
 	}
 
 	@Override
 	public boolean addTimeRowObject(List<TimeRowObject> timerow) {
-		// TODO Auto-generated method stub
 		boolean isAdded = true;
 		this.timerow = timerow;
 		return isAdded;
@@ -66,20 +63,17 @@ public class TimeLogImpl implements TimeLog, Serializable {
 
 	@Override
 	public List<TimeRowObject> getTimeRowLists() {
-		// TODO Auto-generated method stub
 		return this.timerow;
 	}
 	
 	@Override
 	public boolean removeAllObjects() {
-		// TODO Auto-generated method stub
 		this.timerow.clear();
 		return false;
 	}
 
 	@Override
 	public boolean removeTimeRowObject(TimeRowObject timerow, int index) {
-		// TODO Auto-generated method stub
 		boolean isRemoved = true;
 		this.timerow.remove(index);
 		return isRemoved;
@@ -143,13 +137,12 @@ public class TimeLogImpl implements TimeLog, Serializable {
 		boolean isEdited = false;
 		
 		if (index < this.timerow.size() && rowObj != null) {
-			timerow.set(index, rowObj); //Overwrites the object at the index
+			timerow.set(index, rowObj);
 			isEdited = true;
 		} else if (rowObj != null) {
-			isEdited = addRow(rowObj);	//Adds new object to Arraylist
+			isEdited = addRow(rowObj);
 		}
 		
 		return isEdited;
 	}
-
 }

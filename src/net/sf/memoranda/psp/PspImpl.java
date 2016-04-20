@@ -9,11 +9,11 @@ import net.sf.memoranda.util.Util;
 
 /**
  * Implementation of PSP class
- * @author Cephas
+ * @author Josh
+ * edited by Cephas
  *
  */
-public class PspImpl implements Psp, Serializable {
-	
+public class PspImpl implements Psp, Serializable {	
 
 	private static final long serialVersionUID = 4409606508885247769L;
 	private int pID;
@@ -23,7 +23,6 @@ public class PspImpl implements Psp, Serializable {
 		
 	public static int lastID = Psp.pID;
 	
-	//PspImpl constructor where values are initialized to empty values
 	public PspImpl () {
 		super();
 		stDate = null;
@@ -31,7 +30,6 @@ public class PspImpl implements Psp, Serializable {
 		description = "";
 	}
 	
-	//PspImpl that accepts parameters for all attributes except pID since pID can be accessed through Psp
 	public PspImpl(Date stDate, String name, String description) {
 		super();
 		pID = lastID;
@@ -40,7 +38,6 @@ public class PspImpl implements Psp, Serializable {
 		this.description = description;
 	}
 	
-	//PspImpl that accepts the project name and project description parameters
 	public PspImpl(String name, String description, int id) {
 		super();
 		this.pID = id;
@@ -100,32 +97,16 @@ public class PspImpl implements Psp, Serializable {
 		PspImpl.lastID = lastID;
 	}
 	
-	/**
-	 * Implement custom object reader
-	 * @param stream
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
 	private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		stream.defaultReadObject();
 		Util.debug("Psp retrieved");
 	}
 	
-	/**
-	 * Implement custom object writer
-	 * @param stream
-	 * @throws IOException
-	 */
 	private void writeObject(ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
 		Util.debug("Psp wrtten");
 	}	
 	
-	/**
-	 * toString method that returns all of PspImpl's attributes
-	 * @return string information of current project
-	 */
-	@Override
 	public String toString() {
 		return "PSP Project Information:\n"
 				+ "Project ID = " + getpId() + ", Project Start Date = " + this.getStDate() 

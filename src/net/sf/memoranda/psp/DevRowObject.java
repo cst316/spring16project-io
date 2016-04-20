@@ -19,8 +19,7 @@ import net.sf.memoranda.util.Local;
  * 03/28/2016
  */
 
-public class DevRowObject implements Serializable{
-	
+public class DevRowObject implements Serializable{	
 
 	private static final long serialVersionUID = -5963248021152547526L;
 	private Date startDate, endDate, estDate;
@@ -56,24 +55,6 @@ public class DevRowObject implements Serializable{
 		}
 		
 		return date;
-	}
-	
-	/**
-	 * 
-	 * @return value calculates value of percent of the project done based on estimates
-	 * @throws Exception in the off chance this 
-	 * method is called and estimate is set to 0
-	 */
-	private float calcPercentDone(){
-		float value;
-		
-		try{
-			value = this.actualComplete/this.estimate;
-		}catch(Exception e){
-			e.getMessage();
-			value = 0;
-		}
-		return value;
 	}
 	
 	public Date getStartDate() {
@@ -127,31 +108,39 @@ public class DevRowObject implements Serializable{
 		this.actualComplete = actualComplete;
 	}
 	
-	public void setPercentComplete(float percentComplete) {
-		this.percentDone = percentComplete;
-	}
-	
 	public float getPercentComplete(){
 		return this.percentDone;
 	}
 	
-	public void setCloseComment(String comment) {
-		
+	public void setPercentComplete(float percentComplete) {
+		this.percentDone = percentComplete;
+	}
+	
+	public String getCloseComment() {	
+		return this.closingComment;	
+	}
+	
+	public void setCloseComment(String comment) {		
 		this.closingComment = comment;
-	}
-	
-	public String getCloseComment() {
-	
-		return this.closingComment;
-	
-	}
-	
-	public void setDescription (String comment) {
-		
-		this.description = comment;
 	}
 	
 	public String getDescription () {	
 		return this.description;	
 	}
+	
+	public void setDescription (String comment) {		
+		this.description = comment;
+	}
+	
+	private float calcPercentDone(){
+		float value;
+		
+		try{
+			value = this.actualComplete/this.estimate;
+		}catch(Exception e){
+			e.getMessage();
+			value = 0;
+		}
+		return value;
+	}	
 }

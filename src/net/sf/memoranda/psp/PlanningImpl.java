@@ -8,18 +8,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import net.sf.memoranda.util.Util;
 
+/**
+ * Implementation of the PSP_Planning controller
+ * @author Josh
+ * and edited by Cephas
+ */
 public class PlanningImpl implements Planning, Serializable {
 	
-	/**
-	 * Implementation of the PSP_Planning controller
-	 * @author Cephas
-	 */
 	private static final long serialVersionUID = 2767071770527400292L;
-
-	//Psp interface reference variable used to get access to the Psp pID constant
 	private Psp pspValues;
-
-	//Attributes related to the Planning class
 	private float estTime;
 	private int locHr;
 	private int estSize;
@@ -30,7 +27,6 @@ public class PlanningImpl implements Planning, Serializable {
 	private ArrayList <String> files = new ArrayList<String>();
 	private HashMap <String, Integer> moduleDescription;
 	
-	//PlanningImpl class constructor with empty values and no parameters
 	public PlanningImpl() {
 		// TODO Auto-generated constructor stub
 		this.estTime = 0.0f;
@@ -44,7 +40,6 @@ public class PlanningImpl implements Planning, Serializable {
 		pspValues = new PspImpl ();
 	}
 	
-	//PlanningImpl class constructor initialized to variables specified in the method parameter header  
 	public PlanningImpl(float estimatedTime, int linesOfCodePerHour, int estimatedSize, int estimatedDefect, 
 			ArrayList<String> nameOfFile, HashMap <String, Integer> projDesc, int pId) {
 		// TODO Auto-generated constructor stub

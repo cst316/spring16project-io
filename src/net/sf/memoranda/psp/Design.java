@@ -11,6 +11,10 @@ import java.util.ArrayList;
  */
 public interface Design {
 	
+	public String getFilePath();
+	
+	public void setFilePath(String filePath);
+	
 	public String getFileName();
 
 	public boolean setFileName(String theFileName);

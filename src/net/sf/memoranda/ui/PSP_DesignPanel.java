@@ -105,11 +105,15 @@ public class PSP_DesignPanel extends JPanel {
     }
 	
 	private void jbInit() throws Exception {
-		try{
-			fileList = new JList<String>(getFileList());
-		}catch (Exception e){
-			e.getMessage();
-		}
+	      try{
+//	          fileList = new JList<String>(getFileList());
+	            fileModel = getFileList();
+	            for(int i = 0; i < fileModel.size(); ++i){
+	                files.add(getPath() + File.separator + fileModel.get(i).toString());
+	            }
+	        }catch (Exception e){
+	            e.getMessage();
+	        }
 		backPanel.setMinimumSize(new Dimension(0, 0));
 		backPanel.setBackground(Color.WHITE);
 		listPanel.setMaximumSize(new Dimension(350, 0));
@@ -118,8 +122,9 @@ public class PSP_DesignPanel extends JPanel {
 		listPanel.setMinimumSize(new Dimension(350, 0));
 		listPanel.setBackground(Color.WHITE);
 		
-		fileModel = new DefaultListModel<String>();
+//		fileModel = new DefaultListModel<String>();
 		lstImages = new JList<String>(fileModel);
+		lstImages.setToolTipText("Choose an image from this list to be displayed");
 		lstImages.setBackground(Color.WHITE);
 		lstImages.setFixedCellWidth(256);
 		//***	
@@ -133,8 +138,10 @@ public class PSP_DesignPanel extends JPanel {
 		lstImages.setFixedCellHeight(25);
 		
 		viewPanel = new JPanel();
+		viewPanel.setToolTipText("Your images will be placed here");
 		viewPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		viewPanel.setBackground(Color.WHITE);
+		btnImportDesign.setToolTipText("Import an image file related to your design");
 		btnImportDesign.setMinimumSize(new Dimension(150, 25));
 		btnImportDesign.setMaximumSize(new Dimension(150, 25));
 		btnImportDesign.setPreferredSize(new Dimension(150, 25));

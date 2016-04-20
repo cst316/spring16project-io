@@ -24,12 +24,10 @@ import java.awt.Color;
 public class PSP_DevelopmentTable extends JPanel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	private JPanel contentPane;
 	static JTable table;
 	private static boolean isDirty = false;
-
-	protected static Development devel;
+	private static Development devel;
 
 	public PSP_DevelopmentTable() {
 		this(new DevelopmentImpl());
@@ -54,6 +52,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		scrollPane.setBackground(Color.WHITE);
 
 		JButton btnNewTask = new JButton("New Task");
+		btnNewTask.setToolTipText("Create a new task");
 		btnNewTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				button_clicked("New Task");
@@ -61,6 +60,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		});
 
 		JButton btnCloseTask = new JButton("Complete Task");
+		btnCloseTask.setToolTipText("Give a task a status of COMPLETE ");
 		btnCloseTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				button_clicked("Close Task");
@@ -68,6 +68,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		});
 
 		JButton btnEditTask = new JButton("Edit Task");
+		btnEditTask.setToolTipText("Edit a task");
 		btnEditTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				button_clicked("Edit Task");
@@ -75,6 +76,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		});
 
 		JButton btnDeleteTask = new JButton("Delete Task");
+		btnDeleteTask.setToolTipText("Remove a task");
 		btnDeleteTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				button_clicked("Delete Task");
@@ -82,6 +84,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		});
 
 		JButton btnViewDescription = new JButton("View Description");
+		btnViewDescription.setToolTipText("View the description of a task");
 		btnViewDescription.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				button_clicked("View Description");
@@ -115,19 +118,20 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 
 		table = new JTable();
 		table.setRowHeight(25);
-		
-		table.setModel(new DefaultTableModel(new Object[][] {{},},
-				new String[] { "Task", "Start Date", "Est. End Date", "Actual End Date", "Priority", "Status",
-						"Estimate (Hrs)", "Actual (Hrs)", "% Done" }) {
-			private static final long serialVersionUID = 1L;
 
-			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, true };
+		table.setModel(
+				new DefaultTableModel(new Object[][] { {}, }, new String[] { "Task", "Start Date", "Est. End Date",
+						"Actual End Date", "Priority", "Status", "Estimate (Hrs)", "Actual (Hrs)", "% Done" }) {
+					private static final long serialVersionUID = 1L;
 
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		
+					boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false,
+							true };
+
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
+
 		table.getColumnModel().getColumn(2).setPreferredWidth(99);
 		table.getColumnModel().getColumn(3).setPreferredWidth(104);
 		table.getColumnModel().getColumn(5).setPreferredWidth(76);
@@ -146,35 +150,32 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 
 	protected static void insertRow(DevRowObject devRow) {
 		boolean dirty;
-		
+
 		if (devel.getRow().size() < 1) {
 			((DefaultTableModel) table.getModel()).removeRow(0);
 		}
-			
+
 		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(), getObject(devRow));
-		
-		dirty = devel.addRow(devRow);	
-		
+
+		dirty = devel.addRow(devRow);
+
 		if (!getIsDirty()) {
 			setIsDirty(dirty);
 		}
 	}
-	
-	private static Object[] getObject (DevRowObject devRow) {
-		Object[] tdarray = new Object[9];		
+
+	private static Object[] getObject(DevRowObject devRow) {
+		Object[] tdarray = new Object[9];
 		tdarray[0] = devRow.getTaskName();
-		tdarray[1] = (devRow.getStartDate() != null ? 
-				getDateTime(devRow.getStartDate(), 0) : "");
-		tdarray[2] = (devRow.getEstDate() != null ? 
-				getDateTime (devRow.getEstDate(), 0) : "");
-		tdarray[3] = (devRow.getEndDate() != null ? 
-				getDateTime (devRow.getEndDate(), 0) : "");
-		tdarray[4] = getPriorityItem (devRow.getPriority());
+		tdarray[1] = (devRow.getStartDate() != null ? getDateTime(devRow.getStartDate(), 0) : "");
+		tdarray[2] = (devRow.getEstDate() != null ? getDateTime(devRow.getEstDate(), 0) : "");
+		tdarray[3] = (devRow.getEndDate() != null ? getDateTime(devRow.getEndDate(), 0) : "");
+		tdarray[4] = getPriorityItem(devRow.getPriority());
 		tdarray[5] = devRow.getStatus();
 		tdarray[6] = devRow.getEstimate() + "";
 		tdarray[7] = devRow.getActualComplete() + "";
 		tdarray[8] = devRow.getPercentComplete() + "";
-		
+
 		return tdarray;
 	}
 
@@ -185,29 +186,28 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 	}
 
 	private static void updateRowData(DevRowObject devRow) {
-		if ((String)(table.getModel().getValueAt(0, 0)) == null) {
+		if ((String) (table.getModel().getValueAt(0, 0)) == null) {
 			((DefaultTableModel) table.getModel()).removeRow(0);
-		}		
-		((DefaultTableModel) table.getModel()).insertRow(
-				table.getRowCount(), getObject(devRow));	
+		}
+		((DefaultTableModel) table.getModel()).insertRow(table.getRowCount(), getObject(devRow));
 	}
 
-	private static String getPriorityItem (int priority) {
+	private static String getPriorityItem(int priority) {
 		String strItem = "";
-		
+
 		switch (priority) {
-			case 0:
-				strItem = "LOW";
-				break;
-			case 1:
-				strItem = "MEDIUM";
-				break;
-			case 2:
-				strItem = "HIGH";
-				break;
-			default:
-				strItem = "NONE";
-		}		
+		case 0:
+			strItem = "LOW";
+			break;
+		case 1:
+			strItem = "MEDIUM";
+			break;
+		case 2:
+			strItem = "HIGH";
+			break;
+		default:
+			strItem = "NONE";
+		}
 		return strItem;
 	}
 
@@ -229,9 +229,9 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 				}
 			}
 		}
-		
+
 		if (table.getRowCount() == 0) {
-			((DefaultTableModel) table.getModel()).insertRow(0, new Object[9]);	
+			((DefaultTableModel) table.getModel()).insertRow(0, new Object[9]);
 		}
 	}
 
@@ -239,16 +239,16 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		int row = table.getSelectedRow();
 		boolean dirty = false;
 		Object cellValue[] = getObject(devRow);
-		
+
 		for (int i = 0; i < 9; i++) {
-			if (i==3 || i==7)
+			if (i == 3 || i == 7)
 				continue;
 			((DefaultTableModel) table.getModel()).setValueAt(cellValue[i], row, i);
 		}
-		
+
 		if (row < devel.getRow().size()) {
 			dirty = devel.editRow(row, devRow);
-			
+
 			if (!getIsDirty()) {
 				setIsDirty(dirty);
 			}
@@ -258,18 +258,18 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 	protected static void closeTask(DevRowObject myDevRow) {
 		int row = table.getSelectedRow();
 		boolean dirty = false;
-		
+
 		((DefaultTableModel) table.getModel()).setValueAt(myDevRow.getActualComplete(), row, 7);
 		((DefaultTableModel) table.getModel()).setValueAt(getDateTime(myDevRow.getEndDate(), 0), row, 3);
 		((DefaultTableModel) table.getModel()).setValueAt(myDevRow.getStatus(), row, 5);
 		((DefaultTableModel) table.getModel()).setValueAt(myDevRow.getPercentComplete(), row, 8);
-		
+
 		if (row < devel.getRow().size()) {
 			dirty = devel.editRow(row, myDevRow);
 			if (!getIsDirty()) {
 				setIsDirty(dirty);
 			}
-		}				
+		}
 	}
 
 	public static Object getCellValues(int col) {
@@ -281,31 +281,31 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 	private void button_clicked(String a) {
 		int index = table.getSelectedRow();
 		DevRowObject myDevRow = new DevRowObject();
-				
+
 		if (index >= 0 && index < devel.getRow().size()) {
-			myDevRow = devel.getRow().get(index); 
+			myDevRow = devel.getRow().get(index);
 		}
-		
+
 		if (a.equalsIgnoreCase("New Task")) {
 			(new PSP_DevelopmentDialog(myDevRow)).setVisible(true);
 		} else if (a.equalsIgnoreCase("Close Task")) {
-			if (index > -1 ) {
+			if (index > -1) {
 				(new PSP_DevelopmentDialogClose(myDevRow)).setVisible(true);
 			}
 		} else if (a.equalsIgnoreCase("Edit Task")) {
 			if (index > -1) {
-				(new PSP_DevelopmentEditDialog(myDevRow)).setVisible(true);			
+				(new PSP_DevelopmentEditDialog(myDevRow)).setVisible(true);
 			}
 		} else if (a.equalsIgnoreCase("Delete Task")) {
 			removeRow();
 		} else if (a.equalsIgnoreCase("View Description")) {
-			if (index > -1)  {
-				(new PSP_DevelopmentTaskDescription (myDevRow)).setVisible(true);
+			if (index > -1) {
+				(new PSP_DevelopmentTaskDescription(myDevRow)).setVisible(true);
 			}
 		}
 	}
-	
-	protected static void editDescription (String str) {
+
+	protected static void editDescription(String str) {
 		int index = table.getSelectedRow();
 		devel.getRow().get(index).setDescription(str);
 	}
@@ -327,7 +327,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 
 	public static void setIsDirty(boolean dirty) {
 		isDirty = dirty;
-		
+
 		Util.debug("Interesting Phenom");
 		if (isDirty) {
 			PSP_Panel.setIsDirty(true);

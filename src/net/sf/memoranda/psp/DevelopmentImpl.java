@@ -24,9 +24,8 @@ public class DevelopmentImpl implements Development, Serializable{
 		rowObj = new ArrayList<DevRowObject> ();
 	}
 	
-	// This should be the main constructor to use
 	public DevelopmentImpl(Psp psp){
-		this();		// Calling empty constructor
+		this();
 		this.pspVal = psp;
 	}
 	
