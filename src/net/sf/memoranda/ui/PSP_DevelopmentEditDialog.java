@@ -30,29 +30,29 @@ import javax.swing.UIManager;
 public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 
 	private static final long serialVersionUID = -4064987826608820142L;
-	protected static  JPanel contentPane;
-	protected static  JTextField editTaskTextField;
-	protected static  JTextField editDescriptionTextField;
-	protected static  JTextField editStartDateTextField;
-	protected static  JTextField editEstDateTextField;
-	protected static  JTextField editEstTimeTextField;
-	protected static  JComboBox<String> jcbStatus;
-	
+	private static JPanel contentPane;
+	private static JTextField editTaskTextField;
+	private static JTextField editDescriptionTextField;
+	private static JTextField editStartDateTextField;
+	private static JTextField editEstDateTextField;
+	private static JTextField editEstTimeTextField;
+	private static JComboBox<String> jcbStatus;
+
 	private DevRowObject myDevRow;
-	protected static  JComboBox<String> jcbPriority;
-	protected static JComboBox<String> jcbPercent;
+	private static JComboBox<String> jcbPriority;
+	private static JComboBox<String> jcbPercent;
 
 	public PSP_DevelopmentEditDialog() {
-		this (new DevRowObject());
+		this(new DevRowObject());
 	}
-	
+
 	public PSP_DevelopmentEditDialog(DevRowObject myDevRow) {
 		this.myDevRow = myDevRow;
 		jbInit();
 	}
-	
+
 	private void jbInit() {
-		setLook ();
+		setLook();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 605, 468);
 		contentPane = new JPanel();
@@ -101,8 +101,7 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 
 		editStartDateTextField = new JTextField();
 		editStartDateTextField.setToolTipText("Enter start date in mm/dd/yy format");
-		editStartDateTextField.setText(myDevRow.getStartDate() != null ? 
-				getDateTime(myDevRow.getStartDate(), 0) : "");
+		editStartDateTextField.setText(myDevRow.getStartDate() != null ? getDateTime(myDevRow.getStartDate(), 0) : "");
 		editStartDateTextField.setColumns(10);
 
 		JLabel lblEndDate_1 = new JLabel("Est End date:");
@@ -111,8 +110,7 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 
 		editEstDateTextField = new JTextField();
 		editEstDateTextField.setToolTipText("Enter estimated end date in mm/dd/yy format");
-		editEstDateTextField.setText(myDevRow.getEstDate() != null ? 
-						getDateTime(myDevRow.getEstDate(), 0) : "");
+		editEstDateTextField.setText(myDevRow.getEstDate() != null ? getDateTime(myDevRow.getEstDate(), 0) : "");
 		editEstDateTextField.setColumns(10);
 
 		editEstTimeTextField = new JTextField();
@@ -128,25 +126,25 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		btnOk.setToolTipText("Press OK to edit the task");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				createEditDevRow ();
+				createEditDevRow();
 			}
 		});
 
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setToolTipText("Press Cancel to exit");
 		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
+			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		
+
 		jcbStatus = new JComboBox<String>();
 		jcbStatus.setToolTipText("Choose status from dropdown");
 		jcbStatus.setBackground(Color.WHITE);
 		jcbStatus.addItem("OPEN");
 		jcbStatus.addItem("COMPLETE");
-		jcbStatus.setSelectedIndex(getComboIndex (myDevRow.getStatus(), jcbStatus));
-				
+		jcbStatus.setSelectedIndex(getComboIndex(myDevRow.getStatus(), jcbStatus));
+
 		jcbPriority = new JComboBox<String>();
 		jcbPriority.setToolTipText("Choose priority level from dropdown");
 		jcbPriority.setBackground(Color.WHITE);
@@ -154,123 +152,159 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		jcbPriority.addItem("MEDIUM");
 		jcbPriority.addItem("HIGH");
 		jcbPriority.setSelectedIndex(myDevRow.getPriority());
-		
+
 		jcbPercent = new JComboBox<String>();
 		jcbPercent.setToolTipText("Choose percentage from dropdown");
 		jcbPercent.addItem("25.0");
 		jcbPercent.addItem("50.0");
 		jcbPercent.addItem("75.0");
 		jcbPercent.addItem("100.0");
-		jcbPercent.setSelectedIndex(getComboIndex (myDevRow.getPercentComplete() + "", jcbPercent));
-		
+		jcbPercent.setSelectedIndex(getComboIndex(myDevRow.getPercentComplete() + "", jcbPercent));
+
 		jcbPercent.setBackground(Color.WHITE);
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(25)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup().addGap(25).addGroup(gl_contentPane
+						.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblTaskName, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(editTaskTextField, GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblTaskDescription, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblTaskName, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(editTaskTextField,
+										GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup().addGroup(gl_contentPane
+								.createParallelGroup(Alignment.LEADING).addComponent(lblTaskDescription,
+										GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblEditComplete, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(editDescriptionTextField, GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblEditComplete, GroupLayout.PREFERRED_SIZE, 120,
+										GroupLayout.PREFERRED_SIZE))
+								.addGap(18)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(editDescriptionTextField, GroupLayout.DEFAULT_SIZE, 366,
+												Short.MAX_VALUE)
 										.addGroup(gl_contentPane.createSequentialGroup()
-											.addComponent(editStartDateTextField, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-										.addGroup(gl_contentPane.createSequentialGroup()
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-												.addComponent(jcbPercent, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-												.addComponent(editEstTimeTextField, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-												.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
-											.addGap(45)))
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-										.addGroup(gl_contentPane.createSequentialGroup()
-											.addGap(44)
-											.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_contentPane.createSequentialGroup()
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addPreferredGap(ComponentPlacement.RELATED)
-													.addComponent(lblEditStatus, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-												.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-													.addGroup(gl_contentPane.createSequentialGroup()
-														.addPreferredGap(ComponentPlacement.RELATED)
-														.addComponent(lblPriority, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
-													.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-														.addGap(12)
-														.addComponent(lblEndDate_1, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))))
-											.addGap(18)
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-												.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addComponent(editEstDateTextField, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-													.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-												.addComponent(jcbPriority, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)))))))
+												.addGroup(gl_contentPane
+														.createParallelGroup(Alignment.LEADING).addGroup(
+																gl_contentPane.createSequentialGroup()
+																		.addComponent(editStartDateTextField,
+																				GroupLayout.PREFERRED_SIZE, 85,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(ComponentPlacement.RELATED,
+																				GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE))
+														.addGroup(gl_contentPane.createSequentialGroup()
+																.addPreferredGap(ComponentPlacement.RELATED)
+																.addGroup(gl_contentPane
+																		.createParallelGroup(Alignment.LEADING)
+																		.addComponent(jcbPercent,
+																				GroupLayout.PREFERRED_SIZE, 85,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addComponent(editEstTimeTextField,
+																				GroupLayout.PREFERRED_SIZE, 85,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addComponent(btnOk, GroupLayout.PREFERRED_SIZE,
+																				85, GroupLayout.PREFERRED_SIZE))
+																.addGap(45)))
+												.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+														.addGroup(gl_contentPane.createSequentialGroup().addGap(44)
+																.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 85,
+																		GroupLayout.PREFERRED_SIZE))
+														.addGroup(gl_contentPane.createSequentialGroup()
+																.addGroup(gl_contentPane
+																		.createParallelGroup(Alignment.TRAILING)
+																		.addGroup(gl_contentPane.createSequentialGroup()
+																				.addPreferredGap(
+																						ComponentPlacement.RELATED)
+																				.addComponent(lblEditStatus,
+																						GroupLayout.PREFERRED_SIZE, 120,
+																						GroupLayout.PREFERRED_SIZE))
+																		.addGroup(gl_contentPane
+																				.createParallelGroup(Alignment.TRAILING)
+																				.addGroup(gl_contentPane
+																						.createSequentialGroup()
+																						.addPreferredGap(
+																								ComponentPlacement.RELATED)
+																						.addComponent(lblPriority,
+																								GroupLayout.DEFAULT_SIZE,
+																								120, Short.MAX_VALUE))
+																				.addGroup(Alignment.LEADING,
+																						gl_contentPane
+																								.createSequentialGroup()
+																								.addGap(12)
+																								.addComponent(
+																										lblEndDate_1,
+																										GroupLayout.PREFERRED_SIZE,
+																										120,
+																										GroupLayout.PREFERRED_SIZE))))
+																.addGap(18)
+																.addGroup(gl_contentPane
+																		.createParallelGroup(Alignment.LEADING, false)
+																		.addComponent(jcbStatus,
+																				GroupLayout.PREFERRED_SIZE, 88,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGroup(gl_contentPane.createSequentialGroup()
+																				.addComponent(editEstDateTextField,
+																						GroupLayout.PREFERRED_SIZE, 85,
+																						GroupLayout.PREFERRED_SIZE)
+																				.addPreferredGap(
+																						ComponentPlacement.RELATED,
+																						GroupLayout.DEFAULT_SIZE,
+																						Short.MAX_VALUE))
+																		.addComponent(jcbPriority,
+																				GroupLayout.PREFERRED_SIZE, 88,
+																				GroupLayout.PREFERRED_SIZE)))))))
 						.addComponent(lblEstimatedTime, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-					.addGap(153))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(237)
-					.addComponent(lblCreateNewTask)
-					.addContainerGap(359, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblCreateNewTask)
-					.addGap(27)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblTaskName, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addGap(153))
+				.addGroup(gl_contentPane.createSequentialGroup().addGap(237).addComponent(lblCreateNewTask)
+						.addContainerGap(359, Short.MAX_VALUE)));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
+				.createSequentialGroup().addContainerGap().addComponent(lblCreateNewTask).addGap(27)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTaskName, GroupLayout.PREFERRED_SIZE, 25,
+								GroupLayout.PREFERRED_SIZE)
 						.addComponent(editTaskTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblTaskDescription, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addGap(91)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
+						.createSequentialGroup()
+						.addComponent(lblTaskDescription, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addGap(91)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblStartDate, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-								.addComponent(editEstDateTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+								.addComponent(editEstDateTextField, GroupLayout.PREFERRED_SIZE, 25,
+										GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblEndDate_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-								.addComponent(editStartDateTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(editDescriptionTextField, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-					.addGap(34)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(editStartDateTextField, GroupLayout.PREFERRED_SIZE, 25,
+										GroupLayout.PREFERRED_SIZE)))
+						.addComponent(editDescriptionTextField, GroupLayout.PREFERRED_SIZE, 75,
+								GroupLayout.PREFERRED_SIZE))
+				.addGap(34)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblEstimatedTime, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(editEstTimeTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblEstimatedTime, GroupLayout.PREFERRED_SIZE, 25,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(editEstTimeTextField, GroupLayout.PREFERRED_SIZE, 25,
+										GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(jcbPriority, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblPriority, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
-					.addGap(27)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(jcbPriority, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblPriority, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
+				.addGap(27)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblEditComplete, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(jcbPercent, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblEditStatus, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnCancel)
-						.addComponent(btnOk))
-					.addGap(26))
-		);
+								.addComponent(lblEditComplete, GroupLayout.PREFERRED_SIZE, 25,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(jcbPercent, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+						.addGroup(
+								gl_contentPane.createParallelGroup(Alignment.BASELINE)
+										.addComponent(jcbStatus, GroupLayout.PREFERRED_SIZE, 25,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblEditStatus, GroupLayout.PREFERRED_SIZE, 25,
+												GroupLayout.PREFERRED_SIZE)))
+				.addPreferredGap(ComponentPlacement.RELATED, 21, Short.MAX_VALUE).addGroup(gl_contentPane
+						.createParallelGroup(Alignment.BASELINE).addComponent(btnCancel).addComponent(btnOk))
+				.addGap(26)));
 		contentPane.setLayout(gl_contentPane);
 	}
 
-	protected static int getComboIndex (String strItem, JComboBox<String> jcbCombo) {
+	protected static int getComboIndex(String strItem, JComboBox<String> jcbCombo) {
 		int indexAt = -1;
 
 		if (!strItem.equals(null)) {
@@ -280,11 +314,11 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 					break;
 				}
 			}
-		}		
+		}
 		return indexAt;
 	}
 
-	private void createEditDevRow() {	
+	private void createEditDevRow() {
 		if (!editTaskTextField.getText().trim().isEmpty()) {
 			myDevRow.setPriority(jcbPriority.getSelectedIndex());
 			myDevRow.setTaskName(editTaskTextField.getText().trim());
@@ -297,15 +331,15 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 			if (NumberUtils.isNumber(editEstTimeTextField.getText())) {
 				myDevRow.setEstimate(Integer.parseInt(editEstTimeTextField.getText().trim()));
 			}
-			myDevRow.setDescription (editDescriptionTextField.getText());
-			myDevRow.setStatus(jcbStatus.getSelectedItem()+"");
-			
+			myDevRow.setDescription(editDescriptionTextField.getText());
+			myDevRow.setStatus(jcbStatus.getSelectedItem() + "");
+
 			if (jcbPercent.getSelectedIndex() != -1) {
-				myDevRow.setPercentComplete(Float.parseFloat (jcbPercent.getSelectedItem()+""));
+				myDevRow.setPercentComplete(Float.parseFloat(jcbPercent.getSelectedItem() + ""));
 			}
-			dispose();	
-			
-			PSP_DevelopmentTable.editRow (myDevRow);			
+			dispose();
+
+			PSP_DevelopmentTable.editRow(myDevRow);
 		} else {
 			editTaskTextField.requestFocus();
 		}
@@ -323,26 +357,22 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		default:
 			Util.debug("Never should have gotten here");
 		}
-		
+
 		Util.debug("In here: " + d.toString());
-				
+
 		return (df.format(d));
 	}
-	
-	private static void setLook () {
+
+	private static void setLook() {
 		try {
 			if (Configuration.get("LOOK_AND_FEEL").equals("system"))
-				UIManager.setLookAndFeel(
-					UIManager.getSystemLookAndFeelClassName());
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
-				UIManager.setLookAndFeel(
-					UIManager.getCrossPlatformLookAndFeelClassName());					
-			else if (
-				Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
-				UIManager.setLookAndFeel(
-					Configuration.get("LOOK_AND_FEEL").toString());
-		} catch (Exception e) {		    
-			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", 
+				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			else if (Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+				UIManager.setLookAndFeel(Configuration.get("LOOK_AND_FEEL").toString());
+		} catch (Exception e) {
+			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.",
 					"Make sure that specified look-and-feel library classes are on the CLASSPATH.");
 		}
 	}
