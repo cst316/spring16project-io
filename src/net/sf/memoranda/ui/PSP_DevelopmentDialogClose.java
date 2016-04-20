@@ -49,20 +49,26 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblCloseTask = new JLabel("CLOSE TASK");
+		lblCloseTask.setToolTipText("Close and complete task");
 		lblCloseTask.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		commentsTextField = new JTextField();
+		commentsTextField.setToolTipText("Enter in your comments here");
 		commentsTextField.setColumns(10);
 		
 		JLabel lblComments = new JLabel("Comments:");
+		lblComments.setToolTipText("Comments\r\n");
 		
 		JLabel lblActualEfforthours = new JLabel("Actual Effort (hours):");
+		lblActualEfforthours.setToolTipText("Effort in hours");
 		lblActualEfforthours.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		actualHoursTextField = new JTextField();
+		actualHoursTextField.setToolTipText("Enter actual effort here");
 		actualHoursTextField.setColumns(10);
 		
 		JButton btnOk = new JButton("Close Task");
+		btnOk.setToolTipText("Press to close/complete the task");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -72,6 +78,7 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		});
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setToolTipText("Press to cancel and exit");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -80,9 +87,11 @@ public class PSP_DevelopmentDialogClose extends JFrame {
 		});
 		
 		actualEndDateTextField = new JTextField();
+		actualEndDateTextField.setToolTipText("Enter end date here");
 		actualEndDateTextField.setColumns(10);
 		
 		JLabel lblActualEndDate = new JLabel("Actual End Date:");
+		lblActualEndDate.setToolTipText("Actual date finished in mm/dd/yy format");
 		lblActualEndDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(

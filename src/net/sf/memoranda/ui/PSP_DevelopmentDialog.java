@@ -56,41 +56,54 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 		setContentPane(contentPane);
 
 		JLabel lblCreateNewTask = new JLabel(" CREATE NEW TASK");
+		lblCreateNewTask.setToolTipText("Create a new task\r\n");
 		lblCreateNewTask.setFont(new Font("Tahoma", Font.BOLD, 15));
 
 		JLabel lblTaskName = new JLabel("Task name:");
+		lblTaskName.setToolTipText("Enter task name\r\n");
 		lblTaskName.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JLabel lblTaskDescription = new JLabel("Description:");
+		lblTaskDescription.setToolTipText("Enter description");
 		lblTaskDescription.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JLabel lblStartDate = new JLabel("Start date:");
+		lblStartDate.setToolTipText("Enter start date using mm/dd/yy format");
 		lblStartDate.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JLabel lblEstimatedTime = new JLabel("Estimated time:");
+		lblEstimatedTime.setToolTipText("Enter the estimated time to complete the task");
 
 		JLabel lblPriority = new JLabel("Priority:");
+		lblPriority.setToolTipText("Enter the priority of the task");
 		lblPriority.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		taskTextField = new JTextField();
+		taskTextField.setToolTipText("Enter in the task name");
 		taskTextField.setColumns(10);
 
 		descriptionTextField = new JTextField();
+		descriptionTextField.setToolTipText("Enter in the description");
 		descriptionTextField.setColumns(10);
 
 		startDateTextField = new JTextField();
+		startDateTextField.setToolTipText("Enter the start date in mm/dd/yy format");
 		startDateTextField.setColumns(10);
 
 		JLabel lblEndDate_1 = new JLabel("Est End date:");
+		lblEndDate_1.setToolTipText("Enter estimated end date using mm/dd/yy format");
 		lblEndDate_1.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		estDateTextField = new JTextField();
+		estDateTextField.setToolTipText("Enter the estimated end date in mm/dd/yy format");
 		estDateTextField.setColumns(10);
 
 		estTimeTextField = new JTextField();
+		estTimeTextField.setToolTipText("Enter the estimated time");
 		estTimeTextField.setColumns(10);
 
 		JButton btnOk = new JButton("OK");
+		btnOk.setToolTipText("Press OK to create task");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				insertRow();
@@ -98,6 +111,7 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 		});
 
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setToolTipText("Press Cancel to exit dialog");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				dispose();
@@ -105,6 +119,7 @@ public class PSP_DevelopmentDialog extends JFrame implements Serializable {
 		});
 		
 		jcbPriority = new JComboBox<String>();
+		jcbPriority.setToolTipText("Choose a priority value from the dropdown menu");
 		jcbPriority.addItem("LOW");
 		jcbPriority.addItem("MEDIUM");
 		jcbPriority.addItem("HIGH");

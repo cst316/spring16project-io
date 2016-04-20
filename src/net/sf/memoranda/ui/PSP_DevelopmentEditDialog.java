@@ -61,56 +61,71 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		setContentPane(contentPane);
 
 		JLabel lblCreateNewTask = new JLabel("EDIT TASK");
+		lblCreateNewTask.setToolTipText("Edit task");
 		lblCreateNewTask.setFont(new Font("Tahoma", Font.BOLD, 15));
 
 		JLabel lblTaskName = new JLabel("Edit task:");
+		lblTaskName.setToolTipText("Edit task");
 		lblTaskName.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JLabel lblTaskDescription = new JLabel("Edit Description:");
+		lblTaskDescription.setToolTipText("Edit description");
 		lblTaskDescription.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JLabel lblStartDate = new JLabel("Start Date:");
+		lblStartDate.setToolTipText("Start date in mm/dd/yy format");
 		lblStartDate.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JLabel lblEstimatedTime = new JLabel("Estimated Time:");
+		lblEstimatedTime.setToolTipText("Estimated time");
 		lblEstimatedTime.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JLabel lblPriority = new JLabel("Edit Priority:");
+		lblPriority.setToolTipText("Edit priority");
 		lblPriority.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JLabel lblEditStatus = new JLabel("Edit Status:");
+		lblEditStatus.setToolTipText("Edit status");
 		lblEditStatus.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		// eidt dialog populates value from existing row
 		editTaskTextField = new JTextField();
+		editTaskTextField.setToolTipText("Task to be edited");
 		editTaskTextField.setText(this.myDevRow.getTaskName());
 		editTaskTextField.setColumns(10);
 
 		editDescriptionTextField = new JTextField();
+		editDescriptionTextField.setToolTipText("Description to be edited");
 		editDescriptionTextField.setText(this.myDevRow.getDescription());
 		editDescriptionTextField.setColumns(10);
 
 		editStartDateTextField = new JTextField();
+		editStartDateTextField.setToolTipText("Enter start date in mm/dd/yy format");
 		editStartDateTextField.setText(myDevRow.getStartDate() != null ? 
 				getDateTime(myDevRow.getStartDate(), 0) : "");
 		editStartDateTextField.setColumns(10);
 
 		JLabel lblEndDate_1 = new JLabel("Est End date:");
+		lblEndDate_1.setToolTipText("Estimated end date (mm/dd/yy format)");
 		lblEndDate_1.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		editEstDateTextField = new JTextField();
+		editEstDateTextField.setToolTipText("Enter estimated end date in mm/dd/yy format");
 		editEstDateTextField.setText(myDevRow.getEstDate() != null ? 
 						getDateTime(myDevRow.getEstDate(), 0) : "");
 		editEstDateTextField.setColumns(10);
 
 		editEstTimeTextField = new JTextField();
+		editEstTimeTextField.setToolTipText("Enter how long you think it will take to finish");
 		editEstTimeTextField.setText(this.myDevRow.getEstimate() + "");
 		editEstTimeTextField.setColumns(10);
 
 		JLabel lblEditComplete = new JLabel("% Complete:");
+		lblEditComplete.setToolTipText("Percentage task completed");
 		lblEditComplete.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JButton btnOk = new JButton("OK");
+		btnOk.setToolTipText("Press OK to edit the task");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				createEditDevRow ();
@@ -118,6 +133,7 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		});
 
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setToolTipText("Press Cancel to exit");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				dispose();
@@ -125,12 +141,14 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		});
 		
 		jcbStatus = new JComboBox<String>();
+		jcbStatus.setToolTipText("Choose status from dropdown");
 		jcbStatus.setBackground(Color.WHITE);
 		jcbStatus.addItem("OPEN");
 		jcbStatus.addItem("COMPLETE");
 		jcbStatus.setSelectedIndex(getComboIndex (myDevRow.getStatus(), jcbStatus));
 				
 		jcbPriority = new JComboBox<String>();
+		jcbPriority.setToolTipText("Choose priority level from dropdown");
 		jcbPriority.setBackground(Color.WHITE);
 		jcbPriority.addItem("LOW");
 		jcbPriority.addItem("MEDIUM");
@@ -138,6 +156,7 @@ public class PSP_DevelopmentEditDialog extends JFrame implements Serializable {
 		jcbPriority.setSelectedIndex(myDevRow.getPriority());
 		
 		jcbPercent = new JComboBox<String>();
+		jcbPercent.setToolTipText("Choose percentage from dropdown");
 		jcbPercent.addItem("25.0");
 		jcbPercent.addItem("50.0");
 		jcbPercent.addItem("75.0");

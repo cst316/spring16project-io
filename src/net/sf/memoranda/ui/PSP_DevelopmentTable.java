@@ -54,6 +54,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		scrollPane.setBackground(Color.WHITE);
 
 		JButton btnNewTask = new JButton("New Task");
+		btnNewTask.setToolTipText("Create a new task");
 		btnNewTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				button_clicked("New Task");
@@ -61,6 +62,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		});
 
 		JButton btnCloseTask = new JButton("Complete Task");
+		btnCloseTask.setToolTipText("Give a task a status of COMPLETE ");
 		btnCloseTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				button_clicked("Close Task");
@@ -68,6 +70,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		});
 
 		JButton btnEditTask = new JButton("Edit Task");
+		btnEditTask.setToolTipText("Edit a task");
 		btnEditTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				button_clicked("Edit Task");
@@ -75,6 +78,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		});
 
 		JButton btnDeleteTask = new JButton("Delete Task");
+		btnDeleteTask.setToolTipText("Remove a task");
 		btnDeleteTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				button_clicked("Delete Task");
@@ -82,6 +86,7 @@ public class PSP_DevelopmentTable extends JPanel implements Serializable {
 		});
 
 		JButton btnViewDescription = new JButton("View Description");
+		btnViewDescription.setToolTipText("View the description of a task");
 		btnViewDescription.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				button_clicked("View Description");
