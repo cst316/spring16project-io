@@ -115,6 +115,7 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		btnAddMod = new JButton("Add Module");
+		btnAddMod.setToolTipText("Additional modules not previously added");
 		btnAddMod.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnAddMod.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -152,6 +153,7 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 		);
 		
 		pnlCurrMod = new JPanel();
+		pnlCurrMod.setToolTipText("Estimated Modules and their sizes");
 		pnlCurrMod.setAlignmentX(Component.LEFT_ALIGNMENT);
 		pnlCurrMod.setBackground(Color.WHITE);
 		pnlCurrMod.setMaximumSize(new Dimension(200, 350));
@@ -236,11 +238,13 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 		panImages.setLeftComponent(panel_1);
 		
 		JLabel lblImageFiles = new JLabel("IMAGE FILES");
+		lblImageFiles.setToolTipText("File name for images in the planning phase");
 		lblImageFiles.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		lblImageFiles.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		listModel = new DefaultListModel<String>();
 		lstImages = new JList<String>(listModel);
+		lstImages.setToolTipText("Select image from list to display");
 		lstImages.setFixedCellWidth(230);
 		lstImages.setFixedCellHeight(25);
 		lstImages.setMaximumSize(new Dimension(230, 0));
@@ -287,6 +291,7 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 		panel_1.setLayout(gl_panel_1);
 		
 		panel_2 = new JPanel();
+		panel_2.setToolTipText("Displaying selected image");
 		panel_2.setBackground(Color.WHITE);
 		panImages.setRightComponent(panel_2);
 		panel_2.setLayout(null);

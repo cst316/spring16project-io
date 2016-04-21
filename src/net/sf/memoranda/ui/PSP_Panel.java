@@ -84,12 +84,14 @@ public class PSP_Panel extends JPanel{
         setLayout(new BorderLayout(0, 0));
         
         toolBar = new JToolBar();
+        toolBar.setToolTipText("Select Menu Item");
         toolBar.setOrientation(SwingConstants.VERTICAL);
         toolBar.setBorder(null);
         toolBar.setBackground(SystemColor.controlHighlight);
         add(toolBar, BorderLayout.WEST);
         
         lblNewProject = new JLabel("New Project");
+        lblNewProject.setToolTipText("Start a new project wizard");
         lblNewProject.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewProject.addMouseListener(new MouseAdapter() {
             @Override
@@ -105,6 +107,7 @@ public class PSP_Panel extends JPanel{
         toolBar.add(lblNewProject);
         
         lblSaveProject = new JLabel("Save Project");
+        lblSaveProject.setToolTipText("Save and write to file");
         setEnabledFlag (lblSaveProject, getIsDirty());
         lblSaveProject.setHorizontalAlignment(SwingConstants.CENTER);
         lblSaveProject.addMouseListener(new MouseAdapter() {
@@ -121,6 +124,7 @@ public class PSP_Panel extends JPanel{
         toolBar.add(lblSaveProject);
         
         lblOpenProject = new JLabel("Open Project");
+        lblOpenProject.setToolTipText("Open saved project");
         setEnabledFlag (lblOpenProject, getIsNeeded());
         lblOpenProject.setHorizontalAlignment(SwingConstants.CENTER);
         lblOpenProject.addMouseListener(new MouseAdapter() {
@@ -137,6 +141,7 @@ public class PSP_Panel extends JPanel{
         toolBar.add(lblOpenProject);
         
         pnlWizard = new JPanel();
+        pnlWizard.setToolTipText("Main panel, snap in view");
         pnlWizard.setVisible(false);
         add(pnlWizard, BorderLayout.CENTER);
         pnlWizard.setLayout(new BorderLayout(0, 0));    
@@ -434,6 +439,7 @@ public class PSP_Panel extends JPanel{
         
         JLabel lblPlanningProject = new JLabel("Planning");
         lblPlanningProject.setHorizontalAlignment(SwingConstants.CENTER);
+        lblPlanningProject.setToolTipText("View project's plan");
         lblPlanningProject.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -447,6 +453,7 @@ public class PSP_Panel extends JPanel{
         lblPlanningProject.setFont(new Font("Dialog", Font.BOLD, 12));
         
         JLabel lblDesigningProject = new JLabel("Designing");
+        lblDesigningProject.setToolTipText("View project's design");
         lblDesigningProject.setHorizontalAlignment(SwingConstants.CENTER);
         lblDesigningProject.addMouseListener(new MouseAdapter() {
             @Override
@@ -461,6 +468,7 @@ public class PSP_Panel extends JPanel{
         lblDesigningProject.setFont(new Font("Dialog", Font.BOLD, 12));
         
         JLabel lblDevelopmentProject = new JLabel("Development");
+        lblDevelopmentProject.setToolTipText("View project's development");
         lblDevelopmentProject.setHorizontalAlignment(SwingConstants.CENTER);
         lblDevelopmentProject.addMouseListener(new MouseAdapter() {
             @Override
@@ -475,6 +483,7 @@ public class PSP_Panel extends JPanel{
         lblDevelopmentProject.setFont(new Font("Dialog", Font.BOLD, 12));
                 
         JLabel lblDefectInProject = new JLabel("Defect");
+        lblDefectInProject.setToolTipText("View project's defects");
         lblDefectInProject.setHorizontalAlignment(SwingConstants.CENTER);
         lblDefectInProject.addMouseListener(new MouseAdapter() {
             @Override
@@ -489,6 +498,7 @@ public class PSP_Panel extends JPanel{
         lblDefectInProject.setFont(new Font("Dialog", Font.BOLD, 12));  
         
         JLabel lblTimeLogProject = new JLabel("Time Log");      
+        lblTimeLogProject.setToolTipText("View project's time logs");
         lblTimeLogProject.setHorizontalAlignment(SwingConstants.CENTER);
         lblTimeLogProject.addMouseListener(new MouseAdapter() {
             @Override
