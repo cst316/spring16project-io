@@ -354,8 +354,11 @@ public class PSP_DefectPanel extends JPanel {
 			}
 			else
 			{
+				String message = "All fields for row " + 
+						numberLabelList.get(i).getText().trim() 
+						+ " must be filled out"; 
 				JOptionPane.showMessageDialog(App.getFrame(),
-						Local.getString("All fields must be filled out!"));
+						Local.getString(message));
 				dirty = false;
 			}
 		}
