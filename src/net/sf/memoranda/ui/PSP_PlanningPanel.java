@@ -254,6 +254,7 @@ public class PSP_PlanningPanel extends JPanel implements ListSelectionListener {
 		
 		btnAddImage = new JButton("Add Image");
 		btnAddImage.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnAddImage.setToolTipText("Add additional images");
 		btnAddImage.setPreferredSize(new Dimension(110, 25));
 		btnAddImage.setMinimumSize(new Dimension(110, 25));
 		btnAddImage.setMaximumSize(new Dimension(110, 25));

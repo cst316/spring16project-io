@@ -141,7 +141,6 @@ public class PSP_Panel extends JPanel{
         toolBar.add(lblOpenProject);
         
         pnlWizard = new JPanel();
-        pnlWizard.setToolTipText("Main panel, snap in view");
         pnlWizard.setVisible(false);
         add(pnlWizard, BorderLayout.CENTER);
         pnlWizard.setLayout(new BorderLayout(0, 0));    

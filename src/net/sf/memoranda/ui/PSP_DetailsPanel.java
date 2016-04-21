@@ -121,8 +121,8 @@ public class PSP_DetailsPanel extends JPanel {
 		txtProjectName.setColumns(10);
 
 		JLabel label3 = new JLabel("Project Description:");
-		txtDescription.setToolTipText("Project's description");
 		txtDescription = new JTextArea(pspI.getDescription());
+		txtDescription.setToolTipText("Project's description");
 		txtDescription.setWrapStyleWord(true);
 		txtDescription.addFocusListener(new FocusAdapter() {
 			@Override
