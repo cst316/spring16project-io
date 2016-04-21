@@ -89,6 +89,14 @@ public class PSP_DetailsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				btnEdit.setText(isToggled ? "Edit Details" : "Cancel");
 				button_ActionClicked(!isToggled ? "EDIT" : "CANCEL");
+				if(!btnEdit.getText().equals("Edit Details"))
+				{
+					btnEdit.setToolTipText("Cancel Edit");
+				}
+				else
+				{
+					btnEdit.setToolTipText("Edit Details");
+				}
 			}
 		});
 		btnEdit.setPreferredSize(new Dimension(115, 25));
