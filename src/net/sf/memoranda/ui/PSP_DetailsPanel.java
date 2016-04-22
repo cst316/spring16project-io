@@ -65,6 +65,7 @@ public class PSP_DetailsPanel extends JPanel {
 		panel.setBackground(Color.WHITE);
 
 		btnUpdate = new JButton("Update");
+		btnUpdate.setToolTipText("Update details");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				button_ActionClicked("UPDATE");
@@ -83,10 +84,19 @@ public class PSP_DetailsPanel extends JPanel {
 		 */
 
 		btnEdit = new JButton("Edit Details");
+		btnEdit.setToolTipText("Edit details");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnEdit.setText(isToggled ? "Edit Details" : "Cancel");
 				button_ActionClicked(!isToggled ? "EDIT" : "CANCEL");
+				if(!btnEdit.getText().equals("Edit Details"))
+				{
+					btnEdit.setToolTipText("Cancel Edit");
+				}
+				else
+				{
+					btnEdit.setToolTipText("Edit Details");
+				}
 			}
 		});
 		btnEdit.setPreferredSize(new Dimension(115, 25));
@@ -112,6 +122,7 @@ public class PSP_DetailsPanel extends JPanel {
 		panel2.setBackground(Color.WHITE);
 		JLabel label2 = new JLabel("Project Name:");
 		txtProjectName = new JTextField(pspI.getName());
+		txtProjectName.setToolTipText("Project's name");
 		txtProjectName.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		txtProjectName.setBackground(Color.WHITE);
 		txtProjectName.setEditable(false);
@@ -119,6 +130,7 @@ public class PSP_DetailsPanel extends JPanel {
 
 		JLabel label3 = new JLabel("Project Description:");
 		txtDescription = new JTextArea(pspI.getDescription());
+		txtDescription.setToolTipText("Project's description");
 		txtDescription.setWrapStyleWord(true);
 		txtDescription.addFocusListener(new FocusAdapter() {
 			@Override
